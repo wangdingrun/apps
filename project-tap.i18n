@@ -1,0 +1,4 @@
+{
+	"supported_languages": ["en", "zh-CN"],
+    "preloaded_langs": ["en", "zh-CN"]
+}
