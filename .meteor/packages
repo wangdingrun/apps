@@ -18,6 +18,7 @@ ejson
 spacebars
 check
 reactive-var
+underscore
 
 accounts-password
 accounts-google
