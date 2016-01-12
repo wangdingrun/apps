@@ -1,13 +1,19 @@
-Router.route '/', ->
-	if (!Meteor.userId())
-		Router.go("/sign-in");
+FlowRouter.route '/', 
+	action: (params, queryParams)->
+		if (!Meteor.userId())
+			FlowRouter.go("/sign-in");
+		else
+			FlowRouter.go("/account/profile");
 
 
 
-Router.route '/logout', ->
-	AccountsTemplates.logout();
+FlowRouter.route '/logout', 
+	action: (params, queryParams)->
+		AccountsTemplates.logout();
 
 
-Router.route '/account/profile', ->
-	if Meteor.user()
-		this.render('profile');
+FlowRouter.route '/account/profile', 
+	action: (params, queryParams)->
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "profile"

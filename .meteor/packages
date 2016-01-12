@@ -38,7 +38,7 @@ steedos:admin-lte
 joshowens:timezone-picker
 useraccounts:core
 useraccounts:bootstrap
-useraccounts:iron-routing
+useraccounts:flow-routing
 softwarerero:accounts-t9n
 
 
@@ -60,7 +60,7 @@ gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
 
-iron:router
+kadira:flow-router
 
 aldeed:template-extension
 gandev:server-eval

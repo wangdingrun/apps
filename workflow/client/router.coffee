@@ -1,7 +1,5 @@
 
-Router.route '/workflow/instance/:instance_id', ->
-	this.render('instanceform');
-
-
-Router.route '/workflow/pending', ->
-	this.render('instance_list');
+FlowRouter.route '/workflow/instance/:instance_id', 
+	action: ->
+		BlazeLayout.render 'masterLayout',
+			main: "instanceform"

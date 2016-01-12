@@ -1,8 +1,8 @@
 <template name="loginLayout">
-  {{> yield region='nav'}}
+  {{> loginNav}}
 
   <div id="content">
-    {{> yield}}
+    {{> Template.dynamic template=main}}
   </div>
 
 <!--   {{> yield region='footer'}} -->
