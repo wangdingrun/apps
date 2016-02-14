@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go("/sign-in");
 		else
-			FlowRouter.go("/account/profile");
+			FlowRouter.go("/workflow/pending");
 
 
 
@@ -17,3 +17,4 @@ FlowRouter.route '/account/profile',
 		if Meteor.user()
 			BlazeLayout.render 'masterLayout',
 				main: "profile"
+

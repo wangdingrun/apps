@@ -1,12 +1,12 @@
-Steedos_data_format = {};
+WorkflowManager_format = {};
 
 //获取user select2 标签的 options
 var getSpaceUserSelect2Options = function (spaceId){
 
-  // todo Steedos_data.getSpaceUsers(spaceId);
+  // todo WorkflowManager.getSpaceUsers(spaceId);
   // 数据格式转换
   
-  var spaceUsers = Steedos_data.getSpaceUsers(spaceId);
+  var spaceUsers = WorkflowManager.getSpaceUsers(spaceId);
   
   var options = new Array();
 
@@ -147,7 +147,7 @@ var s_schema = function (label, field){
   return schema;
 };
 
-Steedos_data_format.getAutoformSchema = function (steedosForm){
+WorkflowManager_format.getAutoformSchema = function (steedosForm){
   var afFields = {};
   var stFields = steedosForm.fields;
 
@@ -173,9 +173,9 @@ Steedos_data_format.getAutoformSchema = function (steedosForm){
                                       };
 
       var sfieldcodes = new Array();
-      for(var si = 0 ; si < stField.sfields.length; si++){
+      for(var si = 0 ; si < stField.fields.length; si++){
        
-        var sstField = stField.sfields[si];
+        var sstField = stField.fields[si];
         
         sfieldcodes.push(sstField.code);
 

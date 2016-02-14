@@ -1,5 +1,5 @@
 
-var attachmentServerURL = Steedos_data.getUrlForServiceName("s3");
+var attachmentServerURL = WorkflowManager.getUrlForServiceName("s3");
 
 var applicationName = "workflow";
 

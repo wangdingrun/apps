@@ -146,4 +146,3 @@ if Meteor.isServer
 			handle.stop();
 			if handle2
 				handle2.stop();
-		

@@ -198,7 +198,7 @@ function init_formula_values(fields, autoFormDoc){
                     }
                 } else if (type == 'user'){
 
-                    __values[field.code] = Steedos_data.getUser(autoFormDoc[field.code]);
+                    __values[field.code] = WorkflowManager.getUser(autoFormDoc[field.code]);
 
                 } else {
                     //此处传spaceId给选人控件的旧数据计算roles和organization
@@ -208,8 +208,8 @@ function init_formula_values(fields, autoFormDoc){
         }, this);
     }
 
-    __values["approver"] = Steedos_data.getFormulaUserObject("");
-    __values["applicant"] = Steedos_data.getFormulaUserObject("");
+    __values["approver"] = WorkflowManager.getFormulaUserObject("");
+    __values["applicant"] = WorkflowManager.getFormulaUserObject("");
 
     //approver 当前用户
     // var currentUserId = CS.getPath('currentUser.id');

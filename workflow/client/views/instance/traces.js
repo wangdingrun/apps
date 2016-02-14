@@ -23,7 +23,7 @@ Template.instance_traces.helpers({
   },
 
   getStepName: function(stepId){
-    var step =Steedos_data.getStep('flowId' ,stepId);
+    var step =WorkflowManager.getInstanceStep(stepId);
     return step.name;
   },
 

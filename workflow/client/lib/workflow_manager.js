@@ -1,0 +1,149 @@
+WorkflowManager = {};
+
+WorkflowManager.getInstance = function (){
+  instanceId = Session.get("instanceId");
+  return db.instances.findOne(instanceId)
+};
+
+WorkflowManager.getInstanceFormVersion = function (){
+  instanceId = Session.get("instanceId");
+  instance = db.instances.findOne(instanceId);
+  if (instance)
+  	form = db.forms.findOne(instance.form);
+  	if (form)
+  		return form.current;
+  return null;
+};
+
+WorkflowManager.getInstanceFlow = function (){
+  instanceId = Session.get("instanceId");
+  instance = db.instances.findOne(instanceId);
+  if (instance)
+  	flow = db.flows.findOne(instance.flow);
+  	if (flow)
+  		return flow.current;
+};
+
+WorkflowManager.getUrlForServiceName = function (serverName){
+  var serverUrls = {"s3":"https://s3ws.steedos.com"};
+  return serverUrls[serverName];
+};
+
+WorkflowManager.getForm = function (formId){
+  return db.forms.findOne(formId);
+};
+
+WorkflowManager.getFlow = function (flowId){
+	return db.flows.findOne(flowId);
+};
+
+WorkflowManager.getInstanceStep = function(stepId){
+  flow = WorkflowManager.getInstanceFlow()
+
+  var g_step;
+
+  flow.steps.forEach(
+    function(step){
+      if (step._id == stepId){
+        g_step = step;
+        return ;
+      }
+    }
+  );
+
+  return g_step;
+};
+
+//获取space下的所有部门
+WorkflowManager.getSpaceOrganizations = function (spaceId){
+
+};
+
+//获取space下的所有用户
+WorkflowManager.getSpaceUsers = function (spaceId){
+  
+  var users = new Array();
+
+  for(var i = 0 ; i < 1500 ; i++){
+    
+    var userObject = new Object();
+    userObject.id = i + "56fdsfsd8f79s8df7s8fsdfusdi";
+    userObject.steedos_id = i + "baozhoutao@hotoa.com";
+    userObject.name = i + "包周涛";
+    userObject.organization = WorkflowManager.getUserOrganization(spaceId, userObject.id);
+    userObject.roles = WorkflowManager.getUserRoles(spaceId, userObject.id);
+
+    users.push(userObject);
+  }
+
+  return users;
+
+};
+
+WorkflowManager.getUser = function (userId){
+
+  if (typeof userId != "string"){
+
+    return WorkflowManager.getUsers(userId);
+  
+  }
+
+  var spaceUsers = WorkflowManager.getSpaceUsers("") , spaceUser = {};
+
+  spaceUsers.forEach(
+    function(user){
+        if (user.id == userId){
+          spaceUser = user;
+          return ;
+        }
+    }
+  );
+
+  return spaceUser;
+};
+
+WorkflowManager.getUsers = function (userIds){
+
+  var users = new Array();
+
+  if(userIds){
+    userIds.forEach(function(userId){
+      users.push(WorkflowManager.getUser(userId));
+    });
+  }
+
+  return users;
+};
+
+//获取用户岗位
+WorkflowManager.getUserRoles = function (spaceId, userId){
+
+  var roles = new Array();
+  roles.push("测试");
+  roles.push("开发");
+
+  return roles;
+};
+
+//获取用户部门
+WorkflowManager.getUserOrganization = function (spaceId, userId){
+
+  var organization = new Object();
+  organization.id = "56dafdsfsafhsdajfas7f8as";
+  organization.name = "测试部";
+  organization.fullname = "华炎软件/测试部";
+
+  return organization;
+}
+
+//return {name:'',organization:{fullname:'',name:''},roles:[]}
+WorkflowManager.getFormulaUserObject = function(userId){
+  userObject = {};
+
+  userObject['name'] = 'test';
+  userObject['organization'] = {fullname:'test organization fullname', name:'test organization name'};
+  userObject["roles"] = ['role1','role2','role3'];
+
+  return userObject;
+
+};

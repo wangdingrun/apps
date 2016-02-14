@@ -45,6 +45,7 @@ Package.onUse(function(api) {
 	// COMMON
 	api.addFiles('lib/collection_helpers.js');
 
+	api.addFiles('lib/tapi18n.coffee');
 	api.addFiles('lib/core.coffee');
 
 	api.addFiles('lib/models/forms.coffee');
