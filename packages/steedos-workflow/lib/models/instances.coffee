@@ -29,6 +29,6 @@ if Meteor.isServer
 		unless spaceId
 			return this.ready()
 
-		return db.instances.find({space: spaceId}, {fields: {name:1, created:1, form:1, flow: 1}})
+		return db.instances.find({space: spaceId}, {fields: {name:1, created:1, form:1, flow: 1, space:1}})
 
 

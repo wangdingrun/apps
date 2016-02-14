@@ -5,14 +5,15 @@ formId = 'instanceform';
 
 Template.instanceform.helpers
 	instanceId: ->
-		return Session.get("instanceId");
+		return 'instanceform';#"instance_" + Session.get("instanceId");
 	
 	steedos_form: ->
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if form_version
 			return form_version
 
-	innersubformContext: ->
+	innersubformContext: (obj)->
+		steedos_instance = WorkflowManager.getInstance();
 		obj["tableValues"] = steedos_instance.values[obj.code]
 		obj["formId"] = formId;
 		return obj;
@@ -22,7 +23,7 @@ Template.instanceform.helpers
 		return steedos_instance;
 
 	equals: (a,b) ->
-		return Instanceform_Helpers.equals(a,b);
+		return (a == b)
 
 	fields: ->
 		form_version = WorkflowManager.getInstanceFormVersion();

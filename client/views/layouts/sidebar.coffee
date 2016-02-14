@@ -9,3 +9,6 @@ Template.sidebar.helpers
 	
 	avatar: ->
 		return Meteor.user()?.avatarURL()
+
+	spaceId: ->
+		return Session.get("spaceId");

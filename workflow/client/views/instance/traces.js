@@ -24,7 +24,10 @@ Template.instance_traces.helpers({
 
   getStepName: function(stepId){
     var step =WorkflowManager.getInstanceStep(stepId);
-    return step.name;
+    if (step)
+      return step.name;
+
+    return null;
   },
 
   getApproveStatusIcon:function(approveJudge){

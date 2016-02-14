@@ -135,7 +135,7 @@ Template.autoform_table.events({
 
       console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
 
-      Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.sfields);
+      Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.fields);
 
     },
 

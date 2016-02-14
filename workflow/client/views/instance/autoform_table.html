@@ -4,11 +4,11 @@
         <div class="panel-heading">
             {{afFieldLabelText name=this.code}}
         </div>
-        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
+        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.fields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.fields}}">
             <thead>
                 <tr>
                     <td >序</td>
-                {{#each this.sfields}}
+                {{#each this.fields}}
                     
                     <td><label class="control-label">{{this.code}}</label></td>
                 {{/each}}  

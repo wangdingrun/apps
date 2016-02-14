@@ -13,7 +13,20 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "APPROVAL"}}</li>
             <li>
-                <a href="/workflow/pending"><i class="fa fa-user"></i><span>Pending</span></a>
+                <a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-user"></i><span>Inbox</span></a>
+            </li>
+            <li>
+                <a href="/workflow/outbox/{{spaceId}}"><i class="fa fa-user"></i><span>Outbox</span></a>
+            </li>
+            <li class="header">{{_ "MY APPLICANT"}}</li>
+            <li>
+                <a href="/workflow/draft/{{spaceId}}"><i class="fa fa-user"></i><span>Draft</span></a>
+            </li>
+            <li>
+                <a href="/workflow/inProgress/{{spaceId}}"><i class="fa fa-user"></i><span>In Progress</span></a>
+            </li>
+            <li>
+                <a href="/workflow/completed/{{spaceId}}"><i class="fa fa-user"></i><span>Completed</span></a>
             </li>
           </ul>
           <ul class="nav sidebar-menu">

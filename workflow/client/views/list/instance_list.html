@@ -1,7 +1,7 @@
-<template name="workflow_pending">
-<div class="box">
+<template name="instance_list">
+          <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
+              <h3 class="box-title">{{boxName}}</h3>
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -18,14 +18,14 @@
               <table class="table table-hover">
                 <tbody><tr>
                   <th>Name</th>
-                  <th>Created</th>
+                  <th>Applicant</th>
                 </tr>
                 {{#each instances}}
                 <tr>
                   <td><a href="/workflow/instance/{{_id}}">{{name}}</a></td>
-                  <td>{{created}}</td>
+                  <td></td>
                 </tr>
-               {{/each}}
+                {{/each}}
               </tbody></table>
             </div>
             <!-- /.box-body -->

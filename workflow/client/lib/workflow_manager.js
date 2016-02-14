@@ -8,37 +8,30 @@ WorkflowManager.getInstance = function (){
 WorkflowManager.getInstanceFormVersion = function (){
   instanceId = Session.get("instanceId");
   instance = db.instances.findOne(instanceId);
-  if (instance)
-  	form = db.forms.findOne(instance.form);
-  	if (form)
-  		return form.current;
+  if (instance) {
+    form = db.forms.findOne(instance.form);
+    if (form)
+      return form.current;
+  }
   return null;
 };
 
-WorkflowManager.getInstanceFlow = function (){
+WorkflowManager.getInstanceFlowVersion = function (){
   instanceId = Session.get("instanceId");
   instance = db.instances.findOne(instanceId);
-  if (instance)
-  	flow = db.flows.findOne(instance.flow);
-  	if (flow)
-  		return flow.current;
+  if (instance){
+    flow = db.flows.findOne(instance.flow);
+    if (flow)
+      return flow.current;
+  }
 };
 
-WorkflowManager.getUrlForServiceName = function (serverName){
-  var serverUrls = {"s3":"https://s3ws.steedos.com"};
-  return serverUrls[serverName];
-};
-
-WorkflowManager.getForm = function (formId){
-  return db.forms.findOne(formId);
-};
-
-WorkflowManager.getFlow = function (flowId){
-	return db.flows.findOne(flowId);
-};
 
 WorkflowManager.getInstanceStep = function(stepId){
-  flow = WorkflowManager.getInstanceFlow()
+  flow = WorkflowManager.getInstanceFlowVersion()
+
+  if (!flow)
+    return null;
 
   var g_step;
 
@@ -54,6 +47,18 @@ WorkflowManager.getInstanceStep = function(stepId){
   return g_step;
 };
 
+WorkflowManager.getUrlForServiceName = function (serverName){
+  var serverUrls = {"s3":"https://s3ws.steedos.com"};
+  return serverUrls[serverName];
+};
+
+WorkflowManager.getForm = function (formId){
+  return db.forms.findOne(formId);
+};
+
+WorkflowManager.getFlow = function (flowId){
+	return db.flows.findOne(flowId);
+};
 //获取space下的所有部门
 WorkflowManager.getSpaceOrganizations = function (spaceId){
 

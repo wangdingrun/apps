@@ -49,3 +49,4 @@ Template.dock.events
 		self = this
 		Meteor.call "setSpaceId", self._id, ->
 			Session.set("spaceId", self._id)
+			FlowRouter.go("/workflow/" + self._id + "/inbox")

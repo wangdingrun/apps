@@ -43,6 +43,7 @@ softwarerero:accounts-t9n
 
 
 tap:i18n
+kadira:flow-router
 flemay:less-autoprefixer
 raix:handlebar-helpers
 natestrauser:animate-css
@@ -60,9 +61,7 @@ gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
 
-kadira:flow-router
 
-aldeed:template-extension
 gandev:server-eval
 
 steedos:workflow
