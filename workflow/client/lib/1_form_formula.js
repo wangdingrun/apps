@@ -181,7 +181,7 @@ function init_formula_values(fields, autoFormDoc){
                     * __values需要转化为下面格式且和主表的值一样放到第一层
                     * {"a":[1,2,3],"b":[4,5,6]}
                     **/
-                    var tableFields = field.fields,
+                    var tableFields = field.sfields,
                         tableValues = autoFormDoc[field.code],
                         formulaTableValues = [],
                         __tableValues = {};

@@ -4,22 +4,25 @@
         <div class="panel-heading">
             {{afFieldLabelText name=this.code}}
         </div>
-        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.fields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.fields}}">
+        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
             <thead>
                 <tr>
                     <td >序</td>
-                {{#each this.fields}}
+                {{#each this.sfields}}
                     
                     <td><label class="control-label">{{this.code}}</label></td>
-                {{/each}}  
+                {{/each}}
+                {{#if equals this.permission 'editable'}}
                 <td style="width:70px;">
                     <span class="panel-controls">
                         <!-- Button trigger modal -->
                         <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
                     </span>
                 </td>
+                {{/if}}
                 </tr>
             </thead>
+            {{#if equals this.permission 'editable'}}
             <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                 {{#each this.tableValues}}
                 <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
@@ -36,6 +39,20 @@
                 </tr>
                 {{/each}}
             </tbody>
+            {{/if}}
+
+            {{#if unequals this.permission 'editable'}}
+            <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
+                {{#each this.tableValues}}
+                <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
+                    <td >{{@index}}</td>
+                    {{#each arrayify this}}
+                        <td>{{value}}</td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </tbody>
+            {{/if}}
         </table>
     </div>
     {{#if equals this.permission 'editable'}}

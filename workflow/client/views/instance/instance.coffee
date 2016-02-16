@@ -14,7 +14,7 @@ Template.instanceform.helpers
 
 	innersubformContext: (obj)->
 		steedos_instance = WorkflowManager.getInstance();
-		obj["tableValues"] = steedos_instance.values[obj.code]
+		obj["tableValues"] = if steedos_instance.values then steedos_instance.values[obj.code] else []
 		obj["formId"] = formId;
 		return obj;
 
@@ -37,7 +37,11 @@ Template.instanceform.events
 	'change .form-control': (event)->
 		console.log("instanceform form-control change");
 		code = event.target.name;
-		# Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, steedos_form.fields);
+		form_version = WorkflowManager.getInstanceFormVersion();
+		formula_fields = []
+		if form_version
+			formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+		Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
 	
 
 
@@ -46,11 +50,16 @@ Template.instanceform.events
 		console.log("instanceform form-control change");
 		code = event.target.name;
 
+		form_version = WorkflowManager.getInstanceFormVersion();
+		formula_fields = []
+		if form_version
+			formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+			
 		# autoform-inputs 中 markChanged 函数中，对template 的更新延迟了100毫秒，
 		# 此处为了能拿到删除列后最新的数据，此处等待markChanged执行完成后，再进行计算公式.
 		# 此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。
 
-		# setTimeout ->
-		#   console.log(JSON.stringify(AutoForm.getFormValues("instanceform").insertDoc));
-		#   Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, steedos_form.fields);
-		# ,101
+		setTimeout ->
+		   console.log(JSON.stringify(AutoForm.getFormValues("instanceform").insertDoc));
+		   Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+		,101

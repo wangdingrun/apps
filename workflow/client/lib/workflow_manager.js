@@ -6,14 +6,30 @@ WorkflowManager.getInstance = function (){
 };
 
 WorkflowManager.getInstanceFormVersion = function (){
+
+  var rev = null
+
   instanceId = Session.get("instanceId");
   instance = db.instances.findOne(instanceId);
   if (instance) {
     form = db.forms.findOne(instance.form);
-    if (form)
-      return form.current;
+    if (form){
+      rev = form.current;
+      field_permission = WorkflowManager.getInstanceFieldPermission();
+      rev.fields.forEach(
+        function(field){
+          field['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+
+          if (field.type == 'table'){
+            field['sfields'] = field['fields']
+            delete field['fields']
+          }
+        }
+      );
+    } 
   }
-  return null;
+  
+  return rev;
 };
 
 WorkflowManager.getInstanceFlowVersion = function (){
@@ -28,7 +44,7 @@ WorkflowManager.getInstanceFlowVersion = function (){
 
 
 WorkflowManager.getInstanceStep = function(stepId){
-  flow = WorkflowManager.getInstanceFlowVersion()
+  flow = WorkflowManager.getInstanceFlowVersion();
 
   if (!flow)
     return null;
@@ -45,6 +61,36 @@ WorkflowManager.getInstanceStep = function(stepId){
   );
 
   return g_step;
+};
+
+WorkflowManager.getInstanceFieldPermission = function (){
+  instance = WorkflowManager.getInstance();
+
+  if (!instance){
+    return {}
+  }
+
+  var current_stepId = "";
+
+  instance.traces.forEach(
+    function(trace){
+      if (trace.is_finished == false){
+        current_stepId = trace.step;
+        return;
+      }
+    }
+  );
+
+ step = WorkflowManager.getInstanceStep(current_stepId);
+ if (!step){
+    return {}
+ }
+ console.log("step.permissions is ")
+ console.log(step.permissions)
+ return step.permissions;
+  
+
+  
 };
 
 WorkflowManager.getUrlForServiceName = function (serverName){
@@ -69,7 +115,7 @@ WorkflowManager.getSpaceUsers = function (spaceId){
   
   var users = new Array();
 
-  for(var i = 0 ; i < 1500 ; i++){
+  for(var i = 0 ; i < 15 ; i++){
     
     var userObject = new Object();
     userObject.id = i + "56fdsfsd8f79s8df7s8fsdfusdi";

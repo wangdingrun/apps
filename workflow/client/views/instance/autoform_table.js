@@ -5,6 +5,10 @@ Template.autoform_table.helpers({
     return autoform_table_Helpers.equals(a,b);
   },
 
+  unequals: function(a,b) {
+    return autoform_table_Helpers.unequals(a,b);
+  },
+
   append: function(a,b) {
     return a + b ;
   },
@@ -42,7 +46,8 @@ Template.autoform_table.events({
       var rowObj = JSON.parse(steedosTable.rowobj);
 
       //获取新增行的index;
-      var row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
+      //var row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
+      var row_index = AutoForm.arrayTracker.info[formId][tableCode].count;
 
       for(var key in rowObj){
         autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key]);
@@ -135,7 +140,7 @@ Template.autoform_table.events({
 
       console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
 
-      Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.fields);
+      Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.sfields);
 
     },
 

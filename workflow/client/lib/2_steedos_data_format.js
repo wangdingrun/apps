@@ -48,65 +48,85 @@ var s_autoform = function (schema, field){
   //字段类型转换
   switch(type){
     case 'input' :
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'text';
+        break;
+    case 'section' : //div
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'text';
+        break;
+    case 'geolocation' : //地理位置
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'text';
+        break;
+    case 'number' :
+        schema.type = Number;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'number'; //控制有效位数
+        break;
+    case 'date' :
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'date';
+        break;
+    case 'dateTime' : 
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = 'time'; 
+        break;
+    case 'checkbox' :
+        schema.type = String;
+        autoform.disabled = (permission == 'readonly');
+        autoform.type = 'boolean-checkbox';
+        break;
+    case 'select' : 
+        if (is_multiselect){
+          schema.type = [String];
+          autoform.multiple = true;
+        }else{
           schema.type = String;
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = 'text';
-          break;
-      case 'number' :
-          schema.type = Number;
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = 'number'; //控制有效位数
-          break;
-      case 'date' :
-          schema.type = String;
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = 'date';
-          break;
-      case 'dateTime' : 
-          schema.type = String;
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = 'time'; 
-          break;
-      case 'checkbox' :
-          schema.type = String;
-          autoform.disabled = (permission == 'readonly');
-          autoform.type = 'boolean-checkbox';
-          break;
-      case 'select' : 
-          if (is_multiselect){
-            schema.type = [String];
-            autoform.multiple = true;
-          }else{
-            schema.type = String;
-          }
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = (permission == 'readonly') ? 'text' : 'select2';
-          break;
-      case 'radio' :
-          schema.type = String;
-          autoform.disabled = (permission == 'readonly');
-          autoform.type = 'select-radio-inline';
-          break;
-      case 'multiSelect' : 
-          schema.type = String;
-          autoform.disabled = (permission == 'readonly');
-          autoform.type = 'select-checkbox-inline';
-          break;
-      case 'user' : 
-          if (is_multiselect){
-            schema.type = [String];
-            autoform.multiple = true; 
-          }else{
-            schema.type = String; // 如果是单选，不能设置multiple 参数
-          }
-          autoform.type = "select2";
-          autoform.options = getSpaceUserSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
-          break;
-      default:
-          schema.type = String;
-          autoform.readonly = (permission == 'readonly');
-          autoform.type = type;
-          break; //地理位置
+        }
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = (permission == 'readonly') ? 'text' : 'select2';
+        break;
+    case 'radio' :
+        schema.type = String;
+        autoform.disabled = (permission == 'readonly');
+        autoform.type = 'select-radio-inline';
+        break;
+    case 'multiSelect' : 
+        schema.type = String;
+        autoform.disabled = (permission == 'readonly');
+        autoform.type = 'select-checkbox-inline';
+        break;
+    case 'user' : 
+        if (is_multiselect){
+          schema.type = [String];
+          autoform.multiple = true; 
+        }else{
+          schema.type = String; // 如果是单选，不能设置multiple 参数
+        }
+        autoform.type = "select2";
+        autoform.options = getSpaceUserSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
+        break;
+    case 'group' : 
+        if (is_multiselect){
+          schema.type = [String];
+          autoform.multiple = true; 
+        }else{
+          schema.type = String; // 如果是单选，不能设置multiple 参数
+        }
+        autoform.type = "select2";
+        autoform.options = getSpaceOrganizationSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
+        break;
+    default:
+        schema.type = String;
+        autoform.readonly = (permission == 'readonly');
+        autoform.type = type;
+        break; //地理位置
   }
   
   if (options != null && options.length > 0){
@@ -150,7 +170,6 @@ var s_schema = function (label, field){
 WorkflowManager_format.getAutoformSchema = function (steedosForm){
   var afFields = {};
   var stFields = steedosForm.fields;
-
   for(var i = 0; i < stFields.length; i ++){
 
     var stField = stFields[i];
@@ -173,9 +192,9 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
                                       };
 
       var sfieldcodes = new Array();
-      for(var si = 0 ; si < stField.fields.length; si++){
+      for(var si = 0 ; si < stField.sfields.length; si++){
        
-        var sstField = stField.fields[si];
+        var sstField = stField.sfields[si];
         
         sfieldcodes.push(sstField.code);
 

@@ -18,6 +18,10 @@ autoform_table_Helpers.equals = function (a, b) {
   return a === b;
 };
 
+autoform_table_Helpers.unequals = function (a, b) {
+  return a != b;
+};
+
 var get_table = function (tableCode){
     return $("[name='"+tableCode+"table']")[0];
 };
@@ -56,7 +60,7 @@ autoform_table_Helpers.getTableModalValue = function (fieldCode){
 }
 
 autoform_table_Helpers.updateTableModal = function (tableCode, values){
-
+    debugger
     var table_modal = get_table_modal(tableCode);
 
     for(var key in values){
@@ -103,7 +107,7 @@ autoform_table_Helpers.getValidrowIndex = function (validrows_str, row_index){
     var validrows = new Array();
     if (validrows_str !="")
         validrows = validrows_str.split(",");
-    return validrows.indexOf(row_index);
+    return validrows.indexOf(row_index) + 1;
 };
 
 autoform_table_Helpers.update_row = function (row_index, tableCode, rowobj){
