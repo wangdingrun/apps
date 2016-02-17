@@ -7,9 +7,15 @@ Template.instance_traces.helpers({
     return a === b;
   },
 
-  isNotNull: function(a){
+  empty: function(a){
     if (a)
-        return a.trim().length > 0;
+        return a.toString().trim().length < 1;
+    else
+        return true;
+  },
+  unempty: function(a){
+    if (a)
+        return a.toString().trim().length > 0;
     else
         return false;
   },

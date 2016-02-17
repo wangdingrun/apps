@@ -79,6 +79,10 @@ autoform_table_Helpers.showTableModal = function (tableCode, modalTitle){
 
 autoform_table_Helpers.initValidrows = function (arr){
     var validrows = new Array();
+
+    if (!arr || arr.length < 1)
+        arr = [-1] ;
+
     for(var i = 0 ; i < arr.length ; i++){
       validrows.push(i + "");
     }
@@ -107,7 +111,7 @@ autoform_table_Helpers.getValidrowIndex = function (validrows_str, row_index){
     var validrows = new Array();
     if (validrows_str !="")
         validrows = validrows_str.split(",");
-    return validrows.indexOf(row_index) + 1;
+    return validrows.indexOf(row_index);
 };
 
 autoform_table_Helpers.update_row = function (row_index, tableCode, rowobj){
