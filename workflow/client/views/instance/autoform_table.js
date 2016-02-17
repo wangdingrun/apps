@@ -21,7 +21,7 @@ Template.autoform_table.helpers({
 
     var rowObj = {};
     for(var i = 0 ; i < sfield.length ; i++){
-      rowObj[sfield[i].code] = '';
+      rowObj[sfield[i].code] = {value:'',type:sfield[i].type};
     }
     return JSON.stringify(rowObj);
   },
@@ -50,7 +50,7 @@ Template.autoform_table.events({
       var row_index = AutoForm.arrayTracker.info[formId][tableCode].count;
 
       for(var key in rowObj){
-        autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key]);
+        autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].value);
       }
       
       AutoForm.arrayTracker.addOneToField(formId, tableCode, AutoForm.getFormSchema(formId),0,5000);

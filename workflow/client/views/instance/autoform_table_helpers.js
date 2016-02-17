@@ -60,7 +60,6 @@ autoform_table_Helpers.getTableModalValue = function (fieldCode){
 }
 
 autoform_table_Helpers.updateTableModal = function (tableCode, values){
-    debugger
     var table_modal = get_table_modal(tableCode);
 
     for(var key in values){
@@ -122,9 +121,26 @@ var get_tds_html = function(row_index, tableCode, rowobj){
     var tds_html = "<td>" + row_index + "</td>";
 
     for(var key in rowobj){
-        tds_html = tds_html + "<td>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
-    }
 
+        switch(rowobj[key].type){
+            case 'user' :
+                tds_html = tds_html + "<td>" + WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                break;
+            case 'group':
+                tds_html = tds_html + "<td>" + WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                break;
+            case 'checkbox':
+                if ($("[name='"+(tableCode + ".$." + key)+"']").val())
+                    tds_html = tds_html + "<td>" + '是' + "</td>";
+                else
+                    tds_html = tds_html + "<td>" + '否' + "</td>";
+                break;
+            default:
+                tds_html = tds_html + "<td>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
+                break;
+        }
+    };
+    debugger;
     tds_html = tds_html + 
                     "<td>" + 
                         "<span class='panel-controls'>" + 

@@ -28,7 +28,7 @@ WorkflowManager.getInstanceFormVersion = function (){
       );
     } 
   }
-  
+
   return rev;
 };
 
@@ -133,6 +133,10 @@ WorkflowManager.getSpaceUsers = function (spaceId){
 
 WorkflowManager.getUser = function (userId){
 
+  if (!userId) {
+    return {name:''};
+  }
+
   if (typeof userId != "string"){
 
     return WorkflowManager.getUsers(userId);
@@ -176,6 +180,44 @@ WorkflowManager.getUserRoles = function (spaceId, userId){
   return roles;
 };
 
+WorkflowManager.getOrganization = function(orgId){
+
+  if (!orgId) {
+    return {name:''};
+  }
+
+  if (typeof orgId != "string"){
+
+    return WorkflowManager.getOrganizations(orgId);
+  
+  }
+
+  var spaceOrgs = WorkflowManager.getSpaceOrganizations("") , spaceOrg = {};
+
+  spaceOrgs.forEach(
+    function(org){
+        if (org.id == orgId){
+          spaceOrg = org;
+          return ;
+        }
+    }
+  );
+
+  return spaceOrg;
+};
+
+WorkflowManager.getOrganizations = function(orgIds){
+  var orgs = new Array();
+
+  if(orgIds){
+    orgIds.forEach(function(orgId){
+      orgs.push(WorkflowManager.getOrganization(orgId));
+    });
+  }
+
+  return orgs;
+};
+
 //获取用户部门
 WorkflowManager.getUserOrganization = function (spaceId, userId){
 
@@ -185,7 +227,7 @@ WorkflowManager.getUserOrganization = function (spaceId, userId){
   organization.fullname = "华炎软件/测试部";
 
   return organization;
-}
+};
 
 //return {name:'',organization:{fullname:'',name:''},roles:[]}
 WorkflowManager.getFormulaUserObject = function(userId){
