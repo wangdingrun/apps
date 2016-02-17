@@ -24,9 +24,22 @@
                             {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
                             </div>
                         {{else}}
-                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
-                            {{> afFormGroup name=this.code}}
-                            </div>
+                            {{#if equals this.type 'section'}}
+                                <div class="col-md-12">
+                                    <div class='panel panel-primary section'>
+                                        <div class="panel-heading">{{this.code}}</div>
+                                        <div class="panel-body">
+                                            {{#each this.fields}}
+                                                {{> afFormGroup name=this.code}}
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                            {{else}}
+                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+                                {{> afFormGroup name=this.code}}
+                                </div>
+                            {{/if}}
                         {{/if}}
                         
                     {{/each}}

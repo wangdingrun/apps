@@ -76,6 +76,10 @@
     color: black;
 }
 
+.section {
+    
+}
+
 textarea {
     resize: none;
 }
@@ -85,7 +89,6 @@ textarea {
         width:760px;
     }
 }
-
 
 [data-required] label::after {
     content:' *';

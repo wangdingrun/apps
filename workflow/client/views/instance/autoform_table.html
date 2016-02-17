@@ -39,9 +39,7 @@
                 </tr>
                 {{/each}}
             </tbody>
-            {{/if}}
-
-            {{#if unequals this.permission 'editable'}}
+            {{else}}
             <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                 {{#each this.tableValues}}
                 <tr class="person-row" data-toggle="modal" name="{{@index}}row" >

@@ -52,11 +52,11 @@ var s_autoform = function (schema, field){
         autoform.readonly = (permission == 'readonly');
         autoform.type = 'text';
         break;
-    case 'section' : //div
+    /*case 'section' : //div
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
         autoform.type = 'text';
-        break;
+        break;*/
     case 'geolocation' : //地理位置
         schema.type = String;
         autoform.readonly = (permission == 'readonly');

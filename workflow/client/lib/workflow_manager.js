@@ -6,6 +6,8 @@ WorkflowManager.getInstance = function (){
 };
 
 WorkflowManager.getInstanceFormVersion = function (){
+ 
+  var form_fields = [];
 
   var rev = null
 
@@ -24,8 +26,16 @@ WorkflowManager.getInstanceFormVersion = function (){
             field['sfields'] = field['fields']
             delete field['fields']
           }
+          if (field.type == 'section'){
+            form_fields.push(field);
+            form_fields = form_fields.concat(field.fields);
+          }else{
+            form_fields.push(field);
+          }
         }
       );
+
+      rev.fields = form_fields;
     } 
   }
 
