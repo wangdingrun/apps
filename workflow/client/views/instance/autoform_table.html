@@ -4,54 +4,60 @@
         <div class="panel-heading">
             {{afFieldLabelText name=this.code}}
         </div>
-        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
-            <thead>
-                <tr>
-                    <td >序</td>
-                {{#each this.sfields}}
-                    
-                    <td><label class="control-label">{{this.code}}</label></td>
-                {{/each}}
-                {{#if equals this.permission 'editable'}}
-                <td style="width:70px;">
-                    <span class="panel-controls">
-                        <!-- Button trigger modal -->
-                        <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
-                    </span>
-                </td>
-                {{/if}}
-                </tr>
-            </thead>
-            {{#if equals this.permission 'editable'}}
-            <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
-                {{#each this.tableValues}}
-                <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
-                    <td >{{@index}}</td>
-                    {{#each arrayify this}}
-                        <td>{{value}}</td>
+        <div class="panel-body" style="padding:0px;overflow-x:scroll;">
+            <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
+                <thead>
+                    <tr>
+                        <td >序</td>
+                    {{#each this.sfields}}
+                        
+                        <td nowrap="nowrap"><label class="control-label">{{this.code}}</label></td>
                     {{/each}}
-                    <td>
+                    {{#if equals this.permission 'editable'}}
+                    <td style="width:70px;">
                         <span class="panel-controls">
-                            <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
-                            <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
+                            <!-- Button trigger modal -->
+                            <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
                         </span>
                     </td>
-                </tr>
-                {{/each}}
-            </tbody>
-            {{else}}
-            <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
-                {{#each this.tableValues}}
-                <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
-                    <td >{{@index}}</td>
-                    {{#each arrayify this}}
-                        <td>{{value}}</td>
+                    {{/if}}
+                    </tr>
+                </thead>
+                {{#if equals this.permission 'editable'}}
+                <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
+                    {{#each this.tableValues}}
+                    <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
+                        <td >{{@index}}</td>
+                        {{#each arrayify this}}
+                            <td>
+                                {{{value}}}
+                            </td>
+                        {{/each}}
+                        <td>
+                            <span class="panel-controls">
+                                <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
+                                <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
+                            </span>
+                        </td>
+                    </tr>
                     {{/each}}
-                </tr>
-                {{/each}}
-            </tbody>
-            {{/if}}
-        </table>
+                </tbody>
+                {{else}}
+                <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
+                    {{#each this.tableValues}}
+                    <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
+                        <td >{{@index}}</td>
+                        {{#each arrayify this}}
+                            <td>
+                                {{{value}}}
+                            </td>
+                        {{/each}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+                {{/if}}
+            </table>
+        </div>
     </div>
     {{#if equals this.permission 'editable'}}
 
@@ -75,7 +81,7 @@
         </div>
     </div>
 
-    <div style = 'display:none'>
+    <div >
         {{> afArrayField name=this.code}}
     </div>
     {{/if}}

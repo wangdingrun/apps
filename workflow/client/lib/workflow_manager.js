@@ -28,7 +28,9 @@ WorkflowManager.getInstanceFormVersion = function (){
           }
           if (field.type == 'section'){
             form_fields.push(field);
-            form_fields = form_fields.concat(field.fields);
+            if (field.fields){
+              form_fields = form_fields.concat(field.fields);
+            }
           }else{
             form_fields.push(field);
           }

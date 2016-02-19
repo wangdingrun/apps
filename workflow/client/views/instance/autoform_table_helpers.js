@@ -1,18 +1,6 @@
 autoform_table_Helpers = {};
 Template.registerHelper("autoform_table_Helpers", autoform_table_Helpers);
 
-function arrayify(obj){
-    result = [];
-    for(var key in obj){
-    result.push({code:key, value:obj[key]})
-    }
-    return result;
-}
-
-
-Template.registerHelper("arrayify", function(obj){
-  return arrayify(obj);
-});
 
 autoform_table_Helpers.equals = function (a, b) {
   return a === b;
@@ -46,7 +34,12 @@ var get_table_modal = function (tableCode){
     return $("[name='"+tableCode+".modal']")[0];
 };
 
-autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode , value){
+autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode ,fieldType, value){
+
+    if(fieldType == 'checkbox'){
+        $("[name='" + fieldCode + "']")[0].checked = (value == 'true' || value) ? true: false;
+    }
+
     $("[name='" + fieldCode + "']").val(value);
 };
 
@@ -56,7 +49,14 @@ autoform_table_Helpers.getTableModal = function (tableCode){
 };
 
 autoform_table_Helpers.getTableModalValue = function (fieldCode){
-    return $("[name='" + fieldCode + "']").val();
+    var val = $("[name='" + fieldCode + "']").val()
+    var type = $("[name='" + fieldCode + "']").attr("type")
+    if(type == 'number'){
+        val = val.to_float();
+    }else if (type == 'checkbox'){
+        val = $("[name='" + fieldCode + "']")[0].checked;
+    }
+    return val;
 }
 
 autoform_table_Helpers.updateTableModal = function (tableCode, values){
@@ -79,12 +79,14 @@ autoform_table_Helpers.showTableModal = function (tableCode, modalTitle){
 autoform_table_Helpers.initValidrows = function (arr){
     var validrows = new Array();
 
-    if (!arr || arr.length < 1)
-        arr = [-1] ;
+    //if (!arr || arr.length < 1)
+    //    arr = [-1] ;
 
     for(var i = 0 ; i < arr.length ; i++){
       validrows.push(i + "");
     }
+
+    console.log("initValidrows return values is " + validrows.toString());
     return validrows.toString();
 };
 
@@ -130,7 +132,7 @@ var get_tds_html = function(row_index, tableCode, rowobj){
                 tds_html = tds_html + "<td>" + WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
                 break;
             case 'checkbox':
-                if ($("[name='"+(tableCode + ".$." + key)+"']").val())
+                if ($("[name='"+(tableCode + ".$." + key)+"']")[0].checked)
                     tds_html = tds_html + "<td>" + '是' + "</td>";
                 else
                     tds_html = tds_html + "<td>" + '否' + "</td>";
@@ -140,7 +142,6 @@ var get_tds_html = function(row_index, tableCode, rowobj){
                 break;
         }
     };
-    debugger;
     tds_html = tds_html + 
                     "<td>" + 
                         "<span class='panel-controls'>" + 
@@ -166,13 +167,19 @@ var get_tr_html = function(row_index, tableCode, rowobj){
 
 autoform_table_Helpers.update_autoFormArrayItem = function(row_index, tableCode, rowobj){
     for(var key in rowobj){
+        switch(rowobj[key].type){
+            case 'checkbox':
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].checked = $("[name='"+(tableCode + ".$." + key)+"']")[0].checked;
+                break;
+            default:
+                break;
+        }
         $("[name='"+(tableCode + "."+row_index+"." + key)+"']").val($("[name='"+(tableCode + ".$." + key)+"']").val());
     }
 };
 
 autoform_table_Helpers.add_row = function (row_index, tableCode, rowobj){
-
-    autoform_table_Helpers.update_autoFormArrayItem(row_index, rowobj);
+    autoform_table_Helpers.update_autoFormArrayItem(row_index, tableCode, rowobj);
 
     var rows_html = $("#"+tableCode+'tbody').html() + get_tr_html(row_index, tableCode, rowobj);
     

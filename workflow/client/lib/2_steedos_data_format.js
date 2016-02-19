@@ -78,7 +78,7 @@ var s_autoform = function (schema, field){
         autoform.type = 'time'; 
         break;
     case 'checkbox' :
-        schema.type = String;
+        schema.type = Boolean;
         autoform.disabled = (permission == 'readonly');
         autoform.type = 'boolean-checkbox';
         break;

@@ -54,7 +54,7 @@ Template.instanceform.events
 		formula_fields = []
 		if form_version
 			formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
-			
+
 		# autoform-inputs 中 markChanged 函数中，对template 的更新延迟了100毫秒，
 		# 此处为了能拿到删除列后最新的数据，此处等待markChanged执行完成后，再进行计算公式.
 		# 此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。

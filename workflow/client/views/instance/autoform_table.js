@@ -1,3 +1,4 @@
+var ROWOBJ = {};
 
 Template.autoform_table.helpers({
 
@@ -23,6 +24,7 @@ Template.autoform_table.helpers({
     for(var i = 0 ; i < sfield.length ; i++){
       rowObj[sfield[i].code] = {value:'',type:sfield[i].type};
     }
+    ROWOBJ = rowObj;
     return JSON.stringify(rowObj);
   },
 
@@ -30,6 +32,33 @@ Template.autoform_table.helpers({
     var formulas = Form_formula.getFormulaFieldVariable("Form_formula.field_values", sfield);
     console.log("autoform_table formulas is \n" + JSON.stringify(formulas));
     return JSON.stringify(formulas);
+  },
+
+  arrayify: function (obj){
+      var result = [];
+      var fValue;
+      for(var key in obj){
+        fValue = obj[key];
+        switch(ROWOBJ[key].type){
+          case 'user':
+              fValue = fValue ? fValue.name : '';
+            break;
+          case 'group':
+            fValue = fValue ? fValue.name : '';
+            break;
+          case 'email':
+            fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
+            break;
+          case 'url':
+            fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
+            break;
+          default:
+            fValue = obj[key];
+            break;
+        }
+        result.push({code:key, value:fValue});
+      }
+      return result;
   }
 
 });
@@ -46,11 +75,16 @@ Template.autoform_table.events({
       var rowObj = JSON.parse(steedosTable.rowobj);
 
       //获取新增行的index;
-      //var row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
-      var row_index = AutoForm.arrayTracker.info[formId][tableCode].count;
+      var row_index
+      if (AutoForm.arrayTracker.info[formId][tableCode].array){
+        row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
+      }else{
+        row_index = 0;
+      }
+      //var row_index = AutoForm.arrayTracker.info[formId][tableCode].count;
 
       for(var key in rowObj){
-        autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].value);
+        autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].type, rowObj[key].value);
       }
       
       AutoForm.arrayTracker.addOneToField(formId, tableCode, AutoForm.getFormSchema(formId),0,5000);
@@ -101,7 +135,7 @@ Template.autoform_table.events({
         console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
 
         for(var key in rowObj){
-          autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowValue[key]);
+          autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].type, rowValue[key]);
         }
 
         autoform_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
@@ -109,11 +143,13 @@ Template.autoform_table.events({
         autoform_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
-    'change .form-control': function(event, template){
+    'change .form-control,.checkbox input': function(event, template){
 
       console.log("autoform_table form-control change");
 
       var fieldCode = event.target.name;
+
+      console.log("change fieldCode is " + fieldCode)
 
       var tableCode = template.data.code;
 
@@ -131,8 +167,6 @@ Template.autoform_table.events({
 
       if (rowIndx < 0) 
         return ;
-
-      autoform_table_Helpers.update_autoFormArrayItem(rowIndx, tableCode, rowObj);
       
       for(var key in rowObj){
         rowValue[key] = autoform_table_Helpers.getTableModalValue(tableCode + ".$." + key);
@@ -142,6 +176,7 @@ Template.autoform_table.events({
 
       Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.sfields);
 
+      autoform_table_Helpers.update_autoFormArrayItem(rowIndx, tableCode, rowObj);
     },
 
     'click #steedos-table-ok-button': function(event, template){
@@ -157,7 +192,6 @@ Template.autoform_table.events({
       var rowobj = JSON.parse(steedosTable.rowobj);
 
       var call_method = steedosTableModal.method;
-
       if(call_method == "add"){
         autoform_table_Helpers.add_row(row_index, tableCode, rowobj);
       }

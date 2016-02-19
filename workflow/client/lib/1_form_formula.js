@@ -139,6 +139,7 @@ Form_formula.mixin = function(dest, src){
 Form_formula.field_values = null;
 
 Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fields){
+    console.log('Form_formula.run......');
     var run = false;
     if (!Form_formula.field_values || true){
         console.debug("Form_formula.init_formula_values: 重新计算field_values");
@@ -154,6 +155,8 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
         }
         if(run){
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
+            console.log("formula is " + formula_field.formula);
+            console.log("fileValue is " + fileValue);
             $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
         }
     }

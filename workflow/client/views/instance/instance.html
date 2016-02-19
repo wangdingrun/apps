@@ -26,13 +26,8 @@
                         {{else}}
                             {{#if equals this.type 'section'}}
                                 <div class="col-md-12">
-                                    <div class='panel panel-primary section'>
+                                    <div class='panel panel-info section'>
                                         <div class="panel-heading">{{this.code}}</div>
-                                        <div class="panel-body">
-                                            {{#each this.fields}}
-                                                {{> afFormGroup name=this.code}}
-                                            {{/each}}
-                                        </div>
                                     </div>
                                 </div>
                             {{else}}
