@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </nav>
-            {{#autoForm id=instanceId schema=fields type="method" doc=instance.values meteormethod='instance'}}
+            {{#autoForm id=instanceId schema=fields type="method" doc=doc_values meteormethod='instance'}}
                 <div class="row">
                     {{#each steedos_form.fields}}
                         {{#if equals this.type 'table'}}

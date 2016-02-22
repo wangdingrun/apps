@@ -1,5 +1,8 @@
 WorkflowManager_format = {};
 
+
+
+
 //获取user select2 标签的 options
 var getSpaceUserSelect2Options = function (spaceId){
 
@@ -93,12 +96,12 @@ var s_autoform = function (schema, field){
         autoform.type = (permission == 'readonly') ? 'text' : 'select2';
         break;
     case 'radio' :
-        schema.type = String;
+        schema.type = [String];
         autoform.disabled = (permission == 'readonly');
         autoform.type = 'select-radio-inline';
         break;
     case 'multiSelect' : 
-        schema.type = String;
+        schema.type = [String];
         autoform.disabled = (permission == 'readonly');
         autoform.type = 'select-checkbox-inline';
         break;
@@ -155,7 +158,7 @@ var s_schema = function (label, field){
   schema.optional = !is_required;
 
   if(fieldType == 'email'){
-    debugger;
+    
     schema.regEx = SimpleSchema.RegEx.Email;
   }else if (fieldType == 'url'){
 
@@ -214,3 +217,55 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
   console.log(JSON.stringify(afFields));
   return afFields;
 };
+
+
+var getSchemaValue = function(field,value){
+  var rev ;
+  switch(field.type){
+    case 'checkbox':
+      rev = (value && value == 'true') ? true : false;
+      break;
+    case 'multiSelect':
+      rev = value ? value.split(",") : [];
+      break;
+    case 'radio':
+      rev = value ? value.split(",") : [];
+    default:
+      rev = value;
+      break;
+  }
+  return rev;
+};
+
+
+WorkflowManager_format.getAutoformSchemaValues = function(){
+  instance = WorkflowManager.getInstance();
+  form = WorkflowManager.getInstanceFormVersion();
+  if(!form) return ;
+  fields = form.fields;
+
+  values = {};
+
+  fields.forEach(function(field){
+    if(field.type == 'table'){
+      t_values = new Array();
+      if (field.sfields){
+        instance.values[field.code].forEach(function(t_row_value){
+          field.sfields.forEach(function(sfield){
+            //if(sfield.type == 'checkbox'){
+            t_row_value[sfield.code] = getSchemaValue(sfield, t_row_value[sfield.code]);
+            //}
+          });
+          t_values.push(t_row_value);
+          
+        });
+      }
+      values[field.code] = t_values;
+    }else{
+      values[field.code] = getSchemaValue(field, instance.values[field.code]);
+    }
+  });
+  console.log("getAutoformSchemaValues ...")
+  console.log(values);
+  return values;
+}

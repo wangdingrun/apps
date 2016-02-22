@@ -133,7 +133,7 @@ Template.autoform_table.events({
         var rowValue = AutoForm.getFieldValue(tableCode, formId)[value_index];
 
         console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
-
+        debugger;
         for(var key in rowObj){
           autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].type, rowValue[key]);
         }
@@ -143,7 +143,7 @@ Template.autoform_table.events({
         autoform_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
-    'change .form-control,.checkbox input': function(event, template){
+    'change .form-control,.checkbox input,.af-radio-group input,.af-checkbox-group input': function(event, template){
 
       console.log("autoform_table form-control change");
 

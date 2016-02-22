@@ -13,8 +13,8 @@ Template.instanceform.helpers
 			return form_version
 
 	innersubformContext: (obj)->
-		steedos_instance = WorkflowManager.getInstance();
-		obj["tableValues"] = if steedos_instance.values then steedos_instance.values[obj.code] else []
+		doc_values = WorkflowManager_format.getAutoformSchemaValues();;
+		obj["tableValues"] = if doc_values then doc_values[obj.code] else []
 		obj["formId"] = formId;
 		return obj;
 
@@ -29,6 +29,8 @@ Template.instanceform.helpers
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if form_version
 			return new SimpleSchema(WorkflowManager_format.getAutoformSchema(form_version));
+	doc_values: ->
+		WorkflowManager_format.getAutoformSchemaValues();
 
 
 

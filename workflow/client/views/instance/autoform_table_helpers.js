@@ -38,9 +38,17 @@ autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode ,fieldTyp
 
     if(fieldType == 'checkbox'){
         $("[name='" + fieldCode + "']")[0].checked = (value == 'true' || value) ? true: false;
+    }else if(fieldType == 'radio'){
+        $("input[type=radio][name='" + fieldCode + "'][value='"+value+"']").attr("checked","checked");
+    }else if(fieldType =='multiSelect'){
+        if (value && value.length > 0){
+            value.forEach(function(v){
+                $("input[name='" + fieldCode + "'][value='"+v+"']").attr("checked","checked");
+            });
+        }
+    }else{
+        $("[name='" + fieldCode + "']").val(value);
     }
-
-    $("[name='" + fieldCode + "']").val(value);
 };
 
 autoform_table_Helpers.getTableModal = function (tableCode){
@@ -126,24 +134,44 @@ var get_tds_html = function(row_index, tableCode, rowobj){
 
         switch(rowobj[key].type){
             case 'user' :
-                tds_html = tds_html + "<td>" + WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                tds_html = tds_html + "<td nowrap='nowrap'>" + WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
                 break;
             case 'group':
-                tds_html = tds_html + "<td>" + WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                tds_html = tds_html + "<td nowrap='nowrap'>" + WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
                 break;
             case 'checkbox':
                 if ($("[name='"+(tableCode + ".$." + key)+"']")[0].checked)
-                    tds_html = tds_html + "<td>" + '是' + "</td>";
+                    tds_html = tds_html + "<td nowrap='nowrap'>" + '是' + "</td>";
                 else
-                    tds_html = tds_html + "<td>" + '否' + "</td>";
+                    tds_html = tds_html + "<td nowrap='nowrap'>" + '否' + "</td>";
+                break;
+            case 'radio':
+                tds_html = tds_html + "<td nowrap='nowrap'>" + $("[name='"+(tableCode + ".$." + key)+"']:checked").val() + "</td>";
+                break;
+            case 'multiSelect':
+                var multiSelect_values = new Array();
+                $("input[name='"+(tableCode + ".$." + key)+"']:checked").each(function(){
+                    multiSelect_values.push($(this).val());
+                });
+                tds_html = tds_html + "<td nowrap='nowrap'>" + multiSelect_values.toString() + "</td>";
+                break;
+            case 'email':
+                var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
+                fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
+                tds_html = tds_html + "<td nowrap='nowrap'>" + fValue + "</td>";
+                break;
+            case 'url':
+                var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
+                fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
+                tds_html = tds_html + "<td nowrap='nowrap'>" + fValue + "</td>";
                 break;
             default:
-                tds_html = tds_html + "<td>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
+                tds_html = tds_html + "<td nowrap='nowrap'>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
                 break;
         }
     };
     tds_html = tds_html + 
-                    "<td>" + 
+                    "<td nowrap='nowrap'>" + 
                         "<span class='panel-controls'>" + 
                             "<span class='glyphicon glyphicon-remove remove-steedos-table-row' data-rowindex='" + row_index + "' ></span>" +
                             "&nbsp;" + 
@@ -171,10 +199,22 @@ autoform_table_Helpers.update_autoFormArrayItem = function(row_index, tableCode,
             case 'checkbox':
                 $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].checked = $("[name='"+(tableCode + ".$." + key)+"']")[0].checked;
                 break;
+            case 'multiSelect':
+                $("input[name='"+(tableCode + "."+row_index+"." + key)+"']").prop("checked",false);
+                $("input[name='"+(tableCode + ".$." + key)+"']:checked").each(function(){
+                    
+                    $("input[name='"+(tableCode + "."+row_index+"." + key)+"'][value='"+$(this).val()+"']").prop("checked",true);
+                });
+                break;
+            case 'radio':
+                $("input[name='"+(tableCode + ".$." + key)+"']:checked").each(function(){
+                    $("input[name='"+(tableCode + "."+row_index+"." + key)+"'][value='"+$(this).val()+"']").attr("checked","checked");
+                });
+                break;
             default:
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']").val($("[name='"+(tableCode + ".$." + key)+"']").val());
                 break;
         }
-        $("[name='"+(tableCode + "."+row_index+"." + key)+"']").val($("[name='"+(tableCode + ".$." + key)+"']").val());
     }
 };
 

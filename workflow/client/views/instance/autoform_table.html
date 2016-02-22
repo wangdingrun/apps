@@ -14,7 +14,7 @@
                         <td nowrap="nowrap"><label class="control-label">{{this.code}}</label></td>
                     {{/each}}
                     {{#if equals this.permission 'editable'}}
-                    <td style="width:70px;">
+                    <td style="width:70px;" nowrap="nowrap">
                         <span class="panel-controls">
                             <!-- Button trigger modal -->
                             <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
@@ -29,11 +29,11 @@
                     <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
                         <td >{{@index}}</td>
                         {{#each arrayify this}}
-                            <td>
+                            <td nowrap="nowrap">
                                 {{{value}}}
                             </td>
                         {{/each}}
-                        <td>
+                        <td nowrap="nowrap">
                             <span class="panel-controls">
                                 <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
                                 <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
@@ -48,7 +48,7 @@
                     <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
                         <td >{{@index}}</td>
                         {{#each arrayify this}}
-                            <td>
+                            <td nowrap="nowrap">
                                 {{{value}}}
                             </td>
                         {{/each}}
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div >
+    <div style="display:none">
         {{> afArrayField name=this.code}}
     </div>
     {{/if}}
