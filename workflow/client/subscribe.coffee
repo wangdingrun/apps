@@ -2,7 +2,8 @@ Meteor.startup ->
 	Meteor.subscribe "my_spaces"
 
 	Tracker.autorun ->
-		Meteor.subscribe "instances_pending", Session.get("spaceId")
+		#Meteor.subscribe "instances_inbox", Session.get("spaceId")
+		Meteor.subscribe "instances_list", Session.get("spaceId"), Session.get("box")
 		
 		Meteor.subscribe "instance_data", Session.get("instanceId"),
 			onReady: ->
