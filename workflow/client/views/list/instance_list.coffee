@@ -4,4 +4,4 @@ Template.instance_list.helpers
 		return db.instances.find();
 
 	boxName: ->
-		return FlowRouter.getParam("box");
+		return Session.get("box");
