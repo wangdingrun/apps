@@ -67,7 +67,7 @@ WorkflowManager.getInstanceStep = function(stepId){
     function(step){
       if (step._id == stepId){
         g_step = step;
-        return ;
+        return;
       }
     }
   );

@@ -241,7 +241,7 @@ var getSchemaValue = function(field,value){
 WorkflowManager_format.getAutoformSchemaValues = function(){
   instance = WorkflowManager.getInstance();
   form = WorkflowManager.getInstanceFormVersion();
-  if(!form) return ;
+  if(!form || !instance.values) return ;
   fields = form.fields;
 
   values = {};

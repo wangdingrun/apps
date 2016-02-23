@@ -1,12 +1,48 @@
 <template name="instanceform">
     <div class="instanceContent">
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                       <button type="submit" id='submit' class="btn btn-primary">提交</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <span class="help-block"></span>
+                            <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
+                            <label class="radio-inline">
+                                <input type='radio' name='judge' value="approved" class='suggestion'/>核准
+                            </label>
+                            <label class="radio-inline">
+                                <input type='radio' name='judge' value="rejected" class='suggestion'/>驳回
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </nav>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <textarea name="" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">下一步骤&nbsp;:</label>
+                            <select class="form-control" name="nextSteps" id="nextSteps">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">处理人&nbsp;:</label>
+                            <select class="form-control" name="nextStepUsers" id="nextStepUsers">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
         <div class="container">
             <nav class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container">

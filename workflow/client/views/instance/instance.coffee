@@ -32,10 +32,25 @@ Template.instanceform.helpers
 	doc_values: ->
 		WorkflowManager_format.getAutoformSchemaValues();
 
+	currentStep: ->
+		return ApproveManager.getCurrentNextStep();
+
 
 
 Template.instanceform.events
 	
+	'change .suggestion': (event) ->
+		instance = WorkflowManager.getInstance();
+		currentStep = ApproveManager.getCurrentNextStep();
+		nextSteps = ApproveManager.getNextSteps(instance, currentStep, event.target.value);
+		ApproveManager.updateNextStepOptions(nextSteps, event.target.value);
+
+	'change #nextSteps': (event) ->
+		instance = WorkflowManager.getInstance();
+		nextStepId = $("#nextSteps option:selected").val();
+		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+		ApproveManager.updateNextStepUsersOptions(nextStepUsers);
+
 	'change .form-control': (event)->
 		console.log("instanceform form-control change");
 		code = event.target.name;

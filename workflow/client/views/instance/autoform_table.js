@@ -52,6 +52,9 @@ Template.autoform_table.helpers({
           case 'url':
             fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
             break;
+          case 'password':
+            fValue = "******";
+            break;
           default:
             fValue = obj[key];
             break;

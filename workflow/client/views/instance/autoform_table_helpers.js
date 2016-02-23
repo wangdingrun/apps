@@ -165,6 +165,9 @@ var get_tds_html = function(row_index, tableCode, rowobj){
                 fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
                 tds_html = tds_html + "<td nowrap='nowrap'>" + fValue + "</td>";
                 break;
+            case 'password':
+                tds_html = tds_html + "<td nowrap='nowrap'>******</td>";
+                break;
             default:
                 tds_html = tds_html + "<td nowrap='nowrap'>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
                 break;
