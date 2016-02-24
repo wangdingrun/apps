@@ -2,7 +2,11 @@ Meteor.startup ->
 	Meteor.subscribe "my_spaces"
 
 	Tracker.autorun ->
-		#Meteor.subscribe "instances_inbox", Session.get("spaceId")
+		Meteor.subscribe "space_users", Session.get("spaceId")
+		Meteor.subscribe "organizations", Session.get("spaceId")
+		Meteor.subscribe "flow_roles", Session.get("spaceId")
+		Meteor.subscribe "flow_positions", Session.get("spaceId")
+
 		Meteor.subscribe "instances_list", Session.get("spaceId"), Session.get("box")
 		
 		Meteor.subscribe "instance_data", Session.get("instanceId"),
@@ -19,3 +23,4 @@ Meteor.startup ->
 
 		Meteor.subscribe "form_data", Session.get("formId")
 		Meteor.subscribe "flow_data", Session.get("flowId")
+
