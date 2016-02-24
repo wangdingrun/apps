@@ -300,6 +300,27 @@ Array.prototype.uniq = function(){
     return a;
 };
 
+
+Array.prototype.filterProperty = function(h, l){
+    var g = [];
+    this.forEach(function(t){
+        var m = t? t[h]:null;
+        var d = false;
+
+        if(typeof m == "string"){
+            d = (l === undefined)?!!m:m==l;
+        }
+
+        if(m instanceof Array){
+            d = m.includes(l);
+        }
+        if(d){
+            g.push(t);
+        }
+    });
+    return g;
+};
+
 //子表的sum方法
 function sum(sub_field_code_values){
     var ret_val=0;
@@ -314,23 +335,23 @@ function sum(sub_field_code_values){
         ret_val += sub_field_code_values[i].toString().to_float();
     }
     return ret_val;
-}
+};
 
 //子表的average方法
 function average(sub_field_code_values){
     if(!sub_field_code_values || sub_field_code_values.length == 0) return "";
     return sum(sub_field_code_values)/count(sub_field_code_values);
-}
+};
 
 //计算数量
 function  count(sub_field_code_values){
     if(!sub_field_code_values || sub_field_code_values.length == 0) return "";
     return sub_field_code_values.length;
-}
+};
 
 function sortNumber(a,b){
     return  a - b;
-}
+};
 
 //子表的max方法
 function max(sub_field_code_values){
@@ -346,7 +367,7 @@ function max(sub_field_code_values){
     if(sub_field_code_values.length > 0){
         return sub_field_code_values.sort(sortNumber)[count(sub_field_code_values) - 1];
     }
-}
+};
 
 //子表的min方法
 function min(sub_field_code_values){
@@ -362,4 +383,4 @@ function min(sub_field_code_values){
     if(sub_field_code_values.length > 0){
         return sub_field_code_values.sort(sortNumber)[0];
     }
-}
+};

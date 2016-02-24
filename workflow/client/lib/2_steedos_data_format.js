@@ -16,9 +16,9 @@ var getSpaceUserSelect2Options = function (spaceId){
   spaceUsers.forEach(
     function(user){
         options.push({
-            optgroup : user.organization.fullname,
+            optgroup : user.organization.name,
             options: [
-                {label : user.name + "(" + user.steedos_id + ")", value : user.id}
+                {label : user.name, value : user.id}
             ]
         });
     }
@@ -29,8 +29,20 @@ var getSpaceUserSelect2Options = function (spaceId){
 };
 
 //获取group select2 标签的 options
-var getSpaceOrganizationSelect2Options = function(){
+var getSpaceOrganizationSelect2Options = function(spaceId){
+  var spaceOrgs = WorkflowManager.getSpaceOrganizations(spaceId);
+  
+  var options = new Array();
 
+  spaceOrgs.forEach(
+    function(spaceOrg){
+        options.push(
+            {label : spaceOrg.name, value : spaceOrg.id}
+        );
+    }
+  );
+
+  return options ;
 };
 
 var s_autoform = function (schema, field){
