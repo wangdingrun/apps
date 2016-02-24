@@ -10,4 +10,4 @@ Meteor.publish 'organizations', (spaceId)->
 
 	console.log '[publish] organizations for space ' + spaceId
 
-	return db.organizations.find({space: spaceId}, {fields: {name:1, children: 1, parent: 1}});
+	return db.organizations.find({space: spaceId}, {fields: {name:1, fullname:1, children: 1, parent: 1}});
