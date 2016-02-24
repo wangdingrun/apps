@@ -66,6 +66,9 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 
     var nextStep = WorkflowManager.getInstanceStep(nextStepId);
 
+    if (!nextStep)
+        return ;
+
     switch(nextStep.step_type){
         case 'condition':
             break;
@@ -92,19 +95,30 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 ApproveManager.updateNextStepOptions = function(steps, judge){
     
     $("#nextSteps").empty();
+    
+    $("#nextStepUsers").empty();
 
-    if(steps.length > 0 && judge == 'approved')
-        $("#nextSteps").append("<option value='-1'> 请选择 </option>");
-
+    if(!steps)
+        return;
+    
     steps.forEach(function(step){
         $("#nextSteps").append("<option value='" + step._id + "'> " + step.name + " </option>");
     });
 
+    if(steps.length > 0 && judge == 'approved')
+        $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
+
+    if(steps.length > 0)
+        $("#nextSteps").get(0).selectedIndex = 0;
 
 };
 
 ApproveManager.updateNextStepUsersOptions = function(users){
+    
     $("#nextStepUsers").empty();
+    
+    if(!users)
+        return;
 
     users.forEach(function(user){
         $("#nextStepUsers").append("<option value='" + user._id + "'> " + user.name + " </option>");
