@@ -88,6 +88,11 @@ textarea.suggestion-control{
     margin-bottom: 15px;
 }
 
+.glyphicon{
+    padding-left: 15px;
+    font-size: 18px;
+}
+
 .suggestion-control {
   display: block;
   width: 100%;
