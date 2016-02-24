@@ -39,13 +39,17 @@ Template.instanceform.helpers
 
 Template.instanceform.events
 	
-	'change .suggestion': (event) ->
+	'change .suggestion,.form-control': (event) ->
 		instance = WorkflowManager.getInstance();
 		currentStep = ApproveManager.getCurrentNextStep();
-		nextSteps = ApproveManager.getNextSteps(instance, currentStep, event.target.value);
+		form_version = WorkflowManager.getInstanceFormVersion();
+		if !form_version
+			return ;
+		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+		nextSteps = ApproveManager.getNextSteps(instance, currentStep, event.target.value, autoFormDoc, form_version.fields);
 		ApproveManager.updateNextStepOptions(nextSteps, event.target.value);
 
-		if event.target.value == "rejected"
+		if nextSteps.length ==1 || event.target.value == "rejected"
 			nextStepId = $("#nextSteps option:selected").val();
 			nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 			ApproveManager.updateNextStepUsersOptions(nextStepUsers);

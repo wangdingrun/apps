@@ -11,15 +11,16 @@ ApproveManager.getCurrentNextStep = function(){
     return WorkflowManager.getInstanceStep(currentStepId);
 }
 
-ApproveManager.getNextSteps = function(instance, currentStep, judge){
+ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields){
     var nextSteps = new Array();
     var lines = currentStep.lines;
 
     switch(currentStep.step_type){
         case 'condition': //条件
+            nextSteps = Form_formula.getNextStepsFromCondition(currentStep, autoFormDoc, fields);
             break;
         case 'end': //结束
-            break;
+            return next_steps;
         case 'sign': //审批
             if(judge == 'approved'){ //核准
                 lines.forEach(function(line){
@@ -50,15 +51,50 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge){
             }
             break;
         default: //start：开始、submit：填写、counterSign：会签
-
+            lines.forEach(function(line){
+                if(line.state == "submitted"){
+                    var submitted_step = WorkflowManager.getInstanceStep(line.to_step);
+                    if(submitted_step)
+                        nextSteps.push(submitted_step);
+                }
+            });
             break;
     }
 
+    //去除重复
+    nextSteps = nextSteps.uniq();
+
+    //按照步骤名称排序(升序)
     nextSteps.sort(function(p1,p2){
         return p1.name.localeCompare(p2.name);
     });
 
-    return nextSteps;
+    var condition_next_steps = new Array();
+    nextSteps.forEach(function(nextStep){
+        if(nextStep.step_type == "condition"){
+            condition_next_steps = condition_next_steps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields));
+        }
+    })
+
+    nextSteps = nextSteps.concat(condition_next_steps);
+
+    var rev_nextSteps = new Array();
+
+    nextSteps.forEach(function(nextStep){
+        if(nextStep.step_type != "condition")
+            rev_nextSteps.push(nextStep);
+    });
+
+
+    //去除重复
+    rev_nextSteps = rev_nextSteps.uniq();
+
+    // 会签节点，如果下一步有多个 则清空下一步
+    if (currentStep.step_type == "counterSign" && rev_nextSteps.length > 1){
+        rev_nextSteps = [];
+    }
+
+    return rev_nextSteps;
 };
 
 ApproveManager.getNextStepUsers = function(instance, nextStepId){
@@ -105,7 +141,7 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
         $("#nextSteps").append("<option value='" + step._id + "'> " + step.name + " </option>");
     });
 
-    if(steps.length > 0 && judge == 'approved')
+    if(steps.length > 1 && judge == 'approved')
         $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
 
     if(steps.length > 0)

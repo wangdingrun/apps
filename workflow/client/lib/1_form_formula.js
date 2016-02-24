@@ -162,6 +162,35 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
     }
 };
 
+Form_formula.getNextStepsFromCondition = function(step, autoFormDoc, fields){
+    //定义要返回的步骤数组 
+    var next_steps = new Array();
+
+    lines = step.lines;
+
+    Form_formula.field_values = init_formula_values(fields,autoFormDoc);
+    //CoreForm.mainFormController.getPath("mainFormView.__values");
+
+    lines.forEach(function(line){
+        if(line.state == "submitted"){
+            var conditionStr = line.condition.toString();
+            conditionStr = conditionStr.replace(/\=/g,"==").replace(/\>==/g,">=").replace(/\<==/g,"<=").replace(/\======/g,"===").replace(/\====/g,"==");
+            conditionStr = Form_formula.prependPrefixForFormula("Form_formula.field_values",conditionStr);
+
+            try{
+                if(eval(conditionStr.replace(/[\r\n]+/g, '\\n'))){
+                    next_steps.push(WorkflowManager.getInstanceStep(line.to_step));
+                }
+            }catch(err){
+                console.error("getNextStepsFromCondition-exception: " + err.message);
+            }
+
+        }
+    });
+    return next_steps;
+    
+};
+
 /**
     * 获得公式需要用到的初始值
     * 输入：fields, values, applicant
@@ -262,10 +291,19 @@ Array.prototype.contains = function(ele)
     return b;
 };
 
+Array.prototype.uniq = function(){
+    var a = [];
+    this.forEach(function(b){ 
+        if(a.indexOf(b) < 0)
+            {a[a.length] = b}
+    });
+    return a;
+};
+
 //子表的sum方法
 function sum(sub_field_code_values){
     var ret_val=0;
-    if(!sub_field_code_values || sub_field_code_values.length == 0) return "";
+    if(!sub_field_code_values || sub_field_code_values.length == 0) return ret_val;
     for(var i=0;i < sub_field_code_values.length;i++){
         if(sub_field_code_values[i]==undefined||sub_field_code_values[i]==""){
             sub_field_code_values[i]=0;
