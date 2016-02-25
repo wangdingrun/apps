@@ -2,7 +2,11 @@ UUflow_api = {};
 
 // 新建instance（申请单）
 UUflow_api.post_draft = function() {
-  var url = "https://uuflowws.steedos.com/uf/drafts";
+  var uobj = {};
+  uobj.methodOverride = "POST";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/drafts?" + $.param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -19,11 +23,6 @@ UUflow_api.post_draft = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
@@ -38,7 +37,9 @@ UUflow_api.post_draft = function() {
 UUflow_api.put_draft = function() {
   var uobj = {};
   uobj.methodOverride = "PUT";
-  var url = "https://uuflowws.steedos.com/uf/drafts" + $.param(uobj);
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/drafts?" + $.param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -55,11 +56,6 @@ UUflow_api.put_draft = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
@@ -74,7 +70,9 @@ UUflow_api.put_draft = function() {
 UUflow_api.delete_draft = function() {
   var uobj = {};
   uobj.methodOverride = "DELETE";
-  var url = "https://uuflowws.steedos.com/uf/drafts" + $.param(uobj);
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/drafts?" + $.param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -91,11 +89,6 @@ UUflow_api.delete_draft = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
@@ -108,7 +101,11 @@ UUflow_api.delete_draft = function() {
 
 // instance（申请单）的第一次提交
 UUflow_api.post_submit = function() {
-  var url = "https://uuflowws.steedos.com/uf/submit";
+  var uobj = {};
+  uobj.methodOverride = "POST";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/submit?" + $param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -125,11 +122,6 @@ UUflow_api.post_submit = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
@@ -144,7 +136,9 @@ UUflow_api.post_submit = function() {
 UUflow_api.put_approvals = function() {
   var uobj = {};
   uobj.methodOverride = "PUT";
-  var url = "https://uuflowws.steedos.com/uf/approvals" + $.param(uobj);
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/approvals?" + $.param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -161,11 +155,6 @@ UUflow_api.put_approvals = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
@@ -178,7 +167,11 @@ UUflow_api.put_approvals = function() {
 
 // 待审核提交
 UUflow_api.post_engine = function() {
-  var url = "https://uuflowws.steedos.com/uf/engine";
+  var uobj = {};
+  uobj.methodOverride = "POST";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = "https://uuflowws.steedos.com/uf/engine?" + $.param(uobj);
   var data = { "Instances": 
     [{
       "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
@@ -195,11 +188,6 @@ UUflow_api.post_engine = function() {
     dataType: "json",
     processData: false,
     contentType: "text/plain",
-
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-User-Id", localStorage.getItem("Meteor.userId"));
-      xhr.setRequestHeader("X-Auth-Token", localStorage.getItem("Meteor.loginToken"));
-    },
 
     success: function(responseText, status) {
       // alert("s");
