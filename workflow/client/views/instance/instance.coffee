@@ -47,6 +47,10 @@ Template.instanceform.events
 			return ;
 		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
 		nextSteps = ApproveManager.getNextSteps(instance, currentStep, event.target.value, autoFormDoc, form_version.fields);
+
+		if !nextSteps
+			return ;
+
 		ApproveManager.updateNextStepOptions(nextSteps, event.target.value);
 
 		if nextSteps.length ==1 || event.target.value == "rejected"

@@ -112,16 +112,99 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
     if (!nextStep)
         return ;
 
+    var applicant = WorkflowManager.getUser(instance.applicant);
+
     switch(nextStep.step_type){
         case 'condition':
             break;
         case 'start': //下一步步骤类型为开始
-            nextStepUsers.push(WorkflowManager.getUser(instance.applicant));
+            nextStepUsers.push(applicant);
             break;
         default:
             switch(nextStep.deal_type){
                 case 'pickupAtRuntime': //审批时指定人员
                     nextStepUsers = WorkflowManager.getSpaceUsers(instance.space);
+                    break;
+                case 'specifyUser': //指定人员
+                    var specifyUserIds = nextStep.approver_users;
+                    nextStepUsers = nextStepUsers.concat(WorkflowManager.getUsers(specifyUserIds));
+                    break;
+                case 'applicantRole': //指定审批岗位
+                    var approveRoles = nextStep.approver_roles;
+                    nextStepUsers = WorkflowManager.getRoleUsersByOrgAndRoles(instance.space, applicant.organization.id, approveRoles);
+                    if(nextStepUsers.length < 1){
+                        //todo 记录未找到角色人员的原因，用于前台显示
+                        console.error("步骤: " + nextStep.name + "找指定岗位处理人失败。参数：orgId is " + applicant.organization.id + ";roleIds is " + approveRoles);
+                    }
+                    break;
+                case 'applicantSuperior': //申请人上级
+                    nextStepUsers = WorkflowManager.getUsers(applicant.managers);
+                    break;
+                case 'applicant': //申请人
+                    nextStepUsers.push(applicant);
+                    break;
+                case 'userField': //指定人员字段
+                    var userFieldId =  nextStep.approver_user_field;
+                    var instanceFields = WorkflowManager.getInstanceFields();
+                    var userField = instanceFields.filterProperty("_id", userFieldId);
+                    if(userField.length > 0){
+                        var userFieldValue = InstanceManager.getFormFieldValue(userField[0].code);
+                        if(userFieldValue instanceof Array){
+                            nextStepUsers = WorkflowManager.getUsers(userFieldValue);
+                        }else{
+                            nextStepUsers.push(WorkflowManager.getUser(userFieldValue));
+                        }
+                    }
+                    if(nextStepUsers.length < 1){
+                       //todo 记录记录未找到的原因，用于前台显示 
+                       console.error("步骤: " + nextStep.name + "fieldId is " + fieldId);
+                    }
+                    break;
+                case 'orgField': //指定部门字段
+                    var orgFieldId = nextStep.approver_org_field;
+                    var instanceFields = WorkflowManager.getInstanceFields();
+                    var orgField = instanceFields.filterProperty("_id", orgFieldId);
+
+                    if(orgField.length > 0){
+                        var orgFieldValue = InstanceManager.getFormFieldValue(orgField[0].code);
+
+                        var orgs;
+
+                        var orgChildrens = new Array();
+
+                        //获得orgFieldValue的所有子部门
+                        if(orgFieldValue instanceof Array){
+                            orgs = WorkflowManager.getOrganizations(orgFieldValue);
+                            orgChildrens = WorkflowManager.getOrganizationsChildrens(instance.space, orgFieldValue);
+                        }else{
+                            orgs = [WorkflowManager.getOrganization(orgFieldValue)];
+                            orgChildrens = WorkflowManager.getOrganizationChildrens(instance.space, orgFieldValue);
+                        }
+
+                        nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgChildrens);
+                        
+                        orgFieldUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgs);
+
+                        nextStepUsers = nextStepUsers.concat(orgFieldUsers);
+                    }
+
+                    if(nextStepUsers < 1){
+                        //todo 记录记录未找到的原因，用于前台显示 
+                    }
+                    break;
+                case 'specifyOrg': //指定部门
+                    var specifyOrgIds = nextStep.approver_orgs;
+
+                    var specifyOrgs = WorkflowManager.getOrganizations(specifyOrgIds);
+
+                    nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, specifyOrgs);
+                    if(nextStepUsers < 1){
+                        //todo 记录记录未找到的原因，用于前台显示 
+                    }
+                    break;
+                case 'userFieldRole': //指定人员字段相关审批岗位
+                    break;
+                case 'orgFieldRole': //指定部门字段相关审批岗位
                     break;
                 default:
                     break;

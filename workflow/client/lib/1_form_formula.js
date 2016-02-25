@@ -306,13 +306,10 @@ Array.prototype.filterProperty = function(h, l){
     this.forEach(function(t){
         var m = t? t[h]:null;
         var d = false;
-
-        if(typeof m == "string"){
-            d = (l === undefined)?!!m:m==l;
-        }
-
         if(m instanceof Array){
             d = m.includes(l);
+        }else{
+            d = (l === undefined)?!!m:m==l;
         }
         if(d){
             g.push(t);

@@ -44,6 +44,12 @@ WorkflowManager.getInstanceFormVersion = function (){
   return rev;
 };
 
+WorkflowManager.getInstanceFields = function(){
+  var instanceForm = WorkflowManager.getInstanceFormVersion();
+
+  return instanceForm.fields;
+}
+
 WorkflowManager.getInstanceFlowVersion = function (){
   instanceId = Session.get("instanceId");
   instance = db.instances.findOne(instanceId);
@@ -126,6 +132,37 @@ WorkflowManager.getSpaceOrganizations = function (spaceId){
 
   return orgs;
 };
+
+
+
+WorkflowManager.getOrganizationChildrens = function(spaceId, orgId){
+  var spaceOrganizations = WorkflowManager.getSpaceOrganizations(spaceId);
+  var chidrenOrgs= spaceOrganizations.filterProperty("parents", orgId);
+
+  return chidrenOrgs;
+};
+
+WorkflowManager.getOrganizationsChildrens = function(spaceId, orgIds){
+  var chidrenOrgs = new Array();
+  orgIds.forEach(function(orgId){
+    chidrenOrgs = chidrenOrgs.concat(WorkflowManager.getOrganizationChildrens(spaceId, orgId));
+  });
+
+  return chidrenOrgs;
+};
+
+WorkflowManager.getOrganizationsUsers = function(spaceId, orgs){
+
+  var spaceUsers = WorkflowManager.getSpaceUsers(spaceId);
+
+  var orgUsers = new Array();
+
+  orgs.forEach(function(org){
+    orgUsers = orgUsers.concat(WorkflowManager.getUsers(org.users));
+  });
+
+  return orgUsers;
+}
 
 //获取space下的所有用户
 WorkflowManager.getSpaceUsers = function (spaceId){
@@ -210,11 +247,19 @@ WorkflowManager.getSpacePositions = function(spaceId){
 
 //获取用户岗位
 WorkflowManager.getUserRoles = function(spaceId, orgId, userId){
+
+  var userRoles = new Array();
+
   var spacePositions = WorkflowManager.getSpacePositions(spaceId);
 
   //orgRoles = spacePositions.filterProperty("org", orgId);
+  var userPositions = spacePositions.filterProperty("users", userId);
 
-  return userRoles = spacePositions.filterProperty("users", userId);
+  userPositions.forEach(function(userPosition){
+    userRoles.push(WorkflowManager.getRole(userPosition.role));
+  });
+
+  return userRoles;
 };
 
 WorkflowManager.getSpaceRoles = function(spaceId){
@@ -248,6 +293,47 @@ WorkflowManager.getRole = function(roleId){
   return role;
 };
 
+/*
+返回指定部门下的角色成员,如果指定部门没有找到对应的角色，则会继续找部门的上级部门直到找到为止。
+return [{spaceUser}]
+*/
+WorkflowManager.getRoleUsersbyOrgAndRole = function(spaceId, orgId, roleId){
+
+  var roleUsers = new Array();
+
+  var spaceRoles = WorkflowManager.getSpaceRoles(spaceId);
+
+  var spacePositions = WorkflowManager.getSpacePositions(spaceId);
+
+  var rolePositions = spacePositions.filterProperty("role", roleId);
+
+  var orgPositions = rolePositions.filterProperty("org", orgId);
+
+  orgPositions.forEach(function(orgPosition){
+    var roleUserIds = orgPosition.users;
+    roleUsers = roleUsers.concat(WorkflowManager.getUsers(roleUserIds));
+  });
+
+  if(orgPositions.length == 0){
+    var organization = WorkflowManager.getOrganization(orgId);
+    if(organization.parent != '')
+      roleUsers = roleUsers.concat(WorkflowManager.getRoleUsersbyOrgAndRole(spaceId, organization.parent, roleId));
+  }
+
+  return roleUsers;
+};
+
+WorkflowManager.getRoleUsersByOrgAndRoles = function(spaceId, orgId, roleIds){
+
+  var roleUsers = new Array();
+
+  roleIds.forEach(function(roleId){
+    roleUsers = roleUsers.concat(WorkflowManager.getRoleUsersbyOrgAndRole(spaceId, orgId, roleId));
+  });
+
+  return roleUsers;
+
+};
 
 
 WorkflowManager.getOrganization = function(orgId){
@@ -268,6 +354,18 @@ WorkflowManager.getOrganization = function(orgId){
   );
 
   return spaceOrg;
+};
+
+WorkflowManager.getOrganizations = function(orgIds){
+  if(!orgIds || !(orgIds instanceof Array)){
+    return [];
+  }
+
+  var orgs = new Array();
+  orgIds.forEach(function(orgId){
+    orgs.push(WorkflowManager.getOrganization(orgId));
+  });
+  return orgs;
 };
 
 
