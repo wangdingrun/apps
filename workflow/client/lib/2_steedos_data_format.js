@@ -16,7 +16,7 @@ var getSpaceUserSelect2Options = function (spaceId){
   spaceUsers.forEach(
     function(user){
         options.push({
-            optgroup : user.organization.name,
+            optgroup : user.organization.fullname,
             options: [
                 {label : user.name, value : user.id}
             ]
@@ -37,7 +37,7 @@ var getSpaceOrganizationSelect2Options = function(spaceId){
   spaceOrgs.forEach(
     function(spaceOrg){
         options.push(
-            {label : spaceOrg.name, value : spaceOrg.id}
+            {label : spaceOrg.fullname, value : spaceOrg.id}
         );
     }
   );
