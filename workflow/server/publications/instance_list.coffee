@@ -24,5 +24,5 @@
 		else
 			query.state = "none"
 
-		return db.instances.find(query, {fields: {name:1, created:1, form:1, flow: 1, space:1}})
+		return db.instances.find(query, {fields: {name:1, created:1, form:1, flow: 1, space:1, modified:1}})
 
