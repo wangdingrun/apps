@@ -300,6 +300,18 @@ Array.prototype.uniq = function(){
     return a;
 };
 
+Array.prototype.uniqById = function(){
+    var a = [];
+    var r = [];
+    this.forEach(function(b){
+        if(a.indexOf(b.id) < 0){
+            a[a.length] = b.id;
+            r[r.length] = b;
+        }
+    });
+
+    return r;
+}
 
 Array.prototype.filterProperty = function(h, l){
     var g = [];

@@ -69,7 +69,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     }
 
     //去除重复
-    nextSteps = nextSteps.uniq();
+    nextSteps = nextSteps.uniqById();
 
     //按照步骤名称排序(升序)
     nextSteps.sort(function(p1,p2){
@@ -94,7 +94,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
 
 
     //去除重复
-    rev_nextSteps = rev_nextSteps.uniq();
+    rev_nextSteps = rev_nextSteps.uniqById();
 
     // 会签节点，如果下一步有多个 则清空下一步
     if (currentStep.step_type == "counterSign" && rev_nextSteps.length > 1){
@@ -145,11 +145,10 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     break;
                 case 'userField': //指定人员字段
                     var userFieldId =  nextStep.approver_user_field;
-                    var instanceFields = WorkflowManager.getInstanceFields();
-                    var userField = instanceFields.filterProperty("_id", userFieldId);
-                    if(userField.length > 0){
-                        var userFieldValue = InstanceManager.getFormFieldValue(userField[0].code);
-                        if(userFieldValue instanceof Array){
+                    var userField = InstanceManager.getFormField(userFieldId);
+                    if(userField){
+                        var userFieldValue = InstanceManager.getFormFieldValue(userField.code);
+                        if(userField.is_multiselect){ //如果多选，以userFieldValue值为Array
                             nextStepUsers = WorkflowManager.getUsers(userFieldValue);
                         }else{
                             nextStepUsers.push(WorkflowManager.getUser(userFieldValue));
@@ -162,18 +161,17 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     break;
                 case 'orgField': //指定部门字段
                     var orgFieldId = nextStep.approver_org_field;
-                    var instanceFields = WorkflowManager.getInstanceFields();
-                    var orgField = instanceFields.filterProperty("_id", orgFieldId);
+                    var orgField = InstanceManager.getFormField(orgFieldId);
 
-                    if(orgField.length > 0){
-                        var orgFieldValue = InstanceManager.getFormFieldValue(orgField[0].code);
+                    if(orgField){
+                        var orgFieldValue = InstanceManager.getFormFieldValue(orgField.code);
 
                         var orgs;
 
                         var orgChildrens = new Array();
 
                         //获得orgFieldValue的所有子部门
-                        if(orgFieldValue instanceof Array){
+                        if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
                             orgs = WorkflowManager.getOrganizations(orgFieldValue);
                             orgChildrens = WorkflowManager.getOrganizationsChildrens(instance.space, orgFieldValue);
                         }else{
@@ -196,21 +194,67 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     var specifyOrgIds = nextStep.approver_orgs;
 
                     var specifyOrgs = WorkflowManager.getOrganizations(specifyOrgIds);
+                    var specifyOrgChildrens = WorkflowManager.getOrganizationsChildrens(instance.space,specifyOrgIds);
 
                     nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, specifyOrgs);
+                    nextStepUsers = nextStepUsers.concat(WorkflowManager.getOrganizationsUsers(instance.space, specifyOrgChildrens));
                     if(nextStepUsers < 1){
                         //todo 记录记录未找到的原因，用于前台显示 
                     }
                     break;
                 case 'userFieldRole': //指定人员字段相关审批岗位
+
+                    var approverRoles = nextStep.approver_roles;
+                    var userFieldId = nextStep.approver_user_field;
+                    var userField = InstanceManager.getFormField(userFieldId);
+
+                    if (userField){
+                        var userFieldValue = InstanceManager.getFormFieldValue(userField.code);
+
+                        if(userField.is_multiselect){//如果多选，以userFieldValue值为Array
+                            nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, userFieldValue, approverRoles);
+                        }else{
+                            nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, [userFieldValue], approverRoles);
+                        }
+                    }
+
+                    if(nextStepUsers < 1){
+                        //todo 记录记录未找到的原因，用于前台显示 
+                    }
+
                     break;
                 case 'orgFieldRole': //指定部门字段相关审批岗位
+                    var approverRoles = nextStep.approver_roles;
+                    var orgFieldId = nextStep.approver_org_field;
+                    var orgField = InstanceManager.getFormField(orgFieldId);
+
+                    if(orgField){
+                        var orgFieldValue = InstanceManager.getFormFieldValue(orgField.code);
+
+                        if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
+                            nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, orgFieldValue, approverRoles);
+                        }else{
+                            nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, [orgFieldValue], approverRoles);
+                        }
+                    }
+
+                    if(nextStepUsers < 1){
+                        //todo 记录记录未找到的原因，用于前台显示 
+                    }
+
                     break;
                 default:
                     break;
             }
             break;
     }
+
+    nextStepUsers = nextStepUsers.uniqById();
+
+    //按照步骤名称排序(升序)
+    nextStepUsers.sort(function(p1,p2){
+        return p1.name.localeCompare(p2.name);
+    });
 
     return nextStepUsers;
 
@@ -231,7 +275,7 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
         $("#nextSteps").append("<option value='" + step._id + "'> " + step.name + " </option>");
     });
 
-    if(steps.length > 1 && judge == 'approved')
+    if(steps.length > 1)
         $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
 
     if(steps.length > 0)
@@ -249,5 +293,10 @@ ApproveManager.updateNextStepUsersOptions = function(users){
     users.forEach(function(user){
         $("#nextStepUsers").append("<option value='" + user._id + "'> " + user.name + " </option>");
     });
+
+    if(users.length > 1 ){
+        $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");
+        $("#nextStepUsers").get(0).selectedIndex = 0;
+    }
 
 }

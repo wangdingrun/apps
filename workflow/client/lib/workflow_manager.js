@@ -1,9 +1,92 @@
 WorkflowManager = {};
 
+/*-------------------data source------------------*/
+
+WorkflowManager.getUrlForServiceName = function (serverName){
+  var serverUrls = {"s3":"https://s3ws.steedos.com"};
+  return serverUrls[serverName];
+};
+
+//获取space下的所有部门
+WorkflowManager.getSpaceOrganizations = function (spaceId){
+  var orgs = new Array();
+  var spaceOrgs = db.organizations.find();
+
+  spaceOrgs.forEach(function(spaceOrg){
+    spaceOrg.id = spaceOrg._id
+    orgs.push(spaceOrg);
+  })
+
+  return orgs;
+};
+
+//获取space下的所有用户
+WorkflowManager.getSpaceUsers = function (spaceId){
+  
+  var users = new Array();
+
+  // for(var i = 0 ; i < 15 ; i++){
+    
+  //   var userObject = new Object();
+  //   userObject.id = i + "56fdsfsd8f79s8df7s8fsdfusdi";
+  //   userObject.steedos_id = i + "baozhoutao@hotoa.com";
+  //   userObject.name = i + "包周涛";
+  //   userObject.organization = WorkflowManager.getUserOrganization(spaceId, userObject.id);
+  //   userObject.roles = WorkflowManager.getUserRoles(spaceId, userObject.id);
+
+  //   users.push(userObject);
+  // }
+
+  var spaceUsers = db.space_users.find();
+
+  spaceUsers.forEach(function(spaceUser){
+    spaceUser.id = spaceUser.user;
+    spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
+    spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
+    users.push(spaceUser);
+  })
+
+  return users;
+};
+
+WorkflowManager.getSpacePositions = function(spaceId){
+  var positions = new Array();
+
+  var spacePositions = db.flow_positions.find();
+
+  spacePositions.forEach(function(spacePosition){
+    positions.push(spacePosition);
+  });
+
+  return positions;
+};
+
+WorkflowManager.getSpaceRoles = function(spaceId){
+  var roles = new Array();
+
+  var spaceRoles = db.flow_roles.find();
+
+  spaceRoles.forEach(function(spaceRole){
+    spaceRole.id = spaceRole._id;
+    roles.push(spaceRole);
+  });
+
+  return roles;
+};
+
+WorkflowManager.getForm = function (formId){
+  return db.forms.findOne(formId);
+};
+
+WorkflowManager.getFlow = function (flowId){
+  return db.flows.findOne(flowId);
+};
+
 WorkflowManager.getInstance = function (){
   instanceId = Session.get("instanceId");
   return db.instances.findOne(instanceId)
 };
+
 
 WorkflowManager.getInstanceFormVersion = function (){
  
@@ -12,9 +95,9 @@ WorkflowManager.getInstanceFormVersion = function (){
   var rev = null
 
   instanceId = Session.get("instanceId");
-  instance = db.instances.findOne(instanceId);
+  instance = WorkflowManager.getInstance(instanceId);
   if (instance) {
-    form = db.forms.findOne(instance.form);
+    form = WorkflowManager.getForm(instance.form);
     if (form){
       rev = form.current;
       field_permission = WorkflowManager.getInstanceFieldPermission();
@@ -44,22 +127,21 @@ WorkflowManager.getInstanceFormVersion = function (){
   return rev;
 };
 
-WorkflowManager.getInstanceFields = function(){
-  var instanceForm = WorkflowManager.getInstanceFormVersion();
-
-  return instanceForm.fields;
-}
-
 WorkflowManager.getInstanceFlowVersion = function (){
   instanceId = Session.get("instanceId");
-  instance = db.instances.findOne(instanceId);
+  instance = WorkflowManager.getInstance(instanceId);
   if (instance){
-    flow = db.flows.findOne(instance.flow);
+    flow = WorkflowManager.getFlow(instance.flow);
     if (flow)
       return flow.current;
   }
 };
 
+WorkflowManager.getInstanceFields = function(){
+  var instanceForm = WorkflowManager.getInstanceFormVersion();
+
+  return instanceForm.fields;
+}
 
 WorkflowManager.getInstanceStep = function(stepId){
   flow = WorkflowManager.getInstanceFlowVersion();
@@ -108,32 +190,6 @@ WorkflowManager.getInstanceFieldPermission = function (){
  return step.permissions;
 };
 
-WorkflowManager.getUrlForServiceName = function (serverName){
-  var serverUrls = {"s3":"https://s3ws.steedos.com"};
-  return serverUrls[serverName];
-};
-
-WorkflowManager.getForm = function (formId){
-  return db.forms.findOne(formId);
-};
-
-WorkflowManager.getFlow = function (flowId){
-	return db.flows.findOne(flowId);
-};
-//获取space下的所有部门
-WorkflowManager.getSpaceOrganizations = function (spaceId){
-  var orgs = new Array();
-  var spaceOrgs = db.organizations.find();
-
-  spaceOrgs.forEach(function(spaceOrg){
-    spaceOrg.id = spaceOrg._id
-    orgs.push(spaceOrg);
-  })
-
-  return orgs;
-};
-
-
 
 WorkflowManager.getOrganizationChildrens = function(spaceId, orgId){
   var spaceOrganizations = WorkflowManager.getSpaceOrganizations(spaceId);
@@ -164,34 +220,54 @@ WorkflowManager.getOrganizationsUsers = function(spaceId, orgs){
   return orgUsers;
 }
 
-//获取space下的所有用户
-WorkflowManager.getSpaceUsers = function (spaceId){
+WorkflowManager.getOrganization = function(orgId){
+
+  if (!orgId) {
+    return {name:''};
+  }
+
+  var spaceOrgs = WorkflowManager.getSpaceOrganizations("") , spaceOrg = {};
+
+  spaceOrgs.forEach(
+    function(org){
+        if (org.id == orgId){
+          spaceOrg = org;
+          return ;
+        }
+    }
+  );
+
+  return spaceOrg;
+};
+
+WorkflowManager.getOrganizations = function(orgIds){
+  if(!orgIds || !(orgIds instanceof Array)){
+    return [];
+  }
+
+  var orgs = new Array();
+  orgIds.forEach(function(orgId){
+    orgs.push(WorkflowManager.getOrganization(orgId));
+  });
+  return orgs;
+};
+
+WorkflowManager.getRole = function(roleId){
   
-  var users = new Array();
+  if (!roleId) {
+    return {name:''};
+  }
 
-  // for(var i = 0 ; i < 15 ; i++){
-    
-  //   var userObject = new Object();
-  //   userObject.id = i + "56fdsfsd8f79s8df7s8fsdfusdi";
-  //   userObject.steedos_id = i + "baozhoutao@hotoa.com";
-  //   userObject.name = i + "包周涛";
-  //   userObject.organization = WorkflowManager.getUserOrganization(spaceId, userObject.id);
-  //   userObject.roles = WorkflowManager.getUserRoles(spaceId, userObject.id);
+  var spaceRoles = WorkflowManager.getSpaceRoles(), role = {};
 
-  //   users.push(userObject);
-  // }
+  spaceRoles.forEach(function(spaceRole){
+    if(spaceRoles.id = roleId){
+      role = spaceRole;
+      return ;
+    }
+  });
 
-  var spaceUsers = db.space_users.find();
-
-  spaceUsers.forEach(function(spaceUser){
-    spaceUser.id = spaceUser.user;
-    spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
-    spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
-    users.push(spaceUser);
-  })
-
-  return users;
-
+  return role;
 };
 
 WorkflowManager.getUser = function (userId){
@@ -233,18 +309,6 @@ WorkflowManager.getUsers = function (userIds){
   return users;
 };
 
-WorkflowManager.getSpacePositions = function(spaceId){
-  var positions = new Array();
-
-  var spacePositions = db.flow_positions.find();
-
-  spacePositions.forEach(function(spacePosition){
-    positions.push(spacePosition);
-  });
-
-  return positions;
-};
-
 //获取用户岗位
 WorkflowManager.getUserRoles = function(spaceId, orgId, userId){
 
@@ -262,36 +326,6 @@ WorkflowManager.getUserRoles = function(spaceId, orgId, userId){
   return userRoles;
 };
 
-WorkflowManager.getSpaceRoles = function(spaceId){
-  var roles = new Array();
-
-  var spaceRoles = db.flow_roles.find();
-
-  spaceRoles.forEach(function(spaceRole){
-    spaceRole.id = spaceRole._id;
-    roles.push(spaceRole);
-  });
-
-  return roles;
-};
-
-WorkflowManager.getRole = function(roleId){
-  
-  if (!roleId) {
-    return {name:''};
-  }
-
-  var spaceRoles = WorkflowManager.getSpaceRoles(), role = {};
-
-  spaceRoles.forEach(function(spaceRole){
-    if(spaceRoles.id = roleId){
-      role = spaceRole;
-      return ;
-    }
-  });
-
-  return role;
-};
 
 /*
 返回指定部门下的角色成员,如果指定部门没有找到对应的角色，则会继续找部门的上级部门直到找到为止。
@@ -335,39 +369,38 @@ WorkflowManager.getRoleUsersByOrgAndRoles = function(spaceId, orgId, roleIds){
 
 };
 
+WorkflowManager.getRoleUsersByOrgsAndRoles = function(spaceId, orgIds, roleIds){
+  var roleUsers = new Array();
 
-WorkflowManager.getOrganization = function(orgId){
+  if (!orgIds || !roleIds)
+    return roleUsers;
 
-  if (!orgId) {
-    return {name:''};
-  }
-
-  var spaceOrgs = WorkflowManager.getSpaceOrganizations("") , spaceOrg = {};
-
-  spaceOrgs.forEach(
-    function(org){
-        if (org.id == orgId){
-          spaceOrg = org;
-          return ;
-        }
-    }
-  );
-
-  return spaceOrg;
-};
-
-WorkflowManager.getOrganizations = function(orgIds){
-  if(!orgIds || !(orgIds instanceof Array)){
-    return [];
-  }
-
-  var orgs = new Array();
   orgIds.forEach(function(orgId){
-    orgs.push(WorkflowManager.getOrganization(orgId));
+    roleUsers = roleUsers.concat(WorkflowManager.getRoleUsersByOrgAndRoles(spaceId, orgId, roleIds));
   });
-  return orgs;
+
+  return roleUsers;
 };
 
+/*
+返回用户所在部门下的角色成员.
+return [{spaceUser}]
+*/
+WorkflowManager.getRoleUsersByUsersAndRoles = function(spaceId, userIds, roleIds){
+
+  var roleUsers = new Array();
+
+  if (!userIds || !roleIds)
+    return roleUsers;
+
+  var users = WorkflowManager.getUsers(userIds);
+
+  users.forEach(function(user){
+    roleUsers = roleUsers.concat(WorkflowManager.getRoleUsersByOrgAndRoles(spaceId, user.organization.id, roleIds));
+  });
+
+  return roleUsers;
+};
 
 
 //return {name:'',organization:{fullname:'',name:''},roles:[]}
