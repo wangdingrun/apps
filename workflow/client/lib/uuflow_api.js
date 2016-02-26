@@ -198,4 +198,6 @@ UUflow_api.post_engine = function() {
   })
 }
 
-
+UUflow_api.print = function(instanceId){
+  window.open("http://192.168.0.23/uf/print?id=" + instanceId);
+}

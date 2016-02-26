@@ -73,7 +73,8 @@ Template.instanceform.events
 			formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
 		Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
 	
-
+	'click #instance_to_print': (event)->
+		UUflow_api.print($("#instanceId").val());
 
 	# 子表删除行时，执行主表公式计算
 	'click .remove-steedos-table-row': (event, template)->
