@@ -304,9 +304,16 @@ Array.prototype.uniqById = function(){
     var a = [];
     var r = [];
     this.forEach(function(b){
-        if(a.indexOf(b.id) < 0){
-            a[a.length] = b.id;
-            r[r.length] = b;
+        if("id" in b){
+            if(a.indexOf(b.id) < 0){
+                a[a.length] = b.id;
+                r[r.length] = b;
+            }
+        }else if("_id" in b){
+            if(a.indexOf(b._id) < 0){
+                a[a.length] = b._id;
+                r[r.length] = b;
+            }
         }
     });
 

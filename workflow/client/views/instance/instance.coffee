@@ -36,7 +36,7 @@ Template.instanceform.helpers
 		WorkflowManager_format.getAutoformSchemaValues();
 
 	currentStep: ->
-		return ApproveManager.getCurrentNextStep();
+		return ApproveManager.getCurrentStep();
 
 
 
