@@ -18,7 +18,7 @@
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
                 <span class="help-block"></span>
-                {{#if equals currentStep.step_type 'sign'}}
+                {{#if includes currentStep.step_type 'sign,counterSign'}}
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">

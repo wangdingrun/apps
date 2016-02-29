@@ -25,6 +25,9 @@ Template.instanceform.helpers
 	equals: (a,b) ->
 		return (a == b)
 
+	includes: (a, b) ->
+		return b.split(',').includes(a);
+
 	fields: ->
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if form_version
@@ -41,7 +44,7 @@ Template.instanceform.events
 	
 	'change .suggestion,.form-control': (event) ->
 		instance = WorkflowManager.getInstance();
-		currentStep = ApproveManager.getCurrentNextStep();
+		currentStep = ApproveManager.getCurrentStep();
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if !form_version
 			return ;

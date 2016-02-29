@@ -1,6 +1,6 @@
 ApproveManager = {};
 
-ApproveManager.getCurrentNextStep = function(){
+ApproveManager.getCurrentStep = function(){
 
     var instance = WorkflowManager.getInstance();
 
