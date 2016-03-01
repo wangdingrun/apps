@@ -30,6 +30,43 @@ InstanceManager.resetId = function (instance) {
   })
 }
 
+InstanceManager.getCurrentStep = function(){
+
+    var instance = WorkflowManager.getInstance();
+
+    if(!instance || !instance.traces)
+        return ;
+
+    var currentTrace = instance.traces[instance.traces.length - 1];
+
+    var currentStepId = currentTrace.step;
+
+    return WorkflowManager.getInstanceStep(currentStepId);
+}
+
+InstanceManager.getCurrentApprove = function(){
+  var instance = WorkflowManager.getInstance();
+
+  if (!instance)
+    return ;
+
+  var currentTraces = instance.traces.filterProperty("is_finished", false);
+
+  if(currentTraces.length < 1)
+    return ;
+
+  var currentApproves = currentTraces[0].approves.filterProperty("user", localStorage.getItem("Meteor.userId"));
+  
+  var currentApprove = currentApproves.length > 0 ? currentApproves[0] : null;
+  
+  if (!currentApprove)
+    return ;
+
+  currentApprove.id = currentApprove._id;
+  delete currentApprove._id;
+  return currentApprove; 
+}
+
 InstanceManager.getMyApprove = function(){
   var instance = {};
   $.extend(instance, WorkflowManager.getInstance());

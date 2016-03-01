@@ -36,7 +36,10 @@ Template.instanceform.helpers
 		WorkflowManager_format.getAutoformSchemaValues();
 
 	currentStep: ->
-		return ApproveManager.getCurrentStep();
+		return InstanceManager.getCurrentStep();
+
+	currentApprove: ->
+		return InstanceManager.getCurrentApprove();
 
 
 
@@ -44,7 +47,7 @@ Template.instanceform.events
 	
 	'change .suggestion,.form-control': (event) ->
 		instance = WorkflowManager.getInstance();
-		currentStep = ApproveManager.getCurrentStep();
+		currentStep = InstanceManager.getCurrentStep();
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if !form_version
 			return ;

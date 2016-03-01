@@ -1,19 +1,5 @@
 ApproveManager = {};
 
-ApproveManager.getCurrentStep = function(){
-
-    var instance = WorkflowManager.getInstance();
-
-    if(!instance || !instance.traces)
-        return ;
-
-    var currentTrace = instance.traces[instance.traces.length - 1];
-
-    var currentStepId = currentTrace.step;
-
-    return WorkflowManager.getInstanceStep(currentStepId);
-}
-
 ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields){
 
     if(!currentStep)
