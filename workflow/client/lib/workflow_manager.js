@@ -3,7 +3,7 @@ WorkflowManager = {};
 /*-------------------data source------------------*/
 
 WorkflowManager.getUrlForServiceName = function (serverName){
-  var serverUrls = {"s3":"https://s3ws.steedos.com"};
+  var serverUrls = {"s3":"https://s3ws.steedos.com","workflow","http://192.168.0.23:3000"};
   return serverUrls[serverName];
 };
 
