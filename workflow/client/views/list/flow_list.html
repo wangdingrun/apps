@@ -1,0 +1,19 @@
+<template name="flow_list">
+  
+    {{#each categories}}
+      <a class="list-group-item glyphicon glyphicon-folder-close" data-toggle="collapse"  href="#{{_id}}" aria-expanded="false" aria-controls="{{_id}}">
+        {{name}}
+      </a>
+      <div id="{{_id}}" class="panel-collapse collapse" role="tabpanel">
+        
+          {{#each categoryFlows _id}}
+            <a href="#" id="{{_id}}" name="selectFlow" class="list-group-item">&nbsp;&nbsp;{{name}}</a>
+          {{/each}}
+        
+      </div>
+    {{/each}}
+    {{#each notCategoryFlows}}
+      <a href="#" id="{{_id}}" name="selectFlow" class="list-group-item">{{name}}</a>
+    {{/each}}
+  
+</template>

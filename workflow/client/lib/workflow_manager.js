@@ -415,3 +415,39 @@ WorkflowManager.getFormulaUserObject = function(userId){
   return userObject;
 
 };
+
+WorkflowManager.getSpaceCategories = function(spaceId){
+  var re = new Array();
+
+  var r = db.categories.find();
+
+  r.forEach(function(c){
+    re.push(c);
+  });
+
+  return re;
+};
+
+WorkflowManager.getSpaceFlows = function(spaceId){
+  var re = new Array();
+
+  var r = db.flows.find();
+
+  r.forEach(function(c){
+    re.push(c);
+  });
+
+  return re;
+};
+
+WorkflowManager.getSpaceForms = function(spaceId){
+  var re = new Array();
+
+  var r = db.forms.find();
+
+  r.forEach(function(c){
+    re.push(c);
+  });
+
+  return re;
+};

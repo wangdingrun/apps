@@ -1,7 +1,7 @@
 UUflow_api = {};
 
 // 新建instance（申请单）
-UUflow_api.post_draft = function() {
+UUflow_api.post_draft = function(flowId) {
   var uobj = {};
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
@@ -11,9 +11,9 @@ UUflow_api.post_draft = function() {
   {
     "Instances": [
       {
-        "flow": "761f48a3-b29c-4dd2-ac20-fac76bf10c89",
-        "applicant": "569c45ea6dd0ce005f000015",
-        "space": "569c46246dd0ce005f000016"
+        "flow": flowId,
+        "applicant": localStorage.getItem("Meteor.userId"),
+        "space": Session.get("spaceId")
       }
     ]
   };
@@ -28,7 +28,7 @@ UUflow_api.post_draft = function() {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      $('#createInsModal').modal('hide');
     },
     error: function(xhr, msg, ex) {
       // alert("e");

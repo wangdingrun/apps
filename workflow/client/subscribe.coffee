@@ -23,4 +23,8 @@ Meteor.startup ->
 
 		Meteor.subscribe "form_data", Session.get("formId")
 		Meteor.subscribe "flow_data", Session.get("flowId")
+		Meteor.subscribe "flows", Session.get("spaceId")
+		Meteor.subscribe "categories", Session.get("spaceId")
+		Meteor.subscribe "forms", Session.get("spaceId")
+
 

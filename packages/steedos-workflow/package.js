@@ -53,6 +53,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/flow_roles.coffee');
 	api.addFiles('lib/models/flow_positions.coffee');
 	api.addFiles('lib/models/instances.coffee');
+	api.addFiles('lib/models/categories.coffee');
 
 
 	// EXPORT

@@ -68,8 +68,7 @@ InstanceManager.getCurrentApprove = function(){
 }
 
 InstanceManager.getMyApprove = function(){
-  var instance = {};
-  $.extend(instance, WorkflowManager.getInstance());
+  var instance = WorkflowManager.getInstance();
 
   var myTrace = instance.traces.filterProperty("is_finished", false);
   if (myTrace.length > 0) {
@@ -98,8 +97,7 @@ InstanceManager.getMyApprove = function(){
 
 // 申请单暂存
 InstanceManager.saveIns = function() {
-  var instance = {};
-  $.extend(instance, WorkflowManager.getInstance());
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     InstanceManager.resetId(instance);
     var state = instance.state;
@@ -112,6 +110,11 @@ InstanceManager.saveIns = function() {
       UUflow_api.put_approvals(myApprove);
     }
   }
+}
+
+// 申请单新建
+InstanceManager.newIns = function(flowId) {
+  UUflow_api.post_draft(flowId);
 }
 
 
