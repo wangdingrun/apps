@@ -246,8 +246,6 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 
 };
 
-
-
 ApproveManager.updateNextStepOptions = function(steps, judge){
     
     $("#nextSteps").empty();
@@ -258,7 +256,7 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
         return;
     
     steps.forEach(function(step){
-        $("#nextSteps").append("<option value='" + step._id + "'> " + step.name + " </option>");
+        $("#nextSteps").append("<option value='" + step.id + "'> " + step.name + " </option>");
     });
 
     if(steps.length > 1)
@@ -269,16 +267,28 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
 
 };
 
-ApproveManager.updateNextStepUsersOptions = function(users){
+ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
     
     $("#nextStepUsers").empty();
-    
     if(!users)
         return;
+    
+    if(nextStep.step_type == 'end'){
+        $("#nextStepUsers_div").hide();
+        return ;
+    }else{
+        $("#nextStepUsers_div").show();
+    }
 
     users.forEach(function(user){
-        $("#nextStepUsers").append("<option value='" + user._id + "'> " + user.name + " </option>");
+        $("#nextStepUsers").append("<option value='" + user.id + "'> " + user.name + " </option>");
     });
+
+    if(nextStep.step_type == 'counterSign'){
+        $("#nextStepUsers").prop('multiple','multiple');
+    }else{
+        $("#nextStepUsers").removeAttr('multiple');
+    }
 
     if(users.length > 1 ){
         $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");

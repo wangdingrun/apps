@@ -41,6 +41,33 @@ Template.instanceform.helpers
 	currentApprove: ->
 		return InstanceManager.getCurrentApprove();
 
+	init_nextStepsOptions: ->
+		currentApprove = InstanceManager.getCurrentApprove();
+		if !currentApprove
+			return;
+		judge = currentApprove.judge
+		instance = WorkflowManager.getInstance();
+		currentStep = InstanceManager.getCurrentStep();
+		form_version = WorkflowManager.getInstanceFormVersion();
+		if !form_version
+			return ;
+		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+		nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+
+		if !nextSteps
+			return ;
+
+		ApproveManager.updateNextStepOptions(nextSteps, judge);
+
+		nextStepId = currentApprove.next_steps[0].step;
+		$("#nextSteps").get(0).value = nextStepId;
+
+		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+		nextStep = WorkflowManager.getInstanceStep(nextStepId);
+		ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+		$("#nextStepUsers").get(0).value = currentApprove.next_steps[0].users[0];
+
+
 
 
 Template.instanceform.events
@@ -62,13 +89,16 @@ Template.instanceform.events
 		if nextSteps.length ==1 || event.target.value == "rejected"
 			nextStepId = $("#nextSteps option:selected").val();
 			nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-			ApproveManager.updateNextStepUsersOptions(nextStepUsers);
+			nextStep = WorkflowManager.getInstanceStep(nextStepId);
+			ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
 	'change #nextSteps': (event) ->
 		instance = WorkflowManager.getInstance();
 		nextStepId = $("#nextSteps option:selected").val();
+		nextStep = WorkflowManager.getInstanceStep(nextStepId);
+
 		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-		ApproveManager.updateNextStepUsersOptions(nextStepUsers);
+		ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
 	'change .form-control': (event)->
 		console.log("instanceform form-control change");
