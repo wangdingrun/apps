@@ -79,6 +79,10 @@ Template.instanceform.events
 	'click #instance_to_print': (event)->
 		UUflow_api.print($("#instanceId").val());
 
+	
+	'click #instance_update': (event)->
+		InstanceManager.saveIns();
+
 	# 子表删除行时，执行主表公式计算
 	'click .remove-steedos-table-row': (event, template)->
 		console.log("instanceform form-control change");
