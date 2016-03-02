@@ -16,7 +16,7 @@ Form_formula = {};
     CS.Utils.prependPrefixForFormula("__values",formulaStr)
 */
 Form_formula.prependPrefixForFormula = function(prefix,fieldVariable){
-    console.debug("进入prependPrefixForFormula");
+    //console.debug("进入prependPrefixForFormula");
     var startTrack = new Date *1;
     
     var reg = /(\{[^{}]*\})/g;//匹配包括花括号自身在内的所有符号
@@ -27,14 +27,14 @@ Form_formula.prependPrefixForFormula = function(prefix,fieldVariable){
         return prefix + $1.replace(/\{\s*/,"[\"").replace(/\s*\}/,"\"]").replace(/\s*\.\s*/g,"\"][\"");
     })
 
-    console.debug("return value : " + rev);
-    console.debug("退出 prependPrefixForFormula");
-    console.debug("消耗时间：" + (new Date() * 1 - startTrack) + "ms");
+    //console.debug("return value : " + rev);
+    //console.debug("退出 prependPrefixForFormula");
+    //console.debug("消耗时间：" + (new Date() * 1 - startTrack) + "ms");
     return rev;
 };
 //return [Object]; Object["code"] , Object["formula"]
 Form_formula.getFormulaFieldVariable = function(prefix,fields){
-    console.debug("进入 getFormulaFieldVariable");
+    //console.debug("进入 getFormulaFieldVariable");
     var startTrack = new Date *1;
     if (!fields) return ;
     var formulas = new Array();
@@ -81,8 +81,8 @@ Form_formula.getFormulaFieldVariable = function(prefix,fields){
         //给公式添加前缀
         formulas[j]["formula"] = Form_formula.prependPrefixForFormula(prefix,formulas[j]["formula"]);
     }
-    console.log("formula_field is \n" + JSON.stringify(formulas));
-    console.debug("退出 getFormulaFieldVariable 消耗时间：" + (new Date() * 1 - startTrack) + "ms");
+    //console.log("formula_field is \n" + JSON.stringify(formulas));
+    //console.debug("退出 getFormulaFieldVariable 消耗时间：" + (new Date() * 1 - startTrack) + "ms");
     return formulas;
 };
 /**
@@ -142,11 +142,11 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
     console.log('Form_formula.run......');
     var run = false;
     if (!Form_formula.field_values || true){
-        console.debug("Form_formula.init_formula_values: 重新计算field_values");
+        //console.debug("Form_formula.init_formula_values: 重新计算field_values");
         var startTrack = new Date * 1;
         Form_formula.field_values = init_formula_values(fields,autoFormDoc);
-        console.log("Form_formula.field_values is \n" + JSON.stringify(Form_formula.field_values));
-        console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
+        //console.log("Form_formula.field_values is \n" + JSON.stringify(Form_formula.field_values));
+        //console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
     }
     for(var i = 0 ; i < formula_fields.length; i++){
         formula_field = formula_fields[i];
@@ -155,8 +155,8 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
         }
         if(run){
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
-            console.log("formula is " + formula_field.formula);
-            console.log("fileValue is " + fileValue);
+            //console.log("formula is " + formula_field.formula);
+            //console.log("fileValue is " + fileValue);
             $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
         }
     }

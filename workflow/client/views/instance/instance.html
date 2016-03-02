@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <label class="control-label">下一步骤&nbsp;:</label>
                             <select class="suggestion-control" name="nextSteps" id="nextSteps">
-                                {{init_nextStepsOptions}}
+                                
                             </select>
                         </div>
                     </div>
@@ -78,6 +78,7 @@
                 </div>
             </nav>
             {{#autoForm id=instanceId schema=fields type="method" doc=doc_values meteormethod='instance'}}
+                <div style='display:none'>{{init_nextStepsOptions}}</div>
                 <div class="row">
                     {{#each steedos_form.fields}}
                         {{#if equals this.type 'table'}}

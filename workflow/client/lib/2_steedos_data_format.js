@@ -225,8 +225,8 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
     
     }
   }
-  console.log("afFields is");
-  console.log(JSON.stringify(afFields));
+  //console.log("afFields is");
+  //console.log(JSON.stringify(afFields));
   return afFields;
 };
 
@@ -290,7 +290,7 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
       values[field.code] = getSchemaValue(field, instanceValue[field.code]);
     }
   });
-  console.log("getAutoformSchemaValues ...")
-  console.log(values);
+  //console.log("getAutoformSchemaValues ...")
+  //console.log(values);
   return values;
 }

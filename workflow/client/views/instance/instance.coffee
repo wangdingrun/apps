@@ -45,6 +45,10 @@ Template.instanceform.helpers
 		currentApprove = InstanceManager.getCurrentApprove();
 		if !currentApprove
 			return;
+
+		if(currentApprove.next_steps.length < 1)
+			return ;
+
 		judge = currentApprove.judge
 		instance = WorkflowManager.getInstance();
 		currentStep = InstanceManager.getCurrentStep();
@@ -65,7 +69,19 @@ Template.instanceform.helpers
 		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 		nextStep = WorkflowManager.getInstanceStep(nextStepId);
 		ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
-		$("#nextStepUsers").get(0).value = currentApprove.next_steps[0].users[0];
+		#设置选中的用户
+		u_ops = $("#nextStepUsers option").toArray();
+
+		if u_ops.length > 0
+			$("#nextStepUsers").get(0).selectedIndex = -1;
+
+		u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
+		
+		#u_ops.forEach(function(u_op){
+		#	if(currentApprove.next_steps[0].users.includes(u_op.value))
+		#		u_op.selected = true;
+		#});
+		#$("#nextStepUsers").get(0).value = currentApprove.next_steps[0].users[0];
 
 
 
@@ -101,8 +117,11 @@ Template.instanceform.events
 		ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
 	'change .form-control': (event)->
-		console.log("instanceform form-control change");
+		
 		code = event.target.name;
+
+		console.log("instanceform form-control change, code is " + code);
+
 		form_version = WorkflowManager.getInstanceFormVersion();
 		formula_fields = []
 		if form_version

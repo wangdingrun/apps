@@ -15,7 +15,7 @@ var get_table = function (tableCode){
 };
 
 autoform_table_Helpers.getTable = function (tableCode){
-    console.log("autoform_table dataset is " + JSON.stringify(get_table(tableCode).dataset));
+    //console.log("autoform_table dataset is " + JSON.stringify(get_table(tableCode).dataset));
     return get_table(tableCode).dataset;
 };
 
@@ -52,7 +52,7 @@ autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode ,fieldTyp
 };
 
 autoform_table_Helpers.getTableModal = function (tableCode){
-    console.log("autoform_table modal dataset is " + JSON.stringify(get_table(tableCode).dataset));
+    //console.log("autoform_table modal dataset is " + JSON.stringify(get_table(tableCode).dataset));
     return get_table_modal(tableCode).dataset;
 };
 
@@ -94,7 +94,7 @@ autoform_table_Helpers.initValidrows = function (arr){
       validrows.push(i + "");
     }
 
-    console.log("initValidrows return values is " + validrows.toString());
+    //console.log("initValidrows return values is " + validrows.toString());
     return validrows.toString();
 };
 

@@ -30,7 +30,7 @@ Template.autoform_table.helpers({
 
   initRowFormula: function(sfield){
     var formulas = Form_formula.getFormulaFieldVariable("Form_formula.field_values", sfield);
-    console.log("autoform_table formulas is \n" + JSON.stringify(formulas));
+    //console.log("autoform_table formulas is \n" + JSON.stringify(formulas));
     return JSON.stringify(formulas);
   },
 
@@ -135,8 +135,8 @@ Template.autoform_table.events({
 
         var rowValue = AutoForm.getFieldValue(tableCode, formId)[value_index];
 
-        console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
-        debugger;
+        //console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
+        
         for(var key in rowObj){
           autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].type, rowValue[key]);
         }
@@ -148,11 +148,11 @@ Template.autoform_table.events({
 
     'change .form-control,.checkbox input,.af-radio-group input,.af-checkbox-group input': function(event, template){
 
-      console.log("autoform_table form-control change");
+      //console.log("autoform_table form-control change");
 
       var fieldCode = event.target.name;
 
-      console.log("change fieldCode is " + fieldCode)
+      //console.log("change fieldCode is " + fieldCode)
 
       var tableCode = template.data.code;
 
@@ -175,7 +175,7 @@ Template.autoform_table.events({
         rowValue[key] = autoform_table_Helpers.getTableModalValue(tableCode + ".$." + key);
       }
 
-      console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
+      //console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
 
       Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.sfields);
 
