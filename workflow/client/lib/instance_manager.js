@@ -100,32 +100,6 @@ InstanceManager.getMyApprove = function(){
   }
 
   return {};
-
-  // var instance = WorkflowManager.getInstance();
-
-  // var myTrace = instance.traces.filterProperty("is_finished", false);
-  // if (myTrace.length > 0) {
-  //   myTrace = myTrace[0];
-  //   var myApprove = myTrace.approves.filterProperty("user", localStorage.getItem("Meteor.userId"));
-  //   if (myApprove.length > 0) {
-  //     myApprove = myApprove[0];
-  //     myApprove.id = myApprove._id;
-  //     delete myApprove._id;
-  //     myApprove.description = $("#suggestion").val();
-  //     var judge = $("[name='judge']").filter(':checked').val();
-  //     if (judge)
-  //       myApprove.judge = judge;
-  //     var nextStepId = $("#nextSteps option:selected").val();
-  //     if (nextStepId) {
-  //       var nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-  //       myApprove.next_steps = [{step:nextStepId,users:nextStepUsers}];
-  //     }
-  //     myApprove.values = AutoForm.getFormValues("instanceform").insertDoc;
-  //     return myApprove;
-  //   }
-  // }
-
-  // return {};
 }
 
 // 申请单暂存

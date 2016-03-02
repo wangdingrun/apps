@@ -247,10 +247,10 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 };
 
 ApproveManager.updateNextStepOptions = function(steps, judge){
+
+    var lastSelected = $("#nextSteps option:selected").val();
     
     $("#nextSteps").empty();
-    
-    $("#nextStepUsers").empty();
 
     if(!steps)
         return;
@@ -261,13 +261,22 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
 
     if(steps.length > 1)
         $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
+    
+    var lastStep = steps.filterProperty("id", lastSelected);
 
-    if(steps.length > 0)
+    if(lastStep.length > 0){
+        $("#nextSteps").get(0).value = lastSelected;
+    }else if(steps.length > 0)
         $("#nextSteps").get(0).selectedIndex = 0;
 
 };
 
 ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
+    var lastSelected = new Array();
+    var selectedNextStepUsers = $("#nextStepUsers option:selected").toArray();
+    selectedNextStepUsers.forEach(function(su){
+      lastSelected.push(su.value);
+    });
     
     $("#nextStepUsers").empty();
     if(!users)
@@ -290,9 +299,16 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
         $("#nextStepUsers").removeAttr('multiple');
     }
 
+    var u_ops = $("#nextStepUsers option").toArray();
+
+    u_ops.forEach(function(u_op){
+        if (lastSelected.includes(u_op.value))
+            u_op.selected = true;
+    });
+
     if(users.length > 1 ){
         $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");
-        $("#nextStepUsers").get(0).selectedIndex = 0;
     }
+
 
 }

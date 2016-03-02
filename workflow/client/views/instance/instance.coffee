@@ -77,11 +77,6 @@ Template.instanceform.helpers
 
 		u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
 		
-		#u_ops.forEach(function(u_op){
-		#	if(currentApprove.next_steps[0].users.includes(u_op.value))
-		#		u_op.selected = true;
-		#});
-		#$("#nextStepUsers").get(0).value = currentApprove.next_steps[0].users[0];
 
 
 
@@ -89,20 +84,22 @@ Template.instanceform.helpers
 Template.instanceform.events
 	
 	'change .suggestion,.form-control': (event) ->
+		judge = $("[name='judge']").filter(':checked').val();
 		instance = WorkflowManager.getInstance();
 		currentStep = InstanceManager.getCurrentStep();
 		form_version = WorkflowManager.getInstanceFormVersion();
 		if !form_version
 			return ;
 		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
-		nextSteps = ApproveManager.getNextSteps(instance, currentStep, event.target.value, autoFormDoc, form_version.fields);
+		nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
 
 		if !nextSteps
-			return ;
+			$("#nextSteps").empty();$("#nextStepUsers").empty();
+			return;
 
-		ApproveManager.updateNextStepOptions(nextSteps, event.target.value);
+		ApproveManager.updateNextStepOptions(nextSteps, judge);
 
-		if nextSteps.length ==1 || event.target.value == "rejected"
+		if nextSteps.length ==1 || judge == "rejected"
 			nextStepId = $("#nextSteps option:selected").val();
 			nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 			nextStep = WorkflowManager.getInstanceStep(nextStepId);
