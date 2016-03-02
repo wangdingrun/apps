@@ -254,7 +254,7 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
   var instance = WorkflowManager.getInstance();
   var form = WorkflowManager.getInstanceFormVersion();
   var currentApprove = InstanceManager.getCurrentApprove();
-  if(!form || !instance.values) return ;
+  if(!form) return ;
   var fields = form.fields;
 
   var values = {};
@@ -267,6 +267,9 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
   }
 
   var instanceValue = approve_values_is_null ? instance.values : currentApprove.values;
+
+  if(!instanceValue)
+    return ;
 
   fields.forEach(function(field){
     if(field.type == 'table'){
