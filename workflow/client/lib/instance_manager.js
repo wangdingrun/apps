@@ -11,6 +11,13 @@ InstanceManager.getFormField = function(fieldId){
     return null;
 }
 
+InstanceManager.getApplicantUserId = function(){
+  var instance = WorkflowManager.getInstance();
+  if(instance)
+    return instance.applicant;
+  return '';
+}
+
 InstanceManager.getFormFieldValue = function(fieldCode){
     return AutoForm.getFieldValue(fieldCode, "instanceform");
 };

@@ -406,11 +406,16 @@ WorkflowManager.getRoleUsersByUsersAndRoles = function(spaceId, userIds, roleIds
 
 //return {name:'',organization:{fullname:'',name:''},roles:[]}
 WorkflowManager.getFormulaUserObject = function(userId){
-  userObject = {};
+  var userObject = {};
 
-  userObject['name'] = 'test';
-  userObject['organization'] = {fullname:'test organization fullname', name:'test organization name'};
-  userObject["roles"] = ['role1','role2','role3'];
+  var user = WorkflowManager.getUser(userId);
+
+  if(!user)
+    return null;
+
+  userObject['name'] = user.name;
+  userObject['organization'] = user.organization;
+  userObject["roles"] = user.roles;
 
   return userObject;
 

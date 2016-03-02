@@ -239,9 +239,10 @@ function init_formula_values(fields, autoFormDoc){
             }
         }, this);
     }
-
-    __values["approver"] = WorkflowManager.getFormulaUserObject("");
-    __values["applicant"] = WorkflowManager.getFormulaUserObject("");
+    //当前处理人
+    __values["approver"] = WorkflowManager.getFormulaUserObject(localStorage.getItem("Meteor.userId"));
+    //申请人
+    __values["applicant"] = WorkflowManager.getFormulaUserObject(InstanceManager.getApplicantUserId());
 
     //approver 当前用户
     // var currentUserId = CS.getPath('currentUser.id');
