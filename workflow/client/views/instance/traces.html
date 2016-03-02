@@ -21,10 +21,12 @@
 
 
                         </tr>
-                        {{#if unempty this.description}}
-                        <tr class="approve-item">
-                            <td class="description" colspan="3">{{this.description}}</td>
-                        </tr>
+                        {{#if this.is_finishd}}
+                            {{#if unempty this.description}}
+                            <tr class="approve-item">
+                                <td class="description" colspan="3">{{this.description}}</td>
+                            </tr>
+                            {{/if}}
                         {{/if}}
                     {{/each}}
                 {{/each}}
