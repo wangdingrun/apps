@@ -90,7 +90,7 @@ var s_autoform = function (schema, field){
     case 'dateTime' : 
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'time'; 
+        autoform.type = 'datetime-local'; 
         break;
     case 'checkbox' :
         schema.type = Boolean;
@@ -251,18 +251,28 @@ var getSchemaValue = function(field,value){
 
 
 WorkflowManager_format.getAutoformSchemaValues = function(){
-  instance = WorkflowManager.getInstance();
-  form = WorkflowManager.getInstanceFormVersion();
+  var instance = WorkflowManager.getInstance();
+  var form = WorkflowManager.getInstanceFormVersion();
+  var currentApprove = InstanceManager.getCurrentApprove();
   if(!form || !instance.values) return ;
-  fields = form.fields;
+  var fields = form.fields;
 
-  values = {};
+  var values = {};
+
+  var approve_values_is_null = true;
+
+  for(var ak in currentApprove.values){
+    approve_values_is_null = false;
+    break;
+  }
+
+  var instanceValue = approve_values_is_null ? instance.values : currentApprove.values;
 
   fields.forEach(function(field){
     if(field.type == 'table'){
       t_values = new Array();
       if (field.sfields){
-        instance.values[field.code].forEach(function(t_row_value){
+        instanceValue[field.code].forEach(function(t_row_value){
           field.sfields.forEach(function(sfield){
             //if(sfield.type == 'checkbox'){
             t_row_value[sfield.code] = getSchemaValue(sfield, t_row_value[sfield.code]);
@@ -274,7 +284,7 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
       }
       values[field.code] = t_values;
     }else{
-      values[field.code] = getSchemaValue(field, instance.values[field.code]);
+      values[field.code] = getSchemaValue(field, instanceValue[field.code]);
     }
   });
   console.log("getAutoformSchemaValues ...")
