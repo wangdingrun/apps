@@ -35,5 +35,24 @@ Template.flow_list.events({
     InstanceManager.newIns(event.target.id);
   },
 
+  "click [name='selectCategory']": function (event, template) {
+    var d = $(event.currentTarget), c = "normal",
+        e = d.next();
+    if (e.is(".treeview-menu") && e.is(":visible") && !$("body").hasClass("sidebar-collapse")) e.slideUp(c, function() {
+        e.removeClass("menu-open")
+    }), e.parent("li").removeClass("active");
+    else if (e.is(".treeview-menu") && !e.is(":visible")) {
+        var f = d.parents("ul").first(),
+            g = f.find("ul:visible").slideUp(c);
+        g.removeClass("menu-open");
+        var h = d.parent("li");
+        e.slideDown(c, function() {
+            e.addClass("menu-open"), f.find("li.active").removeClass("active"), h.addClass("active");
+            // b.layout.fix();
+        })
+    }
+    e.is(".treeview-menu") && event.preventDefault()
+  },
+
 
 })
