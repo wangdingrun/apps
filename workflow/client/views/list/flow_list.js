@@ -32,7 +32,7 @@ Template.flow_list.helpers({
 Template.flow_list.events({
 
   "click [name='selectFlow']": function (event, template) {
-    InstanceManager.newIns(event.target.id);
+    InstanceManager.newIns(event.currentTarget.id);
   },
 
   "click [name='selectCategory']": function (event, template) {

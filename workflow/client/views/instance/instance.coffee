@@ -132,6 +132,12 @@ Template.instanceform.events
 	'click #instance_update': (event)->
 		InstanceManager.saveIns();
 
+	'click #instance_remove': (event)->
+		InstanceManager.deleteIns();
+
+	'click #instance_submit': (event)->
+		InstanceManager.submitIns();
+
 	# 子表删除行时，执行主表公式计算
 	'click .remove-steedos-table-row': (event, template)->
 		console.log("instanceform form-control change");

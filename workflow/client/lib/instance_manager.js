@@ -124,5 +124,32 @@ InstanceManager.newIns = function(flowId) {
   UUflow_api.post_draft(flowId);
 }
 
+// 申请单删除
+InstanceManager.deleteIns = function() {
+  var instance = WorkflowManager.getInstance();
+  if (instance && instance.state == "draft") {
+    UUflow_api.delete_draft(instance._id);
+  }
+  
+}
+
+// 申请单提交
+InstanceManager.submitIns = function() {
+  var instance = WorkflowManager.getInstance();
+  if (instance) {
+    InstanceManager.resetId(instance);
+    var state = instance.state;
+    if (state=="draft") {
+      instance.traces[0].approves[0] = InstanceManager.getMyApprove();
+      UUflow_api.post_submit(instance);
+    } else if (state=="pending") {
+      var myApprove = InstanceManager.getMyApprove();
+      myApprove.values = AutoForm.getFormValues("instanceform").insertDoc;
+      UUflow_api.post_engine(myApprove);
+    }
+      
+  }
+}
+
 
 
