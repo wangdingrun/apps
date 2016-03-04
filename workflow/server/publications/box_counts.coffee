@@ -43,7 +43,7 @@ Meteor.publish 'box_counts', (spaceId)->
             progress_count--;
             self.changed("box_counts", spaceId, {progress_count: progress_count});
 
-    handle4 = db.instances.find({space: spaceId, state: "completed", submitter: this.userId}).observeChanges
+    handle4 = db.instances.find({space: spaceId, state: "completed", submitter: this.userId, is_archived: false}).observeChanges
         added: (id)->
             finished_count++;
             if !initializing
