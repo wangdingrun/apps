@@ -13,7 +13,7 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "APPROVAL"}}</li>
             <li>
-                <a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-user"></i><span>Inbox</span></a>
+                <a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-user"></i><span>Inbox</span><small class="label pull-right bg-yellow">{{pending_count}}</small></a>
             </li>
             <li>
                 <a href="/workflow/outbox/{{spaceId}}"><i class="fa fa-user"></i><span>Outbox</span></a>

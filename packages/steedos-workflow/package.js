@@ -54,6 +54,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/flow_positions.coffee');
 	api.addFiles('lib/models/instances.coffee');
 	api.addFiles('lib/models/categories.coffee');
+	api.addFiles('lib/models/pending_counts.coffee');
 
 
 	// EXPORT

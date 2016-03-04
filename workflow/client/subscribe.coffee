@@ -26,5 +26,6 @@ Meteor.startup ->
 		Meteor.subscribe "flows", Session.get("spaceId")
 		Meteor.subscribe "categories", Session.get("spaceId")
 		Meteor.subscribe "forms", Session.get("spaceId")
+		Meteor.subscribe "pending_counts", Session.get("spaceId")
 
 
