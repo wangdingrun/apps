@@ -7,7 +7,7 @@ Meteor.startup ->
 		Meteor.subscribe "flow_roles", Session.get("spaceId")
 		Meteor.subscribe "flow_positions", Session.get("spaceId")
 
-		Meteor.subscribe "instances_list", Session.get("spaceId"), Session.get("box")
+		Meteor.subscribe "instances_list", Session.get("spaceId"), Session.get("box"), Session.get("flowId")
 		
 		Meteor.subscribe "instance_data", Session.get("instanceId"),
 			onReady: ->

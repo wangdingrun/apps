@@ -1,5 +1,5 @@
 
-	Meteor.publish 'instances_list', (spaceId, box)->
+	Meteor.publish 'instances_list', (spaceId, box, flowId)->
 
 		unless this.userId
 			return this.ready()
@@ -21,6 +21,9 @@
 		else if box == "completed"
 			query.submitter = this.userId;
 			query.state = "completed"
+		else if box == "monitor"
+			query.flow = flowId;
+			query.state = {$in: ["pending","completed"]};
 		else
 			query.state = "none"
 

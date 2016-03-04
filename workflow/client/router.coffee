@@ -51,6 +51,25 @@ FlowRouter.route '/workflow/completed/:spaceId',
 				main: "instance_list"
 
 
+FlowRouter.route '/workflow/monitor/:spaceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("box", "monitor");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "monitor"
+
+
+FlowRouter.route '/workflow/monitor/:spaceId/:flowId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("flowId", params.flowId);
+		Session.set("box", "monitor");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instance_list"
+
+
 FlowRouter.route '/workflow/instance/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("instanceId", params.instanceId)

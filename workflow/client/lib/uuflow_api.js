@@ -31,6 +31,7 @@ UUflow_api.post_draft = function(flowId) {
 
     success: function(responseText, status) {
       $('#createInsModal').modal('hide');
+      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
     },
     error: function(xhr, msg, ex) {
       // alert("e");
@@ -91,7 +92,7 @@ UUflow_api.delete_draft = function(instanceId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
     },
     error: function(xhr, msg, ex) {
       // alert("e");
@@ -118,7 +119,7 @@ UUflow_api.post_submit = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
     },
     error: function(xhr, msg, ex) {
       // alert("e");
@@ -172,7 +173,7 @@ UUflow_api.post_engine = function(approve) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
     },
     error: function(xhr, msg, ex) {
       // alert("e");
