@@ -1,1 +1,0 @@
-db.pending_counts = new Mongo.Collection("pending_counts");
