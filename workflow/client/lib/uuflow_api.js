@@ -30,8 +30,8 @@ UUflow_api.post_draft = function(flowId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      Session.set("instanceId", responseText.ChangeSet.inserts.Instances[0].id);
       $('#createInsModal').modal('hide');
-      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
     },
     error: function(xhr, msg, ex) {
       // alert("e");
