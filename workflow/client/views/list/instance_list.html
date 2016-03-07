@@ -1,14 +1,14 @@
 <template name="instance_list">
           <section class="content-header">
-            <h1>{{boxName}}  
+            <h1>{{_ boxName}}  
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createInsModal" style="margin-left: 15px;margin-bottom: 5px">
-                New
+                {{_ "New"}}
               </button>
             </h1>
             <ol class="breadcrumb">
-            <li><a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">{{boxName}}</li>
+            <li><a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-dashboard"></i> {{_ "Home"}}</a></li>
+            <li class="active">{{_ boxName}}</li>
             </ol>
           </section>
           <div class="box" style="margin-left: 16px;">
@@ -48,7 +48,7 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>Name</th>
+                  <th>{{_ "Name"}}</th>
                   <th>
                     <!-- <div class="pull-right" style="padding-right: 15px">
                         <ul class="pagination" style="margin:0px !important">
