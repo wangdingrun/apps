@@ -104,6 +104,8 @@ Template.instanceform.events
 			nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 			nextStep = WorkflowManager.getInstanceStep(nextStepId);
 			ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+		else
+			$("#nextStepUsers").empty();
 
 	'change #nextSteps': (event) ->
 		instance = WorkflowManager.getInstance();
@@ -118,6 +120,8 @@ Template.instanceform.events
 		code = event.target.name;
 
 		console.log("instanceform form-control change, code is " + code);
+
+		InstanceManager.checkFormFieldValue(event.target);
 
 		form_version = WorkflowManager.getInstanceFormVersion();
 		formula_fields = []
@@ -136,7 +140,9 @@ Template.instanceform.events
 		InstanceManager.deleteIns();
 
 	'click #instance_submit': (event)->
-		InstanceManager.submitIns();
+		InstanceManager.checkFormValue();
+		if($(".has-error").length == 0)
+			InstanceManager.submitIns();
 
 	# 子表删除行时，执行主表公式计算
 	'click .remove-steedos-table-row': (event, template)->

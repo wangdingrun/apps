@@ -18,6 +18,70 @@ InstanceManager.getApplicantUserId = function(){
   return '';
 }
 
+function showMessage(parent_group,message){
+  parent_group.addClass("has-error");
+  $(".help-block",parent_group).html(message);
+}
+
+function removeMessage(parent_group){
+  parent_group.removeClass("has-error");
+  $(".help-block",parent_group).html('');
+}
+
+InstanceManager.checkFormValue = function(){
+
+  //下一步步骤校验
+  var nextSteps_parent_group = $("#nextSteps").parent();
+  if($("#nextSteps option:selected").val())
+    removeMessage(nextSteps_parent_group);
+  else
+    showMessage(nextSteps_parent_group, '请选择下一步步骤');
+  
+
+  //下一步处理人校验
+  var nextStepUsers_parent_group = $("#nextStepUsers").parent();
+  if($("#nextStepUsers option:selected").val())
+    removeMessage(nextStepUsers_parent_group);
+  else
+    showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
+
+  //如果是驳回必须填写意见
+  var judge = $("[name='judge']").filter(':checked').val();
+  var suggestion_parent_group = $("#suggestion").parent();
+  if(judge && judge == 'rejected'){
+    if($("#suggestion").val())
+      removeMessage(suggestion_parent_group);
+    else
+      showMessage(suggestion_parent_group, '驳回时必须填写意见');
+  }else{
+    removeMessage(suggestion_parent_group);
+  }
+
+  //字段校验
+
+}
+
+InstanceManager.checkFormFieldValue = function(field){
+
+    var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+    var parent_group = $("#" + field.id).parent();
+    var message = '';
+    if(field.required){
+      if(!field.value || field.value == '' || field.length < 1)
+          message = showMessage(parent_group, '此字段为必填');
+    }
+
+    if(field.type == 'email' && field.value !=''){
+        if(!reg_email.test(field.value))
+          message = '邮件地址格式错误';
+    }
+
+    if(message=='')
+      removeMessage(parent_group);
+    else
+      showMessage(parent_group, message);
+}
+
 InstanceManager.getFormFieldValue = function(fieldCode){
     return AutoForm.getFieldValue(fieldCode, "instanceform");
 };
