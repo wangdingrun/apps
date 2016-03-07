@@ -58,10 +58,19 @@ InstanceManager.checkFormValue = function(){
   }
 
   //字段校验
+  var fieldsPermision = WorkflowManager.getInstanceFieldPermission();
 
+  for(var k in fieldsPermision){
+    if(fieldsPermision[k] == 'editable'){
+      InstanceManager.checkFormFieldValue($("[name='"+k+"']")[0]);
+    }
+  }
 }
 
 InstanceManager.checkFormFieldValue = function(field){
+
+    if(!field)
+      return ;
 
     var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
     var parent_group = $("#" + field.id).parent();
