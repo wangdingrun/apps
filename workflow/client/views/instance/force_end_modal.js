@@ -19,10 +19,4 @@ Template.force_end_modal.events({
         $('#force_end_modal_warn').hide();
     },
 
-    'hidden.bs.modal #force_end_modal': function (event, template) {
-        FlowRouter.go("/workflow/pending/" + Session.get("spaceId"));
-    }
-
-
-
 })

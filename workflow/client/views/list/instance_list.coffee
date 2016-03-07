@@ -13,4 +13,6 @@ Template.instance_list.helpers
 Template.instance_list.events
 
 	'hidden.bs.modal #createInsModal': (event)->
-		FlowRouter.go("/workflow/instance/" + Session.get("instanceId"));
+		insId = Session.get("instanceId");
+		if insId
+			FlowRouter.go("/workflow/instance/" + insId);
