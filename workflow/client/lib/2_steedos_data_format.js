@@ -275,6 +275,8 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
     if(field.type == 'table'){
       t_values = new Array();
       if (field.sfields){
+        if (!instanceValue[field.code])
+          return ;
         instanceValue[field.code].forEach(function(t_row_value){
           field.sfields.forEach(function(sfield){
             //if(sfield.type == 'checkbox'){

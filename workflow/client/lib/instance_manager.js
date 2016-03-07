@@ -57,6 +57,9 @@ InstanceManager.getCurrentApprove = function(){
   if (!instance)
     return ;
 
+  if (!instance.traces || instance.traces.length < 1)
+    return ;
+
   var currentTraces = instance.traces.filterProperty("is_finished", false);
 
   if(currentTraces.length < 1)

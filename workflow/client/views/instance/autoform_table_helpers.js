@@ -90,6 +90,9 @@ autoform_table_Helpers.initValidrows = function (arr){
     //if (!arr || arr.length < 1)
     //    arr = [-1] ;
 
+    if(!arr)
+        return ;
+
     for(var i = 0 ; i < arr.length ; i++){
       validrows.push(i + "");
     }
