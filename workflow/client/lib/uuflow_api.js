@@ -181,6 +181,33 @@ UUflow_api.post_engine = function(approve) {
   })
 }
 
+// 取消申请
+UUflow_api.post_terminate = function(instance) {
+  var uobj = {};
+  uobj.methodOverride = "POST";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = workflowServer + "/uf/terminate?" + $.param(uobj);
+  var data = {"Instances":[instance]};
+  data = JSON.stringify(data);
+  $.ajax({
+    url: url,
+    type: "POST",
+    async: true,
+    data: data,
+    dataType: "json",
+    processData: false,
+    contentType: "text/plain",
+
+    success: function(responseText, status) {
+      $('#force_end_modal').modal('hide');
+    },
+    error: function(xhr, msg, ex) {
+      // alert("e");
+    }
+  })
+}
+
 UUflow_api.print = function(instanceId){
   window.open(workflowServer + "/uf/print?id=" + instanceId);
 }

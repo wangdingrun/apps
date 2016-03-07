@@ -10,6 +10,8 @@
                         <span class="btn glyphicon glyphicon-remove" id="instance_remove"></span>
                         <span class="btn glyphicon glyphicon-print" id="instance_to_print"></span>
                         <span class="btn glyphicon glyphicon-paperclip" id="instance_add_attachment"></span>
+                        <span class="btn glyphicon glyphicon-ban-circle" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal"></span>
+                        {{> force_end_modal}}
                         <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
                     </div>
                 </div>

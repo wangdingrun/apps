@@ -154,5 +154,15 @@ InstanceManager.submitIns = function() {
   }
 }
 
+// 取消申请
+InstanceManager.terminateIns = function (terminate_reason) {
+  var instance = WorkflowManager.getInstance();
+  if (instance) {
+    InstanceManager.resetId(instance);
+    instance.terminate_reason = terminate_reason;
+    UUflow_api.post_terminate(instance);
+  }
+}
+
 
 
