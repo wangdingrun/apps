@@ -30,6 +30,9 @@ Template.monitor.helpers({
     return flows;
   },
 
+  spaceId: function() {
+    return Session.get("spaceId");
+  }
 
 });
 

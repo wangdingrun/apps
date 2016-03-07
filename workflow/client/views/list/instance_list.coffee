@@ -6,6 +6,9 @@ Template.instance_list.helpers
 	boxName: ->
 		return Session.get("box");
 
+	spaceId: ->
+		return Session.get("spaceId");
+
 
 Template.instance_list.events
 

@@ -1,5 +1,17 @@
 <template name="monitor">
-  <div class="box">
+  <section class="content-header">
+    <h1>{{boxName}}  
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createInsModal" style="margin-left: 15px;margin-bottom: 5px">
+        New
+      </button>
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">{{boxName}}</li>
+    </ol>
+  </section>
+  <div class="box" style="margin-left: 15px;margin-bottom: 5px">
     <div class="box-header">
       <h3 class="box-title">{{boxName}}</h3>
     </div>
