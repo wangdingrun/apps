@@ -1,5 +1,7 @@
 ApproveManager = {};
 
+ApproveManager.error = {nextSteps:'',nextStepUsers:''}
+
 ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields){
 
     if(!currentStep)
@@ -116,11 +118,13 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     nextStepUsers = nextStepUsers.concat(WorkflowManager.getUsers(specifyUserIds));
                     break;
                 case 'applicantRole': //指定审批岗位
-                    var approveRoles = nextStep.approver_roles;
-                    nextStepUsers = WorkflowManager.getRoleUsersByOrgAndRoles(instance.space, applicant.organization.id, approveRoles);
-                    if(nextStepUsers.length < 1){
+                    var approveRoleIds = nextStep.approver_roles;
+                    var approveRoles = WorkflowManager.getRoles(approveRoleIds);
+                    nextStepUsers = WorkflowManager.getRoleUsersByOrgAndRoles(instance.space, applicant.organization.id, approveRoleIds);
+                    if(!nextStepUsers.length){
                         //todo 记录未找到角色人员的原因，用于前台显示
-                        console.error("步骤: " + nextStep.name + "找指定岗位处理人失败。参数：orgId is " + applicant.organization.id + ";roleIds is " + approveRoles);
+                        ApproveManager.error.nextStepUsers = '"' + approveRoles.getProperty('name').toString() + '"审批岗位未指定审批人';
+                        console.error("步骤: " + nextStep.name + "找指定岗位处理人失败。参数：orgId is " + applicant.organization.id + ";roleIds is " + approveRoleIds);
                     }
                     break;
                 case 'applicantSuperior': //申请人上级
@@ -134,46 +138,54 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     var userField = InstanceManager.getFormField(userFieldId);
                     if(userField){
                         var userFieldValue = InstanceManager.getFormFieldValue(userField.code);
-                        if(userField.is_multiselect){ //如果多选，以userFieldValue值为Array
-                            nextStepUsers = WorkflowManager.getUsers(userFieldValue);
-                        }else{
-                            nextStepUsers.push(WorkflowManager.getUser(userFieldValue));
+                        if(userFieldValue){
+                            if(userField.is_multiselect){ //如果多选，以userFieldValue值为Array
+                                nextStepUsers = WorkflowManager.getUsers(userFieldValue);
+                            }else{
+                                nextStepUsers.push(WorkflowManager.getUser(userFieldValue));
+                            }
                         }
                     }
-                    if(nextStepUsers.length < 1){
-                       //todo 记录记录未找到的原因，用于前台显示 
-                       console.error("步骤: " + nextStep.name + "fieldId is " + fieldId);
+                    if(!nextStepUsers.length){
+                       //todo 记录记录未找到的原因，用于前台显示
+                       ApproveManager.error.nextStepUsers = '"' + userField.code + '"字段没有值';
+                       console.error("步骤: " + nextStep.name + "fieldId is " + userFieldId);
                     }
                     break;
                 case 'orgField': //指定部门字段
                     var orgFieldId = nextStep.approver_org_field;
                     var orgField = InstanceManager.getFormField(orgFieldId);
+                    var orgs = new Array();
 
                     if(orgField){
                         var orgFieldValue = InstanceManager.getFormFieldValue(orgField.code);
 
-                        var orgs;
-
                         var orgChildrens = new Array();
 
                         //获得orgFieldValue的所有子部门
-                        if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
-                            orgs = WorkflowManager.getOrganizations(orgFieldValue);
-                            orgChildrens = WorkflowManager.getOrganizationsChildrens(instance.space, orgFieldValue);
-                        }else{
-                            orgs = [WorkflowManager.getOrganization(orgFieldValue)];
-                            orgChildrens = WorkflowManager.getOrganizationChildrens(instance.space, orgFieldValue);
+                        if(orgFieldValue){
+                            if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
+                                orgs = WorkflowManager.getOrganizations(orgFieldValue);
+                                orgChildrens = WorkflowManager.getOrganizationsChildrens(instance.space, orgFieldValue);
+                            }else{
+                                orgs = [WorkflowManager.getOrganization(orgFieldValue)];
+                                orgChildrens = WorkflowManager.getOrganizationChildrens(instance.space, orgFieldValue);
+                            }
+
+                            nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgChildrens);
+                            
+                            orgFieldUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgs);
+
+                            nextStepUsers = nextStepUsers.concat(orgFieldUsers);
                         }
-
-                        nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgChildrens);
-                        
-                        orgFieldUsers = WorkflowManager.getOrganizationsUsers(instance.space, orgs);
-
-                        nextStepUsers = nextStepUsers.concat(orgFieldUsers);
                     }
 
-                    if(nextStepUsers < 1){
-                        //todo 记录记录未找到的原因，用于前台显示 
+                    if(!nextStepUsers.length){
+                        if(!orgs.length){
+                            ApproveManager.error.nextStepUsers = '"' + orgField.code + '"字段没有值';
+                        }else{
+                            ApproveManager.error.nextStepUsers = '"' + orgs.concat(orgChildrens).getProperty('name').toString() + '"部门中没有人员';
+                        }
                     }
                     break;
                 case 'specifyOrg': //指定部门
@@ -184,48 +196,61 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 
                     nextStepUsers = WorkflowManager.getOrganizationsUsers(instance.space, specifyOrgs);
                     nextStepUsers = nextStepUsers.concat(WorkflowManager.getOrganizationsUsers(instance.space, specifyOrgChildrens));
-                    if(nextStepUsers < 1){
-                        //todo 记录记录未找到的原因，用于前台显示 
+                    if(!nextStepUsers.length){
+                        ApproveManager.error.nextStepUsers = '"' + specifyOrgs.concat(specifyOrgChildrens).getProperty('name').toString() + '"部门中没有人员';
                     }
                     break;
                 case 'userFieldRole': //指定人员字段相关审批岗位
 
-                    var approverRoles = nextStep.approver_roles;
+                    var approverRoleIds = nextStep.approver_roles;
                     var userFieldId = nextStep.approver_user_field;
                     var userField = InstanceManager.getFormField(userFieldId);
-
+                    var userFieldValue;
                     if (userField){
-                        var userFieldValue = InstanceManager.getFormFieldValue(userField.code);
-
-                        if(userField.is_multiselect){//如果多选，以userFieldValue值为Array
-                            nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, userFieldValue, approverRoles);
-                        }else{
-                            nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, [userFieldValue], approverRoles);
+                        userFieldValue = InstanceManager.getFormFieldValue(userField.code);
+                        if(userFieldValue){
+                            if(userField.is_multiselect){//如果多选，以userFieldValue值为Array
+                                nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, userFieldValue, approverRoleIds);
+                            }else{
+                                nextStepUsers = WorkflowManager.getRoleUsersByUsersAndRoles(instance.space, [userFieldValue], approverRoleIds);
+                            }
                         }
                     }
 
-                    if(nextStepUsers < 1){
-                        //todo 记录记录未找到的原因，用于前台显示 
+                    if(!nextStepUsers.length){
+                        
+                        if(!userFieldValue){
+                            ApproveManager.error.nextStepUsers = '"' + userField.code + '"字段没有值';
+                        }else{
+                            var approverRoles = WorkflowManager.getRoles(approverRoleIds);
+                            ApproveManager.error.nextStepUsers = '"' + approverRoles.getProperty("name").toString() + '"审批岗位未指定审批人';
+                        }
                     }
 
                     break;
                 case 'orgFieldRole': //指定部门字段相关审批岗位
-                    var approverRoles = nextStep.approver_roles;
+                    var approverRoleIds = nextStep.approver_roles;
                     var orgFieldId = nextStep.approver_org_field;
                     var orgField = InstanceManager.getFormField(orgFieldId);
-
+                    var orgFieldValue;
                     if(orgField){
-                        var orgFieldValue = InstanceManager.getFormFieldValue(orgField.code);
-
-                        if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
-                            nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, orgFieldValue, approverRoles);
-                        }else{
-                            nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, [orgFieldValue], approverRoles);
+                        orgFieldValue = InstanceManager.getFormFieldValue(orgField.code);
+                        if(orgFieldValue){
+                            if(orgField.is_multiselect){//如果多选，以orgFieldValue值为Array
+                                nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, orgFieldValue, approverRoleIds);
+                            }else{
+                                nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(instance.space, [orgFieldValue], approverRoleIds);
+                            }
                         }
                     }
 
                     if(nextStepUsers < 1){
-                        //todo 记录记录未找到的原因，用于前台显示 
+                        if(!orgFieldValue){
+                            ApproveManager.error.nextStepUsers = '"' + orgField.code + '"字段没有值';
+                        }else{
+                            var approverRoles = WorkflowManager.getRoles(approverRoleIds);
+                            ApproveManager.error.nextStepUsers = '"' + approverRoles.getProperty("name").toString() + '"审批岗位未指定审批人';
+                        }
                     }
 
                     break;

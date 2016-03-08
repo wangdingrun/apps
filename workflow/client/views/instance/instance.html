@@ -82,7 +82,6 @@
                 </div>
             </nav>
             {{#autoForm id=instanceId schema=fields type="method" doc=doc_values meteormethod='instance'}}
-                <div style='display:none'>{{init_nextStepsOptions}}</div>
                 <div class="row">
                     {{#each steedos_form.fields}}
                         {{#if equals this.type 'table'}}
@@ -108,7 +107,7 @@
                 </div>
                 
             {{/autoForm}}
-
+             <div style='display:none'>{{init_nextStepsOptions}}</div>
              <div class="row">
                 <div class="col-md-12">
                     {{> Template.dynamic template="instance_attachments" data=instance.attachments}}

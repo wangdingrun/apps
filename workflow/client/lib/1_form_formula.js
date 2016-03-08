@@ -305,15 +305,17 @@ Array.prototype.uniqById = function(){
     var a = [];
     var r = [];
     this.forEach(function(b){
-        if("id" in b){
-            if(a.indexOf(b.id) < 0){
-                a[a.length] = b.id;
-                r[r.length] = b;
-            }
-        }else if("_id" in b){
-            if(a.indexOf(b._id) < 0){
-                a[a.length] = b._id;
-                r[r.length] = b;
+        if(b){
+            if("id" in b){
+                if(a.indexOf(b.id) < 0){
+                    a[a.length] = b.id;
+                    r[r.length] = b;
+                }
+            }else if("_id" in b){
+                if(a.indexOf(b._id) < 0){
+                    a[a.length] = b._id;
+                    r[r.length] = b;
+                }
             }
         }
     });
@@ -337,6 +339,15 @@ Array.prototype.filterProperty = function(h, l){
     });
     return g;
 };
+
+Array.prototype.getProperty = function(k){
+    var v = new Array();
+    this.forEach(function(t){
+        var m = t? t[k]:null;
+        v.push(m);
+    });
+    return v;
+}
 
 //子表的sum方法
 function sum(sub_field_code_values){

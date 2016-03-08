@@ -168,19 +168,20 @@ WorkflowManager.getInstanceFieldPermission = function (){
   instance = WorkflowManager.getInstance();
 
   if (!instance){
-    return {}
+    return {};
   }
 
   var current_stepId = "";
-
-  instance.traces.forEach(
-    function(trace){
-      if (trace.is_finished == false){
-        current_stepId = trace.step;
-        return;
+  if(instance.traces){
+    instance.traces.forEach(
+      function(trace){
+        if (trace.is_finished == false){
+          current_stepId = trace.step;
+          return;
+        }
       }
-    }
-  );
+    );
+  }
 
  step = WorkflowManager.getInstanceStep(current_stepId);
  if (!step){
@@ -224,7 +225,7 @@ WorkflowManager.getOrganizationsUsers = function(spaceId, orgs){
 WorkflowManager.getOrganization = function(orgId){
 
   if (!orgId) {
-    return {name:''};
+    return ;
   }
 
   var spaceOrgs = WorkflowManager.getSpaceOrganizations("") , spaceOrg = {};
@@ -253,16 +254,30 @@ WorkflowManager.getOrganizations = function(orgIds){
   return orgs;
 };
 
+WorkflowManager.getRoles = function(roleIds){
+  if(!roleIds || !(roleIds instanceof Array)){
+    return [];
+  }
+
+  var roles = new Array();
+
+  roleIds.forEach(function(roleId){
+    roles.push(WorkflowManager.getRole(roleId));
+  });
+
+  return roles;
+}
+
 WorkflowManager.getRole = function(roleId){
   
   if (!roleId) {
-    return {name:''};
+    return ;
   }
 
   var spaceRoles = WorkflowManager.getSpaceRoles(), role = {};
 
   spaceRoles.forEach(function(spaceRole){
-    if(spaceRoles.id = roleId){
+    if(spaceRole.id == roleId){
       role = spaceRole;
       return ;
     }
@@ -274,7 +289,7 @@ WorkflowManager.getRole = function(roleId){
 WorkflowManager.getUser = function (userId){
 
   if (!userId) {
-    return {name:''};
+    return ;
   }
 
   if (typeof userId != "string"){

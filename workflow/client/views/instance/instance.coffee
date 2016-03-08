@@ -42,6 +42,7 @@ Template.instanceform.helpers
 		return InstanceManager.getCurrentApprove();
 
 	init_nextStepsOptions: ->
+		console.log("run init_nextStepsOptions...");
 		currentApprove = InstanceManager.getCurrentApprove();
 		if !currentApprove
 			return;
@@ -64,7 +65,10 @@ Template.instanceform.helpers
 		ApproveManager.updateNextStepOptions(nextSteps, judge);
 
 		nextStepId = currentApprove.next_steps[0].step;
-		$("#nextSteps").get(0).value = nextStepId;
+		if nextSteps.filterProperty('id',nextStepId).length > 0
+			$("#nextSteps").get(0).value = nextStepId;
+		else
+			return ;
 
 		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 		nextStep = WorkflowManager.getInstanceStep(nextStepId);
@@ -107,6 +111,10 @@ Template.instanceform.events
 		else
 			$("#nextStepUsers").empty();
 
+		InstanceManager.checkSuggestion();
+		InstanceManager.checkNextStep();
+		InstanceManager.checkNextStepUser();
+
 	'change #nextSteps': (event) ->
 		instance = WorkflowManager.getInstance();
 		nextStepId = $("#nextSteps option:selected").val();
@@ -114,6 +122,12 @@ Template.instanceform.events
 
 		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 		ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+
+		InstanceManager.checkNextStep();
+		InstanceManager.checkNextStepUser();
+
+	'change #nextStepUsers': (event) ->
+		InstanceManager.checkNextStepUser();
 
 	'change .form-control': (event)->
 		

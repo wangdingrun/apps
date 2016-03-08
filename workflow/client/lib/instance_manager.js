@@ -29,23 +29,50 @@ function removeMessage(parent_group){
 }
 
 InstanceManager.checkFormValue = function(){
+  
+  InstanceManager.checkNextStep();
 
-  //下一步步骤校验
+  InstanceManager.checkNextStepUser();
+
+  InstanceManager.checkSuggestion();
+
+  //字段校验
+  var fieldsPermision = WorkflowManager.getInstanceFieldPermission();
+
+  for(var k in fieldsPermision){
+    if(fieldsPermision[k] == 'editable'){
+      InstanceManager.checkFormFieldValue($("[name='"+k+"']")[0]);
+    }
+  }
+}
+
+//下一步步骤校验
+InstanceManager.checkNextStep = function(){
   var nextSteps_parent_group = $("#nextSteps").parent();
-  if($("#nextSteps option:selected").val())
+  if($("#nextSteps option:selected").val() && $("#nextSteps option:selected").val() != '-1')
     removeMessage(nextSteps_parent_group);
   else
     showMessage(nextSteps_parent_group, '请选择下一步步骤');
-  
+}
 
-  //下一步处理人校验
+//下一步处理人校验
+InstanceManager.checkNextStepUser = function(){
   var nextStepUsers_parent_group = $("#nextStepUsers").parent();
-  if($("#nextStepUsers option:selected").val())
+
+  if(ApproveManager.error.nextStepUsers != ''){
+    showMessage(nextStepUsers_parent_group, ApproveManager.error.nextStepUsers);
+    ApproveManager.error.nextStepUsers = '';
+    return ;
+  }
+
+  if($("#nextStepUsers option:selected").val() && $("#nextStepUsers option:selected").val() != '-1')
     removeMessage(nextStepUsers_parent_group);
   else
     showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
+}
 
-  //如果是驳回必须填写意见
+//如果是驳回必须填写意见
+InstanceManager.checkSuggestion = function(){
   var judge = $("[name='judge']").filter(':checked').val();
   var suggestion_parent_group = $("#suggestion").parent();
   if(judge && judge == 'rejected'){
@@ -55,15 +82,6 @@ InstanceManager.checkFormValue = function(){
       showMessage(suggestion_parent_group, '驳回时必须填写意见');
   }else{
     removeMessage(suggestion_parent_group);
-  }
-
-  //字段校验
-  var fieldsPermision = WorkflowManager.getInstanceFieldPermission();
-
-  for(var k in fieldsPermision){
-    if(fieldsPermision[k] == 'editable'){
-      InstanceManager.checkFormFieldValue($("[name='"+k+"']")[0]);
-    }
   }
 }
 

@@ -260,7 +260,7 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
   var values = {};
 
   var approve_values_is_null = true;
-
+  if(!currentApprove || !currentApprove.values){return;}
   for(var ak in currentApprove.values){
     approve_values_is_null = false;
     break;
