@@ -115,6 +115,9 @@ Template.instanceform.events
 		InstanceManager.checkNextStep();
 		InstanceManager.checkNextStepUser();
 
+	'change #suggestion': (event) ->
+		InstanceManager.checkSuggestion();
+		
 	'change #nextSteps': (event) ->
 		instance = WorkflowManager.getInstance();
 		nextStepId = $("#nextSteps option:selected").val();
