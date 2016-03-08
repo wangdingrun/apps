@@ -183,8 +183,17 @@ Template.autoform_table.events({
     },
 
     'click #steedos-table-ok-button': function(event, template){
-      
       var tableCode = template.data.code;
+
+      var required_fields = $("[required]", $("#"+tableCode+"modal")).toArray();
+
+      required_fields.forEach(function(required_field){
+        InstanceManager.checkFormFieldValue(required_field);
+      });
+
+      if($(".has-error", $("#"+tableCode+"modal")).length > 0){
+        return ;
+      }
 
       var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
@@ -202,5 +211,6 @@ Template.autoform_table.events({
       if(call_method == "edit"){
         autoform_table_Helpers.update_row(row_index, tableCode, rowobj);
       }
+      autoform_table_Helpers.hideTableModal(tableCode);
     }
 })

@@ -84,6 +84,10 @@ autoform_table_Helpers.showTableModal = function (tableCode, modalTitle){
     $("#" + tableCode + "modal").modal('show');
 };
 
+autoform_table_Helpers.hideTableModal = function(tableCode){
+    $("#" + tableCode + "modal").modal('hide');
+}
+
 autoform_table_Helpers.initValidrows = function (arr){
     var validrows = new Array();
 

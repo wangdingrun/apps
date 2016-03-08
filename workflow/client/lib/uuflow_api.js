@@ -20,6 +20,9 @@ UUflow_api.post_draft = function(flowId) {
     ]
   };
   data = JSON.stringify(data);
+
+  console.log(data);
+
   $.ajax({
     url: url,
     type: "POST",
@@ -48,6 +51,7 @@ UUflow_api.put_draft = function(instance) {
   var url = workflowServer + "/uf/drafts?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -82,6 +86,7 @@ UUflow_api.delete_draft = function(instanceId) {
     ]
   };
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -109,6 +114,7 @@ UUflow_api.post_submit = function(instance) {
   var url = workflowServer + "/uf/submit?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -136,6 +142,7 @@ UUflow_api.put_approvals = function(approve) {
   var url = workflowServer + "/uf/approvals?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -163,6 +170,7 @@ UUflow_api.post_engine = function(approve) {
   var url = workflowServer + "/uf/engine?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -190,6 +198,7 @@ UUflow_api.post_terminate = function(instance) {
   var url = workflowServer + "/uf/terminate?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
+  console.log(data);
   $.ajax({
     url: url,
     type: "POST",

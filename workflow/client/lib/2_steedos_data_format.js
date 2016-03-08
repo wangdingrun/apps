@@ -238,10 +238,16 @@ var getSchemaValue = function(field,value){
       rev = (value && value == 'true') ? true : false;
       break;
     case 'multiSelect':
-      rev = value ? value.split(",") : [];
+      if(value instanceof Array)
+        rev = value;
+      else
+        rev = value ? value.split(",") : [];
       break;
     case 'radio':
-      rev = value ? value.split(",") : [];
+      if(value instanceof Array)
+        rev = value
+      else
+        rev = value ? value.split(",") : [];
     default:
       rev = value;
       break;
