@@ -49,6 +49,13 @@ InstanceManager.checkFormValue = function(){
 //下一步步骤校验
 InstanceManager.checkNextStep = function(){
   var nextSteps_parent_group = $("#nextSteps").parent();
+
+  if(ApproveManager.error.nextSteps != ''){
+    showMessage(nextSteps_parent_group, ApproveManager.error.nextSteps);
+    ApproveManager.error.nextSteps = '';
+    return ;
+  }
+
   if($("#nextSteps option:selected").val() && $("#nextSteps option:selected").val() != '-1')
     removeMessage(nextSteps_parent_group);
   else

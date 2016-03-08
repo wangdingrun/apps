@@ -13,6 +13,8 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     switch(currentStep.step_type){
         case 'condition': //条件
             nextSteps = Form_formula.getNextStepsFromCondition(currentStep, autoFormDoc, fields);
+            if(!nextSteps.length)
+                ApproveManager.error.nextSteps = '未能根据条件找到下一步';
             break;
         case 'end': //结束
             return next_steps;
