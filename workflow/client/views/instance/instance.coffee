@@ -80,6 +80,66 @@ Template.instanceform.helpers
 			$("#nextStepUsers").get(0).selectedIndex = -1;
 
 		u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
+
+
+	enabled_submit: ->
+		ins = WorkflowManager.getInstance();
+		flow_state = db.flows.findOne(ins.flow).state;
+		if (Session.get("box")=="draft"&&flow_state=="enabled") || Session.get("box")=="inbox"
+			return "";
+		else
+			return "display: none;";
+
+	enabled_save: ->
+		ins = WorkflowManager.getInstance();
+		flow_state = db.flows.findOne(ins.flow).state;
+		if (Session.get("box")=="draft"&&flow_state=="enabled") || Session.get("box")=="inbox"
+			return "";
+		else
+			return "display: none;";
+
+	enabled_delete: ->
+		# TODO 管理员删除
+		ins = WorkflowManager.getInstance();
+		if (Session.get("box")=="draft" || Session.get("box")=="monitor")
+			return "";
+		else
+			return "display: none;";
+
+	enabled_print: ->
+		# TODO 手机打印
+		if Meteor.isCordova
+			return "display: none;";
+		else
+			return "";
+
+
+	enabled_add_attachment: -> 
+		if Session.get("box")=="draft" || Session.get("box")=="inbox"
+			return "";
+		else
+			return "display: none;";
+
+	enabled_terminate: ->
+		ins = WorkflowManager.getInstance();
+		if (Session.get("box")=="pending" || Session.get("box")=="inbox") && ins.state=="pending" && ins.applicant==Meteor.userId()
+			return "";
+		else
+			return "display: none;";
+
+	enabled_reassign: -> 
+		ins = WorkflowManager.getInstance();
+		if Session.get("box")=="monitor" && ins.state=="pending" 
+			return "";
+		else
+			return "display: none;";
+
+	enabled_relocate: -> 
+		ins = WorkflowManager.getInstance();
+		if Session.get("box")=="monitor" && ins.state=="pending" 
+			return "";
+		else
+			return "display: none;";
 		
 
 

@@ -5,13 +5,15 @@
                 <span class="help-block"></span>
                 <div class="col-sm-6" style="padding:0px;">
                     <div class="button-group">
-                        <button type="button" class="btn btn-primary" id="instance_submit">提交</button>
-                        <span class="btn glyphicon glyphicon-save" id="instance_update"></span>
-                        <span class="btn glyphicon glyphicon-remove" id="instance_remove"></span>
-                        <span class="btn glyphicon glyphicon-print" id="instance_to_print"></span>
-                        <span class="btn glyphicon glyphicon-paperclip" id="instance_add_attachment"></span>
-                        <span class="btn glyphicon glyphicon-ban-circle" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal"></span>
+                        <button type="button" class="btn btn-primary" id="instance_submit" style={{enabled_submit}}>提交</button>
+                        <span class="btn glyphicon glyphicon-save" id="instance_update" title="保存" style={{enabled_save}}></span>
+                        <span class="btn glyphicon glyphicon-remove" id="instance_remove" title="删除" style={{enabled_delete}}></span>
+                        <span class="btn glyphicon glyphicon-print" id="instance_to_print" title="打印" style={{enabled_print}}></span>
+                        <span class="btn glyphicon glyphicon-paperclip" id="instance_add_attachment" title="附件" style={{enabled_add_attachment}}></span>
+                        <span class="btn glyphicon glyphicon-ban-circle" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal" title="取消申请" style={{enabled_terminate}}></span>
                         {{> force_end_modal}}
+                        <span class="btn glyphicon glyphicon-user" id="instance_reassign" title="转签核" style={{enabled_reassign}}></span>
+                        <span class="btn glyphicon glyphicon-random" id="instance_relocate" title="重定位" style={{enabled_relocate}}></span>
                         <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
                     </div>
                 </div>
