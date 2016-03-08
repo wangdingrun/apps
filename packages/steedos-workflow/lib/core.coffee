@@ -1,5 +1,7 @@
 @Steedos = @db = {}
 
+@TabularTables = {};
+
 db.users =  Meteor.users;
 db.organizations = new Meteor.Collection('organizations');
 db.spaces = new Meteor.Collection('spaces');
