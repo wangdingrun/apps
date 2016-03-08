@@ -57,12 +57,6 @@
 	
 	"Home": "主页",
 	"Profile": "个人信息",
-	"Inbox": "待审核",
-	"Outbox": "已审核",
-	"Draft": "草稿",
-	"In Progress": "进行中",
-	"Finished": "已完成",
-	"Monitor": "监控箱",
 	"APPROVAL": "审核",
 	"MY APPLICANT": "我的申请单",
 	"SETTINGS": "设置",
