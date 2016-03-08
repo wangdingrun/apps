@@ -84,16 +84,26 @@ Template.instanceform.helpers
 
 	enabled_submit: ->
 		ins = WorkflowManager.getInstance();
-		flow_state = db.flows.findOne(ins.flow).state;
-		if (Session.get("box")=="draft"&&flow_state=="enabled") || Session.get("box")=="inbox"
+		if !ins
+			return;
+		flow = db.flows.findOne(ins.flow);
+		if !flow
+			return;
+
+		if (Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox"
 			return "";
 		else
 			return "display: none;";
 
 	enabled_save: ->
 		ins = WorkflowManager.getInstance();
-		flow_state = db.flows.findOne(ins.flow).state;
-		if (Session.get("box")=="draft"&&flow_state=="enabled") || Session.get("box")=="inbox"
+		if !ins
+			return;
+		flow = db.flows.findOne(ins.flow);
+		if !flow
+			return;
+
+		if (Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox"
 			return "";
 		else
 			return "display: none;";
@@ -101,6 +111,8 @@ Template.instanceform.helpers
 	enabled_delete: ->
 		# TODO 管理员删除
 		ins = WorkflowManager.getInstance();
+		if !ins
+			return;
 		if (Session.get("box")=="draft" || Session.get("box")=="monitor")
 			return "";
 		else
@@ -122,6 +134,8 @@ Template.instanceform.helpers
 
 	enabled_terminate: ->
 		ins = WorkflowManager.getInstance();
+		if !ins
+			return;
 		if (Session.get("box")=="pending" || Session.get("box")=="inbox") && ins.state=="pending" && ins.applicant==Meteor.userId()
 			return "";
 		else
@@ -129,6 +143,8 @@ Template.instanceform.helpers
 
 	enabled_reassign: -> 
 		ins = WorkflowManager.getInstance();
+		if !ins
+			return;
 		if Session.get("box")=="monitor" && ins.state=="pending" 
 			return "";
 		else
@@ -136,6 +152,8 @@ Template.instanceform.helpers
 
 	enabled_relocate: -> 
 		ins = WorkflowManager.getInstance();
+		if !ins
+			return;
 		if Session.get("box")=="monitor" && ins.state=="pending" 
 			return "";
 		else
