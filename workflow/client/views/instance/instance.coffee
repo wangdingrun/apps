@@ -43,6 +43,11 @@ Template.instanceform.helpers
 
 	init_nextStepsOptions: ->
 		console.log("run init_nextStepsOptions...");
+
+		#将下一步、处理人控件设置为select2
+		$("#nextSteps").select2();
+		$("#nextStepUsers").select2();
+
 		currentApprove = InstanceManager.getCurrentApprove();
 		if !currentApprove
 			return;

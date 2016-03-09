@@ -279,6 +279,8 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
     
     $("#nextSteps").empty();
 
+    $("#nextSteps").select2().val(null);
+
     if(!steps)
         return;
     
@@ -293,9 +295,11 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
 
     if(lastStep.length > 0){
         $("#nextSteps").get(0).value = lastSelected;
-    }else if(steps.length > 0)
+    }else if(steps.length > 0){
         $("#nextSteps").get(0).selectedIndex = 0;
+    }
 
+    $("#nextSteps").select2().val($("#nextSteps option:selected").val());
 };
 
 ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
@@ -306,6 +310,7 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
     });
     
     $("#nextStepUsers").empty();
+    $("#nextStepUsers").select2().val(null);
     if(!users)
         return;
     
@@ -337,5 +342,5 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
         $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");
     }
 
-
+    $("#nextStepUsers").select2().val($("#nextStepUsers option:selected").val());
 }

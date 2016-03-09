@@ -235,7 +235,7 @@ var getSchemaValue = function(field,value){
   var rev ;
   switch(field.type){
     case 'checkbox':
-      rev = (value && value == 'true') ? true : false;
+      rev = (value && value != 'false') ? true : false;
       break;
     case 'multiSelect':
       if(value instanceof Array)
