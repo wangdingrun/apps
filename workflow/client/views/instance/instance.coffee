@@ -114,11 +114,15 @@ Template.instanceform.helpers
 			return "display: none;";
 
 	enabled_delete: ->
-		# TODO 管理员删除
+		# TODO 流程管理员
 		ins = WorkflowManager.getInstance();
 		if !ins
 			return;
-		if (Session.get("box")=="draft" || Session.get("box")=="monitor")
+		space = db.spaces.findOne(ins.space);
+		if !space
+			return;
+
+		if Session.get("box")=="draft" || (Session.get("box")=="monitor" && space.admins.contains(Meteor.userId()))
 			return "";
 		else
 			return "display: none;";
@@ -147,19 +151,29 @@ Template.instanceform.helpers
 			return "display: none;";
 
 	enabled_reassign: -> 
+		# TODO 流程管理员
 		ins = WorkflowManager.getInstance();
 		if !ins
 			return;
-		if Session.get("box")=="monitor" && ins.state=="pending" 
+		space = db.spaces.findOne(ins.space);
+		if !space
+			return;
+
+		if Session.get("box")=="monitor" && ins.state=="pending" && space.admins.contains(Meteor.userId())
 			return "";
 		else
 			return "display: none;";
 
 	enabled_relocate: -> 
+		# TODO 流程管理员
 		ins = WorkflowManager.getInstance();
 		if !ins
 			return;
-		if Session.get("box")=="monitor" && ins.state=="pending" 
+		space = db.spaces.findOne(ins.space);
+		if !space
+			return;
+
+		if Session.get("box")=="monitor" && ins.state=="pending" && space.admins.contains(Meteor.userId())
 			return "";
 		else
 			return "display: none;";
