@@ -26,7 +26,7 @@ Template.instance_list.helpers
 			query.submitter = Meteor.userId();
 			query.state = "completed"
 		else if box == "monitor"
-			query.flow = flowId;
+			query.flow = Session.get("flowId");
 			query.state = {$in: ["pending","completed"]};
 		else
 			query.state = "none"

@@ -8,4 +8,4 @@
 
     console.log '[publish] categories for space ' + spaceId
 
-    return db.categories.find({space: spaceId})
+    return db.categories.find({space: spaceId}, {fields: {name: 1}})
