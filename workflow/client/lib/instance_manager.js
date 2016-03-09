@@ -56,7 +56,8 @@ InstanceManager.checkNextStep = function(){
     return ;
   }
 
-  if($("#nextSteps option:selected").val() && $("#nextSteps option:selected").val() != '-1')
+  var value = ApproveManager.getNextStepsSelectValue();
+  if(value && value != '-1')
     removeMessage(nextSteps_parent_group);
   else
     showMessage(nextSteps_parent_group, '请选择下一步步骤');
@@ -71,8 +72,8 @@ InstanceManager.checkNextStepUser = function(){
     ApproveManager.error.nextStepUsers = '';
     return ;
   }
-
-  if($("#nextStepUsers option:selected").val() && $("#nextStepUsers option:selected").val() != '-1')
+  var value = ApproveManager.getNextStepUsersSelectValue();
+  if(value && value != '-1')
     removeMessage(nextStepUsers_parent_group);
   else
     showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
@@ -119,6 +120,10 @@ InstanceManager.checkFormFieldValue = function(field){
 InstanceManager.getFormFieldValue = function(fieldCode){
     return AutoForm.getFieldValue(fieldCode, "instanceform");
 };
+
+InstanceManager.getInstanceValuesByAutoForm = function(){
+  var adjustFieldType = ['number','date-time','checked','user','groups']
+}
 
 InstanceManager.resetId = function (instance) {
   instance.id = instance._id;
@@ -184,10 +189,10 @@ InstanceManager.getMyApprove = function(){
     var judge = $("[name='judge']").filter(':checked').val();
     if (judge)
         currentApprove.judge = judge;
-    var nextStepId = $("#nextSteps option:selected").val();
+    var nextStepId = ApproveManager.getNextStepsSelectValue();
     if (nextStepId) {
 
-        var selectedNextStepUsers = $("#nextStepUsers option:selected").toArray();
+        var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
         var nextStepUsers = new Array();
         selectedNextStepUsers.forEach(function(su){
           nextStepUsers.push(su.value);

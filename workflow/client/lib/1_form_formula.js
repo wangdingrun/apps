@@ -218,7 +218,7 @@ function init_formula_values(fields, autoFormDoc){
                         formulaTableValues = [],
                         __tableValues = {};
                     //按公式的格式转换值为__tableValues
-                    if(tableFields && tableFields.length && tableValues) {
+                    if(tableFields && tableFields.length && tableValues && tableValues instanceof Array) {
                         tableValues.forEach(function(tableValue){
                             formulaTableValues.push(init_formula_values(tableFields, tableValue));
                         }, this);
@@ -331,7 +331,7 @@ Array.prototype.filterProperty = function(h, l){
         if(m instanceof Array){
             d = m.includes(l);
         }else{
-            d = (l === undefined)?!!m:m==l;
+            d = (l === undefined)? false:m==l;
         }
         if(d){
             g.push(t);

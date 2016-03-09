@@ -201,7 +201,7 @@ Template.instanceform.events
 		ApproveManager.updateNextStepOptions(nextSteps, judge);
 
 		if nextSteps.length ==1 || judge == "rejected"
-			nextStepId = $("#nextSteps option:selected").val();
+			nextStepId = ApproveManager.getNextStepsSelectValue();
 			nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
 			nextStep = WorkflowManager.getInstanceStep(nextStepId);
 			ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
@@ -217,7 +217,7 @@ Template.instanceform.events
 		
 	'change #nextSteps': (event) ->
 		instance = WorkflowManager.getInstance();
-		nextStepId = $("#nextSteps option:selected").val();
+		nextStepId = ApproveManager.getNextStepsSelectValue();
 		nextStep = WorkflowManager.getInstanceStep(nextStepId);
 
 		nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);

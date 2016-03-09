@@ -101,6 +101,7 @@ WorkflowManager.getInstanceFormVersion = function (){
     if (form){
       rev = form.current;
       field_permission = WorkflowManager.getInstanceFieldPermission();
+      if(!rev || !rev.fields){return ;}
       rev.fields.forEach(
         function(field){
           field['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
