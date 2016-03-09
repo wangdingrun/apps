@@ -419,6 +419,21 @@ WorkflowManager.getRoleUsersByUsersAndRoles = function(spaceId, userIds, roleIds
   return roleUsers;
 };
 
+WorkflowManager.getFormulaUserObjects = function(userIds){
+  if (!userIds)
+    return ;
+  if(userIds instanceof Array){
+    var users = new Array();
+    userIds.forEach(function(u){
+      var user = WorkflowManager.getFormulaUserObject(u);
+      if(u)
+        users.push(user);
+    });
+    return users;
+  }else{
+    return WorkflowManager.getFormulaUserObject(userIds);
+  }
+}
 
 //return {name:'',organization:{fullname:'',name:''},roles:[]}
 WorkflowManager.getFormulaUserObject = function(userId){
@@ -429,6 +444,7 @@ WorkflowManager.getFormulaUserObject = function(userId){
   if(!user)
     return null;
 
+  userObject['id'] = userId;
   userObject['name'] = user.name;
   userObject['organization'] = user.organization;
   userObject["roles"] = user.roles;
@@ -436,6 +452,37 @@ WorkflowManager.getFormulaUserObject = function(userId){
   return userObject;
 
 };
+
+WorkflowManager.getFormulaOrgObjects = function(orgIds){
+  if (!orgIds)
+    return ;
+  if(orgIds instanceof Array){
+    var orgs = new Array();
+    orgIds.forEach(function(o){
+      var org = WorkflowManager.getFormulaOrgObject(o);
+      if(o)
+        orgs.push(org);
+    });
+    return orgs;
+  }else{
+    return WorkflowManager.getFormulaOrgObject(orgIds);
+  }
+}
+
+WorkflowManager.getFormulaOrgObject = function(orgId){
+  var orgObject = {};
+
+  var org = WorkflowManager.getOrganization(orgId);
+
+  if(!org)
+    return null;
+
+  orgObject['id'] = orgId;
+  orgObject['name'] = org.name;
+  orgObject['fullname'] = org.fullname;
+
+  return orgObject;
+}
 
 WorkflowManager.getSpaceCategories = function(spaceId){
   var re = new Array();

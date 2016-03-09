@@ -107,7 +107,7 @@ autoform_table_Helpers.initValidrows = function (arr){
 
 autoform_table_Helpers.removeValidrows = function (validrows_str, row_index){
     var validrows = new Array();
-    if (validrows_str !="")
+    if (validrows_str && validrows_str !="")
         validrows = validrows_str.split(",");
     var id = validrows.indexOf(row_index);
     if (id > -1)
@@ -117,7 +117,7 @@ autoform_table_Helpers.removeValidrows = function (validrows_str, row_index){
 
 autoform_table_Helpers.addValidrows = function (validrows_str, row_index){
     var validrows = new Array();
-    if (validrows_str !="")
+    if (validrows_str && validrows_str !="")
         validrows = validrows_str.split(",");
     validrows.push(row_index);
     return validrows.toString();
@@ -125,7 +125,7 @@ autoform_table_Helpers.addValidrows = function (validrows_str, row_index){
 
 autoform_table_Helpers.getValidrowIndex = function (validrows_str, row_index){
     var validrows = new Array();
-    if (validrows_str !="")
+    if (validrows_str && validrows_str !="")
         validrows = validrows_str.split(",");
     return validrows.indexOf(row_index);
 };

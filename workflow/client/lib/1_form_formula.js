@@ -230,7 +230,13 @@ function init_formula_values(fields, autoFormDoc){
                     }
                 } else if (type == 'user'){
 
-                    __values[field.code] = WorkflowManager.getUser(autoFormDoc[field.code]);
+                    //__values[field.code] = WorkflowManager.getUser(autoFormDoc[field.code]);
+                    __values[field.code] = WorkflowManager.getFormulaUserObjects(autoFormDoc[field.code]);
+
+                } else if (type == 'group'){
+
+                    //__values[field.code] = WorkflowManager.getUser(autoFormDoc[field.code]);
+                    __values[field.code] = WorkflowManager.getFormulaOrgObjects(autoFormDoc[field.code]);
 
                 } else {
                     //此处传spaceId给选人控件的旧数据计算roles和organization

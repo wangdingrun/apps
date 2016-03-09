@@ -257,22 +257,13 @@ var getSchemaValue = function(field,value){
 
 
 WorkflowManager_format.getAutoformSchemaValues = function(){
-  var instance = WorkflowManager.getInstance();
   var form = WorkflowManager.getInstanceFormVersion();
-  var currentApprove = InstanceManager.getCurrentApprove();
   if(!form) return ;
   var fields = form.fields;
 
   var values = {};
 
-  var approve_values_is_null = true;
-  if(!currentApprove || !currentApprove.values){return;}
-  for(var ak in currentApprove.values){
-    approve_values_is_null = false;
-    break;
-  }
-
-  var instanceValue = approve_values_is_null ? instance.values : currentApprove.values;
+  var instanceValue = InstanceManager.getCurrentValues();
 
   if(!instanceValue)
     return ;

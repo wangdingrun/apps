@@ -88,7 +88,7 @@ textarea.suggestion-control{
     margin-bottom: 15px;
 }
 
-.glyphicon{
+.button-group > .glyphicon{
     padding-left: 15px;
     font-size: 18px;
 }

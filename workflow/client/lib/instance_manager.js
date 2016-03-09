@@ -119,10 +119,76 @@ InstanceManager.checkFormFieldValue = function(field){
 
 InstanceManager.getFormFieldValue = function(fieldCode){
     return AutoForm.getFieldValue(fieldCode, "instanceform");
-};
+}
+
+function adjustFieldValue(field,value){
+  if(!value){return value;}
+  var adjustFieldTypes = ['number','multiSelect','radio','checked','date-time','user','groups'];
+
+  if(adjustFieldTypes.includes(field.type)){
+    switch(field.type){
+      case 'number':
+        value = value.toString();
+        break;
+      case 'multiSelect':
+        value = value.toString();
+        break;
+      case 'radio':
+        value = value.toString();
+        break;
+      case 'checked':
+        value = value.toString();
+        break;
+      case 'date-time':
+        value = $.format.date(value,'yyyy-MM-ddTHH:mm');
+        break;
+      case 'groups':
+        value = WorkflowManager.getFormulaOrgObjects(value);
+        break;
+      case 'user':
+        value = WorkflowManager.getFormulaUserObjects(value);
+        break;
+    }
+  }
+  return value;
+}
+
+
 
 InstanceManager.getInstanceValuesByAutoForm = function(){
-  var adjustFieldType = ['number','date-time','checked','user','groups']
+  
+  var fields = WorkflowManager.getInstanceFields();
+
+  var instanceValue = InstanceManager.getCurrentValues();
+  var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
+
+  var values = {};
+  
+  fields.forEach(function(field){
+    if(field.type == 'table'){
+      t_values = new Array();
+      if (field.sfields){
+        if (!autoFormValue[field.code])
+          return ;
+        autoFormValue[field.code].forEach(function(t_row_value){
+          field.sfields.forEach(function(sfield){
+            //if(sfield.type == 'checkbox'){
+            t_row_value[sfield.code] = adjustFieldValue(sfield, t_row_value[sfield.code]);
+            //}
+          });
+          t_values.push(t_row_value);
+          
+        });
+      }
+      values[field.code] = t_values;
+    }else{
+      if(field.type !='section'){
+        values[field.code] = adjustFieldValue(field, autoFormValue[field.code]);
+      }
+    }
+  });
+
+  return values;
 }
 
 InstanceManager.resetId = function (instance) {
@@ -152,6 +218,20 @@ InstanceManager.getCurrentStep = function(){
     var currentStepId = currentTrace.step;
 
     return WorkflowManager.getInstanceStep(currentStepId);
+}
+
+InstanceManager.getCurrentValues = function(){
+  var instance = WorkflowManager.getInstance();
+  var currentApprove = InstanceManager.getCurrentApprove();
+  var approve_values_is_null = true;
+  if(!currentApprove || !currentApprove.values){return;}
+  if(_.size(currentApprove.values) == 0){
+    approve_values_is_null = false;
+  }
+
+  var instanceValue = approve_values_is_null ? instance.values : currentApprove.values;
+
+  return instanceValue;
 }
 
 InstanceManager.getCurrentApprove = function(){
@@ -200,7 +280,7 @@ InstanceManager.getMyApprove = function(){
         currentApprove.next_steps = [{step:nextStepId,users:nextStepUsers}];
     }
 
-    currentApprove.values = AutoForm.getFormValues("instanceform").insertDoc;
+    currentApprove.values = InstanceManager.getInstanceValuesByAutoForm();
 
     return currentApprove;
   }
@@ -219,7 +299,7 @@ InstanceManager.saveIns = function() {
       UUflow_api.put_draft(instance);
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
-      myApprove.values = AutoForm.getFormValues("instanceform").insertDoc;
+      myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       UUflow_api.put_approvals(myApprove);
     }
   }
@@ -249,7 +329,7 @@ InstanceManager.submitIns = function() {
       UUflow_api.post_submit(instance);
     } else if (state=="pending") {
       var myApprove = InstanceManager.getMyApprove();
-      myApprove.values = AutoForm.getFormValues("instanceform").insertDoc;
+      myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       UUflow_api.post_engine(myApprove);
     }
       
