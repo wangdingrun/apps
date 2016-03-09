@@ -17,8 +17,9 @@ Meteor.startup ->
 					Session.set("flowId", instance.flow)
 					Session.set("spaceId", instance.space)
 			onStop: ->
-				Session.set("formId", null)
-				Session.set("flowId", null)
+				Session.set("formId", null);
+				if Session.get("box") != "monitor"
+					Session.set("flowId", null)
 
 
 		Meteor.subscribe "form_data", Session.get("formId")

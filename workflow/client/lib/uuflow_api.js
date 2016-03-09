@@ -97,7 +97,15 @@ UUflow_api.delete_draft = function(instanceId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
+      box = Session.get("box");
+      if (box) {
+        if (box == "monitor") {
+          FlowRouter.go("/workflow/monitor/" + Session.get("spaceId") + "/" + Session.get("flowId"));
+        } else if (box == "draft") {
+          FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
+        }
+      }
+      
     },
     error: function(xhr, msg, ex) {
       // alert("e");

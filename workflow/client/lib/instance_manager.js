@@ -233,10 +233,9 @@ InstanceManager.newIns = function(flowId) {
 // 申请单删除
 InstanceManager.deleteIns = function() {
   var instance = WorkflowManager.getInstance();
-  if (instance && instance.state == "draft") {
-    UUflow_api.delete_draft(instance._id);
-  }
-  
+  if (!instance)
+    return;
+  UUflow_api.delete_draft(instance._id);
 }
 
 // 申请单提交
