@@ -33,12 +33,25 @@ Template.instance_list.helpers
 
 		return query
 
+	enabled_export: ->
+		spaceId = Session.get("spaceId");
+		if !spaceId
+			return;
+		space = db.spaces.findOne(spaceId);
+		if !space
+			return;
+		if Session.get("box")=="monitor" && space.admins.contains(Meteor.userId())
+			return "";
+		else
+			return "display: none;";
+
+
 Template.instance_list.events
 
 	'hidden.bs.modal #createInsModal': (event)->
 		insId = Session.get("instanceId");
 		if insId
-			FlowRouter.go("/workflow/instance/" + insId);
+			FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
 
 	'click tbody > tr': (event) ->
 		dataTable = $(event.target).closest('table').DataTable();
@@ -54,5 +67,20 @@ Template.instance_list.events
 					FlowRouter.go("/workflow/monitor/" + spaceId + "/" + flowId + "/" + rowData._id)
 			else
 				FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id)
-		
+	
+	'click .dropdown-menu li a': (event) -> 
+		InstanceManager.exportIns(event.target.type);
+
+
+
+
+
+
+
+
+
+
+
+
+
 

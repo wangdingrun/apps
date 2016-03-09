@@ -262,5 +262,13 @@ InstanceManager.terminateIns = function (terminate_reason) {
   }
 }
 
+// 导出报表
+InstanceManager.exportIns = function (type) {
+  spaceId = Session.get("spaceId");
+  flowId = Session.get("flowId");
+  if (spaceId && flowId)
+    UUflow_api.get_export(spaceId, flowId, type);
+}
+
 
 

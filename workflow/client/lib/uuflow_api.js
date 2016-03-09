@@ -217,6 +217,24 @@ UUflow_api.post_terminate = function(instance) {
   })
 }
 
+// 导出报表
+UUflow_api.get_export = function (spaceId, flowId, type) {
+  var uobj = {};
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  uobj.space_id = spaceId;
+  uobj.flow_id = flowId;
+  uobj.timezoneoffset = new Date().getTimezoneOffset();
+  uobj.type = type;
+  var url = workflowServer + "/uf/export/excel?" + $.param(uobj);
+  window.open(url, "_blank");
+}
+
+// 打印
 UUflow_api.print = function(instanceId){
-  window.open(workflowServer + "/uf/print?id=" + instanceId);
+  var uobj = {};
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  uobj.id = instanceId;
+  window.open(workflowServer + "/uf/print?" + $.param(uobj));
 }
