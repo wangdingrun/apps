@@ -15,6 +15,19 @@ FlowRouter.route '/workflow/inbox/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
+FlowRouter.route '/workflow/inbox/:spaceId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "inbox");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
+
 FlowRouter.route '/workflow/outbox/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
@@ -22,6 +35,19 @@ FlowRouter.route '/workflow/outbox/:spaceId',
 		if Meteor.user()
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
+
+FlowRouter.route '/workflow/outbox/:spaceId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "outbox");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
 
 
 FlowRouter.route '/workflow/draft/:spaceId', 
@@ -32,6 +58,19 @@ FlowRouter.route '/workflow/draft/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
+FlowRouter.route '/workflow/draft/:spaceId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "draft");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
+
 
 FlowRouter.route '/workflow/pending/:spaceId', 
 	action: (params, queryParams)->
@@ -41,6 +80,19 @@ FlowRouter.route '/workflow/pending/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
+FlowRouter.route '/workflow/pending/:spaceId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "pending");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
+
 
 FlowRouter.route '/workflow/completed/:spaceId', 
 	action: (params, queryParams)->
@@ -49,6 +101,19 @@ FlowRouter.route '/workflow/completed/:spaceId',
 		if Meteor.user()
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
+
+FlowRouter.route '/workflow/completed/:spaceId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "completed");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
 
 
 FlowRouter.route '/workflow/monitor/:spaceId', 
@@ -68,6 +133,20 @@ FlowRouter.route '/workflow/monitor/:spaceId/:flowId',
 		if Meteor.user()
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
+
+FlowRouter.route '/workflow/monitor/:spaceId/:flowId/:instanceId', 
+	action: (params, queryParams)->
+		Session.set("spaceId", params.spaceId);
+		Session.set("flowId", params.flowId);
+		Session.set("instanceId", params.instanceId);
+		Session.set("box", "monitor");
+		if Meteor.user()
+			BlazeLayout.render 'masterLayout',
+				main: "instanceform"
+	triggersExit: [
+		()->
+			Session.set("instanceId", null)
+	]
 
 
 FlowRouter.route '/workflow/instance/:instanceId', 

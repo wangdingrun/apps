@@ -45,5 +45,14 @@ Template.instance_list.events
 		rowData = dataTable.row(event.currentTarget).data();
 		if (!rowData) 
 			return; 
-		FlowRouter.go("/workflow/instance/" + rowData._id)
+		box = Session.get("box");
+		spaceId = Session.get("spaceId");
+		if box && spaceId
+			if box == "monitor"
+				flowId = Session.get("flowId");
+				if flowId
+					FlowRouter.go("/workflow/monitor/" + spaceId + "/" + flowId + "/" + rowData._id)
+			else
+				FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id)
+		
 
