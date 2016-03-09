@@ -1,22 +1,5 @@
 <template name="flow_list">
-  <ul class="sidebar-menu">
-    {{#each categories}}
-      <li class="treeview">
-        <a href="#" name="selectCategory">
-          <i class="fa fa-folder"></i><span>{{name}}</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          {{#each categoryFlows _id}}
-              <li><a href="#" id="{{_id}}" name="selectFlow" ><i class="fa fa-circle-o"></i>&nbsp;{{name}}</a></li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-    {{#each notCategoryFlows}}
-      <li><a href="#" id="{{_id}}" name="selectFlow" ><i class="fa fa-circle-o"></i><span>{{name}}</span></a></li>
-    {{/each}}
-  </ul>
+  <div id="tree"></div>
 </template>
 
 
