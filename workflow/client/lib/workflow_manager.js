@@ -446,8 +446,8 @@ WorkflowManager.getFormulaUserObject = function(userId){
 
   userObject['id'] = userId;
   userObject['name'] = user.name;
-  userObject['organization'] = user.organization;
-  userObject["roles"] = user.roles;
+  userObject['organization'] = {'name':user.organization.name,'fullname':user.organization.fullname};
+  userObject["roles"] = user.roles ? user.roles.getProperty('name'):[];
 
   return userObject;
 

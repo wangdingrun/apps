@@ -122,8 +122,8 @@ InstanceManager.getFormFieldValue = function(fieldCode){
 }
 
 function adjustFieldValue(field,value){
-  if(!value){return value;}
-  var adjustFieldTypes = ['number','multiSelect','radio','checked','date-time','user','groups'];
+  if(!value && value!=false){return value;}
+  var adjustFieldTypes = ['number','multiSelect','radio','checkbox','dateTime','user','group'];
 
   if(adjustFieldTypes.includes(field.type)){
     switch(field.type){
@@ -136,13 +136,13 @@ function adjustFieldValue(field,value){
       case 'radio':
         value = value.toString();
         break;
-      case 'checked':
+      case 'checkbox':
         value = value.toString();
         break;
-      case 'date-time':
+      case 'dateTime':
         value = $.format.date(value,'yyyy-MM-ddTHH:mm');
         break;
-      case 'groups':
+      case 'group':
         value = WorkflowManager.getFormulaOrgObjects(value);
         break;
       case 'user':
