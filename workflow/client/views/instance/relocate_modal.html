@@ -1,0 +1,29 @@
+<template name="relocate_modal">
+  <div class="modal fade" id="relocate_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLabel2">重定位</h4>
+        </div>
+
+        <div class="modal-body">
+          <!-- 警告框 -->
+          <div class="alert alert-warning fade in" role="alert" style="display: none;" id="relocate_modal_warn">
+            <button type="button" class="close" aria-label="Close" id="relocate_modal_close"><span aria-hidden="true">&times;</span></button>
+            <strong>请填写重定位的理由。</strong>
+          </div>
+
+          <p><span>当前步骤：</span>xxxx</p>
+          <p><span>下一步骤：</span>xxxx</p>
+          <p><span>处理人：</span>xxxxx</p>
+          <textarea class="form-control" id="relocate_modal_text" placeholder="请填写重定位的理由。"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="relocate_modal_ok">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

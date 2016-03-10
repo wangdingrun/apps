@@ -225,6 +225,34 @@ UUflow_api.post_terminate = function(instance) {
   })
 }
 
+// 转签核
+UUflow_api.put_reassign = function(instance) {
+  var uobj = {};
+  uobj.methodOverride = "PUT";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = workflowServer + "/uf/reassign?" + $.param(uobj);
+  var data = {"Instances":[instance]};
+  data = JSON.stringify(data);
+  console.log(data);
+  $.ajax({
+    url: url,
+    type: "POST",
+    async: true,
+    data: data,
+    dataType: "json",
+    processData: false,
+    contentType: "text/plain",
+
+    success: function(responseText, status) {
+      $('#reassign_modal').modal('hide');
+    },
+    error: function(xhr, msg, ex) {
+      // alert("e");
+    }
+  })
+}
+
 // 导出报表
 UUflow_api.get_export = function (spaceId, flowId, type) {
   var uobj = {};

@@ -337,11 +337,11 @@ InstanceManager.submitIns = function() {
 }
 
 // 取消申请
-InstanceManager.terminateIns = function (terminate_reason) {
+InstanceManager.terminateIns = function (reason) {
   var instance = WorkflowManager.getInstance();
   if (instance) {
     InstanceManager.resetId(instance);
-    instance.terminate_reason = terminate_reason;
+    instance.terminate_reason = reason;
     UUflow_api.post_terminate(instance);
   }
 }
@@ -352,6 +352,17 @@ InstanceManager.exportIns = function (type) {
   flowId = Session.get("flowId");
   if (spaceId && flowId)
     UUflow_api.get_export(spaceId, flowId, type);
+}
+
+// 转签核
+InstanceManager.reassignIns = function (user_ids, reason) {
+  var instance = WorkflowManager.getInstance();
+  if (instance) {
+    InstanceManager.resetId(instance);
+    instance.inbox_users = user_ids;
+    instance.reassign_reason = reason;
+    UUflow_api.put_reassign(instance);
+  }
 }
 
 
