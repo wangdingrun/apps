@@ -138,47 +138,53 @@ var get_tds_html = function(row_index, tableCode, rowobj){
     var tds_html = "<td>" + row_index + "</td>";
 
     for(var key in rowobj){
-
+        var td_value = "";
         switch(rowobj[key].type){
             case 'user' :
-                tds_html = tds_html + "<td nowrap='nowrap'>" + WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                if($("[name='"+(tableCode + ".$." + key)+"']").val()){
+                    td_value = WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name
+                }    
                 break;
             case 'group':
-                tds_html = tds_html + "<td nowrap='nowrap'>" + WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name + "</td>";
+                if($("[name='"+(tableCode + ".$." + key)+"']").val()){
+                    td_value = WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name
+                }    
                 break;
             case 'checkbox':
-                if ($("[name='"+(tableCode + ".$." + key)+"']")[0].checked)
-                    tds_html = tds_html + "<td nowrap='nowrap'>" + '是' + "</td>";
-                else
-                    tds_html = tds_html + "<td nowrap='nowrap'>" + '否' + "</td>";
+                if ($("[name='"+(tableCode + ".$." + key)+"']")[0].checked){
+                    td_value = '是';
+                }else{
+                    td_value = '否';
+                }
                 break;
             case 'radio':
-                tds_html = tds_html + "<td nowrap='nowrap'>" + $("[name='"+(tableCode + ".$." + key)+"']:checked").val() + "</td>";
+                td_value = $("[name='"+(tableCode + ".$." + key)+"']:checked").val()
                 break;
             case 'multiSelect':
                 var multiSelect_values = new Array();
                 $("input[name='"+(tableCode + ".$." + key)+"']:checked").each(function(){
                     multiSelect_values.push($(this).val());
                 });
-                tds_html = tds_html + "<td nowrap='nowrap'>" + multiSelect_values.toString() + "</td>";
+                td_value = multiSelect_values.toString();
                 break;
             case 'email':
                 var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
                 fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
-                tds_html = tds_html + "<td nowrap='nowrap'>" + fValue + "</td>";
+                td_value = fValue;
                 break;
             case 'url':
                 var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
                 fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
-                tds_html = tds_html + "<td nowrap='nowrap'>" + fValue + "</td>";
+                td_value = fValue;
                 break;
             case 'password':
-                tds_html = tds_html + "<td nowrap='nowrap'>******</td>";
+                td_value = '******';
                 break;
             default:
-                tds_html = tds_html + "<td nowrap='nowrap'>" + $("[name='"+(tableCode + ".$." + key)+"']").val() + "</td>";
+                td_value = $("[name='"+(tableCode + ".$." + key)+"']").val()
                 break;
         }
+        tds_html = tds_html + "<td nowrap='nowrap'>" + (td_value ? td_value : '') + "</td>";
     };
     tds_html = tds_html + 
                     "<td nowrap='nowrap'>" + 
@@ -188,7 +194,6 @@ var get_tds_html = function(row_index, tableCode, rowobj){
                             "<span class='glyphicon glyphicon-pencil edit-steedos-table-row' data-rowindex='" + row_index + "' data-title='修改' data-method='edit'></span>" +
                         "</span>" + 
                     "</td>";
-
     return tds_html;
 };
 
