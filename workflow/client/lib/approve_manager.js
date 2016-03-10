@@ -315,8 +315,10 @@ ApproveManager.getNextStepUsersSelectValue = function(){
 }
 
 ApproveManager.setNextStepUsersSelectValue = function(value){
-    $("#nextStepUsers").select2().val(value);
-    $("#nextStepUsers").select2().val();
+    if(value){
+        $("#nextStepUsers").select2().val(value);
+        $("#nextStepUsers").select2().val();
+    }
 }
 
 ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
@@ -327,8 +329,9 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
         selectedNextStepUsers.forEach(function(su){
           lastSelected.push(su.value);
         });
+    }else{
+        lastSelected.push(selectedNextStepUsers);
     }
-    
     $("#nextStepUsers").empty();
     $("#nextStepUsers").select2().val(null);
     if(!users)
