@@ -14,9 +14,9 @@
             <strong>请填写重定位的理由。</strong>
           </div>
 
-          <p><span>当前步骤：</span>xxxx</p>
-          <p><span>下一步骤：</span>xxxx</p>
-          <p><span>处理人：</span>xxxxx</p>
+          <p><span>当前步骤：</span>{{currentStepName}}</p>
+          <p><span>下一步骤：</span><select class="suggestion-control" id="relocate_steps"></select></p>
+          <p id="relocate_users_p"><span>处理人：</span><select class="suggestion-control" id="relocate_users"></select></p>
           <textarea class="form-control" id="relocate_modal_text" placeholder="请填写重定位的理由。"></textarea>
         </div>
         <div class="modal-footer">

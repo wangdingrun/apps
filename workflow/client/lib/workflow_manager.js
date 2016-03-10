@@ -165,6 +165,24 @@ WorkflowManager.getInstanceStep = function(stepId){
   return g_step;
 };
 
+WorkflowManager.getInstanceSteps = function(){
+  flow = WorkflowManager.getInstanceFlowVersion();
+
+  if (!flow)
+    return null;
+
+  var steps = [];
+
+  flow.steps.forEach(
+    function(step){
+      step.id = step._id;
+      steps.push(step);
+    }
+  );
+
+  return steps;
+};
+
 WorkflowManager.getInstanceFieldPermission = function (){
   instance = WorkflowManager.getInstance();
 

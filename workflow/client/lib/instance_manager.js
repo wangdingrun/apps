@@ -365,5 +365,17 @@ InstanceManager.reassignIns = function (user_ids, reason) {
   }
 }
 
+// 转签核
+InstanceManager.relocateIns = function (step_id, user_ids, reason) {
+  var instance = WorkflowManager.getInstance();
+  if (instance) {
+    InstanceManager.resetId(instance);
+    instance.relocate_next_step = step_id;
+    instance.relocate_inbox_users = user_ids;
+    instance.relocate_comment = reason;
+    UUflow_api.put_relocate(instance);
+  }
+}
+
 
 
