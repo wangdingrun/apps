@@ -35,9 +35,10 @@ UUflow_api.post_draft = function(flowId) {
     success: function(responseText, status) {
       Session.set("instanceId", responseText.ChangeSet.inserts.Instances[0].id);
       $('#createInsModal').modal('hide');
+      toastr.success("创建成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -62,10 +63,10 @@ UUflow_api.put_draft = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      toastr.success("保存成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -105,10 +106,10 @@ UUflow_api.delete_draft = function(instanceId) {
           FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
         }
       }
-      
+      toastr.success("申请单已删除!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -134,9 +135,10 @@ UUflow_api.post_submit = function(instance) {
 
     success: function(responseText, status) {
       FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
+      toastr.success("提交成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -161,10 +163,10 @@ UUflow_api.put_approvals = function(approve) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      // alert("s");
+      toastr.success("保存成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -190,9 +192,10 @@ UUflow_api.post_engine = function(approve) {
 
     success: function(responseText, status) {
       FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
+      toastr.success("提交成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -218,9 +221,10 @@ UUflow_api.post_terminate = function(instance) {
 
     success: function(responseText, status) {
       $('#force_end_modal').modal('hide');
+      toastr.success("取消申请成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -246,9 +250,10 @@ UUflow_api.put_reassign = function(instance) {
 
     success: function(responseText, status) {
       $('#reassign_modal').modal('hide');
+      toastr.success("转签核成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -274,9 +279,10 @@ UUflow_api.put_relocate = function(instance) {
 
     success: function(responseText, status) {
       $('#relocate_modal').modal('hide');
+      toastr.success("重定位成功!");
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
@@ -304,7 +310,7 @@ UUflow_api.post_archive = function(insId) {
       
     },
     error: function(xhr, msg, ex) {
-      // alert("e");
+      toastr.error(msg);
     }
   })
 }
