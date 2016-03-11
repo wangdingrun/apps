@@ -193,7 +193,7 @@ autoform_table_Helpers.getTDValue = function(tableCode, fieldCode, rowobj){
 
 
 var get_tds_html = function(row_index, tableCode, rowobj){
-    var tds_html = "<td>" + row_index + "</td>";
+    var tds_html = "";
 
     for(var key in rowobj){
         var td_value = autoform_table_Helpers.getTDValue(tableCode, key, rowobj);

@@ -102,7 +102,7 @@ WorkflowManager.getInstanceFormVersion = function (){
       rev = form.current;
       if(!rev || !rev.fields){return ;}
       if(rev._id != instance.form_version){
-        rev = instance.historys.filterProperty("_id",instance.form_version);
+        rev = form.historys.filterProperty("_id",instance.form_version)[0];
       }
       field_permission = WorkflowManager.getInstanceFieldPermission();
       rev.fields.forEach(
@@ -141,7 +141,7 @@ WorkflowManager.getInstanceFlowVersion = function (){
       rev = flow.current;
       if(!rev){return;}
       if(rev._id != instance.flow_version){
-        rev = instance.historys.filterProperty("_id",instance.flow_version);
+        rev = flow.historys.filterProperty("_id",instance.flow_version)[0];
       }
       return rev;
     }

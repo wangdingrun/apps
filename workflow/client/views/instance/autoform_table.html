@@ -2,32 +2,39 @@
     
     <div class="panel panel-default">
         <div class="panel-heading">
-            {{afFieldLabelText name=this.code}}
-        </div>
-        <div class="panel-body" style="padding:0px;overflow-x:scroll;">
-            <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
-                <thead>
-                    <tr>
-                        <td >序</td>
-                    {{#each this.sfields}}
-                        
-                        <td nowrap="nowrap"><label class="control-label">{{this.code}}</label></td>
-                    {{/each}}
-                    {{#if equals this.permission 'editable'}}
-                    <td style="width:70px;" nowrap="nowrap">
+            <div class="panel-title">{{afFieldLabelText name=this.code}}
+                
+                {{#if equals this.permission 'editable'}}
+                    <div class="pull-right">
                         <span class="panel-controls">
                             <!-- Button trigger modal -->
                             <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
                         </span>
-                    </td>
+                    </div>
                     {{/if}}
+            </div>
+        </div>
+        <div class="panel-body" style="padding:0px;overflow-x:auto;">
+            <table class="table table-bordered table-condensed" style='margin-bottom:0px;' name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
+                <thead>
+                    <tr>
+                    {{#each this.sfields}}
+                        {{#if this.is_wide}}
+                            <td nowrap="nowrap" style="width:300px;">
+                                <label class="control-label">{{this.code}}</label>
+                            </td>
+                        {{else}}
+                            <td nowrap="nowrap" style='width:150px'>
+                                <label class="control-label">{{this.code}}</label>
+                            </td>
+                        {{/if}}
+                    {{/each}}
                     </tr>
                 </thead>
                 {{#if equals this.permission 'editable'}}
                 <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                     {{#each this.tableValues}}
                     <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
-                        <td >{{@index}}</td>
                         {{#each arrayify this}}
                             <td nowrap="nowrap">
                                 {{{value}}}
