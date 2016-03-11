@@ -377,5 +377,14 @@ InstanceManager.relocateIns = function (step_id, user_ids, reason) {
   }
 }
 
+InstanceManager.archiveIns = function (insId) {
+  var instance = db.instances.findOne(insId);
+  if (instance) {
+    if (instance.is_archived==true)
+      return;
+    UUflow_api.post_archive(insId);
+  }
+}
+
 
 

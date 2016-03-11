@@ -66,7 +66,10 @@ Template.instance_list.events
                 if flowId
                     FlowRouter.go("/workflow/monitor/" + spaceId + "/" + flowId + "/" + rowData._id)
             else
-                FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id)
+                FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id);
+                if box == "completed"
+                    InstanceManager.archiveIns(rowData._id);
+
     
     'click .dropdown-menu li a': (event) -> 
         InstanceManager.exportIns(event.target.type);

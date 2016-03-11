@@ -281,6 +281,34 @@ UUflow_api.put_relocate = function(instance) {
   })
 }
 
+// 归档
+UUflow_api.post_archive = function(insId) {
+  var uobj = {};
+  uobj.methodOverride = "POST";
+  uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
+  uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
+  var url = workflowServer + "/uf/archive?" + $.param(uobj);
+  var data = {"Instances":[{id: insId}]};
+  data = JSON.stringify(data);
+  console.log(data);
+  $.ajax({
+    url: url,
+    type: "POST",
+    async: true,
+    data: data,
+    dataType: "json",
+    processData: false,
+    contentType: "text/plain",
+
+    success: function(responseText, status) {
+      
+    },
+    error: function(xhr, msg, ex) {
+      // alert("e");
+    }
+  })
+}
+
 // 导出报表
 UUflow_api.get_export = function (spaceId, flowId, type) {
   var uobj = {};
