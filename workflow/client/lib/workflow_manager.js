@@ -100,8 +100,11 @@ WorkflowManager.getInstanceFormVersion = function (){
     form = WorkflowManager.getForm(instance.form);
     if (form){
       rev = form.current;
-      field_permission = WorkflowManager.getInstanceFieldPermission();
       if(!rev || !rev.fields){return ;}
+      if(rev._id != instance.form_version){
+        rev = instance.historys.filterProperty("_id",instance.form_version);
+      }
+      field_permission = WorkflowManager.getInstanceFieldPermission();
       rev.fields.forEach(
         function(field){
           field['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
@@ -131,10 +134,17 @@ WorkflowManager.getInstanceFormVersion = function (){
 WorkflowManager.getInstanceFlowVersion = function (){
   instanceId = Session.get("instanceId");
   instance = WorkflowManager.getInstance(instanceId);
+  var rev = null;
   if (instance){
     flow = WorkflowManager.getFlow(instance.flow);
-    if (flow)
-      return flow.current;
+    if (flow){
+      rev = flow.current;
+      if(!rev){return;}
+      if(rev._id != instance.flow_version){
+        rev = instance.historys.filterProperty("_id",instance.flow_version);
+      }
+      return rev;
+    }
   }
 };
 
