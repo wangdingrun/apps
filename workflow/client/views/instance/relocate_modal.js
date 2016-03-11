@@ -15,11 +15,9 @@ Template.relocate_modal.events({
     'shown.bs.modal #relocate_modal': function (event) {
         $("#relocate_steps").select2();
         $("#relocate_steps").empty();
-        
         $("#relocate_users").select2();
         $("#relocate_users").empty();
         
-
         var c = InstanceManager.getCurrentStep();
         var ins_steps = WorkflowManager.getInstanceSteps();
         if (ins_steps) {
@@ -32,12 +30,9 @@ Template.relocate_modal.events({
 
         $("#relocate_steps").select2().val(null);
         $("#relocate_steps").select2().val();
-
         $("#relocate_users").select2().val(null);
         $("#relocate_users").select2().val();
-
         $("#relocate_modal_text").val(null);
-
     },
 
     'change #relocate_steps': function (event) {
@@ -64,20 +59,18 @@ Template.relocate_modal.events({
         } else {
             $("#relocate_users_p").css("display","");
         }
-
-        
     },
 
     'click #relocate_modal_ok': function (event, template) {
-        var reason = $("#relocate_modal_text").val();
-        if (!reason) {
-            $("#relocate_modal_warn").show();
+        var sv = $("#relocate_steps").select2().val();
+        if (!sv) {
+            toastr.error("请选择步骤。");
             return;
         }
 
-        var sv = $("#relocate_steps").select2().val();
-        if (!sv) {
-            $("#relocate_modal_warn").show();
+        var reason = $("#relocate_modal_text").val();
+        if (!reason) {
+            toastr.error("请填写重定位的理由。");
             return;
         }
 
@@ -95,7 +88,7 @@ Template.relocate_modal.events({
         }
 
         if (s.step_type != "end" && !uv) {
-            $("#relocate_modal_warn").show();
+            toastr.error("请指定处理人。");
             return;
         }
 
@@ -107,10 +100,6 @@ Template.relocate_modal.events({
         }
 
         InstanceManager.relocateIns(sv, user_ids, reason);
-    },
-
-    'click #relocate_modal_close': function (event, template) {
-        $('#relocate_modal_warn').hide();
     },
 
 })

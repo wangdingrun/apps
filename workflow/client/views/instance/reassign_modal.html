@@ -8,14 +8,8 @@
         </div>
 
         <div class="modal-body">
-          <!-- 警告框 -->
-          <div class="alert alert-warning fade in" role="alert" style="display: none;" id="reassign_modal_warn">
-            <button type="button" class="close" aria-label="Close" id="reassign_modal_close"><span aria-hidden="true">&times;</span></button>
-            <strong>请填写转签核的理由。</strong>
-          </div>
-
           <p><span>当前步骤：</span>{{currentStepName}}</p>
-          <p>
+          <p data-required="true">
             <span>处理人：</span><select class="suggestion-control" id="reassign_users"></select>
           </p>
           <textarea class="form-control" id="reassign_modal_text" placeholder="请填写转签核的理由。"></textarea>
