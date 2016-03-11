@@ -134,56 +134,69 @@ autoform_table_Helpers.update_row = function (row_index, tableCode, rowobj){
     $("[name='"+row_index+"row']").html(get_tds_html(row_index, tableCode, rowobj));
 };
 
+
+autoform_table_Helpers.getTDValue = function(tableCode, fieldCode, rowobj){
+    if(!rowobj){return '';}
+    var td_value = "";
+    switch(rowobj[fieldCode].type){
+        case 'user' :
+            if($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()){
+                td_value = WorkflowManager.getUser($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()).name
+            }    
+            break;
+        case 'group':
+            if($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()){
+                td_value = WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()).name
+            }    
+            break;
+        case 'checkbox':
+            if ($("[name='"+(tableCode + ".$." + fieldCode)+"']")[0].checked){
+                td_value = '是';
+            }else{
+                td_value = '否';
+            }
+            break;
+        case 'radio':
+            td_value = $("[name='"+(tableCode + ".$." + fieldCode)+"']:checked").val()
+            break;
+        case 'multiSelect':
+            var multiSelect_values = new Array();
+            $("input[name='"+(tableCode + ".$." + fieldCode)+"']:checked").each(function(){
+                multiSelect_values.push($(this).val());
+            });
+            td_value = multiSelect_values.toString();
+            break;
+        case 'email':
+            var fValue = $("[name='"+(tableCode + ".$." + fieldCode)+"']").val();
+            fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
+            td_value = fValue;
+            break;
+        case 'url':
+            var fValue = $("[name='"+(tableCode + ".$." + fieldCode)+"']").val();
+            fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
+            td_value = fValue;
+            break;
+        case 'password':
+            td_value = '******';
+            break;
+        case 'dateTime':
+            if($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()){
+                td_value = $.format.date($("[name='"+(tableCode + ".$." + fieldCode)+"']").val(),'yyyy-MM-dd HH:mm');
+            }
+            break;
+        default:
+            td_value = $("[name='"+(tableCode + ".$." + fieldCode)+"']").val()
+            break;
+    }
+    return td_value;
+};
+
+
 var get_tds_html = function(row_index, tableCode, rowobj){
     var tds_html = "<td>" + row_index + "</td>";
 
     for(var key in rowobj){
-        var td_value = "";
-        switch(rowobj[key].type){
-            case 'user' :
-                if($("[name='"+(tableCode + ".$." + key)+"']").val()){
-                    td_value = WorkflowManager.getUser($("[name='"+(tableCode + ".$." + key)+"']").val()).name
-                }    
-                break;
-            case 'group':
-                if($("[name='"+(tableCode + ".$." + key)+"']").val()){
-                    td_value = WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + key)+"']").val()).name
-                }    
-                break;
-            case 'checkbox':
-                if ($("[name='"+(tableCode + ".$." + key)+"']")[0].checked){
-                    td_value = '是';
-                }else{
-                    td_value = '否';
-                }
-                break;
-            case 'radio':
-                td_value = $("[name='"+(tableCode + ".$." + key)+"']:checked").val()
-                break;
-            case 'multiSelect':
-                var multiSelect_values = new Array();
-                $("input[name='"+(tableCode + ".$." + key)+"']:checked").each(function(){
-                    multiSelect_values.push($(this).val());
-                });
-                td_value = multiSelect_values.toString();
-                break;
-            case 'email':
-                var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
-                fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
-                td_value = fValue;
-                break;
-            case 'url':
-                var fValue = $("[name='"+(tableCode + ".$." + key)+"']").val();
-                fValue = fValue ?  "<a href='http://"+fValue+"' target='_blank'>http://"+fValue+"</a>" : "";
-                td_value = fValue;
-                break;
-            case 'password':
-                td_value = '******';
-                break;
-            default:
-                td_value = $("[name='"+(tableCode + ".$." + key)+"']").val()
-                break;
-        }
+        var td_value = autoform_table_Helpers.getTDValue(tableCode, key, rowobj);
         tds_html = tds_html + "<td nowrap='nowrap'>" + (td_value ? td_value : '') + "</td>";
     };
     tds_html = tds_html + 

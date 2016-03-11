@@ -46,6 +46,19 @@ Template.autoform_table.helpers({
           case 'group':
             fValue = fValue ? fValue.name : '';
             break;
+          case 'checkbox':
+            if(!fValue){ fValue = ''; break;} 
+            if (fValue == 'true'){
+                fValue = '是';
+            }else{
+                fValue = '否';
+            }
+            break;
+          case 'dateTime':
+            if(fValue){
+                fValue = $.format.date(fValue,'yyyy-MM-dd HH:mm');
+            }
+            break;
           case 'email':
             fValue = fValue ? "<a href='mailto:"+fValue+"'>"+fValue+"</a>" : "";
             break;

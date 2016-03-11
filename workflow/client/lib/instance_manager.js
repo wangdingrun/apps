@@ -225,7 +225,7 @@ InstanceManager.getCurrentValues = function(){
   var currentApprove = InstanceManager.getCurrentApprove();
   var approve_values_is_null = true;
   if(!currentApprove || !currentApprove.values){return;}
-  if(_.size(currentApprove.values) == 0){
+  if(_.size(currentApprove.values) != 0){
     approve_values_is_null = false;
   }
 
@@ -274,9 +274,14 @@ InstanceManager.getMyApprove = function(){
 
         var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
         var nextStepUsers = new Array();
-        selectedNextStepUsers.forEach(function(su){
-          nextStepUsers.push(su.value);
-        });
+        if(selectedNextStepUsers instanceof Array){
+            selectedNextStepUsers.forEach(function(su){
+              nextStepUsers.push(su.value);
+            });
+        }else{
+            nextStepUsers.push(selectedNextStepUsers);
+        }
+
         currentApprove.next_steps = [{step:nextStepId,users:nextStepUsers}];
     }
 

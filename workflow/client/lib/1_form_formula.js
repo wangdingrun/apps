@@ -1,5 +1,32 @@
 Form_formula = {};
 
+CoreForm = {};
+
+
+Form_formula.initFormScripts = function(form_script){
+    try {
+            
+        //var fscript = UUFlow.instanceController.get("form").get("current").get("form_script");
+        // 过滤换行：/\n/g ； 过滤空格 tab : /\s/g
+        if(form_script && form_script.replace(/\n/g,"").replace(/\s/g,"").length > 0){
+            //装载表单脚本
+            eval(form_script);
+            
+            //运行OnLoad()脚本;
+            if (CoreForm["form_OnLoad"] instanceof Function){
+                eval("CoreForm.form_OnLoad();");
+            }
+
+        }else{
+            console.log("脚本为空, 退出运算程序");
+        }
+
+    }catch (e){
+        console.log("初始化表单脚本出错，错误信息: \n" + e);
+    }
+}
+
+
 /*
     该函数实现把公式串中所有的表单字段加上__values前缀，并把花括号替换成中括号
     即把{字段名}替换成__values["字段名"]，

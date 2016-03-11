@@ -40,6 +40,10 @@ Template.instanceform.helpers
 
 	currentApprove: ->
 		return InstanceManager.getCurrentApprove();
+	init_formScripts: ->
+		form_version = WorkflowManager.getInstanceFormVersion();
+		if form_version
+			Form_formula.initFormScripts(form_version.form_script);
 
 	init_nextStepsOptions: ->
 		console.log("run init_nextStepsOptions...");
