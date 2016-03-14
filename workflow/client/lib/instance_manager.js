@@ -21,6 +21,9 @@ InstanceManager.getApplicantUserId = function(){
 function showMessage(parent_group,message){
   parent_group.addClass("has-error");
   $(".help-block",parent_group).html(message);
+  if(message && message.length > 0){
+    toastr.error(message);
+  }
 }
 
 function removeMessage(parent_group){
@@ -103,7 +106,7 @@ InstanceManager.checkFormFieldValue = function(field){
     var message = '';
     if(field.required){
       if(!field.value || field.value == '' || field.length < 1)
-          message = showMessage(parent_group, '此字段为必填');
+          message = showMessage(parent_group, "字段‘" + field.name + '’为必填');
     }
 
     if(field.type == 'email' && field.value !=''){
