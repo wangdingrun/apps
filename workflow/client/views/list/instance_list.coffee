@@ -28,6 +28,12 @@ Template.instance_list.helpers
         else if box == "monitor"
             query.flow = Session.get("flowId");
             query.state = {$in: ["pending","completed"]};
+            uid = Meteor.userId();
+            space = db.spaces.findOne(Session.get("spaceId"));
+            if !space
+                return;
+            if !space.admins.contains(uid)
+                query.$or = [{submitter:uid}, {applicant:uid}, {inbox_users:uid}, {outbox_users:uid}]
         else
             query.state = "none"
 
