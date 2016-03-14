@@ -199,6 +199,7 @@ var get_tds_html = function(row_index, tableCode, rowobj){
         var td_value = autoform_table_Helpers.getTDValue(tableCode, key, rowobj);
         tds_html = tds_html + "<td nowrap='nowrap'>" + (td_value ? td_value : '') + "</td>";
     };
+    /*
     tds_html = tds_html + 
                     "<td nowrap='nowrap'>" + 
                         "<span class='panel-controls'>" + 
@@ -207,6 +208,7 @@ var get_tds_html = function(row_index, tableCode, rowobj){
                             "<span class='glyphicon glyphicon-pencil edit-steedos-table-row' data-rowindex='" + row_index + "' data-title='修改' data-method='edit'></span>" +
                         "</span>" + 
                     "</td>";
+    */
     return tds_html;
 };
 

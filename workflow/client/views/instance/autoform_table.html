@@ -34,18 +34,18 @@
                 {{#if equals this.permission 'editable'}}
                 <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                     {{#each this.tableValues}}
-                    <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
+                    <tr class="person-row edit-steedos-table-row" data-toggle="modal" name="{{@index}}row" data-rowindex="{{@index}}" data-method="edit" data-title="编辑">
                         {{#each arrayify this}}
                             <td nowrap="nowrap">
                                 {{{value}}}
                             </td>
-                        {{/each}}
+                        {{/each}}<!--
                         <td nowrap="nowrap">
                             <span class="panel-controls">
                                 <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
                                 <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
                             </span>
-                        </td>
+                        </td>-->
                     </tr>
                     {{/each}}
                 </tbody>
@@ -79,9 +79,10 @@
                 {{> afObjectField name=(append this.code '.$' )}}
               </div>
               <div class="modal-footer">
-                
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default remove-steedos-table-row">删除</button>
+                </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-
                 <button type="button" id="steedos-table-ok-button" class="btn btn-primary">好</button>
               </div>
             </div>

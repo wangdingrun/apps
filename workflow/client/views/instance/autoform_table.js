@@ -118,7 +118,8 @@ Template.autoform_table.events({
 
       var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
-      var row_index = event.target.dataset.rowindex;
+      //var row_index = event.target.dataset.rowindex;
+      var row_index = event.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.rowindex
 
       var formId = steedosTable.formid;
 
@@ -130,11 +131,12 @@ Template.autoform_table.events({
       //steedosTable.dataset.validrows = autoform_table_Helpers.removeValidrows(steedosTable.dataset.validrows, row_index);
 
       autoform_table_Helpers.updateTable(tableCode, {"validrows" : autoform_table_Helpers.removeValidrows(steedosTable.validrows, row_index)});
+      autoform_table_Helpers.hideTableModal(tableCode);
     },
 
     'click .edit-steedos-table-row': function (event, template) {
 
-        var row_index = event.target.dataset.rowindex;
+        var row_index = event.currentTarget.dataset.rowindex;
 
         var tableCode = template.data.code;
 
@@ -154,9 +156,9 @@ Template.autoform_table.events({
           autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key].type, rowValue[key]);
         }
 
-        autoform_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
+        autoform_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.currentTarget.dataset.method});
 
-        autoform_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
+        autoform_table_Helpers.showTableModal(tableCode , event.currentTarget.dataset.title);
     },
 
     'change .form-control,.checkbox input,.af-radio-group input,.af-checkbox-group input': function(event, template){
