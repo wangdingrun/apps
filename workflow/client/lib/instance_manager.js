@@ -34,7 +34,7 @@ function removeMessage(parent_group){
 InstanceManager.checkFormValue = function(){
   
   InstanceManager.checkNextStep();
-
+  
   InstanceManager.checkNextStepUser();
 
   InstanceManager.checkSuggestion();
@@ -76,7 +76,10 @@ InstanceManager.checkNextStepUser = function(){
     return ;
   }
   var value = ApproveManager.getNextStepUsersSelectValue();
-  if(value && value != '-1')
+  var nextStepId = ApproveManager.getNextStepsSelectValue();
+  var nextStep = WorkflowManager.getInstanceStep(nextStepId);
+  
+  if((value && value != '-1') || (nextStep && nextStep.step_type == 'end'))
     removeMessage(nextStepUsers_parent_group);
   else
     showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
