@@ -9,7 +9,10 @@
                         <span class="btn glyphicon glyphicon-save" id="instance_update" title="保存" style={{enabled_save}}></span>
                         <span class="btn glyphicon glyphicon-remove" id="instance_remove" title="删除" style={{enabled_delete}}></span>
                         <span class="btn glyphicon glyphicon-print" id="instance_to_print" title="打印" style={{enabled_print}}></span>
-                        <span class="btn glyphicon glyphicon-paperclip" id="instance_add_attachment" title="附件" style={{enabled_add_attachment}}></span>
+                        <div class="ins-upload" id="instance_add_attachment" style={{enabled_add_attachment}}>
+                          <span class="btn glyphicon glyphicon-paperclip ins-file-icon"  title="附件"></span>
+                          <input type="file" name="file" class="ins-file-input">
+                        </div>
                         <span class="btn glyphicon glyphicon-ban-circle" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal" title="取消申请" style={{enabled_terminate}}></span>
                         {{> force_end_modal}}
                         <span class="btn glyphicon glyphicon-user" id="instance_reassign" data-toggle="modal" data-target="#reassign_modal" title="转签核" style={{enabled_reassign}}></span>
