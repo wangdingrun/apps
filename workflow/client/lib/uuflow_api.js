@@ -1,14 +1,12 @@
 UUflow_api = {};
 
-var workflowServer = "http://192.168.0.23";
-
 // 新建instance（申请单）
 UUflow_api.post_draft = function(flowId) {
   var uobj = {};
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/drafts?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/drafts?" + $.param(uobj);
   var data = 
   {
     "Instances": [
@@ -49,7 +47,7 @@ UUflow_api.put_draft = function(instance) {
   uobj.methodOverride = "PUT";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/drafts?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/drafts?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
   console.log(data);
@@ -77,7 +75,7 @@ UUflow_api.delete_draft = function(instanceId) {
   uobj.methodOverride = "DELETE";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/drafts?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/drafts?" + $.param(uobj);
   var data = 
   { "Instances": 
     [
@@ -120,7 +118,7 @@ UUflow_api.post_submit = function(instance) {
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/submit?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/submit?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
   console.log(data);
@@ -149,7 +147,7 @@ UUflow_api.put_approvals = function(approve) {
   uobj.methodOverride = "PUT";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/approvals?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/approvals?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
   console.log(data);
@@ -177,7 +175,7 @@ UUflow_api.post_engine = function(approve) {
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/engine?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/engine?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
   console.log(data);
@@ -206,7 +204,7 @@ UUflow_api.post_terminate = function(instance) {
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/terminate?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/terminate?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
   console.log(data);
@@ -235,7 +233,7 @@ UUflow_api.put_reassign = function(instance) {
   uobj.methodOverride = "PUT";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/reassign?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/reassign?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
   console.log(data);
@@ -264,7 +262,7 @@ UUflow_api.put_relocate = function(instance) {
   uobj.methodOverride = "PUT";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/relocate?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/relocate?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
   console.log(data);
@@ -293,7 +291,7 @@ UUflow_api.post_archive = function(insId) {
   uobj.methodOverride = "POST";
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
-  var url = workflowServer + "/uf/archive?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/archive?" + $.param(uobj);
   var data = {"Instances":[{id: insId}]};
   data = JSON.stringify(data);
   console.log(data);
@@ -324,7 +322,7 @@ UUflow_api.get_export = function (spaceId, flowId, type) {
   uobj.flow_id = flowId;
   uobj.timezoneoffset = new Date().getTimezoneOffset();
   uobj.type = type;
-  var url = workflowServer + "/uf/export/excel?" + $.param(uobj);
+  var url = Meteor.settings.public.webservices.uuflow.url + "/uf/export/excel?" + $.param(uobj);
   window.open(url, "_blank");
 }
 
@@ -334,5 +332,5 @@ UUflow_api.print = function(instanceId){
   uobj["X-User-Id"] = localStorage.getItem("Meteor.userId");
   uobj["X-Auth-Token"] = localStorage.getItem("Meteor.loginToken");
   uobj.id = instanceId;
-  window.open(workflowServer + "/uf/print?" + $.param(uobj));
+  window.open(Meteor.settings.public.webservices.uuflow.url + "/uf/print?" + $.param(uobj));
 }
