@@ -213,8 +213,8 @@ var get_tds_html = function(row_index, tableCode, rowobj){
 };
 
 var get_tr_html = function(row_index, tableCode, rowobj){
-
-    var tr_html = "<tr class='person-row' data-toggle='modal' name='" + row_index + "row'>"; 
+    var tr_html = "<tr class='person-row edit-steedos-table-row' data-toggle='modal' name='" + row_index 
+    + "row' data-rowindex ='"+row_index+"' data-method='edit' data-title='编辑'>"; 
 
     tr_html = tr_html + get_tds_html(row_index, tableCode, rowobj);
 
