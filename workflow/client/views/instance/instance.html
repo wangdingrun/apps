@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+        {{#if show_suggestion}}
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
                 <span class="help-block"></span>
@@ -79,7 +80,9 @@
                 </div>
             </div>
         </nav>
-
+        {{else}}
+            <span class="help-block"></span>
+        {{/if}}
         <div class="container">
             <nav class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container">
@@ -88,7 +91,7 @@
                     </div>
                 </div>
             </nav>
-            {{#autoForm id=instanceId schema=fields type="method" doc=doc_values meteormethod='instance'}}
+            {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
                 <div class="row">
                     {{#each steedos_form.fields}}
                         {{#if equals this.type 'table'}}

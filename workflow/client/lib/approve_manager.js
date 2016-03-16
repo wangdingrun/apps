@@ -2,6 +2,20 @@ ApproveManager = {};
 
 ApproveManager.error = {nextSteps:'',nextStepUsers:''}
 
+ApproveManager.isReadOnly = function(){
+    var ins = WorkflowManager.getInstance();
+    if(!ins)
+        return;
+    var flow = db.flows.findOne(ins.flow);
+    if (!flow)
+        return;
+
+    if ((Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox")
+        return false;
+    else
+        return true;
+}
+
 ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields){
 
     if(!currentStep)

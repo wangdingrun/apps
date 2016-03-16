@@ -6,6 +6,12 @@ formId = 'instanceform';
 Template.instanceform.helpers
 	instanceId: ->
 		return 'instanceform';#"instance_" + Session.get("instanceId");
+
+	form_types: ->
+		if ApproveManager.isReadOnly()
+			return 'disabled';
+		else
+			return 'method';
 	
 	steedos_form: ->
 		form_version = WorkflowManager.getInstanceFormVersion();
@@ -49,6 +55,8 @@ Template.instanceform.helpers
 		console.log("run init_nextStepsOptions...");
 
 		#将下一步、处理人控件设置为select2
+		if ApproveManager.isReadOnly()
+			return ;
 		$("#nextSteps").select2();
 		$("#nextStepUsers").select2();
 
@@ -90,6 +98,9 @@ Template.instanceform.helpers
 
 		u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
 
+	show_suggestion: ->
+
+		return !ApproveManager.isReadOnly();
 
 	enabled_submit: ->
 		ins = WorkflowManager.getInstance();
@@ -187,6 +198,8 @@ Template.instanceform.helpers
 Template.instanceform.events
 	
 	'change .suggestion,.form-control': (event) ->
+		if ApproveManager.isReadOnly()
+			return ;
 		judge = $("[name='judge']").filter(':checked').val();
 		instance = WorkflowManager.getInstance();
 		currentStep = InstanceManager.getCurrentStep();
@@ -215,9 +228,13 @@ Template.instanceform.events
 		InstanceManager.checkNextStepUser();
 
 	'change #suggestion': (event) ->
+		if ApproveManager.isReadOnly()
+			return ;
 		InstanceManager.checkSuggestion();
 		
 	'change #nextSteps': (event) ->
+		if ApproveManager.isReadOnly()
+			return ;
 		instance = WorkflowManager.getInstance();
 		nextStepId = ApproveManager.getNextStepsSelectValue();
 		nextStep = WorkflowManager.getInstanceStep(nextStepId);
@@ -229,9 +246,13 @@ Template.instanceform.events
 		InstanceManager.checkNextStepUser();
 
 	'change #nextStepUsers': (event) ->
+		if ApproveManager.isReadOnly()
+			return ;
 		InstanceManager.checkNextStepUser();
 
 	'change .form-control': (event)->
+		if ApproveManager.isReadOnly()
+			return ;
 		
 		code = event.target.name;
 
