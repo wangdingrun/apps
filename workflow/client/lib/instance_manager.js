@@ -398,12 +398,64 @@ InstanceManager.relocateIns = function (step_id, user_ids, reason) {
   }
 }
 
+// 归档
 InstanceManager.archiveIns = function (insId) {
   var instance = db.instances.findOne(insId);
   if (instance) {
     if (instance.is_archived==true)
       return;
     UUflow_api.post_archive(insId);
+  }
+}
+
+// 附件
+InstanceManager.addAttach = function (fileObj) {
+  var instance = WorkflowManager.getInstance();
+  if (instance) {
+    InstanceManager.resetId(instance);
+    var state = instance.state;
+
+    var curTime = new Date().toISOString();
+    var userId = Meteor.userId();
+    var fileName = fileObj.name();
+    var attach = {
+        "id": Meteor.uuid(),
+        "filename": fileName,
+        "contentType": fileObj.type(),
+        "modified": curTime,
+        "modified_by": userId,
+        "created": curTime,
+        "created_by": userId,
+        "current": {
+          "id": Meteor.uuid(),
+          "_rev": fileObj._id,
+          "length": fileObj.size(),
+          "approve": InstanceManager.getMyApprove().id,
+          "created": curTime,
+          "created_by": userId,
+          // "created_by_name": curUser.get('name'),
+          "filename": fileName
+        }
+      };
+    var attachs = instance.attachments;
+    if (attachs) {
+      attachs.push(attach);
+    } else {
+      attachs = [attach];
+    }
+
+    if (state == "draft") {
+      instance.attachments = attachs;
+
+      instance.traces[0].approves[0] = InstanceManager.getMyApprove();
+      UUflow_api.put_draft(instance);
+    } else if (state == "pending") {
+      var myApprove = InstanceManager.getMyApprove();
+      myApprove.attachments = attachs;
+
+      myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+      UUflow_api.put_approvals(myApprove);
+    }
   }
 }
 

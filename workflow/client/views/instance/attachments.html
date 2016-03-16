@@ -3,7 +3,7 @@
         <div class="panel-heading heading">附件</div>
         <table class='table table-condensed attachments'>
             <tbody>
-                {{#each this}}
+                <!-- {{#each this}}
                 <tr>
                     <td colspan='3'>
                         <a href="{{getAttachmentURL this}}" target="_blank">
@@ -11,6 +11,19 @@
                         </a>
                     </td>
                 </tr>
+                {{/each}} -->
+                {{#each attachments}}
+                    <tr>
+                        <td>
+                            {{#unless this.isUploaded}}
+                                {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true}}
+                            {{/unless}}
+                            <a href="{{url download=true}}" target="_parent">{{name}}</a>
+                            
+                            {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
+                            
+                        </td>
+                    </tr>
                 {{/each}}
             </tbody>
         </table>

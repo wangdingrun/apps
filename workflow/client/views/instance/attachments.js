@@ -16,5 +16,14 @@ Template.instance_attachments.helpers({
                             + '&version_id=' + attachment.current._rev;
 
         return attachmentURL;
+    },
+
+    attachments: function () {
+    	var ins = WorkflowManager.getInstance();
+    	if (ins) {
+    		var attach_revs = ins.attachments.getEach("current").getEach("_rev");
+    		return cfs.instances.find({_id: {$in: attach_revs}});
+    	}
     }
+
 })

@@ -181,8 +181,6 @@ Template.instanceform.helpers
 			return "";
 		else
 			return "display: none;";
-		
-
 
 
 
@@ -280,3 +278,16 @@ Template.instanceform.events
 		   console.log(JSON.stringify(AutoForm.getFormValues("instanceform").insertDoc));
 		   Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
 		,101
+
+	'change .ins-file-input': (event, template)->
+		FS.Utility.eachFile(event, (file) ->
+			cfs.instances.insert(file, (err,fileObj) -> 
+				if err
+					toastr.error(err);
+				else
+					InstanceManager.addAttach(fileObj);
+				)
+			)
+
+
+
