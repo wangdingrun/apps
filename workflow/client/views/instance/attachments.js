@@ -19,11 +19,26 @@ Template.instance_attachments.helpers({
     },
 
     attachments: function () {
-    	var ins = WorkflowManager.getInstance();
-    	if (ins) {
-    		var attach_revs = ins.attachments.getEach("current").getEach("_rev");
-    		return cfs.instances.find({_id: {$in: attach_revs}});
-    	}
+        var ins = WorkflowManager.getInstance();
+        if (ins) {
+            var attach_revs = ins.attachments.getEach("current").getEach("_rev");
+
+            return cfs.instances.find({_id: {$in: attach_revs}});
+        }
+        // return cfs.instances.find();
+    },
+
+    isUploading: function () {
+        return Session.get("file_id");
     }
+
+})
+
+Template.instance_attachments.events({
+    // "click name=['btn_remove_file']": function (event, template) {
+    //     debugger;
+    // }
+
+
 
 })

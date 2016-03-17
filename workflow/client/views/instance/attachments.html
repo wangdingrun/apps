@@ -12,16 +12,20 @@
                     </td>
                 </tr>
                 {{/each}} -->
+                {{#if isUploading}}
+                    {{#with FS.GetFile "instances" isUploading}}
+                        {{#unless this.isUploaded}}
+                            {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
+                        {{/unless}}
+                    {{/with}}
+                {{/if}}
                 {{#each attachments}}
                     <tr>
-                        <td>
-                            {{#unless this.isUploaded}}
-                                {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true}}
-                            {{/unless}}
+                        <td>   
                             <a href="{{url download=true}}" target="_parent">{{name}}</a>
                             
                             {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
-                            
+
                         </td>
                     </tr>
                 {{/each}}
