@@ -19,13 +19,24 @@
                         {{/unless}}
                     {{/with}}
                 {{/if}}
-                {{#each attachments}}
+                <!-- {{#each attachments}}
                     <tr>
                         <td>   
                             <a href="{{url download=true}}" target="_parent">{{name}}</a>
                             
                             {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
 
+                        </td>
+                    </tr>
+                {{/each}} -->
+
+                {{#each this}}
+                    <tr>
+                        <td>   
+                            {{#with FS.GetFile "instances" current._rev}}
+                                <a href="{{url download=true}}" target="_parent">{{name}}</a>
+                                {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
+                            {{/with}}
                         </td>
                     </tr>
                 {{/each}}

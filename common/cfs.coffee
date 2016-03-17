@@ -29,3 +29,7 @@ Meteor.startup ->
 			return true;
 		download: ->
 			return true;
+
+	cfs.instances.on("removed", (fileObj)->
+		InstanceManager.removeAttach(fileObj);
+	)

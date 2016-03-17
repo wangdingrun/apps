@@ -408,9 +408,9 @@ InstanceManager.archiveIns = function (insId) {
   }
 }
 
-// 附件
+// 添加附件
 InstanceManager.addAttach = function (fileObj) {
-  var instance = WorkflowManager.getInstance();
+  var instance = db.instances.findOne(fileObj.metadata.instance);
   if (instance) {
     InstanceManager.resetId(instance);
     var state = instance.state;
@@ -452,6 +452,34 @@ InstanceManager.addAttach = function (fileObj) {
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = attachs;
+
+      myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+      UUflow_api.put_approvals(myApprove);
+    }
+  }
+}
+
+// 移除附件
+InstanceManager.removeAttach = function (fileObj) {
+  var instance = db.instances.findOne(fileObj.metadata.instance);
+  if (instance) {
+    InstanceManager.resetId(instance);
+    var state = instance.state;
+    var attachs = instance.attachments;
+    var file_id = fileObj._id;
+    var newAttachs = attachs.filter(function(item){
+      if (item.current._rev != file_id)
+        return item;
+    })
+
+    if (state == "draft") {
+      instance.attachments = newAttachs;
+
+      instance.traces[0].approves[0] = InstanceManager.getMyApprove();
+      UUflow_api.put_draft(instance);
+    } else if (state == "pending") {
+      var myApprove = InstanceManager.getMyApprove();
+      myApprove.attachments = newAttachs;
 
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       UUflow_api.put_approvals(myApprove);

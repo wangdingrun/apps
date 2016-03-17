@@ -18,15 +18,14 @@ Template.instance_attachments.helpers({
         return attachmentURL;
     },
 
-    attachments: function () {
-        var ins = WorkflowManager.getInstance();
-        if (ins) {
-            var attach_revs = ins.attachments.getEach("current").getEach("_rev");
+    // attachments: function () {
+    //     var ins = WorkflowManager.getInstance();
+    //     if (ins) {
+    //         var attach_revs = ins.attachments.getEach("current").getEach("_rev");
 
-            return cfs.instances.find({_id: {$in: attach_revs}});
-        }
-        // return cfs.instances.find();
-    },
+    //         return cfs.instances.find({_id: {$in: attach_revs}});
+    //     }
+    // },
 
     isUploading: function () {
         return Session.get("file_id");

@@ -304,7 +304,7 @@ Template.instanceform.events
 		FS.Utility.eachFile(event, (file) ->
 			newFile = new FS.File(file);
 			newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId")};
-			cfs.instances.insert(file, (err,fileObj) -> 
+			cfs.instances.insert(newFile, (err,fileObj) -> 
 				if err
 					toastr.error(err);
 				else
