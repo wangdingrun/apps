@@ -419,7 +419,7 @@ InstanceManager.addAttach = function (fileObj) {
     var userId = Meteor.userId();
     var fileName = fileObj.name();
     var attach = {
-        "id": Meteor.uuid(),
+        "_id": Meteor.uuid(),
         "filename": fileName,
         "contentType": fileObj.type(),
         "modified": curTime,
@@ -427,7 +427,7 @@ InstanceManager.addAttach = function (fileObj) {
         "created": curTime,
         "created_by": userId,
         "current": {
-          "id": Meteor.uuid(),
+          "_id": Meteor.uuid(),
           "_rev": fileObj._id,
           "length": fileObj.size(),
           "approve": InstanceManager.getMyApprove().id,
@@ -460,13 +460,13 @@ InstanceManager.addAttach = function (fileObj) {
 }
 
 // 移除附件
-InstanceManager.removeAttach = function (fileObj) {
-  var instance = db.instances.findOne(fileObj.metadata.instance);
+InstanceManager.removeAttach = function () {
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     InstanceManager.resetId(instance);
     var state = instance.state;
     var attachs = instance.attachments;
-    var file_id = fileObj._id;
+    var file_id = Session.get("file_id");
     var newAttachs = attachs.filter(function(item){
       if (item.current._rev != file_id)
         return item;

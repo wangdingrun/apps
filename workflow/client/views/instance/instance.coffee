@@ -311,6 +311,7 @@ Template.instanceform.events
 					Session.set("file_id", fileObj._id);
 					fileObj.on("uploaded", ()->
 							InstanceManager.addAttach(fileObj);
+							fileObj.removeListener("uploaded");
 						)
 				)
 			)

@@ -3,15 +3,6 @@
         <div class="panel-heading heading">附件</div>
         <table class='table table-condensed attachments'>
             <tbody>
-                <!-- {{#each this}}
-                <tr>
-                    <td colspan='3'>
-                        <a href="{{getAttachmentURL this}}" target="_blank">
-                           <span style="font-size:13px">{{this.filename}}</span>
-                        </a>
-                    </td>
-                </tr>
-                {{/each}} -->
                 {{#if isUploading}}
                     {{#with FS.GetFile "instances" isUploading}}
                         {{#unless this.isUploaded}}
@@ -19,28 +10,22 @@
                         {{/unless}}
                     {{/with}}
                 {{/if}}
-                <!-- {{#each attachments}}
-                    <tr>
-                        <td>   
-                            <a href="{{url download=true}}" target="_parent">{{name}}</a>
-                            
-                            {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
-
-                        </td>
-                    </tr>
-                {{/each}} -->
 
                 {{#each this}}
-                    <tr>
-                        <td>   
-                            {{#with FS.GetFile "instances" current._rev}}
+                    {{#with FS.GetFile "instances" current._rev}}
+                        <tr>
+                            <td>
                                 <a href="{{url download=true}}" target="_parent">{{name}}</a>
-                                {{#FS.DeleteButton class="btn btn-danger btn-xs"}}Delete{{/FS.DeleteButton}}
-                            {{/with}}
-                        </td>
-                    </tr>
+                                {{> _file_DeleteButton fileObj=this}}
+                            </td>
+                        </tr>
+                    {{/with}}
                 {{/each}}
             </tbody>
         </table>
     </div>
+</template>
+
+<template name="_file_DeleteButton">
+    <button type="button" class="btn btn-danger btn-xs">Delete</button>
 </template>
