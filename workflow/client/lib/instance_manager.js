@@ -177,7 +177,7 @@ InstanceManager.getInstanceValuesByAutoForm = function(){
         if (!autoFormValue[field.code])
           return ;
         autoFormValue[field.code].forEach(function(t_row_value){
-          debugger;
+
           var is_invalid_tr = false;
           if(_.size(t_row_value) == 1){
             for(var k in t_row_value){
@@ -210,16 +210,6 @@ InstanceManager.getInstanceValuesByAutoForm = function(){
 InstanceManager.resetId = function (instance) {
   instance.id = instance._id;
   delete instance._id;
-  instance.traces.forEach(function(t){
-    t.id = t._id;
-    delete t._id;
-    if (t.approves) {
-      t.approves.forEach(function(a){
-        a.id = a._id;
-        delete a.id;
-      })
-    }
-  })
 }
 
 InstanceManager.getCurrentStep = function(){
@@ -271,8 +261,6 @@ InstanceManager.getCurrentApprove = function(){
   if (!currentApprove)
     return ;
 
-  currentApprove.id = currentApprove._id;
-  delete currentApprove._id;
   return currentApprove; 
 }
 
@@ -333,6 +321,7 @@ InstanceManager.newIns = function(flowId) {
 
 // 申请单删除
 InstanceManager.deleteIns = function() {
+  // TODO 删除附件
   var instance = WorkflowManager.getInstance();
   if (!instance)
     return;
