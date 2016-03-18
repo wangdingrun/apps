@@ -208,8 +208,24 @@ InstanceManager.getInstanceValuesByAutoForm = function(){
 }
 
 InstanceManager.resetId = function (instance) {
-  instance.id = instance._id;
-  delete instance._id;
+  if (instance._id) {
+    instance.id = instance._id;
+    delete instance._id;
+  }
+  instance.traces.forEach(function(t){
+    if (t._id) {
+      t.id = t._id;
+      delete t._id;
+    }
+    if (t.approves) {
+      t.approves.forEach(function(a){
+        if (a._id) {
+          a.id = a._id;
+          delete a._id;
+        }
+      })
+    }
+  })
 }
 
 InstanceManager.getCurrentStep = function(){
@@ -261,6 +277,11 @@ InstanceManager.getCurrentApprove = function(){
   if (!currentApprove)
     return ;
 
+  if (currentApprove._id) {
+    currentApprove.id = currentApprove._id;
+    delete currentApprove._id;
+  }
+
   return currentApprove; 
 }
 
@@ -301,7 +322,6 @@ InstanceManager.getMyApprove = function(){
 InstanceManager.saveIns = function() {
   var instance = WorkflowManager.getInstance();
   if (instance) {
-    InstanceManager.resetId(instance);
     var state = instance.state;
     if (state == "draft") {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
@@ -401,7 +421,6 @@ InstanceManager.archiveIns = function (insId) {
 InstanceManager.addAttach = function (fileObj) {
   var instance = db.instances.findOne(fileObj.metadata.instance);
   if (instance) {
-    InstanceManager.resetId(instance);
     var state = instance.state;
 
     var curTime = new Date().toISOString();
@@ -450,7 +469,6 @@ InstanceManager.addAttach = function (fileObj) {
 InstanceManager.removeAttach = function () {
   var instance = WorkflowManager.getInstance();
   if (instance) {
-    InstanceManager.resetId(instance);
     var state = instance.state;
     var attachs = instance.attachments;
     var file_id = Session.get("file_id");

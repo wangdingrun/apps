@@ -7,7 +7,7 @@ Meteor.methods({
         var setObj = {};
         var traces = ins.traces;
         var flow = db.flows.findOne(ins.flow, {fields: {"current._id": 1, "current.form_version": 1}});
-        var instance = db.instances.findOne(ins.id, {fields: {applicant: 1}});
+        var instance = db.instances.findOne(ins._id, {fields: {applicant: 1}});
         var applicant_id = ins.applicant;
         var space_id = ins.space;
 
@@ -44,7 +44,7 @@ Meteor.methods({
         }
         setObj.traces = traces;
 
-        db.instances.update({_id:ins.id}, {$set: setObj});
+        db.instances.update({_id:ins._id}, {$set: setObj});
         return true;
     },
 

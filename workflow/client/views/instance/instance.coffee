@@ -303,7 +303,8 @@ Template.instanceform.events
 	'change .ins-file-input': (event, template)->
 		FS.Utility.eachFile(event, (file) ->
 			newFile = new FS.File(file);
-			newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId")};
+			currentApprove = InstanceManager.getCurrentApprove();
+			newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id};
 			cfs.instances.insert(newFile, (err,fileObj) -> 
 				if err
 					toastr.error(err);

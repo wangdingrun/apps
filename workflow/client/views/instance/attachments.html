@@ -15,8 +15,10 @@
                     {{#with FS.GetFile "instances" current._rev}}
                         <tr>
                             <td>
-                                <a href="{{url download=true}}" target="_parent">{{name}}</a>
-                                {{> _file_DeleteButton fileObj=this}}
+                                <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
+                                {{#if can_delete this.metadata.approve}}
+                                    {{> _file_DeleteButton fileObj=this}}
+                                {{/if}}
                             </td>
                         </tr>
                     {{/with}}
