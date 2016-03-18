@@ -317,11 +317,11 @@ InstanceManager.saveIns = function() {
     var state = instance.state;
     if (state == "draft") {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      UUflow_api.put_draft(instance);
+      Meteor.call("draft_save_instance", instance);
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      UUflow_api.put_approvals(myApprove);
+      Meteor.call("inbox_save_instance", myApprove);
     }
   }
 }
@@ -446,15 +446,13 @@ InstanceManager.addAttach = function (fileObj) {
 
     if (state == "draft") {
       instance.attachments = attachs;
-
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      UUflow_api.put_draft(instance);
+      Meteor.call("draft_save_instance", instance);
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = attachs;
-
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      UUflow_api.put_approvals(myApprove);
+      Meteor.call("inbox_save_instance", myApprove);
     }
   }
 }
@@ -474,15 +472,13 @@ InstanceManager.removeAttach = function () {
 
     if (state == "draft") {
       instance.attachments = newAttachs;
-
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      UUflow_api.put_draft(instance);
+      Meteor.call("draft_save_instance", instance);
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = newAttachs;
-
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      UUflow_api.put_approvals(myApprove);
+      Meteor.call("inbox_save_instance", myApprove);
     }
   }
 }
