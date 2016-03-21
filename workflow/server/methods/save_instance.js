@@ -60,6 +60,7 @@ Meteor.methods({
         var next_steps = approve.next_steps;
         var description = approve.description;
         var judge = approve.judge;
+        var next_steps = approve.next_steps;
         
         var instance = db.instances.findOne(ins_id, {fields: {traces: 1, flow_version: 1, flow: 1}});
         var traces = instance.traces;
@@ -101,6 +102,7 @@ Meteor.methods({
                         a.read_date = new Date();
                         a.values = values;
                         a.description = description;
+                        a.next_steps = next_steps;
                         if (step_type == "submit" || step_type == "start") {
                             a.judge = "submitted";
                         } else {
@@ -114,6 +116,7 @@ Meteor.methods({
         setObj.modified = new Date();
         setObj.modified_by = this.userId;
         setObj.attachments = approve.attachments;
+        setObj.traces = traces;
 
         db.instances.update({_id:ins_id}, {$set: setObj});
         return true;
