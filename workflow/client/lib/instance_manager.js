@@ -426,7 +426,32 @@ InstanceManager.addAttach = function (fileObj) {
     var curTime = new Date().toISOString();
     var userId = Meteor.userId();
     var fileName = fileObj.name();
-    var attach = {
+    
+    var attachs = instance.attachments;
+    var hasRepeatedFile = false;
+    attachs.forEach(function(a){
+      if (a.filename == fileName) {
+        hasRepeatedFile = true;
+        var his = a.historys;
+        if (!(his instanceof Array))
+          his = [];
+        his.unshift(a.current);
+        a.historys = his;
+        a.current = {
+          "_id": Meteor.uuid(),
+          "_rev": fileObj._id,
+          "length": fileObj.size(),
+          "approve": InstanceManager.getMyApprove().id,
+          "created": curTime,
+          "created_by": userId,
+          // "created_by_name": curUser.get('name'),
+          "filename": fileName
+        };
+      }
+    })
+
+    if (!hasRepeatedFile) {
+      var attach = {
         "_id": Meteor.uuid(),
         "filename": fileName,
         "contentType": fileObj.type(),
@@ -445,11 +470,11 @@ InstanceManager.addAttach = function (fileObj) {
           "filename": fileName
         }
       };
-    var attachs = instance.attachments;
-    if (attachs) {
-      attachs.push(attach);
-    } else {
-      attachs = [attach];
+      if (attachs) {
+        attachs.push(attach);
+      } else {
+        attachs = [attach];
+      }
     }
 
     if (state == "draft") {

@@ -12,22 +12,80 @@
                 {{/if}}
 
                 {{#each this}}
-                    {{#with FS.GetFile "instances" current._rev}}
-                        <tr>
-                            <td>
-                                <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
-                                {{#if can_delete this.metadata.approve}}
-                                    {{> _file_DeleteButton fileObj=this}}
-                                {{/if}}
-                            </td>
-                        </tr>
-                    {{/with}}
+                    {{> Template.dynamic template="instance_attachment" data=this}}
                 {{/each}}
+
+                {{> ins_attach_version_modal}}
             </tbody>
         </table>
     </div>
 </template>
 
+<template name="instance_attachment" >
+    <tr>
+        <td>
+            {{#with FS.GetFile "instances" current._rev}}
+                <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
+                
+            {{/with}}
+            {{> Template.dynamic template="ins_attach_version_btn" data=this}}
+            
+            {{#if can_delete current.approve historys}}
+                {{> _file_DeleteButton file_id=current._rev}}
+            {{/if}}
+        </td>
+    </tr>
+</template>
+
 <template name="_file_DeleteButton">
     <button type="button" class="btn btn-danger btn-xs">Delete</button>
+</template>
+
+<template name="ins_attach_version_btn" >
+    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" >版本</button>
+</template>
+
+<template name="ins_attach_version_modal">
+  <div class="modal fade" id="ins_attach_version_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLabel2">版本</h4>
+        </div>
+
+        <div class="modal-body">
+            <table class='table table-condensed attachments'>
+                <tbody>
+                {{#with attach_data}}
+                    {{#with FS.GetFile "instances" current._rev}}
+                        <tr>
+                            <td>
+                                <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
+                                
+                                <!-- {{#if can_delete this.metadata.approve}}
+                                    {{> _file_DeleteButton fileObj=this}}
+                                {{/if}} -->
+                            </td>
+                        </tr>
+                    {{/with}}
+                    {{#each historys}}
+                        {{#with FS.GetFile "instances" this._rev}}
+                            <tr>
+                                <td>
+                                    <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
+                                </td>
+                            </tr>
+                        {{/with}}
+                    {{/each}}
+                {{/with}}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
