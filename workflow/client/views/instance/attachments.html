@@ -26,13 +26,11 @@
         <td>
             {{#with FS.GetFile "instances" current._rev}}
                 <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
-                
+                {{> Template.dynamic template="ins_attach_version_btn" data=..}}
+                {{#if can_delete ../current.approve ../historys}}
+                    {{> _file_DeleteButton fileObj=this}}
+                {{/if}}
             {{/with}}
-            {{> Template.dynamic template="ins_attach_version_btn" data=this}}
-            
-            {{#if can_delete current.approve historys}}
-                {{> _file_DeleteButton file_id=current._rev}}
-            {{/if}}
         </td>
     </tr>
 </template>
@@ -64,10 +62,10 @@
                                 <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
                                 <br/>
                                 <label>{{attach_version_info this}}</label>
+                                {{#if current_can_delete ../current.approve ../historys}}
+                                    {{> _file_DeleteButton file_id=current._rev}}
+                                {{/if}}
                             {{/with}}
-                            {{#if current_can_delete current.approve historys}}
-                                {{> _file_DeleteButton file_id=current._rev}}
-                            {{/if}}
                         </td>
                     </tr>
                     

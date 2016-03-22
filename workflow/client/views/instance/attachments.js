@@ -52,12 +52,12 @@ Template.instance_attachment.helpers({
 Template._file_DeleteButton.events({
 
     'click button': function(event, template) {
-        var file_id = template.data.file_id;
-        if (!file_id) {
+        var fileObj = template.data.fileObj;
+        if (!fileObj) {
            return false;
         }
-        Session.set("file_id", file_id);
-        cfs.instances.remove({_id: file_id}, function(){InstanceManager.removeAttach();});
+        Session.set("file_id", fileObj._id);
+        fileObj.remove(function(){InstanceManager.removeAttach();});
         return false;
     }
 
