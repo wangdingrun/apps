@@ -498,8 +498,16 @@ InstanceManager.removeAttach = function () {
     var attachs = instance.attachments;
     var file_id = Session.get("file_id");
     var newAttachs = attachs.filter(function(item){
-      if (item.current._rev != file_id)
-        return item;
+        if (item.current._rev != file_id) {
+          return item;
+        } else {
+          var his = item.historys;
+          if (his && his.length > 0) {
+            item.current = item.historys.shift();
+            item.filename = item.current.filename;
+            return item;
+          }
+        }
     })
 
     if (state == "draft") {

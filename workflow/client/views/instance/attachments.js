@@ -68,6 +68,43 @@ Template.ins_attach_version_modal.helpers({
 
     attach_data: function () {
         return Session.get("attach_data");
+    },
+
+    attach_version_info: function (fileObj) {
+        var owner_id = fileObj.metadata.owner;
+        var uploadedAt = fileObj.uploadedAt;
+        var owner = db.users.findOne(owner_id);
+        if (!owner)
+            return "";
+        return owner.name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm");
+    },
+
+    current_can_delete: function (currentApproveId, historys) {
+        var ins = WorkflowManager.getInstance();
+        if (!ins)
+            return false;
+        var isCurrentApprove = false;
+        var isDraftOrInbox = false;
+        var isFlowEnable = false;
+        var isHistoryLenthZero = false;
+        var box = Session.get("box");
+
+        var currentApprove = InstanceManager.getCurrentApprove();
+        if (currentApprove.id == currentApproveId)
+            isCurrentApprove = true;
+
+        if (box == "draft" || box == "inbox")
+            isDraftOrInbox = true;
+
+        var flow = db.flows.findOne(ins.flow, {fields: {state: 1}});
+        if (flow && flow.state == "enabled")
+            isFlowEnable = true;
+
+        if (!historys || historys.length == 0) {
+            isHistoryLenthZero = true;
+        }
+
+        return isCurrentApprove && isDraftOrInbox && isFlowEnable && !isHistoryLenthZero;
     }
 })
 

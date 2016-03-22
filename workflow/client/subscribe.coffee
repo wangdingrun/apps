@@ -32,4 +32,6 @@ Meteor.startup ->
 
 		Meteor.subscribe "cfs_instances"
 
+		Meteor.subscribe "user_data"
+
 
