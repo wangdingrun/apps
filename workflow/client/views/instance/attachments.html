@@ -63,7 +63,7 @@
                                 <br/>
                                 <label>{{attach_version_info this}}</label>
                                 {{#if current_can_delete ../current.approve ../historys}}
-                                    {{> _file_DeleteButton file_id=current._rev}}
+                                    {{> _file_DeleteButton fileObj=this}}
                                 {{/if}}
                             {{/with}}
                         </td>
