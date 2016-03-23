@@ -142,7 +142,9 @@ Template._file_version_DeleteButton.events({
            return false;
         }
 
-        $("#" + modal_id).modal("hide");
+        var m = $(".modal-backdrop")[0];
+        if (m)
+            m.remove();
 
         Session.set("file_id", fileObj._id);
         fileObj.remove(function(){InstanceManager.removeAttach();});
