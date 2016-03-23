@@ -418,7 +418,8 @@ InstanceManager.archiveIns = function (insId) {
 }
 
 // 添加附件
-InstanceManager.addAttach = function (fileObj) {
+InstanceManager.addAttach = function (fileObj, isAddVersion) {
+  console.log("InstanceManager.addAttach");
   var instance = db.instances.findOne(fileObj.metadata.instance);
   if (instance) {
     var state = instance.state;
@@ -429,8 +430,9 @@ InstanceManager.addAttach = function (fileObj) {
     
     var attachs = instance.attachments;
     var hasRepeatedFile = false;
+    var attach_id = fileObj.metadata.attach_id;
     attachs.forEach(function(a){
-      if (a.filename == fileName) {
+      if (a.filename == fileName || (isAddVersion==true && a._id == attach_id)) {
         hasRepeatedFile = true;
         var his = a.historys;
         if (!(his instanceof Array))
@@ -444,9 +446,10 @@ InstanceManager.addAttach = function (fileObj) {
           "approve": InstanceManager.getMyApprove().id,
           "created": curTime,
           "created_by": userId,
-          // "created_by_name": curUser.get('name'),
+          "created_by_name": Meteor.user().name,
           "filename": fileName
         };
+        a.filename = fileName;
       }
     })
 
@@ -466,7 +469,7 @@ InstanceManager.addAttach = function (fileObj) {
           "approve": InstanceManager.getMyApprove().id,
           "created": curTime,
           "created_by": userId,
-          // "created_by_name": curUser.get('name'),
+          "created_by_name": Meteor.user().name,
           "filename": fileName
         }
       };
@@ -492,6 +495,7 @@ InstanceManager.addAttach = function (fileObj) {
 
 // 移除附件
 InstanceManager.removeAttach = function () {
+  console.log("InstanceManager.removeAttach");
   var instance = WorkflowManager.getInstance();
   if (instance) {
     var state = instance.state;

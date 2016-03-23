@@ -2,7 +2,7 @@
 Template.instance_attachments.helpers({
 
     isUploading: function () {
-        return Session.get("file_id");
+        return Session.get("progress_file_id");
     }
  
 })
@@ -58,16 +58,16 @@ Template._file_DeleteButton.events({
         }
         Session.set("file_id", fileObj._id);
         fileObj.remove(function(){InstanceManager.removeAttach();});
-        return false;
+        return true;
     }
 
 })
 
 
-Template.ins_attach_version_modal.helpers({
+Template.ins_attach_version_btn.helpers({
 
-    attach_data: function () {
-        return Session.get("attach_data");
+    isUploading: function () {
+        return Session.get("progress_version_file_id");
     },
 
     attach_version_info: function (fileObj) {
@@ -108,11 +108,47 @@ Template.ins_attach_version_modal.helpers({
     }
 })
 
+
 Template.ins_attach_version_btn.events({
-    'click button': function (event, template) {
-        Session.set("attach_data", template.data);
-        $('#ins_attach_version_modal').modal();
+
+    'change .ins-file-version-input': function (event, template) {
+        console.log("ins_attach_version_btn");
+        Session.set("attach_id", template.data._id);
+        FS.Utility.eachFile(event, function(file){
+            newFile = new FS.File(file);
+            currentApprove = InstanceManager.getCurrentApprove();
+            newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id, attach_id: Session.get("attach_id")};
+            cfs.instances.insert(newFile, function(err, fileObj){
+                if (err) {
+                    toastr.error(err);
+                } else {
+                    Session.set("progress_version_file_id", fileObj._id);
+                    fileObj.on("uploaded", function(){
+                        InstanceManager.addAttach(fileObj, true);
+                        fileObj.removeListener("uploaded");
+                    })
+                }
+            })
+        })
     }
+})
+
+Template._file_version_DeleteButton.events({
+
+    'click button': function(event, template) {
+        var fileObj = template.data.fileObj;
+        var modal_id = template.data.modal_id;
+        if (!fileObj || !modal_id) {
+           return false;
+        }
+
+        $("#" + modal_id).modal("hide");
+
+        Session.set("file_id", fileObj._id);
+        fileObj.remove(function(){InstanceManager.removeAttach();});
+        return true;
+    }
+
 })
 
 

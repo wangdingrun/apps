@@ -301,6 +301,7 @@ Template.instanceform.events
 		,101
 
 	'change .ins-file-input': (event, template)->
+		console.log("instanceform");
 		FS.Utility.eachFile(event, (file) ->
 			newFile = new FS.File(file);
 			currentApprove = InstanceManager.getCurrentApprove();
@@ -309,7 +310,7 @@ Template.instanceform.events
 				if err
 					toastr.error(err);
 				else
-					Session.set("file_id", fileObj._id);
+					Session.set("progress_file_id", fileObj._id);
 					fileObj.on("uploaded", ()->
 							InstanceManager.addAttach(fileObj);
 							fileObj.removeListener("uploaded");
