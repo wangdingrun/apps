@@ -84,6 +84,7 @@ Template.instance_list.events
     'shown.bs.modal #createInsModal': (event) ->
         data = [];
         categories = WorkflowManager.getSpaceCategories();
+        #生成树
         categories.forEach (cat) ->
             o =  {};
             o.text = cat.name;
@@ -91,7 +92,7 @@ Template.instance_list.events
             forms = db.forms.find({category:cat._id});
             forms.forEach (f) ->
                 db.flows.find({form:f._id}).forEach (fl) ->
-                    o.nodes.push({text:fl.name})
+                    o.nodes.push({text:fl.name, flow_id: fl._id})
             data.push(o);
 
         forms = db.forms.find({category:{$in:[null,""]}});
@@ -100,5 +101,10 @@ Template.instance_list.events
                 data.push({text:fl.name});
 
         $('#tree').treeview({data: data});
+        #新建流程
+        $('#tree').on('nodeSelected', (event, data)->
+                InstanceManager.newIns(data.flow_id)
+            )
+
 
 
