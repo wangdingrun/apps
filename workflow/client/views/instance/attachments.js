@@ -142,12 +142,12 @@ Template._file_version_DeleteButton.events({
            return false;
         }
 
-        var m = $(".modal-backdrop")[0];
-        if (m)
-            m.remove();
+        $('#' + modal_id).on('hidden.bs.modal', function(e){
+            Session.set("file_id", fileObj._id);
+            fileObj.remove(function(){InstanceManager.removeAttach();});
+        })
 
-        Session.set("file_id", fileObj._id);
-        fileObj.remove(function(){InstanceManager.removeAttach();});
+        $('#' + modal_id).modal('hide');
         return true;
     }
 
