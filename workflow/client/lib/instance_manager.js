@@ -325,6 +325,7 @@ InstanceManager.saveIns = function() {
     var state = instance.state;
     if (state == "draft") {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
+      instance.applicant = $("#ins_applicant").select2().val();
       Meteor.call("draft_save_instance", instance);
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();

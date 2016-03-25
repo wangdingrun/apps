@@ -315,10 +315,14 @@ ApproveManager.getNextStepsSelectValue = function(){
 ApproveManager.setNextStepsSelectValue = function(steps, value){
     var lastStep = steps.filterProperty("_id", value);
 
-    if(lastStep.length > 0){
-        $("#nextSteps").get(0).value = value;
-    }else if(steps.length > 0){
-        $("#nextSteps").get(0).selectedIndex = 0;
+    try{
+        if(lastStep.length > 0){
+            $("#nextSteps").get(0).value = value;
+        }else if(steps.length > 0){
+            $("#nextSteps").get(0).selectedIndex = 0;
+        }
+    }catch(e){
+        console.info(e);
     }
 
     $("#nextSteps").select2().val();

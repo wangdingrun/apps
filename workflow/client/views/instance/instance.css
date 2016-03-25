@@ -208,7 +208,10 @@ textarea {
   cursor: pointer;
 }
 
-
+.ins-applicant-selector {
+  display: inline-block;
+  width: 160px;
+}
 
 
 

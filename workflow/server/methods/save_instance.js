@@ -25,11 +25,12 @@ Meteor.methods({
             // 申请人已变换
             var user = db.users.findOne(applicant_id, {fields: {name: 1}});
             var applicant = db.space_users.find({space: space_id, user: applicant_id}, {fields: {organization: 1}});
-            var organization = db.organizations.findOne(applicant.organization, {fields: {name: 1, full_name: 1}});
+            var org_id = applicant.fetch()[0].organization;
+            var organization = db.organizations.findOne(org_id, {fields: {name: 1, full_name: 1}});
 
             setObj.applicant = applicant_id;
             setObj.applicant_name = user.name;
-            setObj.applicant_organization = applicant.organization;
+            setObj.applicant_organization = org_id;
             setObj.applicant_organization_name = organization.name;
             setObj.applicant_organization_fullname = organization.full_name;
 
