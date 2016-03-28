@@ -1,13 +1,12 @@
 Package.describe({
-	name: 'steedos:workflow',
+	name: 'steedos:lib',
 	version: '0.0.1',
-	summary: 'Steedos workflow libraries',
+	summary: 'Steedos libraries',
 	git: ''
 });
 
 Package.onUse(function(api) { 
 	api.versionsFrom('1.0');
-
 
 	api.use('reactive-var');
 	api.use('reactive-dict');
@@ -28,7 +27,6 @@ Package.onUse(function(api) {
 	api.use('aldeed:autoform-select2');
 	api.use('matb33:collection-hooks');
 
-	api.use('steedos:lib');
 
 	api.use(['webapp'], 'server');
 
@@ -45,21 +43,23 @@ Package.onUse(function(api) {
 	
 	// COMMON
 	api.addFiles('lib/collection_helpers.js');
-
-	api.addFiles('lib/tapi18n.coffee');
 	api.addFiles('lib/core.coffee');
+	api.addFiles('lib/tapi18n.coffee');
 
-	api.addFiles('lib/models/forms.coffee');
-	api.addFiles('lib/models/flows.coffee');
-	api.addFiles('lib/models/flow_roles.coffee');
-	api.addFiles('lib/models/flow_positions.coffee');
-	api.addFiles('lib/models/instances.coffee');
-	api.addFiles('lib/models/categories.coffee');
-	api.addFiles('lib/models/box_counts.coffee');
+	api.addFiles('lib/models/users.coffee');
+	api.addFiles('lib/models/spaces.coffee');
+	api.addFiles('lib/models/space_users.coffee');
+	api.addFiles('lib/models/organizations.coffee');
 
+	api.addFiles('lib/api/core.coffee', ['server']);
+	api.addFiles('lib/api/users.coffee', ['server']);
+	api.addFiles('lib/api/spaces.coffee', ['server']);
+	api.addFiles('lib/api/space_users.coffee', ['server']);
+	api.addFiles('lib/api/organizations.coffee', ['server']);
 
 	// EXPORT
-	api.export('Workflow');
+	api.export('Steedos');
+	api.export('db');
 });
 
 Package.onTest(function(api) {

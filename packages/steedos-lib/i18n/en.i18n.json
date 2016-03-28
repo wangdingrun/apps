@@ -1,0 +1,58 @@
+{
+	"Steedos Cloud": "Steedos Cloud",
+
+	"Add": "Add",
+	"Edit": "Edit",
+	"Delete": "Delete",
+	"Spaces_isPaid": "Is Paid",
+
+	"db": {	
+		"users": "Users",
+		"users_steedos_id": "Steedos ID",
+		"users_name": "Name",
+		"users_username": "Username",
+		"users_email": "Email",
+		"users_company": "Company",
+		"users_mobile": "Moblie",
+		"users_locale": "Language",
+		"users_timezone": "Timezone",
+		"users_emails": "Emails",
+		"users_createdAt": "Created At",
+		"users_email_notification": "Email Notification",
+		
+		"apps": "Apps",
+		"apps_name": "Name",
+		"apps_description": "Description",
+		"apps_url": "URL",
+		"apps_iconURL": "IconURL",
+
+		"spaces": "Spaces",
+		"spaces_name": "Name",
+		"spaces_admins": "Admins",
+		"spaces_owner": "Owner",
+		"spaces_balance": "Balance",
+		"spaces_is_paid": "Is Paid",
+		"spaces_owner_name()": "Owner",
+		"spaces_admins_name()": "Admins",
+		"Spaces_isPaid" :"Is Paid",
+
+		"organizations": "Organizations",
+		"organizations_fullname": "Fullname",
+		"organizations_users": "Users",
+		"organizations_name": "Name",
+		"organizations_parent": "Parent",
+		"organizations_space_name()": "Space",
+		"organizations_users_count()": "Users Count",
+
+
+		"space_users": "Space Users",
+		"space_users_space_name()": "Space Name",
+		"space_users_name": "Name",
+		"space_users_email": "Email",
+		"space_users_organization": "Organization",
+		"space_users_user_accepted": "User Accepted",
+		"space_users_manager": "Manager",
+		"space_users_organization_name()": "Organization"
+	}
+
+}

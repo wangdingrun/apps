@@ -64,5 +64,6 @@ francocatena:status
 
 gandev:server-eval
 
+steedos:lib
 steedos:workflow
 cfs:ui
