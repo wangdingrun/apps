@@ -30,7 +30,7 @@ Meteor.startup ->
 		Meteor.subscribe "flows", Session.get("spaceId")
 		Meteor.subscribe "box_counts", Session.get("spaceId")
 
-		Meteor.subscribe "cfs_instances"
+		Meteor.subscribe "cfs_instances", Session.get("instanceId")
 
 		Meteor.subscribe "user_data"
 

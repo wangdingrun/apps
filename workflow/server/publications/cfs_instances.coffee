@@ -1,8 +1,13 @@
 
-Meteor.publish 'cfs_instances', ()->
+Meteor.publish 'cfs_instances', (instanceId)->
 
 	unless this.userId
 		return this.ready()
 
-	return cfs.instances.find()
+  unless instanceId
+      return this.ready()
+
+  console.log '[publish] cfs_instances ' + instanceId
+
+	return cfs.instances.find({'metadata.instance': instanceId})
 

@@ -342,10 +342,14 @@ InstanceManager.newIns = function(flowId) {
 
 // 申请单删除
 InstanceManager.deleteIns = function() {
-  // TODO 删除附件
   var instance = WorkflowManager.getInstance();
   if (!instance)
     return;
+  // 删除附件
+  var attachs = cfs.instances.find({"metadata.instance": instance._id});
+  attachs.forEach(function(a){
+    a.remove();
+  })
   UUflow_api.delete_draft(instance._id);
 }
 
