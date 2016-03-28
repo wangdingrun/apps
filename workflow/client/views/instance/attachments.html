@@ -1,26 +1,26 @@
 <template name="instance_attachments" >
-    <div class="panel panel-default instance-attachments">
-        <div class="panel-heading heading">附件</div>
-        <table class='table table-condensed attachments'>
-            <tbody>
-                
-                <div class="modal fade" id="upload_progress_bar" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" data-backdrop="static">
-                    <div class="modal-dialog ins-modal">
-                        {{#if isUploading}}
-                            {{#with FS.GetFile "instances" isUploading}}
-                                {{#unless this.isUploaded}}
-                                    {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
-                                {{/unless}}
-                            {{/with}}
-                        {{/if}}
-                    </div>
-                </div>
-
-                {{#each this}}
-                    {{> Template.dynamic template="instance_attachment" data=this}}
-                {{/each}}
-            </tbody>
-        </table>
+    {{#if this}}
+        <div class="panel panel-default instance-attachments">
+            <div class="panel-heading heading">附件</div>
+            <table class='table table-condensed attachments'>
+                <tbody>
+                    {{#each this}}
+                        {{> Template.dynamic template="instance_attachment" data=this}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if}}
+    <div class="modal fade" id="upload_progress_bar" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" data-backdrop="static">
+        <div class="modal-dialog ins-modal">
+            {{#if isUploading}}
+                {{#with FS.GetFile "instances" isUploading}}
+                    {{#unless this.isUploaded}}
+                        {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
+                    {{/unless}}
+                {{/with}}
+            {{/if}}
+        </div>
     </div>
 </template>
 
