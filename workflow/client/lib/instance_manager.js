@@ -425,7 +425,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
   if (instance) {
     var state = instance.state;
 
-    var curTime = new Date().toISOString();
+    var curTime = new Date();
     var userId = Meteor.userId();
     var fileName = fileObj.name();
     
@@ -484,12 +484,16 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     if (state == "draft") {
       instance.attachments = attachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      Meteor.call("draft_save_instance", instance);
+      Meteor.call("draft_save_instance", instance, function (error, result) {
+        $('#upload_progress_bar').modal('hide');
+      });
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = attachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      Meteor.call("inbox_save_instance", myApprove);
+      Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        $('#upload_progress_bar').modal('hide');
+      });
     }
   }
 }

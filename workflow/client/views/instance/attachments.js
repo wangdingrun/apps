@@ -40,18 +40,9 @@ Template.instance_attachment.helpers({
  
 })
 
-// Template.instance_attachment.events({
-
-//     'click button': function(event, template) {
-//         debugger;
-//     }
-
-// })
-
-
 Template._file_DeleteButton.events({
 
-    'click button': function(event, template) {
+    'click div': function(event, template) {
         var fileObj = template.data.fileObj;
         if (!fileObj) {
            return false;
@@ -64,7 +55,7 @@ Template._file_DeleteButton.events({
 })
 
 
-Template.ins_attach_version_btn.helpers({
+Template.ins_attach_version_modal.helpers({
 
     isUploading: function () {
         return Session.get("progress_version_file_id");
@@ -109,10 +100,9 @@ Template.ins_attach_version_btn.helpers({
 })
 
 
-Template.ins_attach_version_btn.events({
+Template.ins_attach_version_modal.events({
 
     'change .ins-file-version-input': function (event, template) {
-        console.log("ins_attach_version_btn");
         Session.set("attach_id", template.data._id);
         FS.Utility.eachFile(event, function(file){
             newFile = new FS.File(file);
@@ -135,7 +125,7 @@ Template.ins_attach_version_btn.events({
 
 Template._file_version_DeleteButton.events({
 
-    'click button': function(event, template) {
+    'click div': function(event, template) {
         var fileObj = template.data.fileObj;
         var modal_id = template.data.modal_id;
         if (!fileObj || !modal_id) {

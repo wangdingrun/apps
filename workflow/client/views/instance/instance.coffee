@@ -311,6 +311,7 @@ Template.instanceform.events
         ,101
 
     'change .ins-file-input': (event, template)->
+        $('#upload_progress_bar').modal('show'); 
         FS.Utility.eachFile(event, (file) ->
             newFile = new FS.File(file);
             currentApprove = InstanceManager.getCurrentApprove();
@@ -321,7 +322,7 @@ Template.instanceform.events
                 else
                     Session.set("progress_file_id", fileObj._id);
                     fileObj.on("uploaded", ()->
-                            InstanceManager.addAttach(fileObj);
+                            InstanceManager.addAttach(fileObj, false);
                             fileObj.removeListener("uploaded");
                         )
                 )

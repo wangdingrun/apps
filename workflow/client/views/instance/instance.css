@@ -177,6 +177,10 @@ textarea {
     color:red;
 }
 
+.instance-attachments > .heading{
+    font-size: 17px;
+}
+
 .ins-upload {
   display: inline-block;
   position: relative;
@@ -212,6 +216,43 @@ textarea {
   display: inline-block;
   width: 160px;
 }
+
+.ins-modal {
+  -webkit-border-radius:4px;
+}
+
+.ins-attach-view {}
+
+.ins-attach-view .delete {
+  cursor: pointer;
+  display: none;
+  margin-left: 10px;
+}
+
+.ins-attach-view a:hover {
+  text-decoration: underline;
+}
+
+.ins-attach-view:hover .delete {
+  display: inline-block;;
+}
+
+.ins-attach-version-view {}
+
+.ins-attach-version-view .delete {
+  cursor: pointer;
+  display: none;
+  margin-left: 10px;
+}
+
+.ins-attach-version-view a:hover {
+  text-decoration: underline;
+}
+
+.ins-attach-version-view:hover .delete {
+  display: inline-block;;
+}
+
 
 
 
