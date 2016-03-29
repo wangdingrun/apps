@@ -326,11 +326,21 @@ InstanceManager.saveIns = function() {
     if (state == "draft") {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       instance.applicant = $("#ins_applicant").select2().val();
-      Meteor.call("draft_save_instance", instance);
+      Meteor.call("draft_save_instance", instance, function (error, result) {
+        if (result == true)
+          toastr.success("暂存成功!");
+        else 
+          toastr.error(error);
+      });
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      Meteor.call("inbox_save_instance", myApprove);
+      Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        if (result == true)
+          toastr.success("暂存成功!");
+        else 
+          toastr.error(error);
+      });
     }
   }
 }
@@ -489,14 +499,24 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
       instance.attachments = attachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
-        $('#upload_progress_bar').modal('hide');
+        if (result == true) {
+          $('#upload_progress_bar').modal('hide');
+          toastr.success("附件添加成功!");
+        } else {
+          toastr.error(error);
+        }
       });
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = attachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
-        $('#upload_progress_bar').modal('hide');
+        if (result == true) {
+          $('#upload_progress_bar').modal('hide');
+          toastr.success("附件添加成功!");
+        } else {
+          toastr.error(error);
+        }
       });
     }
   }
@@ -526,12 +546,26 @@ InstanceManager.removeAttach = function () {
     if (state == "draft") {
       instance.attachments = newAttachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      Meteor.call("draft_save_instance", instance);
+      Meteor.call("draft_save_instance", instance, function (error, result) {
+        if (result == true) {
+          $('#upload_progress_bar').modal('hide');
+          toastr.success("附件删除成功!");
+        } else {
+          toastr.error(error);
+        }
+      });
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.attachments = newAttachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-      Meteor.call("inbox_save_instance", myApprove);
+      Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        if (result == true) {
+          $('#upload_progress_bar').modal('hide');
+          toastr.success("附件删除成功!");
+        } else {
+          toastr.error(error);
+        }
+      });
     }
   }
 }
