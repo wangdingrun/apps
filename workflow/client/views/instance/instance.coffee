@@ -101,6 +101,7 @@ Template.instanceform.helpers
 
         u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
 
+        $("#nextStepUsers").select2().val();
         $("#ins_applicant").select2().val(instance.applicant);
         $("#ins_applicant").select2().val();
         
