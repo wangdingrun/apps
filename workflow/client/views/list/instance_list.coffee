@@ -98,7 +98,7 @@ Template.instance_list.events
         forms = db.forms.find({category:{$in:[null,""]}});
         forms.forEach (f) ->
             db.flows.find({form:f._id}).forEach (fl) ->
-                data.push({text:fl.name});
+                data.push({text:fl.name, flow_id: fl._id});
 
         $('#tree').treeview({data: data});
         #新建流程
