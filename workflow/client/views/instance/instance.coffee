@@ -311,8 +311,8 @@ Template.instanceform.events
         ,101
 
     'change .ins-file-input': (event, template)->
-        $('#upload_progress_bar').modal('show'); 
         FS.Utility.eachFile(event, (file) ->
+            $('#upload_progress_bar').modal('show');
             newFile = new FS.File(file);
             currentApprove = InstanceManager.getCurrentApprove();
             newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id};

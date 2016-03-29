@@ -1,7 +1,14 @@
 <template name="instance_attachments" >
     {{#if this}}
         <div class="panel panel-default instance-attachments">
-            <div class="panel-heading heading">附件</div>
+            <div class="panel-heading heading">
+                附件
+                <div class="ins-upload" style="float: right;">
+                  <span class="glyphicon glyphicon-plus"  title="附件"></span>
+                  <input type="file" name="file" class="ins-file-input">
+                </div>
+            </div>
+                
             <table class='table table-condensed attachments'>
                 <tbody>
                     {{#each this}}
@@ -12,15 +19,21 @@
         </div>
     {{/if}}
     <div class="modal fade" id="upload_progress_bar" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" data-backdrop="static">
-        <div class="modal-dialog ins-modal">
-            {{#if isUploading}}
-                {{#with FS.GetFile "instances" isUploading}}
-                    {{#unless this.isUploaded}}
-                        {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
-                    {{/unless}}
-                {{/with}}
-            {{/if}}
-        </div>
+        <table align="center" width="33%" height="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        {{#if isUploading}}
+                            {{#with FS.GetFile "instances" isUploading}}
+                                {{#unless this.isUploaded}}
+                                    {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
+                                {{/unless}}
+                            {{/with}}
+                        {{/if}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -76,7 +89,7 @@
                                     <td class="ins-attach-version-view">
                                         <a href="{{this.url download=true}}" target="_parent">{{this.name}} (当前版本)</a>
                                         <br/>
-                                        <label>{{attach_version_info this}}</label>
+                                        <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
                                         {{#if current_can_delete ../current.approve ../historys}}
                                             {{> _file_version_DeleteButton fileObj=this modal_id=../_id}}
                                         {{/if}}
@@ -90,7 +103,7 @@
                                         <td class="ins-attach-version-view">
                                             <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
                                             <br/>
-                                            <label>{{attach_version_info this}}</label>
+                                            <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
                                         </td>
                                     </tr>
                                 {{/with}}
