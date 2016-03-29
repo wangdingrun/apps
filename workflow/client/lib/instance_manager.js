@@ -303,7 +303,7 @@ InstanceManager.getMyApprove = function(){
             selectedNextStepUsers.forEach(function(su){
               nextStepUsers.push(su.value);
             });
-        }else{
+        } else if (selectedNextStepUsers){
             nextStepUsers.push(selectedNextStepUsers);
         }
 
