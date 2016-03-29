@@ -316,11 +316,13 @@ ApproveManager.setNextStepsSelectValue = function(steps, value){
     var lastStep = steps.filterProperty("_id", value);
 
     try{
-        if(lastStep.length > 0){
-            $("#nextSteps").get(0).value = value;
-        }else if(steps.length > 0){
-            $("#nextSteps").get(0).selectedIndex = 0;
-        }
+        if ($("#nextSteps").get(0)) {
+            if(lastStep.length > 0){
+                $("#nextSteps").get(0).value = value;
+            }else if(steps.length > 0){
+                $("#nextSteps").get(0).selectedIndex = 0;
+            }
+        } 
     }catch(e){
         console.info(e);
     }
