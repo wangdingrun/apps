@@ -350,7 +350,9 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
           lastSelected.push(su.value);
         });
     }else{
-        lastSelected.push(selectedNextStepUsers);
+        if (selectedNextStepUsers) {
+            lastSelected.push(selectedNextStepUsers);
+        }
     }
     $("#nextStepUsers").empty();
     $("#nextStepUsers").select2().val(null);

@@ -65,7 +65,7 @@ Template.instanceform.helpers
         if !currentApprove
             return;
 
-        if(currentApprove.next_steps.length < 1)
+        if(!currentApprove.next_steps || currentApprove.next_steps.length < 1)
             return ;
 
         judge = currentApprove.judge
@@ -104,7 +104,7 @@ Template.instanceform.helpers
         $("#nextStepUsers").select2().val();
         $("#ins_applicant").select2().val(instance.applicant);
         $("#ins_applicant").select2().val();
-        
+
 
     show_suggestion: ->
 
@@ -202,13 +202,27 @@ Template.instanceform.helpers
             return "display: none;";
 
     space_users: ->
+        console.log("space_users");
         return db.space_users.find();
 
+    selected_applicant: (user)->
 
+        instance = WorkflowManager.getInstance();
+        if !instance
+            return;
+
+        if instance.applicant == user
+            console.log("selected_applicant");
+            return "selected";
+
+        return;
+    
 
 Template.instanceform.events
     
     'change .suggestion,.form-control': (event) ->
+        $("#ins_applicant").select2();
+        
         if ApproveManager.isReadOnly()
             return ;
         judge = $("[name='judge']").filter(':checked').val();
