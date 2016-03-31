@@ -293,7 +293,7 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
     
     $("#nextSteps").empty();
 
-    $("#nextSteps").select2().val(null);
+    $("#nextSteps").select2().val(null).trigger("change");
 
     if(!steps)
         return;
@@ -314,20 +314,12 @@ ApproveManager.getNextStepsSelectValue = function(){
 
 ApproveManager.setNextStepsSelectValue = function(steps, value){
     var lastStep = steps.filterProperty("_id", value);
-
-    try{
-        if ($("#nextSteps").get(0)) {
-            if(lastStep.length > 0){
-                $("#nextSteps").get(0).value = value;
-            }else if(steps.length > 0){
-                $("#nextSteps").get(0).selectedIndex = 0;
-            }
-        } 
-    }catch(e){
-        console.info(e);
+    
+    if(lastStep.length > 0){
+        $("#nextSteps").select2().val(value).trigger("change");
+    }else if(steps.length > 0){
+        $("#nextSteps").select2().val(steps[0]._id).trigger("change");
     }
-
-    $("#nextSteps").select2().val();
 }
 
 ApproveManager.getNextStepUsersSelectValue = function(){
@@ -336,8 +328,11 @@ ApproveManager.getNextStepUsersSelectValue = function(){
 
 ApproveManager.setNextStepUsersSelectValue = function(value){
     if(value){
-        $("#nextStepUsers").select2().val(value);
-        $("#nextStepUsers").select2().val();
+        if (value.length == 1) {
+            $("#nextStepUsers").select2().val(value[0]).trigger("change");
+        } else if (value.length > 1) {
+            $("#nextStepUsers").select2().val(value).trigger("change");
+        }
     }
 }
 
@@ -355,7 +350,7 @@ ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
         }
     }
     $("#nextStepUsers").empty();
-    $("#nextStepUsers").select2().val(null);
+    $("#nextStepUsers").select2().val(null).trigger("change");
     if(!users)
         return;
     

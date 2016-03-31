@@ -52,14 +52,13 @@ Template.instanceform.helpers
             Form_formula.initFormScripts(form_version.form_script);
 
     init_nextStepsOptions: ->
+
         console.log("run init_nextStepsOptions...");
-        #将下一步、处理人控件设置为select2
+        if !Session.get('instance_data_ready')
+            return;
+
         if ApproveManager.isReadOnly()
             return ;
-        
-        $("#nextSteps").select2();
-        $("#nextStepUsers").select2();
-        $("#ins_applicant").select2();
 
         currentApprove = InstanceManager.getCurrentApprove();
         if !currentApprove
@@ -84,27 +83,22 @@ Template.instanceform.helpers
 
         nextStepId = currentApprove.next_steps[0].step;
         if nextSteps.filterProperty('id',nextStepId).length > 0
-            if $("#nextSteps").get(0)
-                $("#nextSteps").get(0).value = nextStepId;
+            $("#nextSteps").select2().val(nextStepId).trigger('change');
         else
             return ;
 
         nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
         nextStep = WorkflowManager.getInstanceStep(nextStepId);
         ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+        
         #设置选中的用户
-        u_ops = $("#nextStepUsers option").toArray();
-
-        if u_ops.length > 0
-            if $("#nextStepUsers").get(0)
-                $("#nextStepUsers").get(0).selectedIndex = -1;
-
-        u_op.selected = true for u_op in u_ops when currentApprove.next_steps[0].users.includes(u_op.value)
-
-        $("#nextStepUsers").select2().val();
-        $("#ins_applicant").select2().val(instance.applicant);
-        $("#ins_applicant").select2().val();
-
+        users = currentApprove.next_steps[0].users;
+        if users.length == 1
+            $("#nextStepUsers").select2().val(users[0]).trigger('change');
+        else if users.length > 1
+            $("#nextStepUsers").select2().val(users).trigger('change');
+        else
+            $("#nextStepUsers").select2().val(null).trigger('change');
 
     show_suggestion: ->
 
@@ -205,24 +199,20 @@ Template.instanceform.helpers
         console.log("space_users");
         return db.space_users.find();
 
-    selected_applicant: (user)->
-
-        instance = WorkflowManager.getInstance();
-        if !instance
-            return;
-
-        if instance.applicant == user
-            console.log("selected_applicant");
-            return "selected";
-
-        return;
     
+Template.instanceform.onRendered ->
+    $('#nextSteps').select2();
+    $('#nextStepUsers').select2();
+    $("#ins_applicant").select2();
+    Tracker.autorun ->
+        if Session.get("instance_data_ready")
+            instance = WorkflowManager.getInstance();
+            if instance
+                $("#ins_applicant").select2().val(instance.applicant).trigger('change');
 
 Template.instanceform.events
     
     'change .suggestion,.form-control': (event) ->
-        $("#ins_applicant").select2();
-        
         if ApproveManager.isReadOnly()
             return ;
         judge = $("[name='judge']").filter(':checked').val();
@@ -248,10 +238,6 @@ Template.instanceform.events
         else
             $("#nextStepUsers").empty();
 
-        InstanceManager.checkSuggestion();
-        InstanceManager.checkNextStep();
-        InstanceManager.checkNextStepUser();
-
     'change #suggestion': (event) ->
         if ApproveManager.isReadOnly()
             return ;
@@ -267,13 +253,9 @@ Template.instanceform.events
         nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
         ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
-        InstanceManager.checkNextStep();
-        InstanceManager.checkNextStepUser();
-
     'change #nextStepUsers': (event) ->
         if ApproveManager.isReadOnly()
             return ;
-        InstanceManager.checkNextStepUser();
 
     'change .form-control': (event)->
         if ApproveManager.isReadOnly()
