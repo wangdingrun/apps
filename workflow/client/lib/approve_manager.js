@@ -17,7 +17,7 @@ ApproveManager.isReadOnly = function(){
 }
 
 ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields){
-
+    console.log("getNextSteps");
     if(!currentStep)
         return ;
 
@@ -104,7 +104,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     if (currentStep.step_type == "counterSign" && rev_nextSteps.length > 1){
         rev_nextSteps = [];
     }
-
+    console.log(rev_nextSteps);
     return rev_nextSteps;
 };
 
@@ -288,7 +288,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 };
 
 ApproveManager.updateNextStepOptions = function(steps, judge){
-
+    console.log("updateNextStepOptions");
     var lastSelected = ApproveManager.getNextStepsSelectValue();
     
     $("#nextSteps").empty();
@@ -304,20 +304,28 @@ ApproveManager.updateNextStepOptions = function(steps, judge){
 
     if(steps.length > 1)
         $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
+
+    $("#nextSteps").select2().val();
     
+    console.log(steps);
+    console.log(lastSelected);
     ApproveManager.setNextStepsSelectValue(steps, lastSelected);
 };
 
 ApproveManager.getNextStepsSelectValue = function(){
+    console.log("getNextStepsSelectValue");
     return $("#nextSteps").select2().val();
 }
 
 ApproveManager.setNextStepsSelectValue = function(steps, value){
+    console.log("setNextStepsSelectValue");
     var lastStep = steps.filterProperty("_id", value);
     
     if(lastStep.length > 0){
+        console.log("lastStep.length > 0");
         $("#nextSteps").select2().val(value).trigger("change");
-    }else if(steps.length > 0){
+    } else if(steps.length > 0){
+        console.log("steps.length > 0");
         $("#nextSteps").select2().val(steps[0]._id).trigger("change");
     }
 }
@@ -327,16 +335,21 @@ ApproveManager.getNextStepUsersSelectValue = function(){
 }
 
 ApproveManager.setNextStepUsersSelectValue = function(value){
+    console.log("setNextStepUsersSelectValue:");
+    console.log(value);
     if(value){
         if (value.length == 1) {
             $("#nextStepUsers").select2().val(value[0]).trigger("change");
         } else if (value.length > 1) {
             $("#nextStepUsers").select2().val(value).trigger("change");
+        } else {
+            $("#nextStepUsers").select2().val(null).trigger("change");
         }
     }
 }
 
 ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
+    console.log("updateNextStepUsersOptions");
     var lastSelected = new Array();
     var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
 

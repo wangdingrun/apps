@@ -279,7 +279,6 @@ InstanceManager.getCurrentApprove = function(){
 
   if (currentApprove._id) {
     currentApprove.id = currentApprove._id;
-    delete currentApprove._id;
   }
 
   return currentApprove; 
