@@ -18,6 +18,10 @@
             </table>
         </div>
     {{/if}}
+    
+</template>
+
+<template name="upload_progress_bar_modal">
     <div class="modal fade" id="upload_progress_bar" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" data-backdrop="static">
         <table align="center" width="33%" height="100%">
             <tbody>
@@ -42,12 +46,11 @@
         <tr>
             <td class="ins-attach-view">
                 <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
-                <a style="cursor: pointer;margin-left: 10px;" data-toggle="modal" data-target="#{{../_id}}">版本</a>
+                <a style="cursor: pointer;margin-left: 10px;" data-toggle="modal" data-target="#ins_attach_version" name="ins_attach_version" id="{{../_id}}" >版本</a>
                 {{#if can_delete ../current.approve ../historys}}
                     {{> _file_DeleteButton fileObj=this}}
                 {{/if}}
             </td>
-            {{> Template.dynamic template="ins_attach_version_modal" data=..}}
         </tr>
     {{/with}}
 </template>
@@ -58,9 +61,10 @@
 
 <template name="ins_attach_version_modal" >
     
-    <div class="modal fade" id={{_id}} tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal fade" id="ins_attach_version" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
         <div class="modal-dialog" role="document">
           <div class="modal-content ins-modal">
+                {{#with attach}}
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title" id="modalLabel2">{{ filename }}</h4>
@@ -91,7 +95,7 @@
                                         <br/>
                                         <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
                                         {{#if current_can_delete ../current.approve ../historys}}
-                                            {{> _file_version_DeleteButton fileObj=this modal_id=../_id}}
+                                            {{> _file_version_DeleteButton fileObj=this}}
                                         {{/if}}
                                     </td>
                                 </tr>
@@ -114,6 +118,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">好</button>
                 </div>
+                {{/with}}
           </div>
         </div>
     </div>

@@ -442,7 +442,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     var userId = Meteor.userId();
     var fileName = fileObj.name();
     
-    var attachs = instance.attachments;
+    var attachs = instance.attachments || [];
     var hasRepeatedFile = false;
     var attach_id = fileObj.metadata.attach_id;
     attachs.forEach(function(a){

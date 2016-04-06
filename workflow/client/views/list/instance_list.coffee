@@ -54,11 +54,6 @@ Template.instance_list.helpers
 
 Template.instance_list.events
 
-    'hidden.bs.modal #createInsModal': (event)->
-        insId = Session.get("instanceId");
-        if insId
-            FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
-
     'click tbody > tr': (event) ->
         dataTable = $(event.target).closest('table').DataTable();
         rowData = dataTable.row(event.currentTarget).data();
@@ -80,31 +75,6 @@ Template.instance_list.events
     'click .dropdown-menu li a': (event) -> 
         InstanceManager.exportIns(event.target.type);
 
-
-    'shown.bs.modal #createInsModal': (event) ->
-        data = [];
-        categories = WorkflowManager.getSpaceCategories();
-        #生成树
-        categories.forEach (cat) ->
-            o =  {};
-            o.text = cat.name;
-            o.nodes = [];
-            forms = db.forms.find({category:cat._id});
-            forms.forEach (f) ->
-                db.flows.find({form:f._id}).forEach (fl) ->
-                    o.nodes.push({text:fl.name, flow_id: fl._id})
-            data.push(o);
-
-        forms = db.forms.find({category:{$in:[null,""]}});
-        forms.forEach (f) ->
-            db.flows.find({form:f._id}).forEach (fl) ->
-                data.push({text:fl.name, flow_id: fl._id});
-
-        $('#tree').treeview({data: data});
-        #新建流程
-        $('#tree').on('nodeSelected', (event, data)->
-                InstanceManager.newIns(data.flow_id)
-            )
 
 
 

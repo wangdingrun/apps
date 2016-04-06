@@ -76,7 +76,7 @@ Template.instanceform.helpers
                 return ;
             autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
             nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
-            debugger;
+
             if !nextSteps
                 return ;
             console.log("==updateNextStepOptions===");

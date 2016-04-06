@@ -1,10 +1,6 @@
 
 Template.instance_attachments.helpers({
 
-    isUploading: function () {
-        return Session.get("progress_file_id");
-    }
- 
 })
 
 
@@ -40,6 +36,18 @@ Template.instance_attachment.helpers({
  
 })
 
+Template.instance_attachment.events({
+    "click [name='ins_attach_version']": function (event, template) {
+        Session.set("attach_id", event.target.id);
+    }
+})
+
+Template.upload_progress_bar_modal.helpers({
+    isUploading: function () {
+        return Session.get("progress_file_id");
+    }
+})
+
 Template._file_DeleteButton.events({
 
     'click div': function(event, template) {
@@ -56,6 +64,25 @@ Template._file_DeleteButton.events({
 
 
 Template.ins_attach_version_modal.helpers({
+
+    attach: function () {
+        var ins_id, ins_attach_id;
+        ins_id = Session.get("instanceId");
+        ins_attach_id = Session.get("attach_id");
+        if (!ins_id || !ins_attach_id)
+            return;
+        var ins = WorkflowManager.getInstance();
+        if (!ins)
+            return;
+        if (!ins.attachments)
+            return;
+        var attach = ins.attachments.filterProperty("_id", ins_attach_id);
+        if (attach) {
+            return attach[0];
+        } else {
+            return;
+        }
+    },
 
     isUploading: function () {
         return Session.get("progress_version_file_id");
@@ -103,7 +130,7 @@ Template.ins_attach_version_modal.helpers({
 Template.ins_attach_version_modal.events({
 
     'change .ins-file-version-input': function (event, template) {
-        Session.set("attach_id", template.data._id);
+        
         FS.Utility.eachFile(event, function(file){
             newFile = new FS.File(file);
             currentApprove = InstanceManager.getCurrentApprove();
@@ -127,18 +154,12 @@ Template._file_version_DeleteButton.events({
 
     'click div': function(event, template) {
         var fileObj = template.data.fileObj;
-        var modal_id = template.data.modal_id;
-        if (!fileObj || !modal_id) {
+        if (!fileObj) {
            return false;
         }
 
-        $('#' + modal_id).on('hidden.bs.modal', function(e){
-            Session.set("file_id", fileObj._id);
-            fileObj.remove(function(){InstanceManager.removeAttach();});
-        })
-
-        $('#' + modal_id).modal('hide');
-        return true;
+        Session.set("file_id", fileObj._id);
+        fileObj.remove(function(){InstanceManager.removeAttach();});
     }
 
 })
