@@ -72,5 +72,8 @@ Meteor.startup ->
 					, 1000
 
 			onError: (formType, error) ->
-				toastr.error error
+				if error.reason
+					toastr.error error.reason
+				else 
+					toastr.error error
 			

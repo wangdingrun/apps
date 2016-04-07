@@ -53,6 +53,10 @@
 		"space_users_user_accepted": "User Accepted",
 		"space_users_manager": "Manager",
 		"space_users_organization_name()": "Organization"
+	},
+
+	"users_error": {
+		"steedos_id_required": "Steedos ID is required"
 	}
 
 }

@@ -54,6 +54,10 @@
 		"space_users_organization_name()": "部门"
 
 
+	},
+
+	"users_error": {
+		"steedos_id_required": "Steedos ID 不能为空"
 	}
 
 }

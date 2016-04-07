@@ -139,6 +139,9 @@ if Meteor.isServer
 		
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
+		if modifier.$unset && modifier.$unset.steedos_id == ""
+			throw new Meteor.Error(400, t("users_error.steedos_id_required"));
+
 		modifier.$set = modifier.$set || {};
 
 		if doc.steedos_id && modifier.$set.steedos_id
