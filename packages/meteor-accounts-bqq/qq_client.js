@@ -25,7 +25,6 @@ Qq.requestCredential = function (options, credentialRequestCompleteCallback) {
     'https://openapi.b.qq.com/oauth2/authorize' +
       '?app_id=' + config.clientId +
       '&oauth_version=2&response_type=code&ui=web' +
-      '&scope=' + flatScope +
       '&redirect_uri=' + OAuth._redirectUri('bqq', config) +
       '&state=' + OAuth._stateParam(loginStyle, credentialToken);
 

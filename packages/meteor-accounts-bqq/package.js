@@ -10,6 +10,8 @@ Package.onUse(function(api) {
   api.use('accounts-base', ['client', 'server']);
   api.imply('accounts-base', ['client', 'server']);
   api.use('accounts-oauth', ['client', 'server']);
+  api.use('simple:json-routes@2.1.0');
+
 
   api.use('oauth', ['client', 'server']);
   api.use('oauth2', ['client', 'server']);
@@ -21,14 +23,11 @@ Package.onUse(function(api) {
 
   api.addFiles('qq_client.js', 'client');
   api.addFiles('qq_server.js', 'server');
+  api.addFiles('company_token.js', 'server');
   api.addFiles("qq.js");
 
   api.export('Qq');
 
   api.addFiles('qq_login_button.css', 'client');
 
-  api.addFiles([
-    'qq_configuration.html',
-    'qq_configuration.js',
-  ],'client');
 });

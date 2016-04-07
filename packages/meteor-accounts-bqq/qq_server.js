@@ -33,9 +33,9 @@ var getTokenResponse = function (query) {
           grant_type: 'authorization_code'
         }
       });
-
-    if (response.error) // if the http response was an error
-        throw response.error;
+    
+    if (response.error_code) // if the http response was an error
+        throw response.msg;
     if (typeof response.content === "string")
         var qqAccessToken;
         _.each(response.content.split('&'), function (kvString) {
