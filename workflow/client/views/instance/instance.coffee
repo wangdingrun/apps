@@ -201,6 +201,14 @@ Template.instanceform.helpers
         console.log("space_users");
         return db.space_users.find();
 
+    is_disabled: ->
+        ins = WorkflowManager.getInstance();
+        if !ins
+            return;
+        if ins.state!="draft"
+            return "disabled";
+        return;
+
 
 Template.instanceform.onRendered ->
     console.log("onRendered");
