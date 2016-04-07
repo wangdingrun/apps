@@ -1,8 +1,8 @@
-Qq = {};
+BQQ = {};
 
 OAuth.registerService('bqq', 2, null, function(query) {
 
-  var response = getTokenResponse(query);
+  var response = BQQ.getTokenResponse(query);
   return {
     serviceData: {
       id: response.open_id,
@@ -11,7 +11,7 @@ OAuth.registerService('bqq', 2, null, function(query) {
   };
 });
 
-var getTokenResponse = function (query) {
+BQQ.getTokenResponse = function (query) {
   var config = ServiceConfiguration.configurations.findOne({service: 'bqq'});
 
   if (!config)
@@ -37,11 +37,10 @@ var getTokenResponse = function (query) {
                    {response: err.response});
   }
 
-
   return tokenResponse.data.data
 
 };
 
-Qq.retrieveCredential = function(credentialToken, credentialSecret) {
+BQQ.retrieveCredential = function(credentialToken, credentialSecret) {
   return OAuth.retrieveCredential(credentialToken, credentialSecret);
 };

@@ -1,10 +1,10 @@
-Qq = {};
+BQQ = {};
 // Request QQ credentials for the user
 // @param options {optional}
 // @param credentialRequestCompleteCallback {Function} Callback function to call on
 //   completion. Takes one argument, credentialToken on success, or Error on
 //   error.
-Qq.requestCredential = function (options, credentialRequestCompleteCallback) {
+BQQ.requestCredential = function (options, credentialRequestCompleteCallback) {
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
     credentialRequestCompleteCallback = options;
     options = {};

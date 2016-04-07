@@ -1,8 +1,8 @@
 Package.describe({
-  summary: "Business QQ account login for meteor",
+  summary: "connect steedos accounts with bqq",
   "version": "0.0.1",
-  "git": "https://github.com/steedos/meteor-accounts-bqq",
-  "name": "steedos:accounts-bqq"
+  "git": "https://github.com/steedos/connect-bqq",
+  "name": "steedos:connect-bqq"
 });
 
 Package.onUse(function(api) {
@@ -26,7 +26,7 @@ Package.onUse(function(api) {
   api.addFiles('company_token.js', 'server');
   api.addFiles("qq.js");
 
-  api.export('Qq');
+  api.export('BQQ');
 
   api.addFiles('qq_login_button.css', 'client');
 
