@@ -159,3 +159,26 @@ if Meteor.isServer
 	db.users.before.remove (userId, doc) ->
 		if not Roles.userIsInRole userId, "admin"
 			throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
+
+
+			
+	Meteor.publish 'userData', ->
+		unless this.userId
+			return this.ready()
+
+		console.log '[publish] userData'
+
+		db.users.find this.userId,
+			fields:
+				steedos_id: 1
+				name: 1
+				company: 1
+				mobile: 1
+				avatar: 1
+				locale: 1
+				timezone: 1
+				username: 1
+				utcOffset: 1
+				settings: 1
+				is_cloudadmin: 1
+
