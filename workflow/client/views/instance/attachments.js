@@ -32,6 +32,10 @@ Template.instance_attachment.helpers({
         }
 
         return isCurrentApprove && isDraftOrInbox && isFlowEnable && isHistoryLenthZero;
+    },
+
+    getUrl: function (attachVersion) {
+        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
  
 })
@@ -51,12 +55,12 @@ Template.upload_progress_bar_modal.helpers({
 Template._file_DeleteButton.events({
 
     'click div': function(event, template) {
-        var fileObj = template.data.fileObj;
-        if (!fileObj) {
+        var file_id = template.data.file_id;
+        if (!file_id) {
            return false;
         }
-        Session.set("file_id", fileObj._id);
-        fileObj.remove(function(){InstanceManager.removeAttach();});
+        Session.set("file_id", file_id);
+        cfs.instances.remove({_id:file_id}, function(error){InstanceManager.removeAttach();})
         return true;
     }
 
@@ -88,13 +92,10 @@ Template.ins_attach_version_modal.helpers({
         return Session.get("progress_version_file_id");
     },
 
-    attach_version_info: function (fileObj) {
-        var owner_id = fileObj.metadata.owner;
-        var uploadedAt = fileObj.uploadedAt;
-        var owner = db.users.findOne(owner_id);
-        if (!owner)
-            return "";
-        return owner.name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm");
+    attach_version_info: function (attachVersion) {
+        var owner_name = attachVersion.created_by_name;
+        var uploadedAt = attachVersion.created;
+        return owner_name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm");
     },
 
     current_can_delete: function (currentApproveId, historys) {
@@ -123,6 +124,10 @@ Template.ins_attach_version_modal.helpers({
         }
 
         return isCurrentApprove && isDraftOrInbox && isFlowEnable && !isHistoryLenthZero;
+    },
+
+    getUrl: function (attachVersion) {
+        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
 })
 
@@ -153,13 +158,14 @@ Template.ins_attach_version_modal.events({
 Template._file_version_DeleteButton.events({
 
     'click div': function(event, template) {
-        var fileObj = template.data.fileObj;
-        if (!fileObj) {
+        var file_id = template.data.file_id;
+        if (!file_id) {
            return false;
         }
 
-        Session.set("file_id", fileObj._id);
-        fileObj.remove(function(){InstanceManager.removeAttach();});
+        Session.set("file_id", file_id);
+        cfs.instances.remove({_id:file_id}, function(error){InstanceManager.removeAttach();})
+        return true;
     }
 
 })

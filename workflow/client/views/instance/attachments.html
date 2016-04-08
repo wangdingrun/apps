@@ -42,17 +42,15 @@
 </template>
 
 <template name="instance_attachment" >
-    {{#with FS.GetFile "instances" current._rev}}
-        <tr>
-            <td class="ins-attach-view">
-                <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
-                <a style="cursor: pointer;margin-left: 10px;" data-toggle="modal" data-target="#ins_attach_version" name="ins_attach_version" id="{{../_id}}" >版本</a>
-                {{#if can_delete ../current.approve ../historys}}
-                    {{> _file_DeleteButton fileObj=this}}
-                {{/if}}
-            </td>
-        </tr>
-    {{/with}}
+    <tr>
+        <td class="ins-attach-view">
+            <a href="{{getUrl current}}" target="_parent">{{filename}}</a>
+            <a style="cursor: pointer;margin-left: 10px;" data-toggle="modal" data-target="#ins_attach_version" name="ins_attach_version" id="{{_id}}" >版本</a>
+            {{#if can_delete current.approve historys}}
+                {{> _file_DeleteButton file_id=current._rev}}
+            {{/if}}
+        </td>
+    </tr>
 </template>
 
 <template name="_file_DeleteButton">
@@ -88,29 +86,25 @@
                                 {{/with}}
                             {{/if}}
                             
-                            {{#with FS.GetFile "instances" current._rev}}
-                                <tr>
-                                    <td class="ins-attach-version-view">
-                                        <a href="{{this.url download=true}}" target="_parent">{{this.name}} (当前版本)</a>
-                                        <br/>
-                                        <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
-                                        {{#if current_can_delete ../current.approve ../historys}}
-                                            {{> _file_version_DeleteButton fileObj=this}}
-                                        {{/if}}
-                                    </td>
-                                </tr>
-                            {{/with}}
+                            <tr>
+                                <td class="ins-attach-version-view">
+                                    <a href="{{getUrl current}}" target="_parent">{{filename}} (当前版本)</a>
+                                    <br/>
+                                    <label style="margin-bottom:0px;">{{attach_version_info current}}</label>
+                                    {{#if current_can_delete current.approve historys}}
+                                        {{> _file_version_DeleteButton file_id=current._rev}}
+                                    {{/if}}
+                                </td>
+                            </tr>
 
                             {{#each historys}}
-                                {{#with FS.GetFile "instances" this._rev}}
-                                    <tr>
-                                        <td class="ins-attach-version-view">
-                                            <a href="{{this.url download=true}}" target="_parent">{{this.name}}</a>
-                                            <br/>
-                                            <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
-                                        </td>
-                                    </tr>
-                                {{/with}}
+                                <tr>
+                                    <td class="ins-attach-version-view">
+                                        <a href="{{getUrl this}}" target="_parent">{{filename}}</a>
+                                        <br/>
+                                        <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
+                                    </td>
+                                </tr>
                             {{/each}}
                         </tbody>
                     </table>
