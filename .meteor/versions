@@ -124,7 +124,6 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
-steedos:admin@0.0.1
 steedos:connect-bqq@0.0.1
 steedos:lib@0.0.1
 steedos:workflow@0.0.1
