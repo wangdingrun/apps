@@ -33,7 +33,6 @@ mrt:moment-timezone
 
 fortawesome:fontawesome
 twbs:bootstrap
-steedos:admin-lte
 
 joshowens:timezone-picker
 useraccounts:core
@@ -49,6 +48,7 @@ raix:handlebar-helpers
 natestrauser:animate-css
 cfs:standard-packages
 cfs:filesystem
+cfs:ui
 chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
@@ -61,10 +61,10 @@ gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
 
+alanning:roles
 
-#gandev:server-eval
-
+#steedos:admin-lte
 steedos:connect-bqq
 steedos:lib
 steedos:workflow
-cfs:ui
+steedos:admin
