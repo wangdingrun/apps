@@ -337,15 +337,25 @@ ApproveManager.getNextStepUsersSelectValue = function(){
 ApproveManager.setNextStepUsersSelectValue = function(value){
     console.log("setNextStepUsersSelectValue:");
     console.log(value);
-    if(value){
-        if (value.length == 1) {
-            $("#nextStepUsers").select2().val(value[0]).trigger("change");
-        } else if (value.length > 1) {
-            $("#nextStepUsers").select2().val(value).trigger("change");
-        } else {
-            $("#nextStepUsers").select2().val(null).trigger("change");
+    var n = [];
+    if(value && value.length > 0){
+        n = value;
+    } else {
+        console.log("setNextStepUsersSelectValue value is []");
+        var c = InstanceManager.getCurrentApprove();
+        if (c && c.next_steps && c.next_steps[0] && c.next_steps[0].users) {
+            n = c.next_steps[0].users;
         }
     }
+    if (n.length == 1) {
+        $("#nextStepUsers").select2().val(n[0]).trigger("change");
+    } else if (n.length > 1) {
+        $("#nextStepUsers").select2().val(n).trigger("change");
+    } else {
+        $("#nextStepUsers").select2().val(null).trigger("change");
+    }
+
+    $("#nextStepUsers").select2().val();
 }
 
 ApproveManager.updateNextStepUsersOptions = function(nextStep, users){

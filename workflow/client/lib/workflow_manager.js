@@ -89,7 +89,7 @@ WorkflowManager.getInstance = function (){
 
 
 WorkflowManager.getInstanceFormVersion = function (){
- 
+  console.log("getInstanceFormVersion");
   var form_fields = [];
 
   var rev = null

@@ -58,14 +58,16 @@ Template.instanceform.helpers
 
             if !Session.get('instance_data_ready')
                 return;
+            console.log("1");
 
             if ApproveManager.isReadOnly()
-                return ;
+                return;
 
+            console.log("2");
             currentApprove = InstanceManager.getCurrentApprove();
             if !currentApprove
                 return;
-
+            console.log("3");
             current_next_steps = currentApprove.next_steps;
 
             judge = currentApprove.judge
@@ -74,6 +76,7 @@ Template.instanceform.helpers
             form_version = WorkflowManager.getInstanceFormVersion();
             if !form_version
                 return ;
+            console.log("4");
             autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
             nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
 
