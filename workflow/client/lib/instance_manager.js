@@ -243,16 +243,14 @@ InstanceManager.getCurrentStep = function(){
 }
 
 InstanceManager.getCurrentValues = function(){
-  var instance = WorkflowManager.getInstance();
-  var currentApprove = InstanceManager.getCurrentApprove();
-  var approve_values_is_null = true;
-  if(!currentApprove || !currentApprove.values){return;}
-  if(_.size(currentApprove.values) != 0){
-    approve_values_is_null = false;
+  var box = Session.get("box"),
+      instanceValue;
+  if (box == "inbox" || box == "draft") {
+      instanceValue = InstanceManager.getCurrentApprove();
+  } else if (box == "outbox" || box == "pending" || box == "completed" || box == "monitor") {
+      var instance = WorkflowManager.getInstance();
+      instanceValue = instance.values;
   }
-
-  var instanceValue = approve_values_is_null ? instance.values : currentApprove.values;
-
   return instanceValue;
 }
 
