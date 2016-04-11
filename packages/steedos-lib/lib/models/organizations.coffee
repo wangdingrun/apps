@@ -79,14 +79,14 @@ db.organizations._simpleSchema = new SimpleSchema
 			omit: true
 
 if Meteor.isClient
-	db.organizations._simpleSchema.i18n("db.organizations")
+	db.organizations._simpleSchema.i18n("db_organizations")
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
 db.organizations.adminConfig =
 	icon: "sitemap"
 	label: ->
-		return t("db.organizations")
+		return t("db_organizations")
 	tableColumns: [
 		{name: "fullname"},
 		{name: "users_count()"},

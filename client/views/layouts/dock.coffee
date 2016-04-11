@@ -19,18 +19,6 @@ Template.dock.helpers
 	avatar: ->
 		return Meteor.user()?.avatarURL()
 
-	spaceCount: ->
-		return Steedos.spaces.find().count()
-		
-	spaces: ->
-		return Steedos.spaces.find();
-
-	spaceName: ->
-		if Session.get("spaceId")
-			space = db.spaces.findOne(Session.get("spaceId"))
-			if space
-				return space.name
-		return t("Select Space")
 
 
 Template.dock.onRendered ->

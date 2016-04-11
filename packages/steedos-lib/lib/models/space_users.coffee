@@ -89,14 +89,14 @@ db.space_users._simpleSchema = new SimpleSchema
 			omit: true
 
 if Meteor.isClient
-	db.space_users._simpleSchema.i18n("db.space_users")
+	db.space_users._simpleSchema.i18n("db_space_users")
 
 db.space_users.attachSchema(db.space_users._simpleSchema);
 
 db.space_users.adminConfig = 
 		icon: "users"
 		label: ->
-			return t("db.space_users")
+			return t("db_space_users")
 		tableColumns: [
 			{name: "name"},
 			{name: "organization_name()"},
@@ -106,6 +106,7 @@ db.space_users.adminConfig =
 		newFormFields: "space,email"
 		editFormFields: "space,name,manager,user_accepted"
 		selector: (userId, connection) ->
+			debugger;
 			if Meteor.isServer
 				spaceId = connection["spaceId"]
 				console.log "[selector] filter space_users " + spaceId
@@ -113,6 +114,14 @@ db.space_users.adminConfig =
 					return {space: spaceId}
 				else
 					return {space: "-1"}
+			if Meteor.isClient
+				spaceId = Session.get("spaceId")
+				console.log "[selector] filter space_users " + spaceId
+				if spaceId
+					return {space: spaceId}
+				else
+					return {space: "-1"}
+
 
 
 db.space_users.helpers
@@ -137,7 +146,7 @@ if (Meteor.isServer)
 		space = db.spaces.findOne(doc.space)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
-		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
+		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 			
 		if (!doc.user) && (doc.email)
@@ -172,7 +181,7 @@ if (Meteor.isServer)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
 		# only space admin can update space_users
-		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
+		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 
 		modifier.$set.modified_by = userId;

@@ -69,12 +69,12 @@ db.spaces.attachSchema new SimpleSchema
 
 
 if Meteor.isClient
-	db.spaces.simpleSchema().i18n("db.spaces")
+	db.spaces.simpleSchema().i18n("db_spaces")
 
-db.spaces.adminCofig = 
+db.spaces.adminConfig = 
 	icon: "globe"
 	label: ->
-		return t("db.spaces")
+		return t("db_spaces")
 	tableColumns: [
 		{name: "name"},
 		{name: "owner_name()"},
@@ -151,12 +151,6 @@ if Meteor.isServer
 		doc.created_by = userId
 		doc.created = new Date()
 		
-		# check space exists
-		existed = db.spaces.find
-			"name": doc.name
-		if existed.count() > 0
-			throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
-
 		if !userId
 			throw new Meteor.Error(400, t("spaces_error.login_required"));
 
@@ -169,16 +163,14 @@ if Meteor.isServer
 			space = db.spaces.findOne(doc._id)
 			_.each doc.admins, (admin) ->
 				space.join_space(admin, true)
-				Roles.addUsersToRoles(admin, 'admin', doc._id)
 			
 
 	db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 
-		if not Roles.userIsInRole userId, "admin"
-			# only space owner can modify space
-			if doc.owner != userId
-				throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+		# only space owner can modify space
+		if doc.owner != userId
+			throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
 
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
@@ -191,12 +183,7 @@ if Meteor.isServer
 					delete modifier.$set.admins
 			else if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
 				modifier.$set.admins.push(modifier.$set.owner)
-		# space 同名判断
-		if (modifier.$set.name != doc.name)
-			existed = db.spaces.find
-				"name": doc.name
-			if existed.count() > 0
-				throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
+		
 		# 管理员不能为空
 		if (!modifier.$set.admins)
 			throw new Meteor.Error(400, t("spaces_error.space_admins_required"));
@@ -207,18 +194,13 @@ if Meteor.isServer
 		modifier.$set = modifier.$set || {};
 
 		if (modifier.$set.admins)
-			_.each this.previous.admins, (admin) ->
-				Roles.removeUsersFromRoles(admin, 'admin', doc._id)
-
 			_.each modifier.$set.admins, (admin) ->
 				self.transform().join_space(admin, true)
-				Roles.addUsersToRoles(admin, 'admin', doc._id)
 
 	db.spaces.before.remove (userId, doc) ->
-		if not Roles.userIsInRole userId, "admin"
-			# only space owner can remove space
-			if doc.owner != userId
-				throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+		# only space owner can remove space
+		if doc.owner != userId
+			throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
 
 		db.space_users.direct.remove({space: doc._id});
 		db.organizations.direct.remove({space: doc._id});

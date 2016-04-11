@@ -106,6 +106,7 @@ adminCreateTables = (collections) ->
 			columns: columns
 			extraFields: collection.extraFields
 			dom: adminTablesDom
+			#selector: collection.selector
 
 
 adminPublishTables = (collections) ->

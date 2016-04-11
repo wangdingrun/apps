@@ -7,7 +7,11 @@ Template.AdminDashboardView.helpers
 	newPath: ->
 		FlowRouter.path "/admin/new/:coll",{coll: Session.get 'admin_collection_name' }
 	admin_table: ->
+		# refresh admin_table when spaceId changed
+		Session.get("spaceId")
 		AdminTables[Session.get 'admin_collection_name']
+
+
 
 Template.adminUsersIsAdmin.helpers checkadmin: ->
 	Roles.userIsInRole @_id, 'admin'

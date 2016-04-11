@@ -73,7 +73,7 @@ db.users._simpleSchema = new SimpleSchema
 			omit: true
 
 if Meteor.isClient
-	db.users._simpleSchema.i18n("db.users")
+	db.users._simpleSchema.i18n("db_users")
 
 db.users.helpers
 	spaces: ->
@@ -160,8 +160,7 @@ if Meteor.isServer
 
 
 	db.users.before.remove (userId, doc) ->
-		if not Roles.userIsInRole userId, "admin"
-			throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
+		throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
 
 
 			
