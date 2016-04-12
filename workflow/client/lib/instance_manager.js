@@ -268,7 +268,7 @@ InstanceManager.getCurrentApprove = function(){
   if(currentTraces.length < 1)
     return ;
 
-  var currentApproves = currentTraces[0].approves.filterProperty("user", localStorage.getItem("Meteor.userId"));
+  var currentApproves = currentTraces[0].approves.filterProperty("handler", localStorage.getItem("Meteor.userId"));
   
   var currentApprove = currentApproves.length > 0 ? currentApproves[0] : null;
   
