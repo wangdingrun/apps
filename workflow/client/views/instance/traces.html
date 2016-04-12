@@ -1,6 +1,15 @@
 <template name="instance_traces" >
-    <div class="panel panel-default instance-traces">
-        <div class="panel-heading heading">签核历程</div>
+
+<div class="box instance-traces">
+    <div class="box-header"> 
+        <h3 class="box-title">签核历程</h3>
+<!--         <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+        </div> -->
+    </div>
+    <div class="box-body">
+
         <table class='table table-condensed traces'>
             <tbody>
                 {{#each this}}
@@ -33,4 +42,6 @@
             </tbody>
         </table>
     </div>
+</div>
+
 </template>

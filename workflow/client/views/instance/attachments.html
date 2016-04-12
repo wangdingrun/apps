@@ -1,13 +1,16 @@
 <template name="instance_attachments" >
+
     {{#if this}}
-        <div class="panel panel-default instance-attachments">
-            <div class="panel-heading heading">
-                附件
-                <div class="ins-upload" style="float: right;">
-                  <span class="glyphicon glyphicon-plus"  title="附件"></span>
-                  <input type="file" name="file" class="ins-file-input">
-                </div>
-            </div>
+
+    <div class="box">
+        <div class="box-header"> 
+            <h3 class="box-title">附件</h3>
+
+            <button type="button" class="btn btn-default ins-upload" title="附件" style={{enabled_add_attachment}}><i class="fa fa-paperclip"></i><input type="file" name="file" class="ins-file-input"></button>
+
+
+        </div>
+        <div class="box-body">
                 
             <table class='table table-condensed attachments'>
                 <tbody>
@@ -16,7 +19,10 @@
                     {{/each}}
                 </tbody>
             </table>
+
         </div>
+    </div>
+
     {{/if}}
     
 </template>

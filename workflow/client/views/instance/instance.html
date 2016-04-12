@@ -1,33 +1,25 @@
 <template name="instanceform">
-    <div class="instanceContent animated slideInRight">
-        <div class="row" style="border-bottom:1px solid #3c8dbc;">
-            <div class="container">
-                <div class="col-sm-6" style="padding-top:6px;padding-bottom:6px;">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-left"></i></button>
-                        <button type="button" class="btn btn-primary" id="instance_submit" style={{enabled_submit}}>提交</button>
-                        <button type="button" class="btn btn-default" id="instance_update" title="保存" style={{enabled_save}}><i class="fa fa-save"></i></button>
-                        <button type="button" class="btn btn-default" id="instance_remove" title="删除" style={{enabled_delete}}><i class="fa fa-remove"></i></button>
-                        <button type="button" class="btn btn-default" id="instance_to_print" title="打印" style={{enabled_print}}><i class="fa fa-print"></i></button>
-<!--                         <div class="ins-upload" id="instance_add_attachment" style={{enabled_add_attachment}}>
-                          <span class="btn fa fa-paperclip ins-file-icon"  title="附件"></span>
-                          <input type="file" name="file" class="ins-file-input">
-                        </div> -->
 
-                        <button type="button" class="btn btn-default ins-upload" id="instance_add_attachment" title="附件" style={{enabled_add_attachment}}><i class="fa fa-paperclip"></i><input type="file" name="file" class="ins-file-input"></button>
+<div class="instance-view content animated slideInRight">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-left"></i></button>
+            <button type="button" class="btn btn-primary" id="instance_submit" style={{enabled_submit}}>提交</button>
+            <button type="button" class="btn btn-default" id="instance_update" title="保存" style={{enabled_save}}><i class="fa fa-save"></i></button>
+            <button type="button" class="btn btn-default" id="instance_remove" title="删除" style={{enabled_delete}}><i class="fa fa-remove"></i></button>
+            <button type="button" class="btn btn-default" id="instance_to_print" title="打印" style={{enabled_print}}><i class="fa fa-print"></i></button>
+            <button type="button" class="btn btn-default ins-upload" id="instance_add_attachment" title="附件" style={{enabled_add_attachment}}><i class="fa fa-paperclip"></i><input type="file" name="file" class="ins-file-input"></button>
 
-                        <button type="button" class="btn btn-default" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal" title="取消申请" style={{enabled_terminate}}><i class="fa fa-ban"></i></button>
-                        <button type="button" class="btn btn-default" id="instance_reassign" data-toggle="modal" data-target="#reassign_modal" title="转签核" style={{enabled_reassign}}><i class="fa fa-user"></i></button>
-                        <button type="button" class="btn btn-default" id="instance_relocate" data-toggle="modal" data-target="#relocate_modal" title="重定位" style={{enabled_relocate}}><i class="fa fa-random"></i></button>
-                        <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
-                    </div>
-                </div>
-            </div>
+            <button type="button" class="btn btn-default" id="instance_force_end" data-toggle="modal" data-target="#force_end_modal" title="取消申请" style={{enabled_terminate}}><i class="fa fa-ban"></i></button>
+            <button type="button" class="btn btn-default" id="instance_reassign" data-toggle="modal" data-target="#reassign_modal" title="转签核" style={{enabled_reassign}}><i class="fa fa-user"></i></button>
+            <button type="button" class="btn btn-default" id="instance_relocate" data-toggle="modal" data-target="#relocate_modal" title="重定位" style={{enabled_relocate}}><i class="fa fa-random"></i></button>
+            <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
         </div>
+
+        <span class="help-block"></span>
+
         {{#if show_suggestion}}
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="container">
-                <span class="help-block"></span>
+        <div class="box">
+            <div class="box-body">
                 {{#if includes currentStep.step_type 'sign,counterSign'}}
                 <div class="row">
                     <div class="col-sm-12">
@@ -79,24 +71,26 @@
                     </div>
                 </div>
             </div>
-        </nav>
-        {{else}}
+        </div>            
+    {{/if}}
+
+    <div class="box">
+        <div class="box-header"> 
+           <h2 style="margin:2px">{{instance.name}}</h2>
             <span class="help-block"></span>
-        {{/if}}
-        <div class="container">
-            <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                       <h3 class='font-size-h3'>{{instance.name}}</h3>
-                       <label class="control-label">提交人&nbsp;:</label>
-                        <select class="ins-applicant-selector" name="ins_applicant" id="ins_applicant" disabled={{is_disabled}}>
-                            {{#each space_users}}
-                                <option value={{user}} >{{name}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                </div>
-            </nav>
+
+            <div class="applicant-wrapper">
+                <label class="control-label">提交人&nbsp;:</label>
+                <select class="ins-applicant-selector" name="ins_applicant" id="ins_applicant" disabled={{is_disabled}}>
+                    {{#each space_users}}
+                        <option value={{user}} >{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="box-body">
+
+
             {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
                 <div class="row">
                     {{#each steedos_form.fields}}
@@ -123,21 +117,17 @@
                 </div>
                 
             {{/autoForm}}
-             
-             <div class="row">
-                <div class="col-md-12">
-                    {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {{> Template.dynamic template="instance_traces" data=instance.traces}}
-                </div>
-            </div>
-            <div style='display:none'>{{init_nextStepsOptions}}{{init_formScripts}}</div>
         </div>
     </div>
+
+    {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
+
+
+    {{> Template.dynamic template="instance_traces" data=instance.traces}}
+
+    <div style='display:none'>{{init_nextStepsOptions}}{{init_formScripts}}</div>
+
+</div>
 </template>
 
 
