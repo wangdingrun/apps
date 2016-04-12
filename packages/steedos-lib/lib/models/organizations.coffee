@@ -93,16 +93,9 @@ db.organizations.adminConfig =
 		{name: "space_name()"},
 	]
 	extraFields: ["space", "name", "users"]
-	newFormFields: "space,name,parent,users"
-	editFormFields: "name,parent,users"
-	selector: (userId, connection) ->
-		if Meteor.isServer
-			spaceId = connection["spaceId"]
-			console.log "[selector] filter space_users " + spaceId
-			if spaceId
-				return {space: spaceId}
-			else
-				return {space: "-1"}
+	newFormFields: "space,name,parent"
+	editFormFields: "name,parent"
+
 
 db.organizations.helpers
 
@@ -138,12 +131,13 @@ db.organizations.helpers
 			children.push(child._id);
 		return children;
 
-	calculateUsers: ->
+	updateUsers: ->
 		users = []
 		spaceUsers = db.space_users.find({organization: this._id}, {fields: {user:1}});
 		spaceUsers.forEach (user) ->
 			users.push(user.user);
-		return users;
+		#return users;
+		db.organizations.direct.update({_id: this._id}, {$set: {users: users}})
 
 	space_name: ->
 		space = db.spaces.findOne({_id: this.space});
@@ -172,10 +166,8 @@ if (Meteor.isServer)
 		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
 		if doc.users
-			doc.users.forEach (User) ->
-				oldUser = db.space_users.findOne({user: User,space: doc.space})
-				if oldUser.organization
-					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: User}})
+			throw new Meteor.Error(400, t("organizations_error.users_readonly"));
+
 		# 同一个space中不能有同名的organization，parent 不能有同名的 child
 		if doc.parent
 			parentOrg = db.organizations.findOne(doc.parent)
@@ -204,10 +196,6 @@ if (Meteor.isServer)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
-		if doc.users
-			_.each doc.users, (userId) ->
-				db.space_users.direct.update({user: userId,space: doc.space}, {$set: {organization: doc._id}})
-
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
@@ -234,24 +222,9 @@ if (Meteor.isServer)
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
-		if (!modifier.$set.users && doc.users)
-			db.space_users.update({user: {$in: doc.users},space: doc.space},{$set: {organization: ""}},{multi: true})	
-
 		if modifier.$set.users
-			removeUsers = []
-			addUsers = []
-			if !doc.users
-				addUsers.push user for user in modifier.$set.users
-			else
-				removeUsers.push user for user in doc.users when 0 > modifier.$set.users.indexOf(user)				
-				addUsers.push user for user in modifier.$set.users when 0 > doc.users.indexOf(user)			
-			# 编辑users时，所添加或删除的space_users之前所属的organization字段要更新
-			db.space_users.update({user: {$in: removeUsers},space: doc.space},{$set: {organization: ""}},{multi: true})						
-			addUsers.forEach (User) ->
-				oldUser = db.space_users.findOne({user: User,space: doc.space})
-				if oldUser.organization
-					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: User}})						
-
+			throw new Meteor.Error(400, t("organizations_error.users_readonly"));
+								
 		if (modifier.$set.parent)
 			# parent 不能等于自己或者 children
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
@@ -291,10 +264,6 @@ if (Meteor.isServer)
 
 		if !_.isEmpty(updateFields)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
-		
-		if modifier.$set.users
-			_.each modifier.$set.users, (userId) ->
-				db.space_users.direct.update({user: userId,space:doc.space},{$set: {organization: doc._id}})
 
 	
 	db.organizations.before.remove (userId, doc) ->
@@ -315,8 +284,25 @@ if (Meteor.isServer)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
-		if doc.users
-			_.each doc.users, (userId) ->
-				db.space_users.direct.update({user: userId}, {$unset: {organization: 1}})
+		# !!! If delete organization, a lot of data need delete.
+		# if doc.users
+		#	_.each doc.users, (userId) ->
+		#		db.space_users.direct.update({user: userId}, {$unset: {organization: 1}})
 
 	
+	Meteor.publish 'organizations', (spaceId)->
+		
+		unless this.userId
+			return this.ready()
+		
+		user = db.users.findOne(this.userId);
+
+		selector = {}
+		if spaceId
+			selector.space = spaceId
+		else 
+			selector.space = {$in: user.spaces()}
+
+		console.log '[publish] organizations ' + spaceId
+
+		return db.organizations.find(selector)

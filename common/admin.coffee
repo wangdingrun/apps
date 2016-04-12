@@ -27,7 +27,6 @@ if Meteor.isServer
 if Meteor.isClient
 	Meteor.startup ->
 		Tracker.autorun ->
-			debugger;
 			if AdminTables["spaces"]
 				AdminTables["spaces"].selector = {_id: Session.get("spaceId")}
 			if AdminTables["space_users"]

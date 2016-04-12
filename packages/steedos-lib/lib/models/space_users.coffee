@@ -20,28 +20,28 @@ db.space_users._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform:
 			omit: true
+
 	organization: 
 		type: String,
 		optional: true,
 		autoform: 
-			omit: true
-			# type: "select2",
-			# options: ->
-			# 	options = [{
-			# 		label: " - ",
-			# 		value: ""
-			# 	}]
-			# 	objs = db.organizations.find({}, 
-			# 		{
-			# 			sort: {fullname:1}
-			# 		}
-			# 	)
-			# 	objs.forEach (obj) ->
-			# 		options.push({
-			# 			label: obj.fullname,
-			# 			value: obj._id
-			# 		})
-			# 	return options
+			type: "select2",
+			options: ->
+				options = [{
+					label: " - ",
+					value: ""
+				}]
+				objs = db.organizations.find({}, 
+					{
+						sort: {fullname:1}
+					}
+				)
+				objs.forEach (obj) ->
+					options.push({
+						label: obj.fullname,
+						value: obj._id
+					})
+				return options
 
 	manager: 
 		type: String,
@@ -173,6 +173,14 @@ if (Meteor.isServer)
 		if existed.count()>0
 			throw new Meteor.Error(400, t("space_users_error.space_users_exists"));
 
+	db.space_users.after.insert (userId, doc) ->
+
+		if doc.organization
+			organizationObj = db.organizations.findOne(doc.organization)
+			organizationObj.updateUsers();
+
+
+
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 
@@ -197,6 +205,18 @@ if (Meteor.isServer)
 			if modifier.$set.user != doc.user
 				throw new Meteor.Error(400, t("space_users_error.user_readonly"));
 	
+	db.space_users.after.update (userId, doc, fieldNames, modifier, options) ->
+		self = this
+		modifier.$set = modifier.$set || {};
+
+		if modifier.$set.organization
+			organizationObj = db.organizations.findOne(modifier.$set.organization)
+			organizationObj.updateUsers();
+		if this.previous.organization
+			organizationObj = db.organizations.findOne(this.previous.organization)
+			organizationObj.updateUsers();
+
+
 	db.space_users.before.remove (userId, doc) ->
 		# check space exists
 		space = db.spaces.findOne(doc.space)
@@ -206,3 +226,27 @@ if (Meteor.isServer)
 		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 
+
+	db.space_users.after.remove (userId, doc) ->
+
+		if doc.organization
+			organizationObj = db.organizations.findOne(doc.organization)
+			organizationObj.updateUsers();
+
+
+	Meteor.publish 'space_users', (spaceId)->
+		unless this.userId
+			return this.ready()
+
+		user = db.users.findOne(this.userId);
+
+		selector = {}
+		if spaceId
+			selector.space = spaceId
+		else 
+			selector.space = {$in: user.spaces()}
+
+		console.log '[publish] space_users ' + spaceId
+
+		return db.space_users.find(selector)
+	
