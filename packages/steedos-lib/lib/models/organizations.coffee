@@ -42,6 +42,7 @@ db.organizations._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: true,
 		autoform: 
+			omit: true,
 			type: "select2",
 			afFieldInput: 
 				multiple: true

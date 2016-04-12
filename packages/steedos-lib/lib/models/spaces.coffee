@@ -204,9 +204,6 @@ if Meteor.isServer
 
 		db.space_users.direct.remove({space: doc._id});
 		db.organizations.direct.remove({space: doc._id});
-
-
-
 		
 
 	Meteor.methods

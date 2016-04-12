@@ -1,6 +1,5 @@
 <template name="fAdminLayout">
   {{#if AdminConfig}}
-  {{#if isInRole 'admin'}}
     <div class="admin-layout">
     {{#AdminLTE skin=admin_skin}}
   			{{> AdminHeader}}
@@ -31,9 +30,6 @@
 				</div>
     {{/AdminLTE}}
     </div>
-	{{else}}
-	{{> NotAdmin}}
-	{{/if}}
 	{{else}}
 	{{> NoConfig}}
 	{{/if}}

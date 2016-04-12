@@ -212,7 +212,6 @@ Template.instanceform.helpers
             return "disabled";
         return;
 
-
 Template.instanceform.onRendered ->
     console.log("onRendered");
     $('#nextSteps').select2();
@@ -291,6 +290,11 @@ Template.instanceform.events
             formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
         Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
     
+    
+    'click #instance_back': (event)->
+        backURL =  "/workflow/" + Session.get("box") + "/" + Session.get("spaceId")
+        FlowRouter.go(backURL)
+
     'click #instance_to_print': (event)->
         UUflow_api.print($("#instanceId").val());
 

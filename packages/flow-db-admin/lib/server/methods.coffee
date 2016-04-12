@@ -1,7 +1,7 @@
 Meteor.methods
 	adminInsertDoc: (doc,collection)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if true #Roles.userIsInRole this.userId, ['admin']
 			Future = Npm.require('fibers/future');
 			fut = new Future();
 
@@ -11,7 +11,7 @@ Meteor.methods
 
 	adminUpdateDoc: (modifier,collection,_id)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if true #Roles.userIsInRole this.userId, ['admin']
 			Future = Npm.require('fibers/future');
 			fut = new Future();
 			adminCollectionObject(collection).update {_id:_id},modifier,(e,r)->
@@ -20,7 +20,7 @@ Meteor.methods
 
 	adminRemoveDoc: (collection,_id)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if true #Roles.userIsInRole this.userId, ['admin']
 			if collection == 'Users'
 				Meteor.users.remove {_id:_id}
 			else

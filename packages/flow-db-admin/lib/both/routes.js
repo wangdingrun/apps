@@ -9,12 +9,12 @@ var fadminRoutes = FlowRouter.group({
   },
  triggersEnter: [
   	function(context) {
-  		if(!Roles.userIsInRole (Meteor.userId(),['admin']))
-  		{
-  			Meteor.call('adminCheckAdmin');
-  			//if (typeof AdminConfig.nonAdminRedirectRoute == 'string')
-  			//	FlowRouter.go(AdminController.nonAdminRedirectRoute);
-  		}
+  		// if(!Roles.userIsInRole (Meteor.userId(),['admin']))
+  		// {
+  		// 	Meteor.call('adminCheckAdmin');
+  		// 	//if (typeof AdminConfig.nonAdminRedirectRoute == 'string')
+  		// 	//	FlowRouter.go(AdminController.nonAdminRedirectRoute);
+  		// }
   	},
     function(context) {
       Session.set('adminSuccess', null);

@@ -10,10 +10,10 @@ AdminDashboard =
 		Session.set 'adminError', message
 
 	checkAdmin: ->
-		if not Roles.userIsInRole Meteor.userId(), ['admin']
-			Meteor.call 'adminCheckAdmin'
-			if (typeof AdminConfig?.nonAdminRedirectRoute == "string")
-			  Router.go AdminConfig.nonAdminRedirectRoute
+		#if not Roles.userIsInRole Meteor.userId(), ['admin']
+		#	Meteor.call 'adminCheckAdmin'
+		#	if (typeof AdminConfig?.nonAdminRedirectRoute == "string")
+		#	  Router.go AdminConfig.nonAdminRedirectRoute
 		if typeof @.next == 'function'
 			@next()
 	adminRoutes: ['adminDashboard','adminDashboardUsersNew','adminDashboardUsersEdit','adminDashboardView','adminDashboardNew','adminDashboardEdit']
