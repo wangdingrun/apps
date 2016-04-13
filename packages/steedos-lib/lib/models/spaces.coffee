@@ -4,7 +4,7 @@ db.spaces = new Meteor.Collection('spaces')
 db.spaces.attachSchema new SimpleSchema
 	name: 
 		type: String,
-		unique: true,
+		# unique: true,
 		max: 200
 	owner: 
 		type: String,
