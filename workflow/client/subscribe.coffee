@@ -9,23 +9,6 @@ Meteor.startup ->
 
 		Meteor.subscribe "instances_list", Session.get("spaceId"), Session.get("box"), Session.get("flowId")
 		
-		Meteor.subscribe "instance_data", Session.get("instanceId"),
-			onReady: ->
-				instance = db.instances.findOne(Session.get("instanceId"));
-				if instance 
-					Session.set("formId", instance.form)
-					Session.set("flowId", instance.flow)
-					Session.set("spaceId", instance.space)
-				Session.set("instance_data_ready", true);
-			onStop: ->
-				Session.set("formId", null);
-				if Session.get("box") != "monitor"
-					Session.set("flowId", null)
-
-
-		Meteor.subscribe "form_data", Session.get("formId")
-		Meteor.subscribe "flow_data", Session.get("flowId")
-		
 		Meteor.subscribe "categories", Session.get("spaceId")
 		Meteor.subscribe "forms", Session.get("spaceId")
 		Meteor.subscribe "flows", Session.get("spaceId")

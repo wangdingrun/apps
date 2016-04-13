@@ -47,63 +47,6 @@ Template.instanceform.helpers
 
     currentApprove: ->
         return InstanceManager.getCurrentApprove();
-    init_formScripts: ->
-        form_version = WorkflowManager.getInstanceFormVersion();
-        if form_version
-            Form_formula.initFormScripts(form_version.form_script);
-
-    init_nextStepsOptions: ->
-        setTimeout ->
-            console.log("run init_nextStepsOptions...");
-
-            if !Session.get('instance_data_ready')
-                return;
-            console.log("1");
-
-            if ApproveManager.isReadOnly()
-                return;
-
-            console.log("2");
-            currentApprove = InstanceManager.getCurrentApprove();
-            if !currentApprove
-                return;
-            console.log("3");
-            current_next_steps = currentApprove.next_steps;
-
-            judge = currentApprove.judge
-            instance = WorkflowManager.getInstance();
-            currentStep = InstanceManager.getCurrentStep();
-            form_version = WorkflowManager.getInstanceFormVersion();
-            if !form_version
-                return ;
-            console.log("4");
-            autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
-            nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
-
-            if !nextSteps
-                return ;
-            console.log("==updateNextStepOptions===");
-            ApproveManager.updateNextStepOptions(nextSteps, judge);
-
-            if current_next_steps && current_next_steps.length > 0
-                nextStepId = current_next_steps[0].step;
-                if nextSteps.filterProperty('_id',nextStepId).length > 0
-                    console.log("nextSteps.filterProperty('_id',nextStepId).length > 0");
-                    $("#nextSteps").select2().val(nextStepId).trigger('change');
-                
-                nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-                nextStep = WorkflowManager.getInstanceStep(nextStepId);
-                ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
-                
-                #设置选中的用户
-                users = current_next_steps[0].users;
-                if users.length == 1
-                    $("#nextStepUsers").select2().val(users[0]).trigger('change');
-                else if users.length > 1
-                    $("#nextStepUsers").select2().val(users).trigger('change');
-                else
-                    $("#nextStepUsers").select2().val(null).trigger('change');
-        ,1
 
     show_suggestion: ->
 
@@ -213,16 +156,50 @@ Template.instanceform.helpers
         return;
 
 Template.instanceform.onRendered ->
-    console.log("onRendered");
-    $('#nextSteps').select2();
-    $('#nextStepUsers').select2();
-    $("#ins_applicant").select2();
-    Tracker.autorun ->
-        if Session.get("instance_data_ready")
+    t = this;
+    t.$('#nextSteps').select2();
+    t.$('#nextStepUsers').select2();
+    t.$("#ins_applicant").select2();
+
+    t.subscribe "instance_data", Session.get("instanceId"), ->
+        
+        Tracker.afterFlush -> 
+            console.log("Tracker.afterFlush");
             instance = WorkflowManager.getInstance();
-            if instance
-                console.log("onRendered-instance_data_ready");
-                $("#ins_applicant").select2().val(instance.applicant).trigger('change');
+            t.$("#ins_applicant").select2().val(instance.applicant).trigger('change');
+
+            if !ApproveManager.isReadOnly()
+                currentApprove = InstanceManager.getCurrentApprove();
+                current_next_steps = currentApprove.next_steps;
+                judge = currentApprove.judge
+                currentStep = InstanceManager.getCurrentStep();
+                form_version = WorkflowManager.getInstanceFormVersion();
+                autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+                nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+
+                if nextSteps && nextSteps.length > 0
+                    ApproveManager.updateNextStepOptions(nextSteps, judge);
+
+                    if current_next_steps && current_next_steps.length > 0
+                        nextStepId = current_next_steps[0].step;
+                        if nextSteps.filterProperty('_id',nextStepId).length > 0
+                            console.log("nextSteps.filterProperty('_id',nextStepId).length > 0");
+                            t.$("#nextSteps").select2().val(nextStepId).trigger('change');
+                        
+                        nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+                        nextStep = WorkflowManager.getInstanceStep(nextStepId);
+                        ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+                        
+                        #设置选中的用户
+                        users = current_next_steps[0].users;
+                        if users.length == 1
+                            t.$("#nextStepUsers").select2().val(users[0]).trigger('change');
+                        else if users.length > 1
+                            t.$("#nextStepUsers").select2().val(users).trigger('change');
+                        else
+                            t.$("#nextStepUsers").select2().val(null).trigger('change');
+
+            Form_formula.initFormScripts(form_version.form_script);
 
 Template.instanceform.events
     

@@ -1,6 +1,6 @@
 <template name="instanceform">
 
-<div class="instance-view content animated slideInRight">
+    <div class="instance-view content animated slideInRight">
         <div class="btn-group">
             <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-left"></i></button>
             <button type="button" class="btn btn-primary" id="instance_submit" style={{enabled_submit}}>提交</button>
@@ -18,116 +18,110 @@
         <span class="help-block"></span>
 
         {{#if show_suggestion}}
-        <div class="box">
-            <div class="box-body">
-                {{#if includes currentStep.step_type 'sign,counterSign'}}
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
-                            <label class="radio-inline">
-                                {{#if equals currentApprove.judge 'approved'}}
-                                    <input type='radio' name='judge' value="approved" class='suggestion' checked/>核准
-                                {{else}}
-                                    <input type='radio' name='judge' value="approved" class='suggestion'/>核准
-                                {{/if}}
-                            </label>
-                            <label class="radio-inline">
-                                {{#if equals currentApprove.judge 'rejected'}}
-                                <input type='radio' name='judge' value="rejected" class='suggestion' checked/>驳回
-                                {{else}}
-                                <input type='radio' name='judge' value="rejected" class='suggestion' />驳回
-                                {{/if}}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                {{/if}}
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <textarea name="" class="suggestion-control" id="suggestion">{{currentApprove.description}}</textarea>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label class="control-label">下一步骤&nbsp;:</label>
-                            <select class="suggestion-control" name="nextSteps" id="nextSteps">
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group" id="nextStepUsers_div">
-                            <label class="control-label">处理人&nbsp;:</label>
-                            <select class="suggestion-control" name="nextStepUsers" id="nextStepUsers">
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>            
-    {{/if}}
-
-    <div class="box">
-        <div class="box-header"> 
-           <h2 style="margin:2px">{{instance.name}}</h2>
-            <span class="help-block"></span>
-
-            <div class="applicant-wrapper">
-                <label class="control-label">提交人&nbsp;:</label>
-                <select class="ins-applicant-selector" name="ins_applicant" id="ins_applicant" disabled={{is_disabled}}>
-                    {{#each space_users}}
-                        <option value={{user}} >{{name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
-        <div class="box-body">
-
-
-            {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
-                <div class="row">
-                    {{#each steedos_form.fields}}
-                        {{#if equals this.type 'table'}}
-                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
-                            
-                            {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
+            <div class="box">
+                <div class="box-body">
+                    {{#if includes currentStep.step_type 'sign,counterSign'}}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
+                                <label class="radio-inline">
+                                    {{#if equals currentApprove.judge 'approved'}}
+                                        <input type='radio' name='judge' value="approved" class='suggestion' checked/>核准
+                                    {{else}}
+                                        <input type='radio' name='judge' value="approved" class='suggestion'/>核准
+                                    {{/if}}
+                                </label>
+                                <label class="radio-inline">
+                                    {{#if equals currentApprove.judge 'rejected'}}
+                                    <input type='radio' name='judge' value="rejected" class='suggestion' checked/>驳回
+                                    {{else}}
+                                    <input type='radio' name='judge' value="rejected" class='suggestion' />驳回
+                                    {{/if}}
+                                </label>
                             </div>
-                        {{else}}
-                            {{#if equals this.type 'section'}}
-                                <div class="col-md-12">
-                                    <div class='panel panel-info section'>
-                                        <div class="panel-heading">{{this.code}}</div>
-                                    </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <textarea name="" class="suggestion-control" id="suggestion">{{currentApprove.description}}</textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">下一步骤&nbsp;:</label>
+                                <select class="suggestion-control" name="nextSteps" id="nextSteps">
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group" id="nextStepUsers_div">
+                                <label class="control-label">处理人&nbsp;:</label>
+                                <select class="suggestion-control" name="nextStepUsers" id="nextStepUsers">
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        {{/if}}
+
+        <div class="box">
+            <div class="box-header"> 
+               <h2 style="margin:2px">{{instance.name}}</h2>
+                <span class="help-block"></span>
+
+                <div class="applicant-wrapper">
+                    <label class="control-label">提交人&nbsp;:</label>
+                    <select class="ins-applicant-selector" name="ins_applicant" id="ins_applicant" disabled={{is_disabled}}>
+                        {{#each space_users}}
+                            <option value={{user}} >{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="box-body">
+                {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
+                    <div class="row">
+                        {{#each steedos_form.fields}}
+                            {{#if equals this.type 'table'}}
+                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
+                                
+                                {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
                                 </div>
                             {{else}}
-                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
-                                {{> afFormGroup name=this.code}}
-                                </div>
+                                {{#if equals this.type 'section'}}
+                                    <div class="col-md-12">
+                                        <div class='panel panel-info section'>
+                                            <div class="panel-heading">{{this.code}}</div>
+                                        </div>
+                                    </div>
+                                {{else}}
+                                    <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+                                    {{> afFormGroup name=this.code}}
+                                    </div>
+                                {{/if}}
                             {{/if}}
-                        {{/if}}
-                        
-                    {{/each}}
-                </div>
-                
-            {{/autoForm}}
+                            
+                        {{/each}}
+                    </div>
+                {{/autoForm}}
+            </div>
         </div>
+
+        {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
+
+        {{> Template.dynamic template="instance_traces" data=instance.traces}}
+        
     </div>
-
-    {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
-
-
-    {{> Template.dynamic template="instance_traces" data=instance.traces}}
-
-    <div style='display:none'>{{init_nextStepsOptions}}{{init_formScripts}}</div>
-
-</div>
 </template>
 
 

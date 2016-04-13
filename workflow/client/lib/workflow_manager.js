@@ -218,7 +218,7 @@ WorkflowManager.getInstanceFieldPermission = function (){
  }
  //console.log("step.permissions is ")
  //console.log(step.permissions)
- return step.permissions;
+ return step.permissions || {};
 };
 
 
