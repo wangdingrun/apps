@@ -34,7 +34,8 @@ Template.flow_list_modal.events({
     });
     forms.forEach(function(f) {
       db.flows.find({
-        form: f._id
+        form: f._id,
+        state: "enabled"
       }).forEach(function(fl) {
         data.push({
           text: fl.name,
