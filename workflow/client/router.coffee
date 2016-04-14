@@ -1,13 +1,23 @@
+workflowRoutes = FlowRouter.group 
+	prefix: '/workflow',
+	name: 'workflow',
+	triggersEnter: [
+		(context, redirect) ->
+			console.log('running workflow triggers');
+			if !Meteor.user()
+				redirect('/sign-in');
+	]
+ 
 
 
-FlowRouter.route '/workflow/inbox', 
+workflowRoutes.route '/inbox', 
 	action: (params, queryParams)->
 		if Meteor.user()
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
 
-FlowRouter.route '/workflow/inbox/:spaceId', 
+workflowRoutes.route '/inbox/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "inbox");
@@ -15,7 +25,7 @@ FlowRouter.route '/workflow/inbox/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/inbox/:spaceId/:instanceId', 
+workflowRoutes.route '/inbox/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("instanceId", params.instanceId);
@@ -28,7 +38,7 @@ FlowRouter.route '/workflow/inbox/:spaceId/:instanceId',
 			Session.set("instanceId", null)
 	]
 
-FlowRouter.route '/workflow/outbox/:spaceId', 
+workflowRoutes.route '/outbox/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "outbox");
@@ -36,7 +46,7 @@ FlowRouter.route '/workflow/outbox/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/outbox/:spaceId/:instanceId', 
+workflowRoutes.route '/outbox/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("instanceId", params.instanceId);
@@ -50,7 +60,7 @@ FlowRouter.route '/workflow/outbox/:spaceId/:instanceId',
 	]
 
 
-FlowRouter.route '/workflow/draft/:spaceId', 
+workflowRoutes.route '/draft/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "draft");
@@ -58,7 +68,7 @@ FlowRouter.route '/workflow/draft/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/draft/:spaceId/:instanceId', 
+workflowRoutes.route '/draft/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("instanceId", params.instanceId);
@@ -72,7 +82,7 @@ FlowRouter.route '/workflow/draft/:spaceId/:instanceId',
 	]
 
 
-FlowRouter.route '/workflow/pending/:spaceId', 
+workflowRoutes.route '/pending/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "pending");
@@ -80,7 +90,7 @@ FlowRouter.route '/workflow/pending/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/pending/:spaceId/:instanceId', 
+workflowRoutes.route '/pending/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("instanceId", params.instanceId);
@@ -94,7 +104,7 @@ FlowRouter.route '/workflow/pending/:spaceId/:instanceId',
 	]
 
 
-FlowRouter.route '/workflow/completed/:spaceId', 
+workflowRoutes.route '/completed/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "completed");
@@ -102,7 +112,7 @@ FlowRouter.route '/workflow/completed/:spaceId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/completed/:spaceId/:instanceId', 
+workflowRoutes.route '/completed/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("instanceId", params.instanceId);
@@ -116,7 +126,7 @@ FlowRouter.route '/workflow/completed/:spaceId/:instanceId',
 	]
 
 
-FlowRouter.route '/workflow/monitor/:spaceId', 
+workflowRoutes.route '/monitor/:spaceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "monitor");
@@ -125,7 +135,7 @@ FlowRouter.route '/workflow/monitor/:spaceId',
 				main: "monitor"
 
 
-FlowRouter.route '/workflow/monitor/:spaceId/:flowId', 
+workflowRoutes.route '/monitor/:spaceId/:flowId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("flowId", params.flowId);
@@ -134,7 +144,7 @@ FlowRouter.route '/workflow/monitor/:spaceId/:flowId',
 			BlazeLayout.render 'masterLayout',
 				main: "instance_list"
 
-FlowRouter.route '/workflow/monitor/:spaceId/:flowId/:instanceId', 
+workflowRoutes.route '/monitor/:spaceId/:flowId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("flowId", params.flowId);
@@ -149,7 +159,7 @@ FlowRouter.route '/workflow/monitor/:spaceId/:flowId/:instanceId',
 	]
 
 
-FlowRouter.route '/workflow/instance/:instanceId', 
+workflowRoutes.route '/instance/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("instanceId", params.instanceId)
 		BlazeLayout.render 'masterLayout',
