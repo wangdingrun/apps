@@ -1,5 +1,5 @@
 {
-	"Steedos Cloud": "华炎云",
+	"Steedos": "华炎云",
 	"Forgot Password": "忘记密码",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
 	"Email": "邮件",
@@ -74,7 +74,8 @@
 	"Account": "账户",
 	"Select Space": "选择工作区",
 	
-	"Steedos Workflow": "审批王"
+	"APPLICATIONS": "应用",
+	"Workflow": "审批王"
 
 
 }

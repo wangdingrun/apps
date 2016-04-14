@@ -13,6 +13,10 @@ Template.sidebar.helpers
 	spaceId: ->
 		return Session.get("spaceId");
 
+	boxClass: (boxName)->
+		if Session.get("box") == boxName
+			return "active";
+
 	inbox_count: ->
 		c = db.box_counts.findOne(Session.get("spaceId"));
 		if c && (c.inbox_count > 0)

@@ -1,5 +1,5 @@
 {
-	"Steedos Cloud": "Steedos Cloud",
+	"Steedos": "Steedos",
 	"Forgot Password": "Forgot Password",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
 	"Email": "Email",
@@ -69,6 +69,7 @@
 	"Account": "Account",
 	"Select Space": "Select Space",
 
-	"Steedos Workflow": "Steedos Workflow"
+	"APPLICATIONS": "APPLICATIONS",
+	"Workflow": "Workflow"
 
 }

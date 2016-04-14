@@ -20,25 +20,32 @@
             </div>
           </form> -->
           <ul class="nav sidebar-menu">
-            <li class="header">{{_ "APPROVAL"}}</li>
-            <li>
-                <a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-inbox"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
-            </li>
-            <li>
-                <a href="/workflow/outbox/{{spaceId}}"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
-            </li>
-            <li class="header">{{_ "MY APPLICANT"}}</li>
-            <li>
-                <a href="/workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
-            </li>
-            <li>
-                <a href="/workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
-            </li>
-            <li>
-                <a href="/workflow/completed/{{spaceId}}"><i class="fa fa-check-square-o"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
-            </li>
-            <li>
-                <a href="/workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+            <li class="header">{{_ "APPLICATIONS"}}</li>
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-check-square-o"></i> <span>{{_ "Workflow"}}</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="{{boxClass 'inbox'}}">
+                    <a href="/workflow/inbox/{{spaceId}}"><i class="fa fa-inbox"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
+                </li>
+                <li class="{{boxClass 'outbox'}}">
+                    <a href="/workflow/outbox/{{spaceId}}"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
+                </li>
+                <li class="{{boxClass 'draft'}}">
+                    <a href="/workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
+                </li>
+                <li class="{{boxClass 'pending'}}">
+                    <a href="/workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
+                </li>
+                <li class="{{boxClass 'completed'}}">
+                    <a href="/workflow/completed/{{spaceId}}"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
+                </li>
+                <li class="{{boxClass 'monitor'}}">
+                    <a href="/workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+                </li>
+              </ul>
             </li>
           </ul>
           <ul class="nav sidebar-menu">
