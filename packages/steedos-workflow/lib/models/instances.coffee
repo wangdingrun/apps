@@ -36,4 +36,7 @@ TabularTables.instances = new Tabular.Table({
   searching: true,
   responsive: true,
   autoWidth: false,
+  select:
+    style: 'single'
+
 });
