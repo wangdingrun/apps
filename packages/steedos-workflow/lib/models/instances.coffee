@@ -31,7 +31,7 @@ TabularTables.instances = new Tabular.Table({
   lengthChange: false,
   pageLength: 20,
   info: false,
-  searching: false,
+  searching: true,
   responsive: true,
   autoWidth: false,
 });
