@@ -26,18 +26,10 @@
                             <div class="form-group">
                                 <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
                                 <label class="radio-inline">
-                                    {{#if equals currentApprove.judge 'approved'}}
-                                        <input type='radio' name='judge' value="approved" class='suggestion' checked/>核准
-                                    {{else}}
-                                        <input type='radio' name='judge' value="approved" class='suggestion'/>核准
-                                    {{/if}}
+                                    <input type='radio' name='judge' value="approved" class='suggestion' checked="{{#if equals currentApprove.judge 'approved'}}checked{{/if}}" id="judge_approved"/>核准
                                 </label>
                                 <label class="radio-inline">
-                                    {{#if equals currentApprove.judge 'rejected'}}
-                                    <input type='radio' name='judge' value="rejected" class='suggestion' checked/>驳回
-                                    {{else}}
-                                    <input type='radio' name='judge' value="rejected" class='suggestion' />驳回
-                                    {{/if}}
+                                    <input type='radio' name='judge' value="rejected" class='suggestion' checked="{{#if equals currentApprove.judge 'rejected'}}checked{{/if}}"/>驳回
                                 </label>
                             </div>
                         </div>
@@ -120,7 +112,7 @@
         {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
 
         {{> Template.dynamic template="instance_traces" data=instance.traces}}
-        
+
     </div>
 </template>
 

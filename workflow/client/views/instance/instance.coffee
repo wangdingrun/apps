@@ -166,6 +166,7 @@ Template.instanceform.onRendered ->
         Tracker.afterFlush -> 
             console.log("Tracker.afterFlush");
             instance = WorkflowManager.getInstance();
+
             t.$("#ins_applicant").select2().val(instance.applicant).trigger('change');
 
             if !ApproveManager.isReadOnly()
@@ -198,6 +199,11 @@ Template.instanceform.onRendered ->
                             t.$("#nextStepUsers").select2().val(users).trigger('change');
                         else
                             t.$("#nextStepUsers").select2().val(null).trigger('change');
+
+                # 默认核准
+                if (currentStep.step_type == "sign" || currentStep.step_type == "sign") && !judge
+                    t.$("#judge_approved").prop("checked", "checked").trigger("change");
+
 
             Form_formula.initFormScripts(form_version.form_script);
 

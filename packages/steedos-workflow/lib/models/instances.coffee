@@ -25,7 +25,7 @@ TabularTables.instances = new Tabular.Table({
         	return "";
     },
   ],
-  extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant"],
+  extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
   lengthChange: false,
   info: false,
   searching: false,
