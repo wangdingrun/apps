@@ -6,7 +6,11 @@
   				{{> instance_list}}
     		</div>
     		<div class="col-md-8">
-  				{{> instanceform}}
+    			{{#if instanceId}}
+  					{{> instanceform}}
+  				{{else}}
+  					Please select instance
+  				{{/if}}
     		</div>
     	</div>
     </section>

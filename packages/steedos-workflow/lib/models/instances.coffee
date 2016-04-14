@@ -26,8 +26,9 @@ TabularTables.instances = new Tabular.Table({
     },
   ],
 
+  #select:
+  #  style: 'single'
   dom: "tp",
-
   order:[[2,"desc"]]
   extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
   lengthChange: false,
@@ -36,7 +37,5 @@ TabularTables.instances = new Tabular.Table({
   searching: true,
   responsive: true,
   autoWidth: false,
-  select:
-    style: 'single'
 
 });

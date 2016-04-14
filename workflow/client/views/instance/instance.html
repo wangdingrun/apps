@@ -1,6 +1,6 @@
 <template name="instanceform">
 
-    <div class="instance-view animated slideInRight">
+    <div class="instance-view">
         <div class="btn-group">
             <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-left"></i></button>
             <button type="button" class="btn btn-primary" id="instance_submit" style={{enabled_submit}}>提交</button>
@@ -68,7 +68,7 @@
 
         <div class="box">
             <div class="box-header"> 
-               <h2 style="margin:2px">{{instance.name}}</h2>
+               <h3 class="box-title">{{instance.name}}</h3>
                 <span class="help-block"></span>
 
                 <div class="applicant-wrapper">
