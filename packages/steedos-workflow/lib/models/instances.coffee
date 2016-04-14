@@ -25,8 +25,12 @@ TabularTables.instances = new Tabular.Table({
         	return "";
     },
   ],
+  order:[[2,"desc"]]
   extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant"],
   lengthChange: false,
+  pageLength: 20,
   info: false,
   searching: false,
+  responsive: true,
+  autoWidth: false,
 });

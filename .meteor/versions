@@ -83,7 +83,6 @@ meteor-base@1.0.1
 meteorhacks:meteorx@1.0.2
 meteorhacks:unblock@1.1.0
 meteorspark:util@0.2.0
-mfactory:admin-lte@0.0.2
 minifiers@1.1.7
 minimongo@1.0.10
 mobile-experience@1.0.1
@@ -124,6 +123,7 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
+steedos:admin-lte@0.0.2
 steedos:connect-bqq@0.0.1
 steedos:lib@0.0.1
 steedos:workflow@0.0.1

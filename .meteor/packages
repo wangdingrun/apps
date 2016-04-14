@@ -64,7 +64,6 @@ francocatena:status
 alanning:roles
 sach:flow-db-admin
 
-#steedos:admin-lte
 steedos:connect-bqq
 steedos:lib
 steedos:workflow
