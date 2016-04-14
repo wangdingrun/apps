@@ -75,6 +75,9 @@ Template.instance_list.events
     'click .dropdown-menu li a': (event) -> 
         InstanceManager.exportIns(event.target.type);
 
-
-
-
+    'keyup #instance_search': (event) ->
+        dataTable = $(".datatable-instances").DataTable();
+        dataTable.search(
+            $('#instance_search').val(),
+        ).draw();
+ 

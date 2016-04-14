@@ -26,11 +26,7 @@ TabularTables.instances = new Tabular.Table({
     },
   ],
 
-  buttons: [
-      'colvis',
-      'excel',
-      'print'
-  ],
+  dom: "tp",
 
   order:[[2,"desc"]]
   extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
