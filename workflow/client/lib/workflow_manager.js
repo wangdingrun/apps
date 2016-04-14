@@ -90,12 +90,10 @@ WorkflowManager.getInstance = function (){
 
 WorkflowManager.getInstanceFormVersion = function (){
   console.log("getInstanceFormVersion");
-  var form_fields = [];
+  var form_fields = [],
+      rev = null,
+      instance = WorkflowManager.getInstance();
 
-  var rev = null
-
-  instanceId = Session.get("instanceId");
-  instance = WorkflowManager.getInstance(instanceId);
   if (instance) {
     form = WorkflowManager.getForm(instance.form);
     if (form){
@@ -132,8 +130,7 @@ WorkflowManager.getInstanceFormVersion = function (){
 };
 
 WorkflowManager.getInstanceFlowVersion = function (){
-  instanceId = Session.get("instanceId");
-  instance = WorkflowManager.getInstance(instanceId);
+  instance = WorkflowManager.getInstance();
   var rev = null;
   if (instance){
     flow = WorkflowManager.getFlow(instance.flow);
