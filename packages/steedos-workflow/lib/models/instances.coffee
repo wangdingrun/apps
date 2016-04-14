@@ -14,7 +14,7 @@ TabularTables.instances = new Tabular.Table({
   collection: db.instances,
   columns: [
     {data: "name", title: "Title"},
-    {data: "applicant_name()", title: "Applicant"},
+    {data: "applicant_name", title: "Applicant"},
     {
       data: "modified",
       title: "Modified",
@@ -24,6 +24,12 @@ TabularTables.instances = new Tabular.Table({
         else 
         	return "";
     },
+  ],
+
+  buttons: [
+      'colvis',
+      'excel',
+      'print'
   ],
 
   order:[[2,"desc"]]
