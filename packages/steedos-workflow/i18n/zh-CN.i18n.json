@@ -3,5 +3,6 @@
 
         "db_instances_name": "标题",
         "db_instances_applicant_name": "申请人",
-        "db_instances_modified": "更新日期"
+        "db_instances_modified": "更新日期",
+        "db_instances_applicant_organization_name": "部门"
 }

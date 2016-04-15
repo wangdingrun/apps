@@ -3,5 +3,7 @@
 
         "db_instances_name": "Title",
         "db_instances_applicant_name": "Applicant",
-        "db_instances_modified": "Modified"
+        "db_instances_modified": "Modified",
+        "db_instances_applicant_organization_name": "Organization"
+
 }

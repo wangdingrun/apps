@@ -24,6 +24,7 @@ TabularTables.instances = new Tabular.Table({
         else 
         	return "";
     },
+    {data: "applicant_organization_name", title: "Organization"},
   ],
 
   #select:
@@ -35,7 +36,8 @@ TabularTables.instances = new Tabular.Table({
   pageLength: 20,
   info: false,
   searching: true,
-  responsive: true,
+  responsive: 
+    details: false
   autoWidth: false,
 
 });
