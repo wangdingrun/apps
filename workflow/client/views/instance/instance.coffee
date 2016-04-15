@@ -162,13 +162,15 @@ Template.instanceform.onRendered ->
     t.$("#ins_applicant").select2();
 
     Tracker.autorun ->
-        t.subscribe "instance_data", Session.get("instanceId"), ->
+        Meteor.subscribe "instance_data", Session.get("instanceId"), ->
             
             Tracker.afterFlush -> 
                 console.log("Tracker.afterFlush");
                 instance = WorkflowManager.getInstance();
+                if !instance
+                    return;
 
-                t.$("#ins_applicant").select2().val(instance.applicant).trigger('change');
+                $("#ins_applicant").select2().val(instance.applicant).trigger('change');
 
                 if !ApproveManager.isReadOnly()
                     currentApprove = InstanceManager.getCurrentApprove();
@@ -186,7 +188,7 @@ Template.instanceform.onRendered ->
                             nextStepId = current_next_steps[0].step;
                             if nextSteps.filterProperty('_id',nextStepId).length > 0
                                 console.log("nextSteps.filterProperty('_id',nextStepId).length > 0");
-                                t.$("#nextSteps").select2().val(nextStepId).trigger('change');
+                                $("#nextSteps").select2().val(nextStepId).trigger('change');
                             
                             nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
                             nextStep = WorkflowManager.getInstanceStep(nextStepId);
@@ -195,15 +197,15 @@ Template.instanceform.onRendered ->
                             #设置选中的用户
                             users = current_next_steps[0].users;
                             if users.length == 1
-                                t.$("#nextStepUsers").select2().val(users[0]).trigger('change');
+                                $("#nextStepUsers").select2().val(users[0]).trigger('change');
                             else if users.length > 1
-                                t.$("#nextStepUsers").select2().val(users).trigger('change');
+                                $("#nextStepUsers").select2().val(users).trigger('change');
                             else
-                                t.$("#nextStepUsers").select2().val(null).trigger('change');
+                                $("#nextStepUsers").select2().val(null).trigger('change');
 
                     # 默认核准
                     if (currentStep.step_type == "sign" || currentStep.step_type == "sign") && !judge
-                        t.$("#judge_approved").prop("checked", "checked").trigger("change");
+                        $("#judge_approved").prop("checked", "checked").trigger("change");
 
 
                 Form_formula.initFormScripts(form_version.form_script);
