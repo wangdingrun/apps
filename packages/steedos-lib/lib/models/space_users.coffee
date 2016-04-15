@@ -179,7 +179,12 @@ if (Meteor.isServer)
 			organizationObj = db.organizations.findOne(doc.organization)
 			organizationObj.updateUsers();
 
-
+		db.users_changelogs.direct.insert
+			operator: userId
+			space: doc.space
+			operation: "add"
+			user: doc.user
+			user_count: db.space_users.find({space: doc.space}).count()
 
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
@@ -216,6 +221,15 @@ if (Meteor.isServer)
 			organizationObj = db.organizations.findOne(this.previous.organization)
 			organizationObj.updateUsers();
 
+		if modifier.$set.hasOwnProperty("user_accepted")
+			if this.previous.user_accepted != modifier.$set.user_accepted
+				db.users_changelogs.direct.insert
+					operator: userId
+					space: doc.space
+					operation: modifier.$set.user_accepted ? "enable" : "disable"
+					user: doc.user
+					user_count: db.space_users.find({space: doc.space}).count()
+
 
 	db.space_users.before.remove (userId, doc) ->
 		# check space exists
@@ -232,6 +246,13 @@ if (Meteor.isServer)
 		if doc.organization
 			organizationObj = db.organizations.findOne(doc.organization)
 			organizationObj.updateUsers();
+
+		db.users_changelogs.direct.insert
+			operator: userId
+			space: doc.space
+			operation: "delete"
+			user: doc.user
+			user_count: db.space_users.find({space: doc.space}).count()
 
 
 	Meteor.publish 'space_users', (spaceId)->

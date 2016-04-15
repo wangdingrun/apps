@@ -50,6 +50,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/spaces.coffee');
 	api.addFiles('lib/models/space_users.coffee');
 	api.addFiles('lib/models/organizations.coffee');
+	api.addFiles('lib/models/users_changelogs.coffee');
 
 	api.addFiles('lib/api/core.coffee', ['server']);
 	api.addFiles('lib/api/users.coffee', ['server']);
