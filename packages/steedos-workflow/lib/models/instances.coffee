@@ -40,4 +40,8 @@ TabularTables.instances = new Tabular.Table({
     details: false
   autoWidth: false,
 
+  #scrollY:        '400px',
+  #scrollCollapse: true,
+  pagingType: "numbers"
+
 });

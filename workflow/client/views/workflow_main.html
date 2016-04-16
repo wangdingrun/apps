@@ -1,17 +1,16 @@
 <template name="workflow_main">
 
-    <section class="content animated slideInRight">
-    	<div class="row">
-    		<div class="col-md-4">
-  				{{> instance_list}}
-    		</div>
-    		<div class="col-md-8">
-    			{{#if instanceId}}
-  					{{> instanceform}}
-  				{{else}}
-  					Please select instance
-  				{{/if}}
-    		</div>
-    	</div>
-    </section>
+  <div class="workflow-main row">
+    <div class="instance-list-wrapper col-md-4">
+    	{{> instance_list}}
+    </div>
+    <div class="instance-wrapper col-md-8">
+    	{{#if instanceId}}
+    		{{> instanceform}}
+    	{{else}}
+    		Please select instance
+    	{{/if}}
+    </div>
+  </div>
+    
 </template>
