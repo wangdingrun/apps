@@ -15,3 +15,5 @@ Meteor.startup ->
 			Meteor.subscribe "box_counts", Session.get("spaceId")
 
 			Meteor.subscribe "cfs_instances", Session.get("instanceId")
+
+			Meteor.subscribe "instance_data", Session.get("instanceId") 
