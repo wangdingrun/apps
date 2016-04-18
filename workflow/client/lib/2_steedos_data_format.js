@@ -154,7 +154,6 @@ var s_autoform = function (schema, field){
     }
 
     autoform.options = afoptions;
-    //autoform.defaultValue = '飞机票';
   }
   return autoform;
 };
@@ -166,7 +165,6 @@ var s_schema = function (label, field){
   schema = {};
    
   schema.label = label;
-  //schema.defaultValue = '飞机票';
   schema.optional = !is_required;
 
   if(fieldType == 'email'){
@@ -179,6 +177,13 @@ var s_schema = function (label, field){
   }
 
   schema.autoform = new s_autoform(schema, field);
+  if(schema.autoform.options && schema.autoform.options.length > 0 && schema.autoform`.type=='select2'){
+    if(is_required !=true){
+      schema.autoform.options.unshift({label:'',value:''});
+    }
+
+    schema.autoform.defaultValue = schema.autoform.options[0].value;
+  }
   return schema;
 };
 
