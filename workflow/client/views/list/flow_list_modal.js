@@ -7,11 +7,16 @@ Template.flow_list_modal.events({
     var categories, data, forms;
     data = [];
     categories = WorkflowManager.getSpaceCategories();
+    flow_id = Session.get("flowId");
     categories.forEach(function(cat) {
       var o;
       o = {};
       o.text = cat.name;
       o.nodes = [];
+      o.selectable = false;
+      o.state = {
+        expanded: true
+      };
       forms = db.forms.find({
         category: cat._id
       });
@@ -19,10 +24,20 @@ Template.flow_list_modal.events({
         db.flows.find({
           form: f._id
         }).forEach(function(fl) {
-          o.nodes.push({
-            text: fl.name,
-            flow_id: fl._id
-          });
+          if (flow_id == fl._id) {
+            o.nodes.push({
+              text: fl.name,
+              flow_id: fl._id,
+              state: {selected: true}
+            });
+          }
+          else {
+            o.nodes.push({
+              text: fl.name,
+              flow_id: fl._id
+            });
+          }
+            
         });
       });
       data.push(o);
@@ -37,10 +52,19 @@ Template.flow_list_modal.events({
         form: f._id,
         state: "enabled"
       }).forEach(function(fl) {
-        data.push({
-          text: fl.name,
-          flow_id: fl._id
-        });
+        if (flow_id == fl._id) {
+          data.push({
+            text: fl.name,
+            flow_id: fl._id,
+            state: {selected: true}
+          });
+        }
+        else {
+          data.push({
+            text: fl.name,
+            flow_id: fl._id
+          });
+        }
       });
     });
 
@@ -51,6 +75,7 @@ Template.flow_list_modal.events({
       $('#tree').on('nodeSelected', function(event, data) {
         InstanceManager.newIns(data.flow_id);
       });
+      Session.set("flow_list_modal_type", "create");
     }
     else if (event.relatedTarget.name == "show_flows_btn") {
       $('#tree').treeview({
@@ -65,12 +90,13 @@ Template.flow_list_modal.events({
         }
         $('#flow_list_modal').modal('hide');
       });
+      Session.set("flow_list_modal_type", "show");
     }
       
   },
 
   'hidden.bs.modal #flow_list_modal': function(event) {
-    if (event.relatedTarget.name == "create_ins_btn") {
+    if (Session.get("flow_list_modal_type") == "create") {
       var insId;
       insId = Session.get("instanceId");
       if (insId) {
