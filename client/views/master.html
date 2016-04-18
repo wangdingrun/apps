@@ -1,10 +1,10 @@
 <template name="masterLayout">
-        {{# AdminLTE skin="green" fixed="true" sidebarMini="true" }}
+        {{# AdminLTE skin="green" sidebarMini="true" }}
         	{{> dock}}
         	{{> sidebar}}
 
 
-        	<div class="content-wrapper">
+        	<div class="content-wrapper" style="min-height: {{minHeight}}">
         		{{> status}}
             	{{> Template.dynamic template=main}}
             </div>

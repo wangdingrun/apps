@@ -51,13 +51,24 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "SETTINGS"}}</li>
             <li>
-                <a href="/account/profile/"><i class="fa fa-user"></i><span>{{_ "Account"}}</span></a>
-            </li>
-            <li>
                 <a href="/admin"><i class="fa fa-gears"></i><span>{{_ "Admin"}}</span></a>
             </li>
             <li>
-                <a href="https://www.steedos.com/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
+                <a href="#">
+                  <i class="fa fa-user"></i> <span>{{_ "Account"}}</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="/account/profile/"><i class="fa fa-support"></i><span>{{_ "Account Settings"}}</span></a>
+                  </li>
+                  <li>
+                      <a href="https://www.steedos.com/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
+                  </li>
+                  <li>
+                      <a href="/logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
+                  </li>
+                </ul>
             </li>
           </ul>
         </div>
