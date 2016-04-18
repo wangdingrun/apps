@@ -11,6 +11,17 @@ InstanceManager.getFormField = function(fieldId){
     return null;
 }
 
+InstanceManager.getFormFieldByCode = function(fieldCode){
+    var instanceFields = WorkflowManager.getInstanceFields();
+    var field = instanceFields.filterProperty("code", fieldCode);
+
+    if (field.length > 0){
+        return field[0];
+    }
+
+    return null;
+}
+
 InstanceManager.getApplicantUserId = function(){
   var instance = WorkflowManager.getInstance();
   if(instance)
@@ -108,8 +119,14 @@ InstanceManager.checkFormFieldValue = function(field){
     var parent_group = $("#" + field.id).parent();
     var message = '';
     if(field.required){
-      if(!field.value || field.value == '' || field.length < 1)
-          message = showMessage(parent_group, "字段‘" + field.name + '’为必填');
+      if(!field.value || field.value == '' || field.length < 1){
+          var fo = InstanceManager.getFormFieldByCode(field.name);
+          var titleName = field.name
+          if(fo){
+            titleName = fo.name ? fo.name:fo.code;
+          }
+          message = showMessage(parent_group, "字段‘" + titleName + '’为必填');
+      }
     }
 
     if(field.type == 'email' && field.value !=''){
