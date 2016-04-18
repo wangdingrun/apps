@@ -5,6 +5,10 @@ Package.describe({
 	git: ''
 });
 
+Npm.depends({
+  formidable: "1.0.17",
+});
+
 Package.onUse(function(api) { 
 	api.versionsFrom('1.0');
 
@@ -20,6 +24,9 @@ Package.onUse(function(api) {
 	api.use('tracker');
 	api.use('session');
 	
+  	api.use('simple:json-routes');
+	api.use('cfs:http-methods');
+	api.use('cfs:standard-packages');
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
@@ -57,6 +64,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/categories.coffee');
 	api.addFiles('lib/models/box_counts.coffee');
 
+	api.addFiles('lib/cfs/core.coffee');
+	api.addFiles('lib/cfs/api.coffee', 'server');
 
 	// EXPORT
 	api.export('Workflow');
