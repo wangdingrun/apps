@@ -1,13 +1,20 @@
 <template name="masterLayout">
-	{{# AdminLTE skin="green" fixed="true" sidebarMini="true" }}
-		{{> dock}}
-		{{> sidebar}}
+        {{# AdminLTE skin="green" fixed="true" sidebarMini="true" }}
+        	{{> dock}}
+        	{{> sidebar}}
 
 
-		<div class="content-wrapper">
-			{{> status}}
-	    	{{> Template.dynamic template=main}}
-	    </div>
-	{{/ AdminLTE}}
+        	<div class="content-wrapper">
+        		{{> status}}
+            	{{> Template.dynamic template=main}}
+            </div>
+        {{/ AdminLTE}}
+        
+  {{> flow_list_modal}}
+  {{> force_end_modal}}
+  {{> reassign_modal}}
+  {{> relocate_modal}}
+  {{> upload_progress_bar_modal}}
+  {{> ins_attach_version_modal}}
 </template>
 

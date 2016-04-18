@@ -1,9 +1,32 @@
 <template name="loginLayout">
-  {{> loginNav}}
 
-  <div id="content">
-    {{> Template.dynamic template=main}}
-  </div>
+    <div class="skin-green layout-top-nav">
 
-<!--   {{> yield region='footer'}} -->
+        <header class="main-header">
+            <nav class="navbar navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="/" class="navbar-brand"><b>{{_ "Steedos"}}</b></a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/sign-in">{{_ 'Log in'}}</a></li>
+                            <li><a href="/sign-up">{{_ 'Sign up'}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content-wrapper" style="min-height: {{minHeight}}">
+            <div id="container">
+                {{> Template.dynamic template=main}}
+            </div>
+        </div>
+
+    </div>
+
 </template>
