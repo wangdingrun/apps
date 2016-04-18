@@ -71,25 +71,6 @@ db.spaces.attachSchema new SimpleSchema
 if Meteor.isClient
 	db.spaces.simpleSchema().i18n("db_spaces")
 
-db.spaces.adminConfig = 
-	icon: "globe"
-	label: ->
-		return t("db_spaces")
-	tableColumns: [
-		{name: "name"},
-		{name: "owner_name()"},
-		{name: "is_paid"},
-	]
-	extraFields: ["owner"]
-	newFormFields: "name"
-	selector: (userId, connection) ->
-		if Meteor.isServer
-			spaceId = connection["spaceId"]
-			if spaceId
-				return {_id: spaceId}
-			else
-				return {_id: -1}
-
 
 db.spaces.helpers
 

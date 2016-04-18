@@ -93,35 +93,6 @@ if Meteor.isClient
 
 db.space_users.attachSchema(db.space_users._simpleSchema);
 
-db.space_users.adminConfig = 
-		icon: "users"
-		label: ->
-			return t("db_space_users")
-		tableColumns: [
-			{name: "name"},
-			{name: "organization_name()"},
-			{name: "space_name()"},
-		]
-		extraFields: ["space", "user", 'organization']
-		newFormFields: "space,email"
-		editFormFields: "space,name,manager,user_accepted"
-		selector: (userId, connection) ->
-			debugger;
-			if Meteor.isServer
-				spaceId = connection["spaceId"]
-				console.log "[selector] filter space_users " + spaceId
-				if spaceId
-					return {space: spaceId}
-				else
-					return {space: "-1"}
-			if Meteor.isClient
-				spaceId = Session.get("spaceId")
-				console.log "[selector] filter space_users " + spaceId
-				if spaceId
-					return {space: spaceId}
-				else
-					return {space: "-1"}
-
 
 
 db.space_users.helpers

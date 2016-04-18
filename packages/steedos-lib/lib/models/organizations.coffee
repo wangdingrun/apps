@@ -84,19 +84,6 @@ if Meteor.isClient
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
-db.organizations.adminConfig =
-	icon: "sitemap"
-	label: ->
-		return t("db_organizations")
-	tableColumns: [
-		{name: "fullname"},
-		{name: "users_count()"},
-		{name: "space_name()"},
-	]
-	extraFields: ["space", "name", "users"]
-	newFormFields: "space,name,parent"
-	editFormFields: "name,parent"
-
 
 db.organizations.helpers
 

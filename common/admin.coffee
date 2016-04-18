@@ -3,6 +3,47 @@
 @space_users = db.space_users
 @organizations = db.organizations
 
+db.spaces.adminConfig = 
+	icon: "globe"
+	label: ->
+		return t("db_spaces")
+	tableColumns: [
+		{name: "name"},
+		{name: "owner_name()"},
+		{name: "is_paid"},
+	]
+	extraFields: ["owner"]
+	newFormFields: "name"
+	selector: {_id: -1}
+
+db.organizations.adminConfig =
+	icon: "sitemap"
+	label: ->
+		return t("db_organizations")
+	tableColumns: [
+		{name: "fullname"},
+		{name: "users_count()"},
+		{name: "space_name()"},
+	]
+	extraFields: ["space", "name", "users"]
+	newFormFields: "space,name,parent"
+	editFormFields: "name,parent"
+	selector: {space: "-1"}
+
+db.space_users.adminConfig = 
+		icon: "users"
+		label: ->
+			return t("db_space_users")
+		tableColumns: [
+			{name: "name"},
+			{name: "organization_name()"},
+			{name: "space_name()"},
+			{name: "user_accepted"}
+		]
+		extraFields: ["space", "user", 'organization', "manager"]
+		newFormFields: "space,email"
+		editFormFields: "space,name,manager,user_accepted"
+		selector: {space: "-1"}
 
 @AdminConfig = 
 	name: "Steedos Admin"
@@ -27,9 +68,10 @@ if Meteor.isServer
 if Meteor.isClient
 	Meteor.startup ->
 		Tracker.autorun ->
-			if AdminTables["spaces"]
-				AdminTables["spaces"].selector = {_id: Session.get("spaceId")}
-			if AdminTables["space_users"]
-				AdminTables["space_users"].selector = {space: Session.get("spaceId")}
-			if AdminTables["organizations"]
-				AdminTables["organizations"].selector = {space: Session.get("spaceId")}
+			if Session.get("spaceId")
+				if AdminTables["spaces"]
+					AdminTables["spaces"].selector = {_id: Session.get("spaceId")}
+				if AdminTables["space_users"]
+					AdminTables["space_users"].selector = {space: Session.get("spaceId")}
+				if AdminTables["organizations"]
+					AdminTables["organizations"].selector = {space: Session.get("spaceId")}

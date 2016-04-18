@@ -3,7 +3,8 @@ Template.AdminDashboardView.rendered = ->
 
 Template.AdminDashboardView.helpers
 	hasDocuments: ->
-		AdminCollectionsCount.findOne({collection: Session.get 'admin_collection_name'})?.count > 0
+		return true;
+		#AdminCollectionsCount.findOne({collection: Session.get 'admin_collection_name'})?.count > 0
 	newPath: ->
 		FlowRouter.path "/admin/new/:coll",{coll: Session.get 'admin_collection_name' }
 	admin_table: ->
