@@ -177,7 +177,7 @@ var s_schema = function (label, field){
   }
 
   schema.autoform = new s_autoform(schema, field);
-  if(schema.autoform.options && schema.autoform.options.length > 0 && schema.autoform`.type=='select2'){
+  if(schema.autoform.options && schema.autoform.options.length > 0 && schema.autoform.type=='select2'){
     if(is_required !=true){
       schema.autoform.options.unshift({label:'',value:''});
     }
