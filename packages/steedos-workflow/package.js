@@ -5,10 +5,6 @@ Package.describe({
 	git: ''
 });
 
-Npm.depends({
-  busboy: "0.2.13",
-});
-
 Package.onUse(function(api) { 
 	api.versionsFrom('1.0');
 
@@ -24,7 +20,6 @@ Package.onUse(function(api) {
 	api.use('tracker');
 	api.use('session');
 	
-  	api.use('simple:json-routes');
 	api.use('cfs:standard-packages');
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
@@ -64,7 +59,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/box_counts.coffee');
 
 	api.addFiles('lib/cfs/core.coffee');
-	api.addFiles('lib/cfs/api.coffee', 'server');
 
 	// EXPORT
 	api.export('Workflow');

@@ -1,6 +1,7 @@
 Busboy = Npm.require('busboy');
+Fiber = Npm.require('fibers');
 
-JsonRoutes.parseFiles = (req, res, cb) ->
+JsonRoutes.parseFiles = (req, res, next) ->
 		files = []; # Store files in an array and then pass them to request.
 		image = {}; # crate an image object
 
@@ -30,56 +31,62 @@ JsonRoutes.parseFiles = (req, res, cb) ->
 			busboy.on "finish",  () ->
 				# Pass the file array together with the request
 				req.files = files;
-				cb();
+
+				Fiber ()->
+					next();
+				.run();
 			
 			# Pass request to busboy
 			req.pipe(busboy);
 		
 		else
-			cb();
+			next();
 		
 
-JsonRoutes.Middleware.use(JsonRoutes.parseFiles);
+#JsonRoutes.Middleware.use(JsonRoutes.parseFiles);
 
 JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
-	collection = cfs.instances
+	JsonRoutes.parseFiles req, res, ()->
+		collection = cfs.instances
 
-	if req.files and req.files[0]
+		if req.files and req.files[0]
 
-		newFile = new FS.File();
-		newFile.attachData req.files[0].data, {type: req.files[0].mimeType}, (err) ->
-			newFile.name(req.files[0].filename);
+			newFile = new FS.File();
+			newFile.attachData req.files[0].data, {type: req.files[0].mimeType}, (err) ->
+				newFile.name(req.files[0].filename);
 
-			collection.insert newFile,  (err, fileObj) ->
-				resp = {
-					version_id: fileObj._id
-					size: fileObj.size 
-				};
-				res.end(JSON.stringify(resp));
-				return
-	else
-		res.statusCode = 500;
-		res.end();
+				collection.insert newFile,  (err, fileObj) ->
+					resp = {
+						version_id: fileObj._id
+						size: fileObj.size 
+					};
+					res.end(JSON.stringify(resp));
+					return
+		else
+			res.statusCode = 500;
+			res.end();
 
 	 
 JsonRoutes.add "delete", "/s3/",  (req, res, next) ->
 
-	collection = cfs.instances
+	JsonRoutes.parseFiles req, res ()->
 
-	id = req.query.version_id;
-	if id
-		file = collection.findOne({ _id: id })
-		if file
-			file.remove()
-			resp = {
-				status: "OK"
-			}
-			res.end(JSON.stringify(resp));
-			return
+		collection = cfs.instances
 
-	res.statusCode = 404;
-	res.end();
+		id = req.query.version_id;
+		if id
+			file = collection.findOne({ _id: id })
+			if file
+				file.remove()
+				resp = {
+					status: "OK"
+				}
+				res.end(JSON.stringify(resp));
+				return
+
+		res.statusCode = 404;
+		res.end();
 
 	 
 JsonRoutes.add "get", "/s3/",  (req, res, next) ->
