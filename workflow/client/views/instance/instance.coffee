@@ -206,7 +206,7 @@ Template.instanceform.onRendered ->
                 $("#judge_approved").prop("checked", "checked").trigger("change");
 
 
-        Form_formula.initFormScripts(form_version.form_script);
+            Form_formula.initFormScripts(form_version.form_script);
 
 Template.instanceform.events
     
