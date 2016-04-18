@@ -24,7 +24,7 @@ TabularTables.instances = new Tabular.Table({
         else 
         	return "";
     },
-    {data: "applicant_organization_name", title: "Organization"},
+    #{data: "applicant_organization_name", title: "Organization"},
   ],
 
   #select:
