@@ -45,7 +45,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 	collection = cfs.instances
 
-	if req.files
+	if req.files and req.files[0]
 
 		newFile = new FS.File();
 		newFile.attachData req.files[0].data, {type: req.files[0].mimeType}, (err) ->
@@ -54,11 +54,13 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 			collection.insert newFile,  (err, fileObj) ->
 				resp = {
 					version_id: fileObj._id
+					size: fileObj.size 
 				};
 				res.end(JSON.stringify(resp));
 				return
-
-	res.end();
+	else
+		res.statusCode = 500;
+		res.end();
 
 	 
 JsonRoutes.add "delete", "/s3/",  (req, res, next) ->
@@ -69,13 +71,14 @@ JsonRoutes.add "delete", "/s3/",  (req, res, next) ->
 	if id
 		file = collection.findOne({ _id: id })
 		if file
-			if file.remove()
-				resp = {
-					status: "OK"
-				}
-				res.end(JSON.stringify(resp));
-				return
+			file.remove()
+			resp = {
+				status: "OK"
+			}
+			res.end(JSON.stringify(resp));
+			return
 
+	res.statusCode = 404;
 	res.end();
 
 	 
