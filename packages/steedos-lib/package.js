@@ -19,6 +19,7 @@ Package.onUse(function(api) {
 	api.use('tracker');
 	api.use('session');
 	
+  	api.use('simple:json-routes');
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
@@ -57,6 +58,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/api/spaces.coffee', ['server']);
 	api.addFiles('lib/api/space_users.coffee', ['server']);
 	api.addFiles('lib/api/organizations.coffee', ['server']);
+
+	api.addFiles('lib/api/setup.coffee', ['server']);
 
 	// EXPORT
 	api.export('Steedos');
