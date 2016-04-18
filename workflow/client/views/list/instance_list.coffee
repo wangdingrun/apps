@@ -10,7 +10,7 @@ Template.instance_list.helpers
         return Session.get("spaceId");
 
     selector: ->
-        query = {space: Session.get("spaceId")}
+        query = {space: Session.get("spaceId"), flow: Session.get("flowId")}
         box = Session.get("box") 
         if box == "inbox"
             query.inbox_users = Meteor.userId();
@@ -26,7 +26,6 @@ Template.instance_list.helpers
             query.submitter = Meteor.userId();
             query.state = "completed"
         else if box == "monitor"
-            query.flow = Session.get("flowId");
             query.state = {$in: ["pending","completed"]};
             uid = Meteor.userId();
             space = db.spaces.findOne(Session.get("spaceId"));
@@ -94,4 +93,11 @@ Template.instance_list.events
         dataTable.search(
             $('#instance_search').val(),
         ).draw();
+
+    'click [name="show_all_ins"]': (event) ->
+        Session.set("flowId", undefined);
+
+
+
+
  

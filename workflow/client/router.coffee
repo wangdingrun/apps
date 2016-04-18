@@ -20,6 +20,7 @@ workflowRoutes.route '/inbox/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "inbox");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 
@@ -39,6 +40,7 @@ workflowRoutes.route '/outbox/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "outbox");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 
@@ -59,6 +61,7 @@ workflowRoutes.route '/draft/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "draft");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 
@@ -79,6 +82,7 @@ workflowRoutes.route '/pending/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "pending");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 
@@ -99,6 +103,7 @@ workflowRoutes.route '/completed/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "completed");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 
@@ -119,22 +124,14 @@ workflowRoutes.route '/monitor/:spaceId',
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", "monitor");
+		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "monitor"
 
 
-workflowRoutes.route '/monitor/:spaceId/:flowId', 
+workflowRoutes.route '/monitor/:spaceId/:instanceId', 
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
-		Session.set("flowId", params.flowId);
-		Session.set("box", "monitor");
-		BlazeLayout.render 'masterLayout',
-			main: "workflow_main"
-
-workflowRoutes.route '/monitor/:spaceId/:flowId/:instanceId', 
-	action: (params, queryParams)->
-		Session.set("spaceId", params.spaceId);
-		Session.set("flowId", params.flowId);
 		Session.set("instanceId", params.instanceId);
 		Session.set("box", "monitor");
 		BlazeLayout.render 'masterLayout',

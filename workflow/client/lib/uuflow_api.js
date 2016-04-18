@@ -32,7 +32,7 @@ UUflow_api.post_draft = function(flowId) {
 
     success: function(responseText, status) {
       Session.set("instanceId", responseText.ChangeSet.inserts.Instances[0].id);
-      $('#createInsModal').modal('hide');
+      $('#flow_list_modal').modal('hide');
       toastr.success("创建成功!");
     },
     error: function(xhr, msg, ex) {
