@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
-  formidable: "1.0.17",
+  busboy: "0.2.13",
 });
 
 Package.onUse(function(api) { 
@@ -25,7 +25,6 @@ Package.onUse(function(api) {
 	api.use('session');
 	
   	api.use('simple:json-routes');
-	api.use('cfs:http-methods');
 	api.use('cfs:standard-packages');
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
