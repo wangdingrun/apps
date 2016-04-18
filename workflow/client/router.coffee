@@ -126,7 +126,7 @@ workflowRoutes.route '/monitor/:spaceId',
 		Session.set("box", "monitor");
 		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
-			main: "monitor"
+			main: "workflow_main"
 
 
 workflowRoutes.route '/monitor/:spaceId/:instanceId', 
