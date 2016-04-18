@@ -145,7 +145,7 @@ if (Meteor.isServer)
 			throw new Meteor.Error(400, t("space_users_error.space_users_exists"));
 
 	db.space_users.after.insert (userId, doc) ->
-
+		console.log("db.space_users.after.insert");
 		if doc.organization
 			organizationObj = db.organizations.findOne(doc.organization)
 			organizationObj.updateUsers();
@@ -155,7 +155,7 @@ if (Meteor.isServer)
 			space: doc.space
 			operation: "add"
 			user: doc.user
-			user_count: db.space_users.find({space: doc.space}).count()
+			user_count: db.space_users.find({space: doc.space, user_accepted: true}).count()
 
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
@@ -182,6 +182,7 @@ if (Meteor.isServer)
 				throw new Meteor.Error(400, t("space_users_error.user_readonly"));
 	
 	db.space_users.after.update (userId, doc, fieldNames, modifier, options) ->
+		console.log("db.space_users.after.update");
 		self = this
 		modifier.$set = modifier.$set || {};
 
@@ -199,7 +200,7 @@ if (Meteor.isServer)
 					space: doc.space
 					operation: modifier.$set.user_accepted ? "enable" : "disable"
 					user: doc.user
-					user_count: db.space_users.find({space: doc.space}).count()
+					user_count: db.space_users.find({space: doc.space, user_accepted: true}).count()
 
 
 	db.space_users.before.remove (userId, doc) ->
@@ -213,7 +214,7 @@ if (Meteor.isServer)
 
 
 	db.space_users.after.remove (userId, doc) ->
-
+		console.log("db.space_users.after.remove");
 		if doc.organization
 			organizationObj = db.organizations.findOne(doc.organization)
 			organizationObj.updateUsers();
@@ -223,7 +224,7 @@ if (Meteor.isServer)
 			space: doc.space
 			operation: "delete"
 			user: doc.user
-			user_count: db.space_users.find({space: doc.space}).count()
+			user_count: db.space_users.find({space: doc.space, user_accepted: true}).count()
 
 
 	Meteor.publish 'space_users', (spaceId)->
