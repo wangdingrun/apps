@@ -70,10 +70,12 @@ Template.flow_list_modal.events({
   },
 
   'hidden.bs.modal #flow_list_modal': function(event) {
-    var insId;
-    insId = Session.get("instanceId");
-    if (insId) {
-      return FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
+    if (event.relatedTarget.name == "create_ins_btn") {
+      var insId;
+      insId = Session.get("instanceId");
+      if (insId) {
+        return FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
+      }
     }
   }
 
