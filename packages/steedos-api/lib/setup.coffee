@@ -13,7 +13,7 @@ JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 			userId = req.body["X-User-Id"]
 			authToken = req.body["X-Auth-Token"]
 
-	if userId and loginToken
+	if userId and authToken
 		user = Meteor.users.findOne
 			_id: userId,
 			"services.resume.loginTokens.hashedToken": authToken
@@ -23,6 +23,7 @@ JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 			cookies.set("X-Auth-Token", authToken)
 			JsonRoutes.sendResult res, 
 				data: user
+			return
 
 
 	JsonRoutes.sendResult res, 
