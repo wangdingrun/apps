@@ -24,7 +24,8 @@ Package.onUse(function(api) {
 	api.use('underscore');
 	api.use('tracker');
 	api.use('session');
-	
+	api.use('accounts-base');
+
   	api.use('simple:json-routes');
 	api.use('cfs:standard-packages');
 	api.use('nimble:restivus');
@@ -34,8 +35,10 @@ Package.onUse(function(api) {
 
 	api.use(['webapp'], 'server');
 
-	api.addFiles('lib/setup.coffee', 'server');
-	api.addFiles('lib/s3.coffee', 'server');
+	api.addFiles('accounts_client.coffee', 'client');
+
+	api.addFiles('routes/setup.coffee', 'server');
+	api.addFiles('routes/s3.coffee', 'server');
 
 });
 
