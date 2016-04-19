@@ -25,6 +25,8 @@ Package.onUse(function(api) {
 	api.use('tracker');
 	api.use('session');
 	api.use('accounts-base');
+	api.use('sha');
+	api.use('npm-bcrypt');
 
   	api.use('simple:json-routes');
 	api.use('cfs:standard-packages');

@@ -1,4 +1,8 @@
 Cookies = Npm.require("cookies")
+bcrypt = NpmModuleBcrypt;
+bcryptHash = Meteor.wrapAsync(bcrypt.hash);
+bcryptCompare = Meteor.wrapAsync(bcrypt.compare);
+
 
 JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 
@@ -58,3 +62,54 @@ JsonRoutes.add "post", "/se/ws/1/logout", (req, res, next) ->
 	cookies.set("X-Auth-Token", "")
 
 	res.end();
+
+
+JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
+
+	cookies = new Cookies( req, res );
+
+	username = req.body["username"]
+	password = req.body["password"]
+	extended_login = req.body["extended_login"]
+
+	bcryptPassword = SHA256(password);
+
+	user = Meteor.users.findOne
+		"emails.address": username
+
+	if !user
+		res.statusCode = 401;
+		res.end();
+
+	if (!bcryptCompare(bcryptPassword, user.services.password.bcrypt)) 
+		res.statusCode = 401;
+		res.end();
+		return
+
+
+	authToken = Accounts._generateStampedLoginToken()
+	hashedToken = Accounts._hashLoginToken authToken.token
+	Accounts._insertHashedLoginToken user._id, {hashedToken}
+
+	# set cookie to response
+	cookies.set("X-User-Id", user._id)
+	cookies.set("X-Auth-Token", authToken)
+
+	JsonRoutes.sendResult res, 
+		data: 
+			apps: []
+			dsInfo: 
+				dsid: user._id
+				steedosId: user.steedos_id
+				name: user.name
+				primaryEmail: user.email
+				statusCode: 2
+			instance: "1329598861"
+			isExtendedLogin: true
+			requestInfo:
+				country: "CN"
+				region: "SH"
+				timezone: "GMT+8"
+			webservices:
+				Meteor.settings.public.webservices
+
