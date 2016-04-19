@@ -9,7 +9,10 @@ FlowRouter.route '/',
 
 FlowRouter.route '/logout', 
 	action: (params, queryParams)->
-		AccountsTemplates.logout();
+		#AccountsTemplates.logout();
+		Meteor.logout ()->
+			SteedosAPI.setupLogout();
+			FlowRouter.go("/");
 
 
 FlowRouter.route '/account/profile', 

@@ -1,6 +1,6 @@
 # call validate when login success
-Steedos = {}
-Steedos.setupValidate = ()->
+@SteedosAPI = {}
+SteedosAPI.setupValidate = ()->
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
 	if userId and loginToken
@@ -19,9 +19,21 @@ Steedos.setupValidate = ()->
 		.done ( data ) ->
 			#console.log(data)
 
+SteedosAPI.setupLogout = () ->
+
+		$.ajax
+			type: "POST",
+			url: "/se/ws/1/logout",
+			dataType: 'json',
+			xhrFields: 
+			   withCredentials: true
+			crossDomain: true,
+		.done ( data ) ->
+			console.log(data)
+
 Accounts.onLogin ()->
-	Steedos.setupValidate();
+	SteedosAPI.setupValidate();
 
 Meteor.startup ->
 	if Meteor.userId
-		Steedos.setupValidate();
+		SteedosAPI.setupValidate();

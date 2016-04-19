@@ -46,6 +46,15 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 	JsonRoutes.sendResult res, 
 		code: 401,
 		data: 
-			"error": "Validate Request -- Missing X-STEEDOS-WEBAUTH-TOKEN cookie", 
+			"error": "Validate Request -- Missing X-Auth-Token", 
 			"instance": "1329598861", 
 			"success": false
+
+
+JsonRoutes.add "post", "/se/ws/1/logout", (req, res, next) ->
+
+	cookies = new Cookies( req, res );
+	cookies.set("X-User-Id", "")
+	cookies.set("X-Auth-Token", "")
+
+	res.end();
