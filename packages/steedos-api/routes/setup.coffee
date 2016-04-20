@@ -95,12 +95,12 @@ JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
 
 	# set cookie to response
 	cookies.set("X-User-Id", user._id)
-	cookies.set("X-Auth-Token", authToken)
+	cookies.set("X-Auth-Token", authToken.token)
 
 	JsonRoutes.sendResult res, 
 		data: 
 			userId: user._id
-			authToken: authToken
+			authToken: authToken.token
 			apps: []
 			dsInfo: 
 				dsid: user._id
