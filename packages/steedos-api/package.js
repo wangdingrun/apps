@@ -7,7 +7,8 @@ Package.describe({
 
 Npm.depends({
   busboy: "0.2.13",
-  cookies: "0.6.1"
+  cookies: "0.6.1",
+  mime: "1.3.4"
 });
 
 Package.onUse(function(api) { 

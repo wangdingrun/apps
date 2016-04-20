@@ -46,7 +46,7 @@
         "url" : "https://www.steedos.com:443"
       }
     }
-  }
+  },
+  "fakes3_root": "/mnt/fakes3/10"
 
-  
 }
