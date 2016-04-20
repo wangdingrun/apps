@@ -4,8 +4,8 @@
                 "max_memory_restart": "1024M",
                 "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
                 "script": "/srv/workflow/bundle/main.js",
-                "out_file": "/var/log/workflow/app.log",
-                "error_file": "/var/log/workflow/err.log",
+                "out_file": "/srv/workflow/log/app.log",
+                "error_file": "/srv/workflow/log/err.log",
                 "port": "80",
                 "env": {
                         "MONGO_URL": "mongodb://localhost:27017/steedos",
@@ -19,8 +19,8 @@
                 "max_memory_restart": "1024M",
                 "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
                 "script": "/srv/workflow/bundle/main.js",
-                "out_file": "/var/log/rocket.chat/app.log",
-                "error_file": "/var/log/rocket.chat/err.log",
+                "out_file": "/srv/workflow/log/app.log",
+                "error_file": "/srv/workflow/log/err.log",
                 "port": "6000",
                 "env": {
                         "MONGO_URL": "mongodb://localhost:27017/steedos",
@@ -34,8 +34,8 @@
                 "max_memory_restart": "1024M",
                 "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
                 "script": "/srv/workflow/bundle/main.js",
-                "out_file": "/var/log/workflow/app.log",
-                "error_file": "/var/log/workflow/err.log",
+                "out_file": "/srv/workflow/log/app.log",
+                "error_file": "/srv/workflow/log/err.log",
                 "port": "6001",
                 "env": {
                         "MONGO_URL": "mongodb://localhost:27017/steedos",
