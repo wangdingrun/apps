@@ -32,7 +32,6 @@ Template.instanceform.helpers
         return (a == b)
 
     includes: (a, b) ->
-        console.log("instance includes...");
         return b.split(',').includes(a);
 
     fields: ->
@@ -144,7 +143,6 @@ Template.instanceform.helpers
             return "display: none;";
 
     space_users: ->
-        console.log("space_users");
         return db.space_users.find();
 
     is_disabled: ->
@@ -163,9 +161,7 @@ Template.instanceform.onRendered ->
 
     t.subscribe "instance_data", Session.get("instanceId"), ->
         Tracker.afterFlush -> 
-            console.log("Tracker.afterFlush");
             instance = WorkflowManager.getInstance();
-            console.log(instance);
             if !instance
                 return;
 
@@ -309,7 +305,6 @@ Template.instanceform.events
         # 此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。
 
         setTimeout ->
-           console.log(JSON.stringify(AutoForm.getFormValues("instanceform").insertDoc));
            Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
         ,101
 
