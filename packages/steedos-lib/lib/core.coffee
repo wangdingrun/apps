@@ -17,3 +17,6 @@ if Meteor.isClient
 		return {value: name, label: "(GMT " + label + ") " + name, offset: offset};
 	Steedos._timezones = _.sortBy(Steedos._timezones, 'offset');
 
+
+	Steedos.isMobile = ()->
+		return $(window).width() < 767
