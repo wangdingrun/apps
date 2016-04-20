@@ -3,26 +3,56 @@
 }
 
 .instance-list-wrapper {
-	padding-left: 10px;
-	padding-right: 10px;
+	width: 350px;
+	float: left;
+	padding-left: 0px;
+	padding-right: 0px;
 	border-right: 1px solid #d2d6de;
 	overflow-y: scroll;
 
 	.instance-list-toolbar {
-		padding-top: 10px;
+		padding: 10px;
 	}
 
+	.dataTables_wrapper {
+		border-top: 1px solid #d2d6de;
+	}
 	.dataTable {
 		background: white;
-	    border-top: 1px solid #d2d6de;
-	    margin-top: 10px !important;
+		border-top: 1px solid #d2d6de;
+		margin-top: 0px !important;
+
+		thead {
+			display: none
+		}
+
+		dataTables_paginate {
+			padding-right: 6px;
+		}
 	}
+
+        .instance-name {
+                padding-left: 6px;
+                font-weight: bold
+        }
+        .instance-modified {
+                padding-right: 6px;
+                float: right;
+        }
+        .instance-applicant {
+                padding-left: 6px;
+        }
 }
 
 .instance-wrapper {
-	padding-left: 10px;
-	padding-right: 10px;
+	float: left;
 	overflow-y: scroll;
+
+	.instance {
+		overflow-y: scroll;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
 
 	.instance-toolbar {
 		padding-top: 10px;

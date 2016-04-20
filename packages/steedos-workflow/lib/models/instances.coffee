@@ -13,25 +13,31 @@ TabularTables.instances = new Tabular.Table({
   name: "instances",
   collection: db.instances,
   columns: [
-    {data: "name", title: "Title"},
-    {data: "applicant_name", title: "Applicant"},
     {
-      data: "modified",
-      title: "Modified",
+      data: "modified", 
       render:  (val, type, doc) ->
-        if (val instanceof Date) 
-        	return moment(val).fromNow()
-        else 
-        	return "";
+        modifiedString = moment(doc.modified).format('YY-MM-DD');
+        return "<div class='instance-name'>" + doc.name + "</div><div class='instance-modified'>" + modifiedString + "</div><div class='instance-applicant'>" + doc.applicant_name + "</div>"
     },
-    #{data: "applicant_organization_name", title: "Organization"},
+    # {data: "applicant_name", title: "Applicant"},
+    # {
+    #   data: "modified",
+    #   title: "Modified",
+    #   render:  (val, type, doc) ->
+    #     if (val instanceof Date) 
+    #       modifiedString = moment(val).format('YY-MM-DD');
+    #     	return "<div class='instance-modified'>" + modifiedString + "</div>"
+    #     else 
+    #     	return "";
+    # },
+    # {data: "applicant_organization_name", title: "Organization"},
   ],
 
   #select:
   #  style: 'single'
   dom: "tp",
-  order:[[2,"desc"]]
-  extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
+  order:[[0,"desc"]]
+  extraFields: ["applicant_name", "name", "form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
   lengthChange: false,
   pageLength: 20,
   info: false,

@@ -1,15 +1,17 @@
 <template name="workflow_main">
 
   <div class="workflow-main row">
-    <div class="instance-list-wrapper col-md-4">
+    <div class="instance-list-wrapper">
     	{{> instance_list}}
     </div>
-    <div class="instance-wrapper col-md-8">
+    <div class="instance-wrapper">
+        <div class="instance">
     	{{#if instanceId}}
     		{{> instanceform}}
     	{{else}}
     		Please select instance
     	{{/if}}
+        </div>
     </div>
   </div>
     
