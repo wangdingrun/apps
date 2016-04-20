@@ -98,7 +98,7 @@ JsonRoutes.add "get", "/s3/",  (req, res, next) ->
   res.end();
 
 
-JsonRoutes.add "get", "/s3/upgrade",  (req, res, next) ->
+JsonRoutes.add "post", "/s3/upgrade",  (req, res, next) ->
   console.log("/s3/upgrade")
 
   fs = Npm.require('fs')
@@ -176,7 +176,7 @@ JsonRoutes.add "get", "/s3/upgrade",  (req, res, next) ->
 
 
 
-JsonRoutes.add "get", "/s3/remove",  (req, res, next) ->
+JsonRoutes.add "post", "/s3/remove",  (req, res, next) ->
   cfs.instances.remove({"metadata.space":"519f004e8e296a1c5f00001d"})
   res.statusCode = 204
   res.end()
