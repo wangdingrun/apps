@@ -1,0 +1,48 @@
+{
+        "apps": [{
+                "name": "workflow.0",
+                "max_memory_restart": "1024M",
+                "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
+                "script": "/srv/workflow/bundle/main.js",
+                "out_file": "/var/log/workflow/app.log",
+                "error_file": "/var/log/workflow/err.log",
+                "port": "80",
+                "env": {
+                        "MONGO_URL": "mongodb://localhost:27017/steedos",
+                        "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
+                        "ROOT_URL": "http://workflow.steedos.com",
+                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
+                        "PORT": "80"
+                }
+        }, {
+                "name": "workflow.1",
+                "max_memory_restart": "1024M",
+                "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
+                "script": "/srv/workflow/bundle/main.js",
+                "out_file": "/var/log/rocket.chat/app.log",
+                "error_file": "/var/log/rocket.chat/err.log",
+                "port": "6000",
+                "env": {
+                        "MONGO_URL": "mongodb://localhost:27017/steedos",
+                        "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
+                        "ROOT_URL": "http://workflow.steedos.com",
+                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
+                        "PORT": "6000"
+                }
+        }, {
+                "name": "workflow.2",
+                "max_memory_restart": "1024M",
+                "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
+                "script": "/srv/workflow/bundle/main.js",
+                "out_file": "/var/log/workflow/app.log",
+                "error_file": "/var/log/workflow/err.log",
+                "port": "6001",
+                "env": {
+                        "MONGO_URL": "mongodb://localhost:27017/steedos",
+                        "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
+                        "ROOT_URL": "http://workflow.steedos.com",
+                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
+                        "PORT": "6001"
+                }
+        }]
+}
