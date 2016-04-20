@@ -14,11 +14,23 @@ TabularTables.instances = new Tabular.Table({
   collection: db.instances,
   columns: [
     {
-      data: "modified", 
+      data: "name", 
       render:  (val, type, doc) ->
         modifiedString = moment(doc.modified).format('YY-MM-DD');
         return "<div class='instance-name'>" + doc.name + "</div><div class='instance-modified'>" + modifiedString + "</div><div class='instance-applicant'>" + doc.applicant_name + "</div>"
     },
+    {
+      data: "modified",
+      visible: false,
+    },
+    {
+      data: "applicant_name",
+      visible: false,
+    },
+    {
+      data: "applicant_organization_name",
+      visible: false,
+    }
     # {data: "applicant_name", title: "Applicant"},
     # {
     #   data: "modified",
@@ -36,8 +48,8 @@ TabularTables.instances = new Tabular.Table({
   #select:
   #  style: 'single'
   dom: "tp",
-  order:[[0,"desc"]]
-  extraFields: ["applicant_name", "name", "form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
+  order:[[1,"desc"]]
+  extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
   lengthChange: false,
   pageLength: 20,
   info: false,
