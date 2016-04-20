@@ -1,11 +1,11 @@
 // Options
 AccountsTemplates.configure({
   defaultLayout: 'loginLayout',
-  // defaultLayoutRegions: {
-  //   nav: 'nav',
-  //   footer: 'footer',
-  // },
-  // defaultContentRegion: 'main',
+  defaultLayoutRegions: {
+    nav: 'loginNav',
+  },
+  defaultContentRegion: 'main',
+
   showForgotPasswordLink: true,
   overrideLoginErrors: true,
   enablePasswordChange: true,
@@ -33,27 +33,10 @@ AccountsTemplates.configure({
 });
 
 
-if (Meteor.isClient){
 
-  // Router.configure({
-  //     layoutTemplate: 'masterLayout',
-  //     yieldTemplates: {
-  //         loginNav: {to: 'nav'},
-  //         loginFooter: {to: 'footer'},
-  //     }
-  // });
-  AccountsTemplates.configure({
-      defaultLayout: 'loginLayout',
-      defaultLayoutRegions: {
-        nav: 'loginNav',
-      },
-      defaultContentRegion: 'main'
-  });
-
-  AccountsTemplates.configureRoute('changePwd');
-  AccountsTemplates.configureRoute('forgotPwd');
-  AccountsTemplates.configureRoute('resetPwd');
-  AccountsTemplates.configureRoute('signIn');
-  AccountsTemplates.configureRoute('signUp');
-  AccountsTemplates.configureRoute('verifyEmail');
-}
+AccountsTemplates.configureRoute('changePwd');
+AccountsTemplates.configureRoute('forgotPwd');
+AccountsTemplates.configureRoute('resetPwd');
+AccountsTemplates.configureRoute('signIn');
+AccountsTemplates.configureRoute('signUp');
+AccountsTemplates.configureRoute('verifyEmail');
