@@ -29,6 +29,8 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 			cookies.set("X-Auth-Token", authToken)
 			JsonRoutes.sendResult res, 
 				data: 
+					userId: user._id
+					authToken: authToken
 					apps: []
 					dsInfo: 
 						dsid: user._id
@@ -97,6 +99,8 @@ JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
 
 	JsonRoutes.sendResult res, 
 		data: 
+			userId: user._id
+			authToken: authToken
 			apps: []
 			dsInfo: 
 				dsid: user._id
