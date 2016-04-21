@@ -153,8 +153,114 @@ Template.instanceform.helpers
             return "disabled";
         return;
 
+    next_step_options: ->
+        console.log("calculate next_step_options")
+        if ApproveManager.isReadOnly()
+            return []
+
+        instance = WorkflowManager.getInstance();
+        currentApprove = InstanceManager.getCurrentApprove();
+        current_next_steps = currentApprove.next_steps;
+
+        if Session.get("judge")
+            judge = Session.get("judge")
+        else
+            judge = currentApprove.judge
+        currentStep = InstanceManager.getCurrentStep();
+        form_version = WorkflowManager.getInstanceFormVersion();
+        # 待办：获取表单值
+        autoFormDoc = {} #AutoForm.getFormValues("instanceform").insertDoc;
+        nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+
+        next_step_options = []
+        if nextSteps && nextSteps.length > 0
+            next_step_id = null;
+            next_step_type = null
+            nextSteps.forEach (step)->
+                option = {
+                    id: step.id,
+                    text: step.name
+                    type: step.step_type
+                }
+                if current_next_steps && current_next_steps.length > 0
+                    if current_next_steps[0].step == step.id
+                        option.selected = true
+                        next_step_id = step.id
+                        next_step_type = step.step_type
+
+                next_step_options.push(option)
+            # 默认选中第一个
+            if not next_step_id and next_step_options.length>0
+                next_step_options[0].selected = true
+                next_step_id = next_step_options[0].id
+                next_step_type = next_step_options[0].step_type
+
+            Session.set("next_step_id", next_step_id);
+            #触发selecte2重新加载
+            Session.set("next_step_multiple", false)
+            if next_step_id
+                if(next_step_type == 'counterSign')
+                    Session.set("next_user_multiple", true)
+                else
+                    Session.set("next_user_multiple", false)
+
+        Tracker.afterFlush ()->
+            $("#nextSteps").select2();
+        return next_step_options;
+
+    next_user_options: ->
+
+        console.log("calculate next_user_options")
+
+        next_user_options = []
+
+        next_step_id = Session.get("next_step_id");
+        next_user_multiple = Session.get("next_user_multiple")
+        if next_step_id
+
+            instance = WorkflowManager.getInstance();
+            currentApprove = InstanceManager.getCurrentApprove();
+            current_next_steps = currentApprove.next_steps;
+            
+            nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
+            next_user_ids = [];
+            if not next_user_multiple
+                next_user_options.push({
+                    id: "",
+                    text: "请选择"
+                })
+            nextStepUsers.forEach (user)->
+                option = {
+                    id: user.id,
+                    text: user.name
+                }
+                if current_next_steps && current_next_steps.length > 0
+                    if _.contains(current_next_steps[0].users, user.id)
+                        option.selected = true
+                        next_user_ids.push(user.id)
+                next_user_options.push(option)
+
+            # 会签节点不自动选人
+            if not next_user_multiple
+                # 默认选中第一个
+                if next_user_options.length == 1
+                    next_user_options[0].selected = true
+                    next_user_ids.push(next_user_options[0].id)
+
+
+        Tracker.afterFlush ()->
+            $("#nextStepUsers").select2();
+        return next_user_options;
+
+    next_step_multiple: ->
+        Session.get("next_step_multiple")
+
+    next_user_multiple: ->
+        Session.get("next_user_multiple")
+
 Template.instanceform.onRendered ->
     t = this;
+
     t.$('#nextSteps').select2();
     t.$('#nextStepUsers').select2();
     t.$("#ins_applicant").select2();
@@ -169,34 +275,87 @@ Template.instanceform.onRendered ->
 
     if !ApproveManager.isReadOnly()
         currentApprove = InstanceManager.getCurrentApprove();
-        current_next_steps = currentApprove.next_steps;
+        # current_next_steps = currentApprove.next_steps;
+
         judge = currentApprove.judge
         currentStep = InstanceManager.getCurrentStep();
         form_version = WorkflowManager.getInstanceFormVersion();
-        autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
-        nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+        # autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+        # nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
 
-        if nextSteps && nextSteps.length > 0
-            ApproveManager.updateNextStepOptions(nextSteps, judge);
+        # if nextSteps && nextSteps.length > 0
+        #     next_step_options = []
+        #     next_step_id = null;
+        #     next_step_type = null
+        #     nextSteps.forEach (step)->
+        #         option = {
+        #             id: step.id,
+        #             name: step.name
+        #             type: step.step_type
+        #         }
+        #         if current_next_steps && current_next_steps.length > 0
+        #             if current_next_steps[0].step == step.id
+        #                 option.selected = true
+        #                 next_step_id = step.id
+        #                 next_step_type = step.step_type
 
-            if current_next_steps && current_next_steps.length > 0
-                nextStepId = current_next_steps[0].step;
-                if nextSteps.filterProperty('_id',nextStepId).length > 0
-                    console.log("nextSteps.filterProperty('_id',nextStepId).length > 0");
-                    $("#nextSteps").select2().val(nextStepId).trigger('change');
+        #         next_step_options.push(option)
+        #     # 默认选中第一个
+        #     if not next_step_id and next_step_options.length>0
+        #         next_step_options[0].selected = true
+        #         next_step_id = next_step_options[0].id
+        #         next_step_type = next_step_options[0].step_type
+
+        #     Session.set("next_step_options", next_step_options);
+
+        #     if next_step_id
+        #         debugger;
+        #         if(next_step_type == 'counterSign')
+        #             Session.set("next_user_multiple", true)
+        #         else
+        #             Session.set("next_user_multiple", false)
+
+        #         nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
+        #         next_user_options = []
+        #         next_user_ids = [];
+        #         nextStepUsers.forEach (user)->
+        #             option = {
+        #                 id: user.id,
+        #                 name: user.name
+        #             }
+        #             if current_next_steps && current_next_steps.length > 0
+        #                 if user.id in current_next_steps[0].users
+        #                     option.selected = true
+        #                     next_user_ids.push(user.id)
+        #             next_user_options.push(option)
+        #         # 默认选中第一个
+        #         if next_user_ids.length==0 and next_user_options.length>0
+        #             next_user_options[0].selected = true
+        #             next_user_ids.push(next_user_options[0].id)
+
+        #         Session.set("next_user_options", next_user_options);
+
+
+            #ApproveManager.updateNextStepOptions(nextSteps, judge);
+
+            # if current_next_steps && current_next_steps.length > 0
+            #     nextStepId = current_next_steps[0].step;
+            #     if nextSteps.filterProperty('_id',nextStepId).length > 0
+            #         console.log("nextSteps.filterProperty('_id',nextStepId).length > 0");
+            #         $("#nextSteps").select2().val(nextStepId).trigger('change');
                 
-                nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-                nextStep = WorkflowManager.getInstanceStep(nextStepId);
-                ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+            #     nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+            #     nextStep = WorkflowManager.getInstanceStep(nextStepId);
+            #     ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
                 
-                #设置选中的用户
-                users = current_next_steps[0].users;
-                if users.length == 1
-                    $("#nextStepUsers").select2().val(users[0]).trigger('change');
-                else if users.length > 1
-                    $("#nextStepUsers").select2().val(users).trigger('change');
-                else
-                    $("#nextStepUsers").select2().val(null).trigger('change');
+            #     #设置选中的用户
+            #     users = current_next_steps[0].users;
+            #     if users.length == 1
+            #         $("#nextStepUsers").select2().val(users[0]).trigger('change');
+            #     else if users.length > 1
+            #         $("#nextStepUsers").select2().val(users).trigger('change');
+            #     else
+            #         $("#nextStepUsers").select2().val(null).trigger('change');
 
         # 默认核准
         if (currentStep.step_type == "sign" || currentStep.step_type == "sign") && !judge
@@ -211,27 +370,29 @@ Template.instanceform.events
         if ApproveManager.isReadOnly()
             return ;
         judge = $("[name='judge']").filter(':checked').val();
-        instance = WorkflowManager.getInstance();
-        currentStep = InstanceManager.getCurrentStep();
-        form_version = WorkflowManager.getInstanceFormVersion();
-        if !form_version
-            return ;
-        autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
-        nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+        Session.set("judge", judge);
 
-        if !nextSteps
-            $("#nextSteps").empty();$("#nextStepUsers").empty();
-            return;
+        # instance = WorkflowManager.getInstance();
+        # currentStep = InstanceManager.getCurrentStep();
+        # form_version = WorkflowManager.getInstanceFormVersion();
+        # if !form_version
+        #     return ;
+        # autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+        # nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
 
-        ApproveManager.updateNextStepOptions(nextSteps, judge);
+        # if !nextSteps
+        #     $("#nextSteps").empty();$("#nextStepUsers").empty();
+        #     return;
 
-        if nextSteps.length ==1 || judge == "rejected"
-            nextStepId = ApproveManager.getNextStepsSelectValue();
-            nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-            nextStep = WorkflowManager.getInstanceStep(nextStepId);
-            ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
-        else
-            $("#nextStepUsers").empty();
+        # ApproveManager.updateNextStepOptions(nextSteps, judge);
+
+        # if nextSteps.length ==1 || judge == "rejected"
+        #     nextStepId = ApproveManager.getNextStepsSelectValue();
+        #     nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+        #     nextStep = WorkflowManager.getInstanceStep(nextStepId);
+        #     ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+        # else
+        #     $("#nextStepUsers").empty();
 
     'change #suggestion': (event) ->
         console.log("change #suggestion");
@@ -241,14 +402,17 @@ Template.instanceform.events
         
     'change #nextSteps': (event) ->
         console.log("change #nextSteps");
+
+        $('#nextSteps').select2();
         if ApproveManager.isReadOnly()
             return ;
-        instance = WorkflowManager.getInstance();
+        #instance = WorkflowManager.getInstance();
         nextStepId = ApproveManager.getNextStepsSelectValue();
-        nextStep = WorkflowManager.getInstanceStep(nextStepId);
+        Session.set("next_step_id", nextStepId)
+        # nextStep = WorkflowManager.getInstanceStep(nextStepId);
 
-        nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-        ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+        # nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+        # ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
     'change #nextStepUsers': (event) ->
         if ApproveManager.isReadOnly()

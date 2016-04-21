@@ -105,7 +105,6 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     if (currentStep.step_type == "counterSign" && rev_nextSteps.length > 1){
         rev_nextSteps = [];
     }
-    console.log(rev_nextSteps);
     return rev_nextSteps;
 };
 
@@ -288,129 +287,127 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 
 };
 
-ApproveManager.updateNextStepOptions = function(steps, judge){
-    console.log("updateNextStepOptions");
-    var lastSelected = ApproveManager.getNextStepsSelectValue();
+// ApproveManager.updateNextStepOptions = function(steps, judge){
+//     console.log("updateNextStepOptions");
+//     var lastSelected = ApproveManager.getNextStepsSelectValue();
     
-    $("#nextSteps").empty();
+//     $("#nextSteps").empty();
 
-    $("#nextSteps").select2().val(null).trigger("change");
+//     $("#nextSteps").select2().val(null).trigger("change");
 
-    if(!steps)
-        return;
+//     if(!steps)
+//         return;
     
-    steps.forEach(function(step){
-        $("#nextSteps").append("<option value='" + step.id + "'> " + step.name + " </option>");
-    });
+//     steps.forEach(function(step){
+//         $("#nextSteps").append("<option value='" + step.id + "'> " + step.name + " </option>");
+//     });
 
-    if(steps.length > 1)
-        $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
+//     if(steps.length > 1)
+//         $("#nextSteps").prepend("<option value='-1'> 请选择 </option>");
 
-    $("#nextSteps").select2().val();
+//     $("#nextSteps").select2().val();
     
-    console.log(steps);
-    console.log(lastSelected);
-    ApproveManager.setNextStepsSelectValue(steps, lastSelected);
-};
+//     ApproveManager.setNextStepsSelectValue(steps, lastSelected);
+// };
 
-ApproveManager.getNextStepsSelectValue = function(){
-    console.log("getNextStepsSelectValue");
-    return $("#nextSteps").select2().val();
-}
+// ApproveManager.getNextStepsSelectValue = function(){
+//     console.log("getNextStepsSelectValue");
+//     return $("#nextSteps").select2().val();
+// }
 
-ApproveManager.setNextStepsSelectValue = function(steps, value){
-    console.log("setNextStepsSelectValue");
-    var lastStep = steps.filterProperty("_id", value);
+// ApproveManager.setNextStepsSelectValue = function(steps, value){
+//     console.log("setNextStepsSelectValue");
+//     var lastStep = steps.filterProperty("_id", value);
     
-    if(lastStep.length > 0){
-        console.log("lastStep.length > 0");
-        $("#nextSteps").select2().val(value).trigger("change");
-    } else if(steps.length > 0){
-        console.log("steps.length > 0");
-        $("#nextSteps").select2().val(steps[0]._id).trigger("change");
-    }
-}
+//     if(lastStep.length > 0){
+//         console.log("lastStep.length > 0");
+//         $("#nextSteps").select2().val(value).trigger("change");
+//     } else if(steps.length > 0){
+//         console.log("steps.length > 0");
+//         $("#nextSteps").select2().val(steps[0]._id).trigger("change");
+//     }
+// }
 
-ApproveManager.getNextStepUsersSelectValue = function(){
-    return $("#nextStepUsers").select2().val();
-}
+// ApproveManager.getNextStepUsersSelectValue = function(){
+//     return $("#nextStepUsers").select2().val();
+// }
 
-ApproveManager.setNextStepUsersSelectValue = function(value){
-    console.log("setNextStepUsersSelectValue:");
-    console.log(value);
-    var n = [];
-    if(value && value.length > 0){
-        n = value;
-    } else {
-        console.log("setNextStepUsersSelectValue value is []");
-        var c = InstanceManager.getCurrentApprove();
-        if (c && c.next_steps && c.next_steps[0] && c.next_steps[0].users) {
-            n = c.next_steps[0].users;
-        }
-    }
-    if (n.length == 1) {
-        $("#nextStepUsers").select2().val(n[0]).trigger("change");
-    } else if (n.length > 1) {
-        $("#nextStepUsers").select2().val(n).trigger("change");
-    } else {
-        $("#nextStepUsers").select2().val(null).trigger("change");
-    }
+// ApproveManager.setNextStepUsersSelectValue = function(value){
+//     console.log("setNextStepUsersSelectValue:");
+//     console.log(value);
+//     var n = [];
+//     if(value && value.length > 0){
+//         n = value;
+//     } else {
+//         console.log("setNextStepUsersSelectValue value is []");
+//         var c = InstanceManager.getCurrentApprove();
+//         if (c && c.next_steps && c.next_steps[0] && c.next_steps[0].users) {
+//             n = c.next_steps[0].users;
+//         }
+//     }
+//     if (n.length == 1) {
+//         $("#nextStepUsers").select2().val(n[0]).trigger("change");
+//     } else if (n.length > 1) {
+//         $("#nextStepUsers").select2().val(n).trigger("change");
+//     } else {
+//         $("#nextStepUsers").select2().val(null).trigger("change");
+//     }
 
-    $("#nextStepUsers").select2().val();
-}
+//     $("#nextStepUsers").select2().val();
+// }
 
-ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
-    console.log("updateNextStepUsersOptions");
-    var lastSelected = new Array();
-    var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
+// ApproveManager.updateNextStepUsersOptions = function(nextStep, users){
+//     console.log("updateNextStepUsersOptions");
+//     var lastSelected = new Array();
+//     var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
 
-    if(selectedNextStepUsers instanceof Array){
-        selectedNextStepUsers.forEach(function(su){
-          lastSelected.push(su.value);
-        });
-    }else{
-        if (selectedNextStepUsers) {
-            lastSelected.push(selectedNextStepUsers);
-        }
-    }
-    $("#nextStepUsers").empty();
-    $("#nextStepUsers").select2().val(null).trigger("change");
-    if(!users)
-        return;
+//     if(selectedNextStepUsers instanceof Array){
+//         selectedNextStepUsers.forEach(function(su){
+//           lastSelected.push(su.value);
+//         });
+//     }else{
+//         if (selectedNextStepUsers) {
+//             lastSelected.push(selectedNextStepUsers);
+//         }
+//     }
+//     $("#nextStepUsers").empty();
+//     $("#nextStepUsers").select2().val(null).trigger("change");
+//     if(!users)
+//         return;
     
-    if(nextStep.step_type == 'end'){
-        $("#nextStepUsers_div").hide();
-        return ;
-    }else{
-        $("#nextStepUsers_div").show();
-    }
+//     if(nextStep.step_type == 'end'){
+//         $("#nextStepUsers_div").hide();
+//         return ;
+//     }else{
+//         $("#nextStepUsers_div").show();
+//     }
 
-    if(nextStep.step_type == 'counterSign'){
-        $("#nextStepUsers").prop('multiple','multiple');
-        $("#nextStepUsers").select2();
-    }else{
-        $("#nextStepUsers").removeAttr('multiple');
-        $("#nextStepUsers").select2();
-    }
+//     if(nextStep.step_type == 'counterSign'){
+//         $("#nextStepUsers").prop('multiple','multiple');
+//         $("#nextStepUsers").select2();
+//     }else{
+//         $("#nextStepUsers").removeAttr('multiple');
+//         $("#nextStepUsers").select2();
+//     }
 
-    users.forEach(function(user){
-        $("#nextStepUsers").append("<option value='" + user.id + "'> " + user.name + " </option>");
-    });
+//     users.forEach(function(user){
+//         $("#nextStepUsers").append("<option value='" + user.id + "'> " + user.name + " </option>");
+//     });
 
-    /*
-    var u_ops = $("#nextStepUsers option").toArray();
+//     /*
+//     var u_ops = $("#nextStepUsers option").toArray();
 
     
-    u_ops.forEach(function(u_op){
-        if (lastSelected.includes(u_op.value))
-            u_op.selected = true;
-    });
-    */
+//     u_ops.forEach(function(u_op){
+//         if (lastSelected.includes(u_op.value))
+//             u_op.selected = true;
+//     });
+//     */
 
-    if(users.length > 1 ){
-        $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");
-    }
+//     if(users.length > 1 ){
+//         $("#nextStepUsers").prepend("<option value='-1'> 请选择 </option>");
+//     }
 
-    ApproveManager.setNextStepUsersSelectValue(lastSelected);
+//     ApproveManager.setNextStepUsersSelectValue(lastSelected);
     
-}
+// }
