@@ -117,9 +117,9 @@ if Meteor.isServer
 
 	db.users.before.insert (userId, doc) ->
 
+		doc.created = new Date();
 		if userId
 			doc.created_by = userId;
-			doc.created = new Date();
 
 		if (doc.emails && !doc.steedos_id)
 			if doc.emails.length>0
