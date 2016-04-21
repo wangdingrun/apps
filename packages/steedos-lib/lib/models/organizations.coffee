@@ -143,6 +143,8 @@ if (Meteor.isServer)
 	db.organizations.before.insert (userId, doc) ->
 		doc.created_by = userId;
 		doc.created = new Date();
+		doc.modified_by = userId;
+		doc.modified = new Date();
 		#doc.is_company = !doc.parent;
 		if (!doc.space)
 			throw new Meteor.Error(400, t("organizations_error.space_required"));

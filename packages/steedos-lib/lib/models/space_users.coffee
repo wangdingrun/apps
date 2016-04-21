@@ -109,6 +109,8 @@ if (Meteor.isServer)
 	db.space_users.before.insert (userId, doc) ->
 		doc.created_by = userId;
 		doc.created = new Date();
+		doc.modified_by = userId;
+		doc.modified = new Date();
 
 		if !doc.space
 			throw new Meteor.Error(400, t("space_users_error.space_required"));

@@ -47,6 +47,8 @@
       }
     }
   },
-  "fakes3_root": "/mnt/fakes3/10"
+  "fakes3_root": "/mnt/fakes3/10",
+  "template_space_en_us" : "526785fb3349041651000a75",
+  "template_space_zh_cn" : "526621803349041651000a1a"
 
 }
