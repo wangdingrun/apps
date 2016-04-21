@@ -1,0 +1,51 @@
+
+
+.breadcrumb{
+    float: right;
+    background: transparent;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    padding: 7px 5px;
+    top: 15px;
+    right: 10px;
+    border-radius: 2px;
+}
+
+.breadcrumb >li+li:before{
+    content: '>\00a0'
+}
+
+.breadcrumb >li>a{
+    font-size: 12px;
+    color: #444;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.selectTag-users .checkbox, .selectTag-users .radio{
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.selectTag-users .checkbox > label, .selectTag-users .radio > label{
+    padding-left: 0;
+}
+
+.selectTag-users .fa{
+    margin-right: 5px;
+}
+
+.selectTag-users a{
+    border-radius: 0;
+    border-top: 0;
+    border-left: 3px solid transparent;
+    color: #444
+}
+
+.selectTag-users img{
+    max-width: 30px;
+    margin-right: 5px;
+}
