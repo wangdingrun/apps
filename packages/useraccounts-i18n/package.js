@@ -1,6 +1,6 @@
 Package.describe({
   summary: "i18n, with standard translations for basic meteor packages.",
-  version: "1.1.4",
+  version: "1.3.3",
   name: "softwarerero:accounts-t9n",
   git: "https://github.com/steedos/useraccounts-i18n.git",
 });
