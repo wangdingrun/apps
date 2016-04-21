@@ -5,10 +5,11 @@ ApproveManager.error = {nextSteps:'',nextStepUsers:''}
 ApproveManager.isReadOnly = function(){
     var ins = WorkflowManager.getInstance();
     if(!ins)
-        return;
+        return true;
+    // 系统启动时，可能flow还没获取到。
     var flow = db.flows.findOne(ins.flow);
     if (!flow)
-        return;
+        return true;
 
     if ((Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox")
         return false;
