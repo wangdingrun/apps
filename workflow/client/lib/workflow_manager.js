@@ -1,4 +1,8 @@
-WorkflowManager = {};
+WorkflowManager = {
+  formVersionsCache: {},
+  flowVersionsCache: {},
+  instanceCache: null
+};
 
 /*-------------------data source------------------*/
 
@@ -74,34 +78,54 @@ WorkflowManager.getSpaceRoles = function(spaceId){
   return roles;
 };
 
-WorkflowManager.getForm = function (formId){
-  return db.forms.findOne(formId);
-};
+WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
 
-WorkflowManager.getFlow = function (flowId){
-  return db.flows.findOne(flowId);
-};
+    instance = db.instances.findOne(instanceId);
+    formCached = false
+    flowCached = false
+
+    if (instance){
+      if (WorkflowManager.formVersionsCache[instance.form_version])
+        formCached = true;
+      if (WorkflowManager.flowVersionsCache[instance.flow_version])
+        flowCached = true;
+    }
+
+    Meteor.call("get_instance_data", instanceId, formCached, flowCached, function(error, result){
+
+      delete WorkflowManager["instanceCache"]
+      WorkflowManager.instanceCache = result.instance;
+      if (result.form_version){
+        console.log("get form version " + result.form_version._id)
+        WorkflowManager.formVersionsCache[result.form_version._id] = result.form_version
+      }
+      if (result.flow_version){
+        console.log("get flow version " + result.flow_version._id)
+        WorkflowManager.flowVersionsCache[result.flow_version._id] = result.flow_version
+      }
+
+      callback();
+
+    });
+}
 
 WorkflowManager.getInstance = function (){
-  instanceId = Session.get("instanceId");
-  return db.instances.findOne(instanceId)
+  return WorkflowManager.instanceCache
 };
 
 
 WorkflowManager.getInstanceFormVersion = function (){
-  console.log("getInstanceFormVersion");
   var form_fields = [],
       rev = null,
       instance = WorkflowManager.getInstance();
 
   if (instance) {
-    form = WorkflowManager.getForm(instance.form);
-    if (form){
-      rev = form.current;
-      if(!rev || !rev.fields){return ;}
-      if(rev._id != instance.form_version){
-        rev = form.historys.filterProperty("_id",instance.form_version)[0];
-      }
+
+      if (instance.form_version_cached)
+        return instance.form_version_cached
+
+      rev = EJSON.clone(WorkflowManager.formVersionsCache[instance.form_version])
+
       field_permission = WorkflowManager.getInstanceFieldPermission();
       rev.fields.forEach(
         function(field){
@@ -109,8 +133,10 @@ WorkflowManager.getInstanceFormVersion = function (){
 
           if (field.type == 'table'){
             field['sfields'] = field['fields']
+            // 因为这个程序会傻傻的执行很多遍，所以不能删除
             delete field['fields']
           }
+
           if (field.type == 'section'){
             form_fields.push(field);
             if (field.fields){
@@ -123,7 +149,7 @@ WorkflowManager.getInstanceFormVersion = function (){
       );
 
       rev.fields = form_fields;
-    } 
+      instance.form_version_cached = rev
   }
 
   return rev;
@@ -131,17 +157,10 @@ WorkflowManager.getInstanceFormVersion = function (){
 
 WorkflowManager.getInstanceFlowVersion = function (){
   instance = WorkflowManager.getInstance();
-  var rev = null;
   if (instance){
-    flow = WorkflowManager.getFlow(instance.flow);
-    if (flow){
-      rev = flow.current;
-      if(!rev){return;}
-      if(rev._id != instance.flow_version){
-        rev = flow.historys.filterProperty("_id",instance.flow_version)[0];
-      }
-      return rev;
-    }
+      if (!instance.flow_version_cached)
+        instance.flow_version_cached = EJSON.clone(WorkflowManager.flowVersionsCache[instance.flow_version])
+      return instance.flow_version_cached
   }
 };
 

@@ -9,10 +9,8 @@
 
 		console.log '[publish] instance ' + instanceId
 
-		instance = db.instances.find({_id: instanceId})
+		instance = db.instances.findOne({_id: instanceId})
 
 		return [
 			db.instances.find({_id: instanceId}),
-			db.flows.find({_id: instance.flow}),
-			db.forms.find({_id: instance.form})
 		]

@@ -30,15 +30,23 @@ workflowRoutes.route '/:box/:spaceId',
 
 workflowRoutes.route '/:box/:spaceId/:instanceId', 
 	action: (params, queryParams)->
-		Session.set("spaceId", params.spaceId);
-		Session.set("instanceId", params.instanceId);
-		Session.set("box", params.box);
-		BlazeLayout.render 'masterLayout',
-			main: "workflow_main"
 
-		if (Steedos.isMobile())
-			$(".instance-list-wrapper").hide();
-			$(".instance-wrapper").show();
+		Session.set("instanceId", null);
+
+		console.log "call get_instance_data"
+		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
+			console.log "response get_instance_data" 
+
+			Session.set("spaceId", params.spaceId);
+			Session.set("instanceId", params.instanceId);
+			Session.set("box", params.box);
+			BlazeLayout.render 'masterLayout',
+				main: "workflow_main"
+
+			if (Steedos.isMobile())
+				$(".instance-list-wrapper").hide();
+				$(".instance-wrapper").show();
+
 	triggersExit: [
 		()->
 			Session.set("instanceId", null)
