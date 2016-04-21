@@ -42,6 +42,7 @@ softwarerero:accounts-t9n
 
 
 tap:i18n
+kadira:blaze-layout
 kadira:flow-router
 flemay:less-autoprefixer
 raix:handlebar-helpers
