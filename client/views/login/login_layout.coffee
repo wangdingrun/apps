@@ -8,3 +8,6 @@ Template.loginLayout.onCreated ->
 Template.loginLayout.onRendered ->
 
         $(window).resize();
+
+        if ($("body").hasClass('sidebar-open')) 
+                $("body").removeClass('sidebar-open');
