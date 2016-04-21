@@ -119,7 +119,7 @@ service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
 simple:json-routes@2.1.0
-softwarerero:accounts-t9n@1.1.6
+softwarerero:accounts-t9n@1.1.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
