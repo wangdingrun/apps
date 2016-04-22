@@ -6,22 +6,22 @@ Template.workflow_main.helpers
 
 Template.workflow_main.onCreated ->
 
-        $(window).resize ->
-        	if Steedos.isMobile()
+		$(window).resize ->
+			if Steedos.isMobile()
 
-                windowWidth = $(window).width() - 1
-                $(".instance-wrapper").width(windowWidth)
-                $(".instance-list-wrapper").width(windowWidth)
+				windowWidth = $(window).width() - 1
+				$(".instance-wrapper").width(windowWidth)
+				$(".instance-list-wrapper").width(windowWidth)
 
-        	else
-                $(".wrapper").height($(window).height())
+			else
+				#$(".wrapper").height($(window).height())
 
-                $(".instance-list-wrapper").height($(window).height()-50);
-                $(".instance-wrapper").height($(window).height()-50);
+				#$(".instance-list-wrapper").height($(window).height()-50);
+				#$(".instance-wrapper").height($(window).height()-50);
 
-                $(".instance-list-wrapper").width(350)
-                instanceWidth = $(window).width() - $(".main-sidebar").width() - $(".instance-list-wrapper").width() - 1
-                $(".instance-wrapper").width(instanceWidth)
+				$(".instance-list-wrapper").width(350)
+				instanceWidth = $(window).width() - $(".main-sidebar").width() - $(".instance-list-wrapper").width() - 1
+				$(".instance-wrapper").width(instanceWidth)
 
 Template.workflow_main.onRendered ->
 

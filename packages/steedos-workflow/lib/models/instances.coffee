@@ -51,7 +51,7 @@ TabularTables.instances = new Tabular.Table({
   order:[[1,"desc"]]
   extraFields: ["form", "flow", "inbox_users", "outbox_users", "state", "space", "applicant", "form_version", "flow_version"],
   lengthChange: false,
-  pageLength: 20,
+  pageLength: 10,
   info: false,
   searching: true,
   responsive: 
