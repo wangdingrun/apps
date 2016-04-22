@@ -7,6 +7,9 @@ Template.sidebar.helpers
 		else
 			return " "
 	
+	absoluteUrl: (url) ->
+		return Meteor.absoluteUrl(url)
+		
 	avatar: ->
 		return Meteor.user()?.avatarURL()
 

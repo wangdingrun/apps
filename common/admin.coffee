@@ -56,6 +56,8 @@ db.space_users.adminConfig =
 		spaces: db.spaces.adminConfig
 		organizations: db.organizations.adminConfig
 		space_users: db.space_users.adminConfig
+	dashboard:
+		homeUrl: Meteor.absoluteUrl()
 
 # set first user as admin
 if Meteor.isServer

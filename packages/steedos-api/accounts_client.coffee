@@ -11,7 +11,7 @@ SteedosAPI.setupValidate = ()->
 				"X-Auth-Token": loginToken
 	$.ajax
 		type: "POST",
-		url: "/se/ws/1/validate",
+		url: Meteor.absoluteUrl "se/ws/1/validate",
 		contentType: "application/json"
 		dataType: 'json',
 		data:
@@ -36,7 +36,7 @@ SteedosAPI.setupValidate = ()->
 				if FlowRouter
 					FlowRouter.go("/")
 				else
-					document.location.href = "/"
+					document.location.href = Meteor.absoluteUrl ""
 				
 				
 
@@ -45,7 +45,7 @@ SteedosAPI.setupLogout = () ->
 
 		$.ajax
 			type: "POST",
-			url: "/se/ws/1/logout",
+			url: Meteor.absoluteUrl "se/ws/1/logout",
 			dataType: 'json',
 			xhrFields: 
 			   withCredentials: true

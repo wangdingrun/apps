@@ -19,6 +19,9 @@ Template.dock.helpers
 	avatar: ->
 		return Meteor.user()?.avatarURL()
 
+	absoluteUrl: (url) ->
+		return Meteor.absoluteUrl(url)
+		
 
 
 Template.dock.onRendered ->
