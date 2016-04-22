@@ -310,10 +310,10 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 //     ApproveManager.setNextStepsSelectValue(steps, lastSelected);
 // };
 
-// ApproveManager.getNextStepsSelectValue = function(){
-//     console.log("getNextStepsSelectValue");
-//     return $("#nextSteps").select2().val();
-// }
+ApproveManager.getNextStepsSelectValue = function(){
+    console.log("getNextStepsSelectValue");
+    return $("#nextSteps").select2().val();
+}
 
 // ApproveManager.setNextStepsSelectValue = function(steps, value){
 //     console.log("setNextStepsSelectValue");
@@ -328,9 +328,9 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 //     }
 // }
 
-// ApproveManager.getNextStepUsersSelectValue = function(){
-//     return $("#nextStepUsers").select2().val();
-// }
+ApproveManager.getNextStepUsersSelectValue = function(){
+    return $("#nextStepUsers").select2().val();
+}
 
 // ApproveManager.setNextStepUsersSelectValue = function(value){
 //     console.log("setNextStepUsersSelectValue:");
