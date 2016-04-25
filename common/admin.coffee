@@ -47,7 +47,7 @@ db.space_users.adminConfig =
 
 @AdminConfig = 
 	name: "Steedos Admin"
-	skin: "blue"
+	skin: "green"
 	userSchema: null,
 	userSchema: db.users._simpleSchema,
 	autoForm:

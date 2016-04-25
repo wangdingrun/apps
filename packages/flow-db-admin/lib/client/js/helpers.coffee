@@ -21,6 +21,9 @@ adminCollections = ->
 Template.registerHelper 'AdminConfig', ->
 	AdminConfig if typeof AdminConfig != 'undefined'
 
+Template.registerHelper 'Meteor', ->
+	Meteor if typeof Meteor != 'undefined'
+
 Template.registerHelper 'admin_skin', ->
 	AdminConfig?.skin or 'black-light'
 
