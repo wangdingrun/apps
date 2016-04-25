@@ -263,7 +263,9 @@ InstanceManager.getCurrentValues = function(){
   var box = Session.get("box"),
       instanceValue;
   if (box == "inbox" || box == "draft") {
-      instanceValue = InstanceManager.getCurrentApprove();
+      approve = InstanceManager.getCurrentApprove();
+      if (approve)
+        return approve.values
   } else if (box == "outbox" || box == "pending" || box == "completed" || box == "monitor") {
       var instance = WorkflowManager.getInstance();
       instanceValue = instance.values;
