@@ -31,8 +31,11 @@ Array.prototype.filterProperty = function(h, l){
 				}
 
 			}
-
-			d = (l === undefined) ? false : m==l;
+            if(l instanceof Array){
+                d = (l === undefined) ? false : l.includes(m);
+            }else{
+                d = (l === undefined) ? false : m==l;
+            }
 		}
 
 		if(d){
@@ -71,7 +74,7 @@ $(function(){
 	}
 
 	if(!$("#selectTagTemplate").html()){
-		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box box-solid"><div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}</script>');
+		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box box-solid"><div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</script>');
 	}
 });
 
@@ -85,9 +88,19 @@ $(function(){
 				hide : hide,
 				reload : reloadTag,
                 checked : checked,
-                values :[]
+                defaultValues : [],
+                values :[],
+                valuesObject : getValuesObject
 			}
 			return selectTag;
+
+            function getValuesObject(){
+                if($options.showUser){
+                    return $options.data.users.filterProperty("id", SelectTag.values);
+                }else{
+                    return $options.data.orgs.filterProperty("id", SelectTag.values);
+                }
+            }
 
             function checked(tag){
                 if(tag.type == 'radio'){
@@ -113,12 +126,19 @@ $(function(){
 			function show(options,callback){
 
                 selectTag.values = [];
+
+                if(selectTag.defaultValues.length > 0){
+                    selectTag.values = selectTag.defaultValues;
+                    selectTag.defaultValues = [];
+                }
 				//检查参数
 				checkOptions(options);
 				
 				initOptions(options);
 				
 				reloadTag($options.orgId);
+
+                $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
 
 				$("#selectTagModal").modal('show');
 			};
@@ -178,7 +198,15 @@ $(function(){
 				var template = Handlebars.compile(sourceTemplate);
 				$('#selectTagModal-body').html(template(options));
                 $(".selectTag-profile").initial({charCount:1});
+                setDefaultValues(options);
 			};
+
+            function setDefaultValues(options){
+                var dfs= selectTag.values;
+                dfs.forEach(function(v){
+                    $("#" + v).attr("checked",true);
+                });
+            }
 
 			function constructorOptions(orgId){
                 var org = {};
@@ -233,7 +261,7 @@ $(function(){
 							}
 						});
 					}else{
-						orgChildren = $options.data.orgs.findProperty('parent', orgId);
+						orgChildren = $options.data.orgs.filterProperty('parent', orgId);
 					}
 				}
 				return orgChildren;
@@ -262,17 +290,29 @@ $(function(){
 }));
 
 
-Handlebars.registerHelper('orgList', function(items, options) {
+Handlebars.registerHelper('orgList', function(items, tagType, showUser, options) {
   var out = "";
   if(!items) 
   	return;
-  for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" + options.fn(items[i]);
-    if(items[i].users){
-    	out = out + "<span class='label label-default pull-right'>" + items[i].users.length + "</span></a>"
-    }
 
-    out = out + "</li>";
+  if(showUser){
+      for(var i=0, l=items.length; i<l; i++) {
+        out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" + options.fn(items[i]);
+        if(items[i].users){
+        	out = out + "<span class='label label-default pull-right'>" + items[i].users.length + "</span>";
+        }
+
+        out = out + "</a></li>";
+      }
+  }else{
+        items.forEach(function(item){
+            out = out + "<li><a class='org'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label>";
+
+            if(item.children && item.children.length > 0){
+                out = out + "<span class='pull-right' style='cursor:pointer;width:30px;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
+            }
+            out = out + "</a></li>";
+        });
   }
 	
   return new Handlebars.SafeString(out);
@@ -283,7 +323,7 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
   if(!items) 
   	return;
   for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<tr><td><a href='#' class='checkbox'><label><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='SUID' value='"+items[i].id+"'><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
+    out = out + "<tr><td><a class='user'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
   }
 	
   return new Handlebars.SafeString(out);

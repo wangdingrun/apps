@@ -49,3 +49,7 @@
     max-width: 30px;
     margin-right: 5px;
 }
+
+.user label, .org label{
+    font-weight: normal;
+}
