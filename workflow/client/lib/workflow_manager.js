@@ -485,7 +485,7 @@ WorkflowManager.getFormulaUserObject = function(userId){
 
   var user = WorkflowManager.getUser(userId);
 
-  if(!user)
+  if(!user || !user.hasOwnProperty("name"))
     return null;
 
   userObject['id'] = userId;
