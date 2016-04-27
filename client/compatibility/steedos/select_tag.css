@@ -23,6 +23,26 @@
     display: inline-block;
 }
 
+.selectTagModal .modal-footer{
+    border-top: 0;
+    padding: 0;
+}
+
+.selectTagModal .box-header{
+    border-bottom: 0;
+    padding: 0;
+    padding-left: 10px;
+}
+
+.selectTagModal-body{
+    overflow-y: auto;
+    max-height: 580px; 
+}
+
+.selectTag-users > tbody > tr > td{
+    padding: 6px;
+}
+
 .selectTag-users .checkbox, .selectTag-users .radio{
     display: inline-block;
     margin-top: 0;

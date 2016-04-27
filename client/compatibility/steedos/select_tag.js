@@ -70,11 +70,11 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div class="modal-body" id="selectTagModal-body"></div>  <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div></div>  </div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div></div>  <div id="selectTagModal-content"></div></div>  </div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
-		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box box-solid"><div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</script>');
+		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="modal-body selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
 	}
 });
 
@@ -88,7 +88,6 @@ $(function(){
 				hide : hide,
 				reload : reloadTag,
                 checked : checked,
-                defaultValues : [],
                 values :[],
                 valuesObject : getValuesObject
 			}
@@ -125,11 +124,11 @@ $(function(){
 			*/
 			function show(options,callback){
 
-                selectTag.values = [];
+                options.values = [];
 
-                if(selectTag.defaultValues.length > 0){
-                    selectTag.values = selectTag.defaultValues;
-                    selectTag.defaultValues = [];
+                if(options.defaultValues && options.defaultValues.length > 0){
+                    selectTag.values = options.defaultValues;
+                    options.defaultValues = [];
                 }
 				//检查参数
 				checkOptions(options);
@@ -196,9 +195,25 @@ $(function(){
 				var options = constructorOptions(orgId);
 				var sourceTemplate = $("#selectTagTemplate").html();
 				var template = Handlebars.compile(sourceTemplate);
-				$('#selectTagModal-body').html(template(options));
+				$('#selectTagModal-content').html(template(options));
                 $(".selectTag-profile").initial({charCount:1});
                 setDefaultValues(options);
+                $("#selectTag-users").DataTable({
+                    paging:true,
+                    lengthChange:false,
+                    searching:false,
+                    ordering:false,
+                    info:false,
+                    autoWidth:true,
+                    language:{
+                        oPaginate:{
+                            sFirst:'首页',
+                            sPrevious:'上页',
+                            sNext:'下页',
+                            sLast:'末页'
+                        }
+                    }
+                });
 			};
 
             function setDefaultValues(options){
