@@ -1,6 +1,6 @@
 <template name="AdminHeader">
     <header class="main-header">
-        <a href="{{Meteor.absoluteUrl 'admin'}}" class="logo">
+        <a href="{{urlPrefix}}/admin" class="logo">
             {{#if AdminConfig.name}}
             {{AdminConfig.name}}
             {{else}}
