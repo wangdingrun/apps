@@ -262,15 +262,26 @@ InstanceManager.getCurrentStep = function(){
 InstanceManager.getCurrentValues = function(){
   var box = Session.get("box"),
       instanceValue;
-  if (box == "inbox" || box == "draft") {
+  if (box == "draft") {
       approve = InstanceManager.getCurrentApprove();
-      if (approve)
+      if (approve && approve.values)
         return approve.values
+  } else if (box == "inbox") {
+      approve = InstanceManager.getCurrentApprove();
+      if (approve && approve.values) {
+        if (_.isEmpty(approve.values))
+          approve.values = InstanceManager.clone(WorkflowManager.getInstance().values)
+        return approve.values
+      }
   } else if (box == "outbox" || box == "pending" || box == "completed" || box == "monitor") {
       var instance = WorkflowManager.getInstance();
       instanceValue = instance.values;
   }
   return instanceValue;
+}
+
+InstanceManager.clone = function(obj){
+  return JSON.parse(JSON.stringify({obj}))
 }
 
 InstanceManager.getCurrentApprove = function(){

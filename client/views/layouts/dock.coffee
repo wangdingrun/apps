@@ -19,8 +19,9 @@ Template.dock.helpers
 	avatar: ->
 		return Meteor.user()?.avatarURL()
 
-	absoluteUrl: (url) ->
-		return Meteor.absoluteUrl(url)
+
+	urlPrefix: ->
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 		
 
 

@@ -22,30 +22,30 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "APPROVAL"}}</li>
             <li class="{{boxClass 'inbox'}}">
-                <a href="{{absoluteUrl}}workflow/inbox/{{spaceId}}"><i class="fa fa-inbox"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
+                <a href="{{urlPrefix}}/workflow/inbox/{{spaceId}}"><i class="fa fa-inbox"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
             </li>
             <li class="{{boxClass 'outbox'}}">
-                <a href="{{absoluteUrl}}workflow/outbox/{{spaceId}}"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
+                <a href="{{urlPrefix}}/workflow/outbox/{{spaceId}}"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
             </li>
             <li class="header">{{_ "MY APPLICANT"}}</li>
             <li class="{{boxClass 'draft'}}">
-                <a href="{{absoluteUrl}}workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
+                <a href="{{urlPrefix}}/workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
             </li>
             <li class="{{boxClass 'pending'}}">
-                <a href="{{absoluteUrl}}workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
+                <a href="{{urlPrefix}}/workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
             </li>
             <li class="{{boxClass 'completed'}}">
-                <a href="{{absoluteUrl}}workflow/completed/{{spaceId}}"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
+                <a href="{{urlPrefix}}/workflow/completed/{{spaceId}}"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
             </li>
             <li class="{{boxClass 'monitor'}}">
-                <a href="{{absoluteUrl}}workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+                <a href="{{urlPrefix}}/workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
             </li>
 
           </ul>
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "SETTINGS"}}</li>
             <li>
-                <a href="{{absoluteUrl}}admin"><i class="fa fa-gears"></i><span>{{_ "Admin"}}</span></a>
+                <a href="{{urlPrefix}}/admin"><i class="fa fa-gears"></i><span>{{_ "Admin"}}</span></a>
             </li>
             <li>
                 <a href="#">
@@ -54,13 +54,13 @@
                 </a>
                 <ul class="treeview-menu">
                   <li>
-                    <a href="{{absoluteUrl}}account/profile/"><i class="fa fa-support"></i><span>{{_ "Account Settings"}}</span></a>
+                    <a href="{{urlPrefix}}/account/profile/"><i class="fa fa-support"></i><span>{{_ "Account Settings"}}</span></a>
                   </li>
                   <li>
                       <a href="https://www.steedos.com/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
                   </li>
                   <li>
-                      <a href="{{absoluteUrl}}logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
+                      <a href="{{urlPrefix}}logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
                   </li>
                 </ul>
             </li>
