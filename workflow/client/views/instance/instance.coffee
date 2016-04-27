@@ -205,7 +205,10 @@ Template.instanceform.helpers
                     Session.set("next_user_multiple", false)
 
         Tracker.afterFlush ()->
-            $("#nextSteps").select2();
+            $("#nextSteps").select2({
+                placeholder: "请选择下一步骤",
+                allowClear: (next_step_options.length > 1)
+            });
         return next_step_options;
 
     next_user_options: ->
@@ -224,11 +227,6 @@ Template.instanceform.helpers
             
             nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
             next_user_ids = [];
-            if not next_user_multiple
-                next_user_options.push({
-                    id: "",
-                    text: "请选择"
-                })
             nextStepUsers.forEach (user)->
                 option = {
                     id: user.id,
@@ -241,15 +239,18 @@ Template.instanceform.helpers
                 next_user_options.push(option)
 
             # 会签节点不自动选人
-            if not next_user_multiple
+            #if not next_user_multiple
                 # 默认选中第一个
-                if next_user_options.length == 1
-                    next_user_options[0].selected = true
-                    next_user_ids.push(next_user_options[0].id)
+            if next_user_options.length == 1
+                next_user_options[0].selected = true
+                next_user_ids.push(next_user_options[0].id)
 
 
         Tracker.afterFlush ()->
-            $("#nextStepUsers").select2();
+            $("#nextStepUsers").select2({
+                placeholder: "请选择下一步处理人",
+                allowClear: (next_user_options.length > 1)
+            });
         return next_user_options;
 
     next_step_multiple: ->
@@ -261,8 +262,8 @@ Template.instanceform.helpers
 Template.instanceform.onRendered ->
     t = this;
 
-    t.$('#nextSteps').select2();
-    t.$('#nextStepUsers').select2();
+    # t.$('#nextSteps').select2();
+    # t.$('#nextStepUsers').select2();
     t.$("#ins_applicant").select2();
 
     #t.subscribe "instance_data", Session.get("instanceId"), ->
