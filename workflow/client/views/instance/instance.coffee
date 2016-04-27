@@ -204,11 +204,11 @@ Template.instanceform.helpers
                 else
                     Session.set("next_user_multiple", false)
 
-        Tracker.afterFlush ()->
-            $("#nextSteps").select2({
-                placeholder: "请选择下一步骤",
-                allowClear: (next_step_options.length > 1)
-            });
+        # Tracker.afterFlush ()->
+        #     $("#nextSteps").select2({
+        #         placeholder: "请选择下一步骤",
+        #         allowClear: (next_step_options.length > 1)
+        #     });
         return next_step_options;
 
     next_user_options: ->
@@ -246,11 +246,11 @@ Template.instanceform.helpers
                 next_user_ids.push(next_user_options[0].id)
 
 
-        Tracker.afterFlush ()->
-            $("#nextStepUsers").select2({
-                placeholder: "请选择下一步处理人",
-                allowClear: (next_user_options.length > 1)
-            });
+        # Tracker.afterFlush ()->
+        #     $("#nextStepUsers").select2({
+        #         placeholder: "请选择下一步处理人",
+        #         allowClear: (next_user_options.length > 1)
+        #     });
         return next_user_options;
 
     next_step_multiple: ->
@@ -262,8 +262,6 @@ Template.instanceform.helpers
 Template.instanceform.onRendered ->
     t = this;
 
-    # t.$('#nextSteps').select2();
-    # t.$('#nextStepUsers').select2();
     t.$("#ins_applicant").select2();
 
     #t.subscribe "instance_data", Session.get("instanceId"), ->
@@ -401,19 +399,18 @@ Template.instanceform.events
             return ;
         InstanceManager.checkSuggestion();
         
-    'change #nextSteps': (event) ->
-        console.log("change #nextSteps");
+    # 'change #nextSteps': (event) ->
+    #     console.log("change #nextSteps");
 
-        $('#nextSteps').select2();
-        if ApproveManager.isReadOnly()
-            return ;
-        #instance = WorkflowManager.getInstance();
-        nextStepId = ApproveManager.getNextStepsSelectValue();
-        Session.set("next_step_id", nextStepId)
-        # nextStep = WorkflowManager.getInstanceStep(nextStepId);
+    #     if ApproveManager.isReadOnly()
+    #         return ;
+    #     #instance = WorkflowManager.getInstance();
+    #     nextStepId = ApproveManager.getNextStepsSelectValue();
+    #     Session.set("next_step_id", nextStepId)
+    #     # nextStep = WorkflowManager.getInstanceStep(nextStepId);
 
-        # nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
-        # ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
+    #     # nextStepUsers = ApproveManager.getNextStepUsers(instance, nextStepId);
+    #     # ApproveManager.updateNextStepUsersOptions(nextStep, nextStepUsers);
 
     'change #nextStepUsers': (event) ->
         if ApproveManager.isReadOnly()
