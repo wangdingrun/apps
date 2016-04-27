@@ -1,7 +1,6 @@
 AutoForm.addInputType("selectuser",{
     template:"afSelectUser",
     valueOut:function(){
-        debugger;
         return this.data.values;
     },
     valueConverters:{
@@ -57,4 +56,13 @@ Template.afSelectUser.confirm = function(name){
         $("input[name='"+name+"']").val();
     }
 
+}
+
+Template.afSelectUser.rendered = function(){
+    debugger;
+    var value = this.data.value;
+    var name = this.data.name;
+    $("input[name='"+name+"']").val(value.name);
+    //this.data.value = value.name;
+    this.data.values = value.id;
 }
