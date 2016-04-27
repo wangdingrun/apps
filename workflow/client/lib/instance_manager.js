@@ -281,7 +281,7 @@ InstanceManager.getCurrentValues = function(){
 }
 
 InstanceManager.clone = function(obj){
-  return JSON.parse(JSON.stringify({obj}))
+  return JSON.parse(JSON.stringify(obj))
 }
 
 InstanceManager.getCurrentApprove = function(){
