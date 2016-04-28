@@ -59,10 +59,11 @@ Template.afSelectUser.confirm = function(name){
 }
 
 Template.afSelectUser.rendered = function(){
-    debugger;
     var value = this.data.value;
     var name = this.data.name;
     $("input[name='"+name+"']").val(value.name);
     //this.data.value = value.name;
+    $("input[name='"+name+"']").data.values = value.id;
+    debugger;
     this.data.values = value.id;
 }
