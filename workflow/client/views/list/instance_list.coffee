@@ -4,7 +4,8 @@ Template.instance_list.helpers
         return db.instances.find({}, {sort: {modified: -1}});
 
     boxName: ->
-        return Session.get("box");
+        if Session.get("box")
+            return t(Session.get("box"))
 
     spaceId: ->
         return Session.get("spaceId");
