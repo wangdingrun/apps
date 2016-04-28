@@ -32,6 +32,8 @@ UUflow_api.post_draft = function(flowId) {
 
     success: function(responseText, status) {
       Session.set("instanceId", responseText.ChangeSet.inserts.Instances[0].id);
+      FlowRouter.go("/workflow/draft/" + Session.get("spaceId")) + "/" + responseText.ChangeSet.inserts.Instances[0].id;
+
       $('#flow_list_modal').modal('hide');
       toastr.success("创建成功!");
     },
@@ -96,14 +98,7 @@ UUflow_api.delete_draft = function(instanceId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      box = Session.get("box");
-      if (box) {
-        if (box == "monitor") {
-          FlowRouter.go("/workflow/monitor/" + Session.get("spaceId"));
-        } else if (box == "draft") {
-          FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
-        }
-      }
+      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
       toastr.success("申请单已删除!");
     },
     error: function(xhr, msg, ex) {
@@ -132,7 +127,8 @@ UUflow_api.post_submit = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
+      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+
       toastr.success("提交成功!");
     },
     error: function(xhr, msg, ex) {
@@ -219,6 +215,8 @@ UUflow_api.post_terminate = function(instance) {
 
     success: function(responseText, status) {
       $('#force_end_modal').modal('hide');
+      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+
       toastr.success("取消申请成功!");
     },
     error: function(xhr, msg, ex) {
@@ -248,6 +246,7 @@ UUflow_api.put_reassign = function(instance) {
 
     success: function(responseText, status) {
       $('#reassign_modal').modal('hide');
+      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
       toastr.success("转签核成功!");
     },
     error: function(xhr, msg, ex) {
@@ -277,6 +276,8 @@ UUflow_api.put_relocate = function(instance) {
 
     success: function(responseText, status) {
       $('#relocate_modal').modal('hide');
+      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+
       toastr.success("重定位成功!");
     },
     error: function(xhr, msg, ex) {
