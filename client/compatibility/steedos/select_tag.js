@@ -94,11 +94,20 @@ $(function(){
 			return selectTag;
 
             function getValuesObject(){
-                if($options.showUser){
-                    return $options.data.users.filterProperty("id", SelectTag.values);
-                }else{
-                    return $options.data.orgs.filterProperty("id", SelectTag.values);
+
+                var vo = new Array();
+                var v = SelectTag.values;
+                if(v){
+
+                    for(var i = 0 ; i < v.length; i ++){
+                       if($options.showUser){
+                            vo.push($options.data.users.findPropertyByPK("id", v[i]));
+                        }else{
+                            vo.push($options.data.orgs.findPropertyByPK("id", v[i]));
+                        } 
+                    }
                 }
+                return vo;
             }
 
             function checked(tag){
@@ -123,12 +132,14 @@ $(function(){
 			* callback : 点击确认按钮的回调函数
 			*/
 			function show(options,callback){
-
+                debugger;
                 options.values = [];
 
                 if(options.defaultValues && options.defaultValues.length > 0){
                     selectTag.values = options.defaultValues;
                     options.defaultValues = [];
+                }else{
+                    selectTag.values = [];
                 }
 				//检查参数
 				checkOptions(options);
