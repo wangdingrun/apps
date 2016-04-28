@@ -16,7 +16,7 @@ Meteor.publish 'box_counts', (spaceId)->
     finished_count = 0;
     initializing = true;
 
-    handle = db.instances.find({space: spaceId, state: "pending", inbox_users: this.userId}).observeChanges
+    handle = db.instances.find({space: spaceId, state: "pending", inbox_users: this.userId, is_deleted: false}).observeChanges
         added: (id)->
             inbox_count++;
             if !initializing
@@ -25,7 +25,7 @@ Meteor.publish 'box_counts', (spaceId)->
             inbox_count--;
             self.changed("box_counts", spaceId, {inbox_count: inbox_count});
 
-    handle2 = db.instances.find({space: spaceId, state: "draft", submitter: this.userId}).observeChanges
+    handle2 = db.instances.find({space: spaceId, state: "draft", submitter: this.userId, is_deleted: false}).observeChanges
         added: (id)->
             draft_count++;
             if !initializing
@@ -34,7 +34,7 @@ Meteor.publish 'box_counts', (spaceId)->
             draft_count--;
             self.changed("box_counts", spaceId, {draft_count: draft_count});
 
-    handle3 = db.instances.find({space: spaceId, state: "pending", submitter: this.userId}).observeChanges
+    handle3 = db.instances.find({space: spaceId, state: "pending", submitter: this.userId, is_deleted: false}).observeChanges
         added: (id)->
             progress_count++;
             if !initializing
@@ -43,7 +43,7 @@ Meteor.publish 'box_counts', (spaceId)->
             progress_count--;
             self.changed("box_counts", spaceId, {progress_count: progress_count});
 
-    handle4 = db.instances.find({space: spaceId, state: "completed", submitter: this.userId, is_archived: false}).observeChanges
+    handle4 = db.instances.find({space: spaceId, state: "completed", submitter: this.userId, is_archived: false, is_deleted: false}).observeChanges
         added: (id)->
             finished_count++;
             if !initializing

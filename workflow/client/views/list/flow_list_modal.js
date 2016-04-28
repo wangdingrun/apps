@@ -96,13 +96,13 @@ Template.flow_list_modal.events({
   },
 
   'hidden.bs.modal #flow_list_modal': function(event) {
-    if (Session.get("flow_list_modal_type") == "create") {
-      var insId;
-      insId = Session.get("instanceId");
-      if (insId) {
-        return FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
-      }
-    }
+    // if (Session.get("flow_list_modal_type") == "create") {
+    //   var insId;
+    //   insId = Session.get("instanceId");
+    //   if (insId) {
+    //     return FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + insId);
+    //   }
+    // }
   }
 
 

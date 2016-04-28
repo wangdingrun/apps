@@ -22,6 +22,7 @@ workflowRoutes.route '/:box/:spaceId',
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
+		Session.set("instanceId", null); 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 		$(".instance-wrapper").hide();

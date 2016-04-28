@@ -37,6 +37,8 @@ Template.instance_list.helpers
         else
             query.state = "none"
 
+        query.is_deleted = false;
+        
         return query
 
     enabled_export: ->
