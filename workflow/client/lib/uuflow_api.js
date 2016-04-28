@@ -99,7 +99,7 @@ UUflow_api.delete_draft = function(instanceId) {
       box = Session.get("box");
       if (box) {
         if (box == "monitor") {
-          FlowRouter.go("/workflow/monitor/" + Session.get("spaceId") + "/" + Session.get("flowId"));
+          FlowRouter.go("/workflow/monitor/" + Session.get("spaceId"));
         } else if (box == "draft") {
           FlowRouter.go("/workflow/draft/" + Session.get("spaceId"));
         }
