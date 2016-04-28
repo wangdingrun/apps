@@ -10,19 +10,15 @@ Template.workflow_main.onCreated ->
 		if Steedos.isMobile()
 			$(".instance-wrapper").css("left", "0px")
 			windowWidth = $(window).width() - 1
-			$(".instance-list-wrapper").width(windowWidth)
-
+			$(".instance-list-wrapper").width(windowWidth);
+			$(".instance-wrapper").hide();
 		else
-			#$(".wrapper").height($(window).height())
-
-			#$(".instance-list-wrapper").height($(window).height()-50);
-			#$(".instance-wrapper").height($(window).height()-50);
 			$(".instance-wrapper").css("left", "351px")
 			$(".instance-list-wrapper").width(350)
 			$(".instance-list-wrapper").show();
 
+
 Template.workflow_main.onRendered ->
 
 	$(window).resize();
-
 
