@@ -272,6 +272,8 @@ Template.instanceform.onRendered ->
 
     $("#ins_applicant").select2().val(instance.applicant).trigger('change');
 
+    ApproveManager.error = {nextSteps:'',nextStepUsers:''};
+
     if !ApproveManager.isReadOnly()
         currentApprove = InstanceManager.getCurrentApprove();
         # current_next_steps = currentApprove.next_steps;
