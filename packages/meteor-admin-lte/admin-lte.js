@@ -111,6 +111,11 @@ Template.AdminLTE.events({
         parent_li.addClass('active');
       });
     }
+    else if ($(window).width() < (screenSizes.sm - 1)) {
+
+      $("body").removeClass('sidebar-open');
+      $("body").removeClass('sidebar-collapse')
+    }
     //if this isn't a link, prevent the page from being redirected
     if (checkElement.is('.treeview-menu')) {
       e.preventDefault();
