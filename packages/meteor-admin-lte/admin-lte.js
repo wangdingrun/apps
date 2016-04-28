@@ -66,6 +66,13 @@ Template.AdminLTE.events({
   },
 
   'click .content-wrapper': function (e, t) {
+
+    if (e.target && e.target.getAttribute)
+      if (e.target.getAttribute("data-toggle") == "offcanvas")
+        return
+    if (e.target && e.target.parentElement && e.target.parentElement.getAttribute)
+      if (e.target.parentElement.getAttribute("data-toggle") == "offcanvas")
+        return
     //Enable hide menu when clicking on the content-wrapper on small screens
     if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
       $("body").removeClass('sidebar-open');

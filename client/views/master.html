@@ -1,6 +1,6 @@
 <template name="masterLayout">
+  <div class="steedos">
         {{# AdminLTE skin="green" sidebarMini="true" }}
-        	{{> dock}}
         	{{> sidebar}}
 
 
@@ -10,11 +10,12 @@
             </div>
         {{/ AdminLTE}}
         
-  {{> flow_list_modal}}
-  {{> force_end_modal}}
-  {{> reassign_modal}}
-  {{> relocate_modal}}
-  {{> upload_progress_bar_modal}}
-  {{> ins_attach_version_modal}}
+    {{> flow_list_modal}}
+    {{> force_end_modal}}
+    {{> reassign_modal}}
+    {{> relocate_modal}}
+    {{> upload_progress_bar_modal}}
+    {{> ins_attach_version_modal}}
+  </div>
 </template>
 
