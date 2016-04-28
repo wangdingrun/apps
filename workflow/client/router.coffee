@@ -24,9 +24,9 @@ workflowRoutes.route '/:box/:spaceId',
 		Session.set("flowId", undefined);
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
+		$(".instance-wrapper").hide();
 		if (Steedos.isMobile())
 			$(".instance-list-wrapper").show();
-			$(".instance-wrapper").hide();
 
 workflowRoutes.route '/:box/:spaceId/:instanceId', 
 	action: (params, queryParams)->
@@ -43,9 +43,10 @@ workflowRoutes.route '/:box/:spaceId/:instanceId',
 			BlazeLayout.render 'masterLayout',
 				main: "workflow_main"
 
+			$(".instance-wrapper").show();
 			if (Steedos.isMobile())
 				$(".instance-list-wrapper").hide();
-				$(".instance-wrapper").show();
+
 
 	triggersExit: [
 		()->
