@@ -37,6 +37,18 @@ Template.afSelectUser.events({
     if(values && values.length > 0){
         options.defaultValues = values.split(",");
     }
+
+    var start_orgId = "";
+
+    if(data.orgs && data.orgs.length > 0){
+        var start_org = data.orgs.filterProperty("is_company",true);
+        start_org.forEach(function(so){
+            start_orgId = so.id;
+        });
+    }
+
+    options.orgId = start_orgId;
+
     SelectTag.show(options,"Template.afSelectUser.confirm('"+template.data.name+"')");
   }
 });
@@ -54,7 +66,7 @@ Template.afSelectUser.confirm = function(name){
         }
         
     }else{
-        $("input[name='"+name+"']").val();
+        $("input[name='"+name+"']").val('');
         $("input[name='"+name+"']")[0].dataset.values = '';
     }
 

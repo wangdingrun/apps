@@ -324,7 +324,7 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
       for(var i=0, l=items.length; i<l; i++) {
         out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" + options.fn(items[i]);
         if(items[i].users){
-        	out = out + "<span class='label label-default pull-right'>" + items[i].users.length + "</span>";
+        	out = out + "<span class='pull-right'>" + items[i].users.length + "<span class='glyphicon glyphicon-menu-right' style='font-size:13px;padding-left:5px;color:#ccc'></span></span>";
         }
 
         out = out + "</a></li>";
