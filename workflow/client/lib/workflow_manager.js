@@ -92,7 +92,6 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
     }
 
     Meteor.call("get_instance_data", instanceId, formCached, flowCached, function(error, result){
-
       delete WorkflowManager["instanceCache"]
       WorkflowManager.instanceCache = result.instance;
       if (result.form_version){
@@ -140,7 +139,10 @@ WorkflowManager.getInstanceFormVersion = function (){
           if (field.type == 'section'){
             form_fields.push(field);
             if (field.fields){
-              form_fields = form_fields.concat(field.fields);
+              field.fields.forEach(function(f){
+                f['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+                form_fields.push(f);
+              });
             }
           }else{
             form_fields.push(field);

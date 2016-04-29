@@ -51,7 +51,7 @@ var s_autoform = function (schema, field){
 
   options = field.options;
 
-  permission = field.permission;
+  permission = field.permission == 'editable' ? 'editable' : 'readonly';
 
   is_multiselect = field.is_multiselect;
 
@@ -124,6 +124,8 @@ var s_autoform = function (schema, field){
         }else{
           schema.type = String; // 如果是单选，不能设置multiple 参数
         }
+        
+        autoform.disabled = (permission == 'readonly');
         autoform.type = "selectuser";
         autoform.options = getSpaceUserSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
         break;
@@ -134,6 +136,9 @@ var s_autoform = function (schema, field){
         }else{
           schema.type = String; // 如果是单选，不能设置multiple 参数
         }
+        
+        autoform.disabled = (permission == 'readonly');
+
         autoform.type = "select2";
         autoform.options = getSpaceOrganizationSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
         break;

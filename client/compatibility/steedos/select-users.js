@@ -13,7 +13,6 @@ AutoForm.addInputType("selectuser",{
         "dateArray" : AutoForm.valueConverters.stringToDateArray
     },
     contextAdjust: function(context){
-
         if(typeof context.atts.maxlength ==='undefined' && typeof context.max === 'number'){
             context.atts.maxlength = context.max;
         }
@@ -29,7 +28,6 @@ AutoForm.addInputType("selectuser",{
 
 Template.afSelectUser.events({
   'click .selectUser': function (event, template) {
-    debugger
     var data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
@@ -44,7 +42,6 @@ Template.afSelectUser.events({
 });
 
 Template.afSelectUser.confirm = function(name){
-    debugger;
     var values = SelectTag.values;
     var valuesObject = SelectTag.valuesObject();
     if(valuesObject.length > 0){
@@ -64,7 +61,6 @@ Template.afSelectUser.confirm = function(name){
 }
 
 Template.afSelectUser.rendered = function(){
-    debugger;
     var value = this.data.value;
     var name = this.data.name;
     if(this.data.atts.multiple){

@@ -132,7 +132,6 @@ $(function(){
 			* callback : 点击确认按钮的回调函数
 			*/
 			function show(options,callback){
-                debugger;
                 options.values = [];
 
                 if(options.defaultValues && options.defaultValues.length > 0){
@@ -373,7 +372,7 @@ Handlebars.registerHelper('breadcrumb', function(data) {
   out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' 
   		+ out;
   if(data.id && data.id !=0 && data.id !=''){
-  	out = out + '<li class="active"><a href="javascript:SelectTag.reload(\''+data.id+'\')">'+data.name+'</a></li>'
+  	out = out + '<li class="active"><a href="javascript:void(0)">'+data.name+'</a></li>';//SelectTag.reload(\''+data.id+'\')
   }
   return new Handlebars.SafeString(out);
 });
