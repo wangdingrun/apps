@@ -8,7 +8,7 @@ workflowRoutes = FlowRouter.group
 				redirect('/sign-in');
 
 	]
- 
+
 
 
 workflowRoutes.route '/inbox', 
@@ -35,6 +35,7 @@ workflowRoutes.route '/:box/:spaceId/:instanceId',
 		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"
+		$(document.body).addClass "loading";
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
 
@@ -47,6 +48,8 @@ workflowRoutes.route '/:box/:spaceId/:instanceId',
 			$(".instance-wrapper").show();
 			if (Steedos.isMobile())
 				$(".instance-list-wrapper").hide();
+
+			$(document.body).removeClass "loading";
 
 
 	triggersExit: [
