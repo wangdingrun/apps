@@ -106,7 +106,7 @@ Meteor.methods
     fs = Npm.require('fs')
     mime = Npm.require('mime')
 
-    root_path = "/mnt/fakes3"
+    root_path = "/mnt/fakes3/10"
     console.log(root_path)
     collection = cfs.instances
 
