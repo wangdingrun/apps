@@ -1,6 +1,6 @@
 #!/bin/bash
-meteor build --server http://192.168.0.10:3000 --directory .build
-cd .build/bundle/programs/server
+meteor build --server https://cn.steedos.com/workflow --directory /srv/workflow
+cd /srv/workflow/bundle/programs/server
 npm install
-#cd ../../../
-#pm2 startOrRestart pm2.json
+cd ../../../
+pm2 restart workflow.0
