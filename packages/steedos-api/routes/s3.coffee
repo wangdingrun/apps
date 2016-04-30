@@ -61,6 +61,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
             version_id: fileObj._id
             size: fileObj.size 
           };
+          res.setHeader "x-amz-version-id" fileObj._id
           res.end(JSON.stringify(resp));
           return
     else
@@ -94,7 +95,7 @@ JsonRoutes.add "get", "/s3/",  (req, res, next) ->
   id = req.query.version_id;
 
   res.statusCode = 302;
-  res.setHeader "Location", "/api/files/instances/" + id + "?download=1"
+  res.setHeader "Location", "/api/files/instances/" + id; # + "?download=1"
   res.end();
 
 
