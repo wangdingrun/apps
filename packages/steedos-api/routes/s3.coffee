@@ -150,7 +150,7 @@ Meteor.methods
     
     b = new Date()
 
-    i = 0
+    i = min
     db.instances.find({"attachments.current": {$ne: null}}, {skip: min, limit: max-min}).forEach (ins) ->
       i = i + 1
       console.log(i)
