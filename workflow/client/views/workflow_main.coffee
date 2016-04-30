@@ -11,7 +11,8 @@ Template.workflow_main.onCreated ->
 			$(".instance-wrapper").css("left", "0px")
 			windowWidth = $(window).width() - 1
 			$(".instance-list-wrapper").width(windowWidth);
-			$(".instance-wrapper").hide();
+			# if (!Session.get("instanceId"))
+			# 	$(".instance-wrapper").hide();
 		else
 			$(".instance-wrapper").css("left", "351px")
 			$(".instance-list-wrapper").width(350)
