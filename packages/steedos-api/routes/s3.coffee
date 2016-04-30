@@ -121,7 +121,7 @@ Meteor.methods
       old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
 
       readFile = (full_path) ->
-        fs.readFile full_path, Meteor.bindEnvironment(((err, data) ->
+        fs.readFile full_path, (err, data) ->
           if err
             console.log(err)
             return
@@ -136,28 +136,17 @@ Meteor.methods
                 console.log(err)
               else
                 console.log(fileObj._id)
-                # fileObj.on("stored", () ->
-                #   console.log("onStored")
-                # )
-          ), ->
-            console.log("Meteor.bindEnvironment failed")
-          )
+          
 
-      fs.stat(new_path, Meteor.bindEnvironment(((err, stat) ->
+      fs.stat new_path,  (err, stat) ->
           if stat && stat.isFile()
             readFile new_path
-          ), ->
-            console.log("Meteor.bindEnvironment failed")
-          )
-      )
+          
 
-      fs.stat(old_path, Meteor.bindEnvironment(((err, stat) ->
+      fs.stat old_path, (err, stat) ->
           if stat && stat.isFile()
             readFile old_path
-          ), ->
-            console.log("Meteor.bindEnvironment failed")
-          )
-      )
+          
 
     count = db.instances.find({"attachments.current": {$ne: null}}).count();
     console.log("all instances: " + count)
@@ -165,13 +154,13 @@ Meteor.methods
     b = new Date()
 
     i = 0
-    db.instances.find({"attachments.current": {$ne: null}}).forEach (ins) ->
+    db.instances.find({"attachments.current": {$ne: null}}, {skip: min, limit: max-min}).forEach (ins) ->
+      i = i + 1
       if i<min 
         return;
       if i>max
         return;
       console.log(i)
-      i = i + 1
       attachs = ins.attachments
       space = ins.space
       ins_id = ins._id
@@ -182,8 +171,8 @@ Meteor.methods
             deal_with_version root_path, space, ins_id, his, att.filename
 
     console.log(new Date() - b)
-    res.statusCode = 204
-    res.end()
+
+    return "ok"
 
 
 
