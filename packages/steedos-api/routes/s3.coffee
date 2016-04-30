@@ -153,10 +153,6 @@ Meteor.methods
     i = 0
     db.instances.find({"attachments.current": {$ne: null}}, {skip: min, limit: max-min}).forEach (ins) ->
       i = i + 1
-      if i<min 
-        return;
-      if i>max
-        return;
       console.log(i)
       attachs = ins.attachments
       space = ins.space
