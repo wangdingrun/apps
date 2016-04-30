@@ -121,11 +121,9 @@ Meteor.methods
       old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
 
       readFile = (full_path) ->
-        fs.readFile full_path, (err, data) ->
-          if err
-            console.log(err)
-            return
-
+        data = fs.readFileSync full_path
+         
+        if data
           newFile = new FS.File();
           newFile._id = _rev;
           newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
@@ -137,15 +135,17 @@ Meteor.methods
               else
                 console.log(fileObj._id)
           
-
-      fs.stat new_path,  (err, stat) ->
-          if stat && stat.isFile()
-            readFile new_path
-          
-
-      fs.stat old_path, (err, stat) ->
-          if stat && stat.isFile()
+      try 
+        n = fs.statSync new_path
+        if n && n.isFile()
+          readFile new_path
+      catch error
+        try 
+          old = fs.statSync old_path
+          if old && old.isFile()
             readFile old_path
+        catch error
+          console.error("file not found: " + old_path)
           
 
     count = db.instances.find({"attachments.current": {$ne: null}}).count();
