@@ -127,13 +127,10 @@ Meteor.methods
           newFile = new FS.File();
           newFile._id = _rev;
           newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
-          newFile.attachData data, {type: mime_type}, (err) ->
-            newFile.name(filename)
-            collection.insert newFile, (err, fileObj) ->
-              if err
-                console.log(err)
-              else
-                console.log(fileObj._id)
+          newFile.attachData data, {type: mime_type}
+          newFile.name(filename)
+          fileObj = collection.insert newFile
+          console.log(fileObj._id)
           
       try 
         n = fs.statSync new_path
