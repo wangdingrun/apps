@@ -66,6 +66,8 @@ faisalman:ua-parser-js
 alanning:roles
 sach:flow-db-admin
 
+autoupdate
+
 steedos:ui
 steedos:connect-bqq
 steedos:lib
