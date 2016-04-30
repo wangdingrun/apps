@@ -98,93 +98,92 @@ JsonRoutes.add "get", "/s3/",  (req, res, next) ->
   res.end();
 
 
-JsonRoutes.add "post", "/s3/upgrade",  (req, res, next) ->
-  console.log("/s3/upgrade")
+Meteor.methods 
 
-  fs = Npm.require('fs')
-  mime = Npm.require('mime')
+  s3_upgrade: (min, max) ->
+    console.log("/s3/upgrade")
 
-  root_path = "/mnt/fakes3"
-  console.log(root_path)
-  collection = cfs.instances
+    fs = Npm.require('fs')
+    mime = Npm.require('mime')
 
-  # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
-  deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
-    _rev = version._rev
-    created_by = version.created_by
-    approve = version.approve
-    filename = version.filename || attach_filename;
-    mime_type = mime.lookup(filename)
-    new_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename + "_" + _rev
-    old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
+    root_path = "/mnt/fakes3"
+    console.log(root_path)
+    collection = cfs.instances
 
-    readFile = (full_path) ->
-      fs.readFile full_path, Meteor.bindEnvironment(((err, data) ->
-        if err
-          console.log(err)
-          return
+    # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
+    deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
+      _rev = version._rev
+      created_by = version.created_by
+      approve = version.approve
+      filename = version.filename || attach_filename;
+      mime_type = mime.lookup(filename)
+      new_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename + "_" + _rev
+      old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
 
-        newFile = new FS.File();
-        newFile._id = _rev;
-        newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
-        newFile.attachData data, {type: mime_type}, (err) ->
-          newFile.name(filename)
-          collection.insert newFile, (err, fileObj) ->
-            if err
-              console.log(err)
-            else
-              console.log(fileObj._id)
-              # fileObj.on("stored", () ->
-              #   console.log("onStored")
-              # )
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
+      readFile = (full_path) ->
+        fs.readFile full_path, Meteor.bindEnvironment(((err, data) ->
+          if err
+            console.log(err)
+            return
 
-    fs.stat(new_path, Meteor.bindEnvironment(((err, stat) ->
-        if stat && stat.isFile()
-          readFile new_path
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
-    )
+          newFile = new FS.File();
+          newFile._id = _rev;
+          newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
+          newFile.attachData data, {type: mime_type}, (err) ->
+            newFile.name(filename)
+            collection.insert newFile, (err, fileObj) ->
+              if err
+                console.log(err)
+              else
+                console.log(fileObj._id)
+                # fileObj.on("stored", () ->
+                #   console.log("onStored")
+                # )
+          ), ->
+            console.log("Meteor.bindEnvironment failed")
+          )
 
-    fs.stat(old_path, Meteor.bindEnvironment(((err, stat) ->
-        if stat && stat.isFile()
-          readFile old_path
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
-    )
+      fs.stat(new_path, Meteor.bindEnvironment(((err, stat) ->
+          if stat && stat.isFile()
+            readFile new_path
+          ), ->
+            console.log("Meteor.bindEnvironment failed")
+          )
+      )
 
-  console.log(db.instances.find({"attachments.current": {$ne: null}}).count())
-  b = new Date()
+      fs.stat(old_path, Meteor.bindEnvironment(((err, stat) ->
+          if stat && stat.isFile()
+            readFile old_path
+          ), ->
+            console.log("Meteor.bindEnvironment failed")
+          )
+      )
 
-  db.instances.find({"attachments.current": {$ne: null}}).forEach (ins) ->
-    attachs = ins.attachments
-    space = ins.space
-    ins_id = ins._id
-    attachs.forEach (att) ->
-      deal_with_version root_path, space, ins_id, att.current, att.filename
-      if att.historys
-        att.historys.forEach (his) ->
-          deal_with_version root_path, space, ins_id, his, att.filename
+    count = db.instances.find({"attachments.current": {$ne: null}}).count();
+    console.log("all instances: " + count)
+    
+    b = new Date()
 
-  console.log(new Date() - b)
-  res.statusCode = 204
-  res.end()
+    i = 0
+    db.instances.find({"attachments.current": {$ne: null}}).forEach (ins) ->
+      if i<min 
+        return;
+      if i>max
+        return;
+      console.log(i)
+      i = i + 1
+      attachs = ins.attachments
+      space = ins.space
+      ins_id = ins._id
+      attachs.forEach (att) ->
+        deal_with_version root_path, space, ins_id, att.current, att.filename
+        if att.historys
+          att.historys.forEach (his) ->
+            deal_with_version root_path, space, ins_id, his, att.filename
 
-
-
-JsonRoutes.add "post", "/s3/remove",  (req, res, next) ->
-  cfs.instances.remove({"metadata.space":"519f004e8e296a1c5f00001d"})
-  res.statusCode = 204
-  res.end()
-
-
-
-
-
+    console.log(new Date() - b)
+    res.statusCode = 204
+    res.end()
 
 
 
