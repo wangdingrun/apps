@@ -104,7 +104,7 @@ JsonRoutes.add "post", "/s3/upgrade",  (req, res, next) ->
   fs = Npm.require('fs')
   mime = Npm.require('mime')
 
-  root_path = Meteor.settings.fakes3_root
+  root_path = "/mnt/fakes3"
   console.log(root_path)
   collection = cfs.instances
 
