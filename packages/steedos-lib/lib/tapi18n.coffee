@@ -17,7 +17,7 @@
 
 datatables_i18n = 
 	"en":
-		"sEmptyTable":     "No data available in table",
+		"sEmptyTable":     "",
 		"sInfo":           "Showing _START_ to _END_ of _TOTAL_ entries",
 		"sInfoEmpty":      "Showing 0 to 0 of 0 entries",
 		"sInfoFiltered":   "(filtered from _MAX_ total entries)",
@@ -49,7 +49,7 @@ datatables_i18n =
 		"sInfoPostFix":  "",
 		"sSearch":       "搜索:",
 		"sUrl":          "",
-		"sEmptyTable":     "表中数据为空",
+		"sEmptyTable":     "",
 		"sLoadingRecords": "载入中...",
 		"sInfoThousands":  ",",
 		"oPaginate": 
