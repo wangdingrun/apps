@@ -451,7 +451,7 @@ InstanceManager.relocateIns = function (step_id, user_ids, reason) {
 
 // 归档
 InstanceManager.archiveIns = function (insId) {
-  var instance = db.instances.findOne(insId);
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     if (instance.is_archived==true)
       return;
@@ -462,7 +462,7 @@ InstanceManager.archiveIns = function (insId) {
 // 添加附件
 InstanceManager.addAttach = function (fileObj, isAddVersion) {
   console.log("InstanceManager.addAttach");
-  var instance = db.instances.findOne(fileObj.metadata.instance);
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     var state = instance.state;
 

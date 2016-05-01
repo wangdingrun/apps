@@ -35,7 +35,7 @@ Template.instance_attachment.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        return Meteor.absoluteUrl() + "api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
  
 })
