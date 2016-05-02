@@ -354,6 +354,7 @@ InstanceManager.saveIns = function() {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       instance.applicant = $("#ins_applicant").select2().val();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        WorkflowManager.instanceModified.set(false)
         if (result == true)
           toastr.success("暂存成功!");
         else 
@@ -363,6 +364,7 @@ InstanceManager.saveIns = function() {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        WorkflowManager.instanceModified.set(false)
         if (result == true)
           toastr.success("暂存成功!");
         else 
@@ -521,11 +523,13 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         attachs = [attach];
       }
     }
+    WorkflowManager.instanceModified.set(true);
 
     if (state == "draft") {
       instance.attachments = attachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
           toastr.success("附件添加成功!");
@@ -538,6 +542,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
       myApprove.attachments = attachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
           toastr.success("附件添加成功!");
@@ -569,11 +574,13 @@ InstanceManager.removeAttach = function () {
           }
         }
     })
+    WorkflowManager.instanceModified.set(true);
 
     if (state == "draft") {
       instance.attachments = newAttachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
           toastr.success("附件删除成功!");
@@ -586,6 +593,7 @@ InstanceManager.removeAttach = function () {
       myApprove.attachments = newAttachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
           toastr.success("附件删除成功!");

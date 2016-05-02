@@ -1,7 +1,8 @@
 WorkflowManager = {
   formVersionsCache: {},
   flowVersionsCache: {},
-  instanceCache: null
+  instanceCache: null,
+  instanceModified: new ReactiveVar(false)
 };
 
 /*-------------------data source------------------*/
@@ -95,6 +96,7 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
 
       delete WorkflowManager["instanceCache"]
       WorkflowManager.instanceCache = result.instance;
+      WorkflowManager.instanceModified.set(false);
       if (result.form_version){
         console.log("get form version " + result.form_version._id)
         WorkflowManager.formVersionsCache[result.form_version._id] = result.form_version

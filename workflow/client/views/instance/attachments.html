@@ -27,25 +27,6 @@
     
 </template>
 
-<template name="upload_progress_bar_modal">
-    <div class="modal fade" id="upload_progress_bar" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" data-backdrop="static">
-        <table align="center" width="33%" height="100%">
-            <tbody>
-                <tr>
-                    <td>
-                        {{#if isUploading}}
-                            {{#with FS.GetFile "instances" isUploading}}
-                                {{#unless this.isUploaded}}
-                                    {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
-                                {{/unless}}
-                            {{/with}}
-                        {{/if}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</template>
 
 <template name="instance_attachment" >
     <tr>

@@ -213,7 +213,6 @@ UUflow_api.post_terminate = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      $('#force_end_modal').modal('hide');
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
       toastr.success("取消申请成功!");

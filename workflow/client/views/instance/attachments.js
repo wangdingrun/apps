@@ -1,6 +1,8 @@
 
 Template.instance_attachments.helpers({
-
+    attachments: function(){
+        return this.attachments;
+    }
 })
 
 
@@ -46,12 +48,6 @@ Template.instance_attachment.events({
     }
 })
 
-Template.upload_progress_bar_modal.helpers({
-    isUploading: function () {
-        return Session.get("progress_file_id");
-    }
-})
-
 Template._file_DeleteButton.events({
 
     'click div': function(event, template) {
@@ -70,6 +66,8 @@ Template._file_DeleteButton.events({
 Template.ins_attach_version_modal.helpers({
 
     attach: function () {
+        WorkflowManager.instanceModified.get();
+
         var ins_id, ins_attach_id;
         ins_id = Session.get("instanceId");
         ins_attach_id = Session.get("attach_id");
