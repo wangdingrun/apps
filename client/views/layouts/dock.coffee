@@ -36,9 +36,3 @@ Template.dock.events
 
 	"click .ui.menu a.item": ->
 		$(this).addClass('active').siblings().removeClass('active')
-
-	"click #switchSpace": ->
-		self = this
-		Meteor.call "setSpaceId", self._id, ->
-			Session.set("spaceId", self._id)
-			FlowRouter.go("/workflow/inbox/" + self._id)
