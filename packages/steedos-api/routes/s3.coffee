@@ -154,7 +154,7 @@ Meteor.methods
     i = min
     db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}, skip: min, limit: max-min}).forEach (ins) ->
       i = i + 1
-      console.log(i)
+      console.log(i + ":" + ins.name)
       attachs = ins.attachments
       space = ins.space
       ins_id = ins._id
