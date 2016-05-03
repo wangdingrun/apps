@@ -28,22 +28,27 @@
             <li class="{{boxClass 'outbox'}}">
                 <a href="{{urlPrefix}}/workflow/outbox/{{spaceId}}"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
             </li>
-            <li class="header">{{_ "MY APPLICANT"}}</li>
-            <li class="{{boxClass 'draft'}}">
-                <a href="{{urlPrefix}}/workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
-            </li>
-            <li class="{{boxClass 'pending'}}">
-                <a href="{{urlPrefix}}/workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
-            </li>
-            <li class="{{boxClass 'completed'}}">
-                <a href="{{urlPrefix}}/workflow/completed/{{spaceId}}"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
-            </li>
-            <li class="{{boxClass 'monitor'}}">
-                <a href="{{urlPrefix}}/workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+            <li>
+                <a href="#">
+                  <i class="fa fa-user"></i> <span>{{_ "MY APPLICANT"}}</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                      <a href="{{urlPrefix}}/workflow/draft/{{spaceId}}"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
+                  </li>
+                  <li class="{{boxClass 'pending'}}">
+                      <a href="{{urlPrefix}}/workflow/pending/{{spaceId}}"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
+                  </li>
+                  <li class="{{boxClass 'completed'}}">
+                      <a href="{{urlPrefix}}/workflow/completed/{{spaceId}}"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
+                  </li>
+                  <li class="{{boxClass 'monitor'}}">
+                      <a href="{{urlPrefix}}/workflow/monitor/{{spaceId}}"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+                  </li>
+                </ul>
             </li>
 
-          </ul>
-          <ul class="nav sidebar-menu">
             <li class="header">{{_ "SETTINGS"}}</li>
             <li>
                 <a href="{{urlPrefix}}/admin"><i class="fa fa-gears"></i><span>{{_ "Admin"}}</span></a>

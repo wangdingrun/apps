@@ -1,9 +1,9 @@
 #!/bin/bash
-meteor build --server https://cn.steedos.com/workflow --directory /srv/workflow
+sudo meteor build --server https://cn.steedos.com/workflow --directory /srv/workflow
 cd /srv/workflow/bundle/programs/server
-npm install
+sudo npm install
 cd npm/npm_bcrypt/
-npm install bcrypt
+sudo npm install bcrypt
 
 cd /srv/workflow/
 pm2 restart workflow.0
