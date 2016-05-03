@@ -38,8 +38,11 @@ Package.onUse(function(api) {
 
 	api.use(['webapp'], 'server');
 
-	api.addFiles('accounts_client.coffee', 'client');
+	api.addFiles('lib/URI.js');
 
+	api.addFiles('core.coffee');
+
+	api.addFiles('accounts_client.coffee', 'client');
 	api.addFiles('routes/setup.coffee', 'server');
 	api.addFiles('routes/s3.coffee', 'server');
 

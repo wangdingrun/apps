@@ -4,20 +4,19 @@
 SteedosAPI.setupValidate = ()->
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
-	data = {}
+	requestData = {}
 	if userId and loginToken
-		data = 
-				"X-User-Id": userId
-				"X-Auth-Token": loginToken
+		requestData = 
+			"X-User-Id": userId
+			"X-Auth-Token": loginToken
 	$.ajax
 		type: "POST",
 		url: Meteor.absoluteUrl "se/ws/1/validate",
 		contentType: "application/json"
 		dataType: 'json',
-		data:
-			JSON.stringify data
+		data: JSON.stringify(requestData)
 		xhrFields: 
-		   withCredentials: true
+			withCredentials: true
 		crossDomain: true,
 	.done ( data ) ->
 		# login by cookie
