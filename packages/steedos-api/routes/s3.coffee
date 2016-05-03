@@ -71,23 +71,21 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
    
 JsonRoutes.add "delete", "/s3/",  (req, res, next) ->
 
-  JsonRoutes.parseFiles req, res ()->
+  collection = cfs.instances
 
-    collection = cfs.instances
+  id = req.query.version_id;
+  if id
+    file = collection.findOne({ _id: id })
+    if file
+      file.remove()
+      resp = {
+        status: "OK"
+      }
+      res.end(JSON.stringify(resp));
+      return
 
-    id = req.query.version_id;
-    if id
-      file = collection.findOne({ _id: id })
-      if file
-        file.remove()
-        resp = {
-          status: "OK"
-        }
-        res.end(JSON.stringify(resp));
-        return
-
-    res.statusCode = 404;
-    res.end();
+  res.statusCode = 404;
+  res.end();
 
    
 JsonRoutes.add "get", "/s3/",  (req, res, next) ->
@@ -95,7 +93,7 @@ JsonRoutes.add "get", "/s3/",  (req, res, next) ->
   id = req.query.version_id;
 
   res.statusCode = 302;
-  res.setHeader "Location", "/api/files/instances/" + id + "?download=1"
+  res.setHeader "Location", Meteor.absoluteUrl("api/files/instances/") + id + "?download=1"
   res.end();
 
 
