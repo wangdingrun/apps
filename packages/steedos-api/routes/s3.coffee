@@ -112,6 +112,8 @@ Meteor.methods
     # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
     deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
       _rev = version._rev
+      if (collection.findOne(_rev))
+        return
       created_by = version.created_by
       approve = version.approve
       filename = version.filename || attach_filename;
@@ -144,13 +146,13 @@ Meteor.methods
           console.error("file not found: " + old_path)
           
 
-    count = db.instances.find({"attachments.current": {$ne: null}}).count();
+    count = db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}}).count();
     console.log("all instances: " + count)
     
     b = new Date()
 
     i = min
-    db.instances.find({"attachments.current": {$ne: null}}, {skip: min, limit: max-min}).forEach (ins) ->
+    db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}, skip: min, limit: max-min}).forEach (ins) ->
       i = i + 1
       console.log(i)
       attachs = ins.attachments
