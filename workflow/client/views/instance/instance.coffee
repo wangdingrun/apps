@@ -332,6 +332,7 @@ Template.instanceform.events
         InstanceManager.checkFormValue();
         if($(".has-error").length == 0)
             InstanceManager.submitIns();
+
     'click #instance_force_end': (event)->
         swal {
             title: "取消申请", 
@@ -340,12 +341,16 @@ Template.instanceform.events
             showCancelButton: true,
             closeOnConfirm: false
         }, (reason) ->
+            # 用户选择取消
+            if (reason == false) 
+                return false;
 
             if (reason == "") 
                 swal.showInputError("请输入取消申请的理由");
                 return false;
             
             InstanceManager.terminateIns(reason);
+            sweetAlert.close();
         
 
     # 子表删除行时，执行主表公式计算
