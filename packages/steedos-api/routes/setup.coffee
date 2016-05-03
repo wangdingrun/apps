@@ -24,14 +24,15 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 			"services.resume.loginTokens.hashedToken": hashedToken
 		if user
 			# set cookie to response
+			# maxAge 3 month
 			cookies.set "X-User-Id", userId, 
 				domain: Steedos.uri.domain(),
-				maxAge: 90*60*60*24*10000,
+				maxAge: 90*60*60*24*1000,
 				httpOnly: false
 
 			cookies.set "X-Auth-Token", authToken, 
 				domain: Steedos.uri.domain(),
-				maxAge: 90*60*60*24*10000,
+				maxAge: 90*60*60*24*1000,
 				httpOnly: false
 
 			JsonRoutes.sendResult res, 
@@ -101,13 +102,14 @@ JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
 	Accounts._insertHashedLoginToken user._id, {hashedToken}
 
 	# set cookie to response
+	# maxAge 3 month
 	cookies.set "X-User-Id", user._id, 
 		domain: Steedos.uri.domain(),
-		maxAge: 90*60*60*24*10000,
+		maxAge: 90*60*60*24*1000,
 		httpOnly: false
 	cookies.set "X-Auth-Token", authToken.token, 
 		domain: Steedos.uri.domain(),
-		maxAge: 90*60*60*24*10000,
+		maxAge: 90*60*60*24*1000,
 		httpOnly: false
 
 	JsonRoutes.sendResult res, 
