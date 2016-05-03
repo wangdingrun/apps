@@ -338,6 +338,8 @@ Template.instanceform.events
             title: "取消申请", 
             text: "请输入取消申请的理由", 
             type: "input",
+            confirmButtonText: t('OK'),
+            cancelButtonText: t('Cancel'),
             showCancelButton: true,
             closeOnConfirm: false
         }, (reason) ->

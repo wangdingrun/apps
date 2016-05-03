@@ -74,6 +74,9 @@
 	"APPLICATIONS": "APPLICATIONS",
 	"Workflow": "Workflow",
 
-	"bqq": "Business QQ"
+	"bqq": "Business QQ",
+
+	"OK": "OK",
+	"Cancel": "Cancel"
 
 }
