@@ -112,7 +112,7 @@ Meteor.methods
     # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
     deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
       _rev = version._rev
-      if (collection.findOne(_rev))
+      if (collection.find({"_id": _rev}).count() >0)
         return
       created_by = version.created_by
       approve = version.approve
