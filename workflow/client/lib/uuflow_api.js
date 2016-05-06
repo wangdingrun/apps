@@ -18,8 +18,7 @@ UUflow_api.post_draft = function(flowId) {
     ]
   };
   data = JSON.stringify(data);
-
-  console.log(data);
+  $(document.body).addClass("loading");
 
   $.ajax({
     url: url,
@@ -31,12 +30,14 @@ UUflow_api.post_draft = function(flowId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + responseText.ChangeSet.inserts.Instances[0].id);
 
       $('#flow_list_modal').modal('hide');
       toastr.success("创建成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -51,7 +52,6 @@ UUflow_api.put_draft = function(instance) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/drafts?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
-  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -86,7 +86,6 @@ UUflow_api.delete_draft = function(instanceId) {
     ]
   };
   data = JSON.stringify(data);
-  console.log(data);
   $.ajax({
     url: url,
     type: "POST",
@@ -115,7 +114,7 @@ UUflow_api.post_submit = function(instance) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/submit?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
-  console.log(data);
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -126,11 +125,13 @@ UUflow_api.post_submit = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
       toastr.success("提交成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -145,7 +146,7 @@ UUflow_api.put_approvals = function(approve) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/approvals?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
-  console.log(data);
+
   $.ajax({
     url: url,
     type: "POST",
@@ -173,7 +174,7 @@ UUflow_api.post_engine = function(approve) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/engine?" + $.param(uobj);
   var data = {"Approvals":[approve]};
   data = JSON.stringify(data);
-  console.log(data);
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -184,10 +185,12 @@ UUflow_api.post_engine = function(approve) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
       toastr.success("提交成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -202,7 +205,8 @@ UUflow_api.post_terminate = function(instance) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/terminate?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
-  console.log(data);
+
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -213,11 +217,13 @@ UUflow_api.post_terminate = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
       toastr.success("取消申请成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -232,7 +238,8 @@ UUflow_api.put_reassign = function(instance) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/reassign?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
-  console.log(data);
+
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -243,11 +250,13 @@ UUflow_api.put_reassign = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       $('#reassign_modal').modal('hide');
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
       toastr.success("转签核成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -262,7 +271,8 @@ UUflow_api.put_relocate = function(instance) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/relocate?" + $.param(uobj);
   var data = {"Instances":[instance]};
   data = JSON.stringify(data);
-  console.log(data);
+  
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -273,12 +283,14 @@ UUflow_api.put_relocate = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       $('#relocate_modal').modal('hide');
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
       toastr.success("重定位成功!");
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
@@ -293,7 +305,7 @@ UUflow_api.post_archive = function(insId) {
   var url = Meteor.settings.public.webservices.uuflow.url + "/uf/archive?" + $.param(uobj);
   var data = {"Instances":[{id: insId}]};
   data = JSON.stringify(data);
-  console.log(data);
+  $(document.body).addClass("loading");
   $.ajax({
     url: url,
     type: "POST",
@@ -304,9 +316,11 @@ UUflow_api.post_archive = function(insId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      $(document.body).removeClass("loading");
       
     },
     error: function(xhr, msg, ex) {
+      $(document.body).removeClass("loading");
       toastr.error(msg);
     }
   })
