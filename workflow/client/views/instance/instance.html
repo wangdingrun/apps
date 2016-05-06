@@ -18,9 +18,9 @@
 
     <div class="instance">
         {{#if show_suggestion}}
-
-            <div class="box">
+            <div class="instance_suggestion box">
                 <div class="box-body">
+
                     {{#if includes currentStep.step_type 'sign,counterSign'}}
                     <div class="row">
                         <div class="col-sm-12">
@@ -68,12 +68,12 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         {{/if}}
 
-        <div class="box">
-            <div class="box-header"> 
-               <h3 class="box-title">{{instance.name}}</h3>
+        <div class="instance-form box">
+            <div class="box-header  with-border">
+                <h3 class="box-title">{{instance.name}}</h3>
                 <span class="help-block"></span>
 
                 <div class="applicant-wrapper">
@@ -112,6 +112,7 @@
                     </div>
                 {{/autoForm}}
             </div>
+
         </div>
 
         {{> Template.dynamic template="instance_attachments" data=attachments}}
