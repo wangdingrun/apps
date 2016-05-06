@@ -197,7 +197,7 @@ var get_tds_html = function(row_index, tableCode, rowobj){
 
     for(var key in rowobj){
         var td_value = autoform_table_Helpers.getTDValue(tableCode, key, rowobj);
-        tds_html = tds_html + "<td nowrap='nowrap'>" + (td_value ? td_value : '') + "</td>";
+        tds_html = tds_html + "<td>" + (td_value ? td_value : '') + "</td>";
     };
     /*
     tds_html = tds_html + 

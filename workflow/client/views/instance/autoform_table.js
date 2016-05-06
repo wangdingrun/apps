@@ -72,7 +72,7 @@ Template.autoform_table.helpers({
             fValue = obj[key];
             break;
         }
-        result.push({code:key, value:fValue});
+        result.push({code:key, value:fValue, type: ROWOBJ[key].type});
       }
       return result;
   }
