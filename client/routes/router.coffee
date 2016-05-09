@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go("/sign-in");
 		else
-			FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
+			FlowRouter.go("/home/");
 
 
 

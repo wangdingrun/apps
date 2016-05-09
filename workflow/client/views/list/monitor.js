@@ -38,11 +38,6 @@ Template.monitor.helpers({
 
 Template.monitor.events({
 
-  "click [name='selectFlow']": function (event, template) {
-    if (Session.get("box") == "monitor") {
-      FlowRouter.go("/workflow/monitor/" + Session.get("spaceId") + "/" + event.currentTarget.id);
-    }
-  },
 
   "click [name='selectCategory']": function (event, template) {
     var d = $(event.currentTarget), c = "normal",

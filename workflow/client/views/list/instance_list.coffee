@@ -68,23 +68,15 @@ Template.instance_list.events
             return; 
         box = Session.get("box");
         spaceId = Session.get("spaceId");
-        # if box && spaceId
-        #     if box == "monitor"
-        #         flowId = Session.get("flowId");
-        #         if flowId
-        #             FlowRouter.go("/workflow/monitor/" + spaceId + "/" + flowId + "/" + rowData._id)
-        #     else
-        #         FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id);
-        #         if box == "completed"
-        #             InstanceManager.archiveIns(rowData._id);
+
         if row.hasClass('selected')  
             row.removeClass('selected');
-            FlowRouter.go("/workflow/" + box + "/" + spaceId);
+            FlowRouter.go("/space/" + spaceId + "/" + box);
         
         else 
             dataTable.$('tr.selected').removeClass('selected');
             row.addClass('selected');
-            FlowRouter.go("/workflow/" + box + "/" + spaceId + "/" + rowData._id);
+            FlowRouter.go("/space/" + spaceId + "/" + box + "/" + rowData._id);
         
 
     

@@ -31,7 +31,7 @@ UUflow_api.post_draft = function(flowId) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
-      FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + responseText.ChangeSet.inserts.Instances[0].id);
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/draft/" + responseText.ChangeSet.inserts.Instances[0].id);
 
       $('#flow_list_modal').modal('hide');
       toastr.success(TAPi18n.__('Added successfully'));
@@ -96,7 +96,7 @@ UUflow_api.delete_draft = function(instanceId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Deleted successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -126,7 +126,7 @@ UUflow_api.post_submit = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
-      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Submitted successfully'));
     },
@@ -186,7 +186,7 @@ UUflow_api.post_engine = function(approve) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
-      FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Submitted successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -218,7 +218,7 @@ UUflow_api.post_terminate = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
-      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Canceled successfully'));
     },
@@ -252,7 +252,7 @@ UUflow_api.put_reassign = function(instance) {
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
       $('#reassign_modal').modal('hide');
-      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Reasigned successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -285,7 +285,7 @@ UUflow_api.put_relocate = function(instance) {
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
       $('#relocate_modal').modal('hide');
-      FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
+      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Relocated successfully'));
     },

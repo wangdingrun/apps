@@ -315,7 +315,7 @@ Template.instanceform.events
     
     
     'click #instance_back': (event)->
-        backURL =  "/workflow/" + Session.get("box") + "/" + Session.get("spaceId")
+        backURL =  "/space/" + Session.get("spaceId") + "/" + Session.get("box")
         FlowRouter.go(backURL)
 
     'click #instance_to_print': (event)->

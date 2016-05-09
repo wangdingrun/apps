@@ -1,23 +1,21 @@
-workflowRoutes = FlowRouter.group 
-	prefix: '/workflow',
-	name: 'workflow',
-	triggersEnter: [
-		(context, redirect) ->
-			#console.log('running workflow triggers');
-			if !Meteor.userId()
-				redirect('/sign-in');
-
-	]
+checkUserSigned = (context, redirect) ->
+	if !Meteor.userId()
+		redirect('/sign-in');
 
 
-
-workflowRoutes.route '/inbox', 
+FlowRouter.route '/home/', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		BlazeLayout.render 'masterLayout',
-			main: "workflow_main"
+		Tracker.autorun (c) ->
+			if FlowRouter.subsReady() is true
+				Meteor.defer ->
+					FlowRouter.go "/space/" + Session.get("spaceId") + "/inbox/"
+				c.stop()
 
 
-workflowRoutes.route '/:box/:spaceId', 
+
+FlowRouter.route '/space/:spaceId/:box/', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
 		Session.set("box", params.box);
@@ -29,7 +27,9 @@ workflowRoutes.route '/:box/:spaceId',
 		$(".instance-wrapper").hide();
 		$(".instance-list-wrapper").show();
 
-workflowRoutes.route '/:box/:spaceId/:instanceId', 
+
+FlowRouter.route '/space/:spaceId/:box/:instanceId', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 
 		Session.set("spaceId", params.spaceId);
