@@ -77,6 +77,27 @@
 	"bqq": "Business QQ",
 
 	"OK": "OK",
-	"Cancel": "Cancel"
+	"Cancel": "Cancel",
+
+	"Attachment deleted successfully": "Attachment deleted successfully!",
+	"Attachment was added successfully": "Attachment was added successfully!",
+
+	"Saved successfully": "Saved successfully!",
+	"Added successfully": "Added successfully!",
+	"Deleted successfully": "Deleted successfully!",
+	"Submitted successfully": "Submitted successfully!",
+	"Canceled successfully": "Canceled successfully!",
+	"Reasigned successfully": "Reasigned successfully",
+	"Relocated successfully": "Relocated successfully!",
+
+	"Attachments": "Attachments",
+	"Versions": "Versions",
+	"Current Version": "（Current Version）"
+
+
+
+
+
+
 
 }

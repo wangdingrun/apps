@@ -34,7 +34,7 @@ UUflow_api.post_draft = function(flowId) {
       FlowRouter.go("/workflow/draft/" + Session.get("spaceId") + "/" + responseText.ChangeSet.inserts.Instances[0].id);
 
       $('#flow_list_modal').modal('hide');
-      toastr.success("创建成功!");
+      toastr.success(TAPi18n.__('Added successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
@@ -62,7 +62,7 @@ UUflow_api.put_draft = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      toastr.success("保存成功!");
+      toastr.success(TAPi18n.__('Saved successfully'));
     },
     error: function(xhr, msg, ex) {
       toastr.error(msg);
@@ -97,7 +97,7 @@ UUflow_api.delete_draft = function(instanceId) {
 
     success: function(responseText, status) {
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
-      toastr.success("申请单已删除!");
+      toastr.success(TAPi18n.__('Deleted successfully'));
     },
     error: function(xhr, msg, ex) {
       toastr.error(msg);
@@ -128,7 +128,7 @@ UUflow_api.post_submit = function(instance) {
       $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
-      toastr.success("提交成功!");
+      toastr.success(TAPi18n.__('Submitted successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
@@ -157,7 +157,7 @@ UUflow_api.put_approvals = function(approve) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
-      toastr.success("保存成功!");
+      toastr.success(TAPi18n.__('Saved successfully'));
     },
     error: function(xhr, msg, ex) {
       toastr.error(msg);
@@ -187,7 +187,7 @@ UUflow_api.post_engine = function(approve) {
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/inbox/" + Session.get("spaceId"));
-      toastr.success("提交成功!");
+      toastr.success(TAPi18n.__('Submitted successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
@@ -220,7 +220,7 @@ UUflow_api.post_terminate = function(instance) {
       $(document.body).removeClass("loading");
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
-      toastr.success("取消申请成功!");
+      toastr.success(TAPi18n.__('Canceled successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
@@ -253,7 +253,7 @@ UUflow_api.put_reassign = function(instance) {
       $(document.body).removeClass("loading");
       $('#reassign_modal').modal('hide');
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
-      toastr.success("转签核成功!");
+      toastr.success(TAPi18n.__('Reasigned successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
@@ -287,7 +287,7 @@ UUflow_api.put_relocate = function(instance) {
       $('#relocate_modal').modal('hide');
       FlowRouter.go("/workflow/" + Session.get("box") + "/" + Session.get("spaceId"));
 
-      toastr.success("重定位成功!");
+      toastr.success(TAPi18n.__('Relocated successfully'));
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");

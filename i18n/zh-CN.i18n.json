@@ -82,7 +82,34 @@
 	"bqq": "企业QQ",
 
 	"OK": "确认",
-	"Cancel": "取消"
+	"Cancel": "取消",
+
+	"Attachment deleted successfully": "附件删除成功!",
+	"Attachment was added successfully": "附件添加成功!",
+
+
+	"Saved successfully": "暂存成功!",
+	"Added successfully": "创建成功!",
+	"Deleted successfully": "删除成功!",
+	"Submitted successfully": "提交成功!",
+	"Canceled successfully": "取消申请成功!",
+	"Reasigned successfully": "转签核成功!",
+	"Relocated successfully": "转签核成功!",
+
+	"Attachments": "附件",
+	"Versions": "版本",
+	"Current Version": "（Current Version）"
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -356,7 +356,7 @@ InstanceManager.saveIns = function() {
       Meteor.call("draft_save_instance", instance, function (error, result) {
         WorkflowManager.instanceModified.set(false)
         if (result == true)
-          toastr.success("暂存成功!");
+          toastr.success(TAPi18n.__('Saved successfully'));
         else 
           toastr.error(error);
       });
@@ -366,7 +366,7 @@ InstanceManager.saveIns = function() {
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
         WorkflowManager.instanceModified.set(false)
         if (result == true)
-          toastr.success("暂存成功!");
+          toastr.success(TAPi18n.__('Saved successfully'));
         else 
           toastr.error(error);
       });
@@ -532,7 +532,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件添加成功!");
+          toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
         }
@@ -545,7 +545,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件添加成功!");
+          toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
         }
@@ -583,7 +583,7 @@ InstanceManager.removeAttach = function () {
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件删除成功!");
+          toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);
         }
@@ -596,7 +596,7 @@ InstanceManager.removeAttach = function () {
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件删除成功!");
+          toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);
         }
