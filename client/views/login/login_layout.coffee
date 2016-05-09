@@ -3,6 +3,11 @@ Template.loginLayout.helpers
         urlPrefix: ->
                 return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
                 
+        isLoggedout: ->
+                if Meteor.userId()
+                        return false;
+                else
+                        return true;
 
 Template.loginLayout.onCreated ->
         self = this;

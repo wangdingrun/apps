@@ -18,6 +18,4 @@ Template.space_switcher.events
 
 	"click #switchSpace": ->
 		self = this
-		Meteor.call "setSpaceId", self._id, ->
-			Session.set("spaceId", self._id)
-			FlowRouter.go("/space/" + self._id + "/inbox/")
+		FlowRouter.go("/space/" + self._id + "/inbox/")

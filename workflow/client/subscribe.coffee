@@ -1,6 +1,6 @@
 
 FlowRouter.subscriptions = ->
-	Meteor.subscribe("my_spaces")
+	@register 'my_spaces', Meteor.subscribe("my_spaces")
 	Tracker.autorun =>
 		if Session.get("spaceId")
 			@register 'space_users', Meteor.subscribe("space_users", Session.get("spaceId"))

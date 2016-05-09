@@ -3,14 +3,20 @@ checkUserSigned = (context, redirect) ->
 		redirect('/sign-in');
 
 
-FlowRouter.route '/home/', 
+FlowRouter.route '/space/:spaceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		Tracker.autorun (c) ->
-			if FlowRouter.subsReady() is true
-				Meteor.defer ->
-					FlowRouter.go "/space/" + Session.get("spaceId") + "/inbox/"
-				c.stop()
+		if !Meteor.userId()
+			FlowRouter.go '/sign-in';
+		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
+		FlowRouter.go "/space/" + params.spaceId + "/inbox/"
+
+		# Tracker.autorun (c) ->
+		# 	if FlowRouter.subsReady() is true
+		# 		Meteor.defer ->
+		# 			FlowRouter.go "/space/" + params.spaceId + "/inbox/"
+		# 		c.stop()
 
 
 
@@ -18,6 +24,7 @@ FlowRouter.route '/space/:spaceId/:box/',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
 		Session.set("instanceId", null); 
@@ -33,6 +40,7 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 	action: (params, queryParams)->
 
 		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"

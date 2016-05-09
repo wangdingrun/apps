@@ -1,6 +1,6 @@
 <template name="loginLayout">
 
-    <div class="skin-green layout-top-nav">
+    <div class="skin-green layout-top-nav steedos">
 
         <div class="wrapper">
             <header class="main-header">
@@ -14,8 +14,12 @@
                         </div>
                         <div class="navbar-collapse pull-left collapse" id="navbar-collapse" aria-expanded="false" style="height: 1px;">
                           <ul class="nav navbar-nav">
+                            {{#if isLoggedout}}
                                 <li><a href="{{urlPrefix}}/sign-in">{{_ 'Log in'}}</a></li>
                                 <li><a href="{{urlPrefix}}/sign-up">{{_ 'Sign up'}}</a></li>
+                            {{else}}
+                                <li><a href="{{urlPrefix}}/logout">{{_ 'Sign out'}}</a></li>
+                            {{/if}}
                           </ul>
                           
                         </div>
