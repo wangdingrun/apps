@@ -208,6 +208,7 @@ $(function(){
 				$('#selectTagModal-content').html(template(options));
                 $(".selectTag-profile").initial({charCount:1});
                 setDefaultValues(options);
+                //TODO 判断当前的用户数量，大于10就显示分页，否则不显示分页
                 $("#selectTag-users").DataTable({
                     paging:true,
                     lengthChange:false,
