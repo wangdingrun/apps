@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div></div>  <div id="selectTagModal-content"></div></div>  </div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){

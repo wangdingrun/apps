@@ -23,11 +23,6 @@
     display: inline-block;
 }
 
-.selectTagModal .modal-footer{
-    border-top: 0;
-    padding: 0;
-}
-
 .selectTagModal .box-header{
     border-bottom: 0;
     padding: 0;
