@@ -248,7 +248,10 @@ Template.instanceform.events
         if form_version
             formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
         Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
-    
+        InstanceManager.updateNextStepTagOptions();
+        
+    'change #nextSteps':(event) ->
+        InstanceManager.updateNextUserTagOptions();
     
     'click #instance_back': (event)->
         backURL =  "/space/" + Session.get("spaceId") + "/" + Session.get("box")
