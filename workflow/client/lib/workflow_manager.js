@@ -123,9 +123,6 @@ WorkflowManager.getInstanceFormVersion = function (){
 
   if (instance) {
 
-      if (instance.form_version_cached)
-        return instance.form_version_cached
-
       rev = EJSON.clone(WorkflowManager.formVersionsCache[instance.form_version])
 
       field_permission = WorkflowManager.getInstanceFieldPermission();
@@ -151,7 +148,6 @@ WorkflowManager.getInstanceFormVersion = function (){
       );
 
       rev.fields = form_fields;
-      instance.form_version_cached = rev
   }
 
   return rev;
@@ -160,9 +156,7 @@ WorkflowManager.getInstanceFormVersion = function (){
 WorkflowManager.getInstanceFlowVersion = function (){
   instance = WorkflowManager.getInstance();
   if (instance){
-      if (!instance.flow_version_cached)
-        instance.flow_version_cached = EJSON.clone(WorkflowManager.flowVersionsCache[instance.flow_version])
-      return instance.flow_version_cached
+      return EJSON.clone(WorkflowManager.flowVersionsCache[instance.flow_version])
   }
 };
 
