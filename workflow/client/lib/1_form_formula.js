@@ -177,7 +177,7 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
     }
     for(var i = 0 ; i < formula_fields.length; i++){
         formula_field = formula_fields[i];
-        if (formula_field.formula.indexOf("[" + code + "]")){
+        if (code=='' || formula_field.formula.indexOf("[" + code + "]") > -1){
             run = true;
         }
         if(run){

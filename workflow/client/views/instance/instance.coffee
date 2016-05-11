@@ -282,6 +282,9 @@ Template.instanceform.onRendered ->
 
         Form_formula.initFormScripts(form_version.form_script);
 
+        formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+        Form_formula.run("", "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+
 Template.instanceform.events
     
     'change .suggestion,.form-control': (event) ->
