@@ -42,7 +42,7 @@ Template.instance_attachment.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return Meteor.absoluteUrl() + "api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
  
 })
@@ -108,7 +108,7 @@ Template.ins_attach_version_modal.helpers({
             return "display: none;";
         
     },
-    
+
     current_can_delete: function (currentApproveId, historys) {
         var ins = WorkflowManager.getInstance();
         if (!ins)
@@ -138,7 +138,7 @@ Template.ins_attach_version_modal.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
 })
 
