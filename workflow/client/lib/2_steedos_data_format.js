@@ -30,7 +30,7 @@ var getSpaceUserSelect2Options = function (){
 
 //获取group select2 标签的 options
 var getSpaceOrganizationSelect2Options = function(){
-  var spaceOrgs = WorkflowManager.getSpaceOrganizations(spaceId);
+  var spaceOrgs = WorkflowManager.getSpaceOrganizations();
   
   var options = new Array();
 

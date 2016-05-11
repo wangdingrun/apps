@@ -94,6 +94,14 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
 
     Meteor.call("get_instance_data", instanceId, formCached, flowCached, function(error, result){
 
+      if (!result.instance) {
+        // 服务端 instance 还没保存好。
+        setTimeout(function(){
+          WorkflowManager.callInstanceDataMethod(instanceId, callback);
+        }, 300);
+        return;
+      }
+
       delete WorkflowManager["instanceCache"]
       WorkflowManager.instanceCache = result.instance;
       WorkflowManager.instanceModified.set(false);

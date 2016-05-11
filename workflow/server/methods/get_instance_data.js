@@ -5,6 +5,11 @@ Meteor.methods({
 
     instance = db.instances.findOne(instance_id);
 
+    if (!instance) 
+      return {
+        instance: null
+      }
+
     if (formCached && flowCached)
       return {
         instance: instance
