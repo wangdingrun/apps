@@ -1,6 +1,13 @@
 
 Template.instance_attachments.helpers({
     
+    enabled_add_attachment: function() {
+        if (Session.get("box")=="draft" || Session.get("box")=="inbox")
+            return "";
+        else
+            return "display: none;";
+        
+    } 
 })
 
 
