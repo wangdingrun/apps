@@ -529,6 +529,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
       instance.attachments = attachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
@@ -538,10 +539,12 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         }
       });
     } else if (state == "pending") {
-      var myApprove = InstanceManager.getMyApprove();
+      var myApprove = {};
+      $.extend(myApprove, InstanceManager.getMyApprove());
       myApprove.attachments = attachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
@@ -580,6 +583,7 @@ InstanceManager.removeAttach = function () {
       instance.attachments = newAttachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
@@ -589,10 +593,13 @@ InstanceManager.removeAttach = function () {
         }
       });
     } else if (state == "pending") {
-      var myApprove = InstanceManager.getMyApprove();
+      instance.attachments = newAttachs;
+      var myApprove = {};
+      $.extend(myApprove, InstanceManager.getMyApprove());
       myApprove.attachments = newAttachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
