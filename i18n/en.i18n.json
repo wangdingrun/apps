@@ -1,5 +1,4 @@
 {
-	"Steedos": "Steedos",
 	"Steedos Workflow": "Steedos Workflow",
 	"Forgot Password": "Forgot Password",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
@@ -52,9 +51,9 @@
 
 	"Home": "Home",
 	"Profile": "Profile",
-	"APPROVAL": "APPROVAL",
-	"MY APPLICANT": "MY APPLICANT",
-	"SETTINGS": "SETTINGS",
+	"APPROVAL": "Approval",
+	"MY APPLICANT": "My Applicant",
+	"SETTINGS": "Settings",
 	"Settings": "Settings",
 	"Help": "Help",
 	"New": "New",
@@ -92,12 +91,15 @@
 
 	"Attachments": "Attachments",
 	"Versions": "Versions",
-	"Current Version": "（Current Version）"
+	"Current Version": "（Current Version）",
+
+
+	"Workflow Designer": "Workflow Designer",
+	"User Management": "User Management",
 
 
 
 
 
-
-
+	"Steedos": "Steedos"
 }

@@ -1,5 +1,4 @@
 {
-	"Steedos": "华炎云",
 	"Steedos Workflow": "审批王",
 	"Forgot Password": "忘记密码",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
@@ -98,17 +97,17 @@
 
 	"Attachments": "附件",
 	"Versions": "版本",
-	"Current Version": "（Current Version）"
+	"Current Version": "（最新版本）",
+
+
+	"Workflow Designer": "流程设计器",
+	"User Management": "用户管理",
 
 
 
 
 
-
-
-
-
-
+	"Steedos": "华炎云"
 
 
 
