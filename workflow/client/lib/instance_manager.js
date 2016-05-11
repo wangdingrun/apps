@@ -11,6 +11,129 @@ InstanceManager.getFormField = function(fieldId){
     return null;
 }
 
+
+InstanceManager.getNextStepOptions = function(){
+  console.log("calculate next_step_options")
+  if (ApproveManager.isReadOnly())
+      return []
+
+  var instance = WorkflowManager.getInstance();
+  var currentApprove = InstanceManager.getCurrentApprove();
+  var current_next_steps = currentApprove.next_steps;
+  var judge = Session.get("judge");
+  var currentStep = InstanceManager.getCurrentStep();
+  var form_version = WorkflowManager.getInstanceFormVersion();
+  // 待办：获取表单值
+  var autoFormDoc = {};
+  if(AutoForm.getFormValues("instanceform")){
+    autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+  }
+  
+  var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+
+  var next_step_options = []
+  if (nextSteps && nextSteps.length > 0){
+      var next_step_id = null;
+      var next_step_type = null
+      nextSteps.forEach(function(step){
+        var option = {
+              id: step.id,
+              text: step.name,
+              type: step.step_type
+          }
+          if (current_next_steps && current_next_steps.length > 0){
+              if (current_next_steps[0].step == step.id){
+                  option.selected = true
+                  next_step_id = step.id
+                  next_step_type = step.step_type
+              }
+          }
+          next_step_options.push(option)
+      });
+          
+      // 默认选中第一个
+      if (!next_step_id && next_step_options.length>0){
+          next_step_options[0].selected = true
+          next_step_id = next_step_options[0].id
+          next_step_type = next_step_options[0].step_type
+      }
+
+      Session.set("next_step_id", next_step_id);
+      //触发selecte2重新加载
+      Session.set("next_step_multiple", false)
+      if (next_step_id){
+          if(next_step_type == 'counterSign')
+              Session.set("next_user_multiple", true)
+          else
+              Session.set("next_user_multiple", false)
+      }
+  }
+  return next_step_options;
+}
+
+InstanceManager.updateNextStepTagOptions = function(){
+  var next_step_options = InstanceManager.getNextStepOptions();
+  $("#nextSteps").empty(); // 清空选项
+  next_step_options.forEach(function(next_step_option){
+    $("#nextSteps").append("<option value='" + next_step_option.id + "'>" + next_step_option.text + "</option>");
+    if(next_step_option.selected){
+      $("#nextSteps").val(next_step_option.id);
+    }
+  });
+}
+
+InstanceManager.getNextUserOptions = function(){
+  console.log("calculate next_user_options")
+
+  var next_user_options = []
+
+  var next_step_id = Session.get("next_step_id");
+  var next_user_multiple = Session.get("next_user_multiple")
+  if (next_step_id){
+
+      var instance = WorkflowManager.getInstance();
+      var currentApprove = InstanceManager.getCurrentApprove();
+      var current_next_steps = currentApprove.next_steps;
+      
+      var next_user_ids = [];
+      var nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
+      if (nextStepUsers){
+          nextStepUsers.forEach(function(user){
+            var option = {
+                  id: user.id,
+                  text: user.name
+              }
+              if (current_next_steps && current_next_steps.length > 0){
+                  if (_.contains(current_next_steps[0].users, user.id)){
+                      option.selected = true
+                      next_user_ids.push(user.id)
+                  }
+              }
+              next_user_options.push(option)
+          });
+
+      }
+      if (next_user_options.length > 0){ //==1
+          next_user_options[0].selected = true
+          next_user_ids.push(next_user_options[0].id)
+      }
+  }
+
+  return next_user_options;
+}
+
+InstanceManager.updateNextUserTagOptions = function(){
+  var next_user_options = InstanceManager.getNextUserOptions();
+  $("#nextStepUsers").empty(); // 清空选项
+  next_user_options.forEach(function(next_user_option){
+    $("#nextStepUsers").append("<option value='" + next_user_option.id + "' >" + next_user_option.text + "</option>");
+    if(next_user_option.selected){
+      $("#nextStepUsers").val(next_user_option.id);
+    }
+  });
+}
+
+
 InstanceManager.getFormFieldByCode = function(fieldCode){
     var instanceFields = WorkflowManager.getInstanceFields();
     var field = instanceFields.filterProperty("code", fieldCode);
