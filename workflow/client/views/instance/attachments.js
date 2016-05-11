@@ -101,6 +101,14 @@ Template.ins_attach_version_modal.helpers({
         return owner_name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm");
     },
 
+    enabled_add_attachment: function() {
+        if (Session.get("box")=="draft" || Session.get("box")=="inbox")
+            return "";
+        else
+            return "display: none;";
+        
+    },
+    
     current_can_delete: function (currentApproveId, historys) {
         var ins = WorkflowManager.getInstance();
         if (!ins)
