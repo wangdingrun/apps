@@ -27,10 +27,10 @@
                             <div class="form-group">
                                 <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
                                 <label class="radio-inline">
-                                    <input type='radio' name='judge' value="approved" class='suggestion' checked="{{#if equals currentApprove.judge 'approved'}}checked{{/if}}" id="judge_approved"/>核准
+                                    <input type='radio' name='judge' value="approved" class='suggestion' checked="{{#if equals judge 'approved'}}checked{{/if}}" id="judge_approved"/>核准
                                 </label>
                                 <label class="radio-inline">
-                                    <input type='radio' name='judge' value="rejected" class='suggestion' checked="{{#if equals currentApprove.judge 'rejected'}}checked{{/if}}"/>驳回
+                                    <input type='radio' name='judge' value="rejected" class='suggestion' checked="{{#if equals judge 'rejected'}}checked{{/if}}"/>驳回
                                 </label>
                             </div>
                         </div>

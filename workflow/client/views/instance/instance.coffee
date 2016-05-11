@@ -155,6 +155,22 @@ Template.instanceform.helpers
             return "disabled";
         return;
 
+    judge: ->
+
+        currentApprove = InstanceManager.getCurrentApprove();
+        if !Session.get("judge")
+             Session.set("judge", currentApprove.judge);
+
+        if !Session.get("judge")
+            currentStep = InstanceManager.getCurrentStep();
+            # 默认核准
+            if (currentStep.step_type == "sign" || currentStep.step_type == "counterSign")
+                Session.set("judge", "approved");
+                
+        currentApprove.judge = Session.get("judge");
+
+        return Session.get("judge")
+
     next_step_options: ->
         console.log("calculate next_step_options")
         if ApproveManager.isReadOnly()
@@ -164,10 +180,7 @@ Template.instanceform.helpers
         currentApprove = InstanceManager.getCurrentApprove();
         current_next_steps = currentApprove.next_steps;
 
-        if Session.get("judge")
-            judge = Session.get("judge")
-        else
-            judge = currentApprove.judge
+        judge = Session.get("judge")
         currentStep = InstanceManager.getCurrentStep();
         form_version = WorkflowManager.getInstanceFormVersion();
         # 待办：获取表单值
@@ -277,9 +290,6 @@ Template.instanceform.onRendered ->
         judge = currentApprove.judge
         currentStep = InstanceManager.getCurrentStep();
         form_version = WorkflowManager.getInstanceFormVersion();
-        # 默认核准
-        if (currentStep.step_type == "sign" || currentStep.step_type == "sign") && !judge
-            $("#judge_approved").prop("checked", "checked").trigger("change");
 
         Form_formula.initFormScripts(form_version.form_script);
 

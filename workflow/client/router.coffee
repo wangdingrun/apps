@@ -48,8 +48,13 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
 
+			Session.set("judge", null);
+			Session.set("next_step_id", null);
+			Session.set("next_step_multiple", null);
+			Session.set("next_user_multiple", null);
 			Session.set("instanceId", params.instanceId);
 			Session.set("box", params.box);
+
 			BlazeLayout.render 'masterLayout',
 				main: "workflow_main"
 
