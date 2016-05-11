@@ -21,11 +21,11 @@
                     {{#each this.sfields}}
                         {{#if this.is_wide}}
                             <td class="field {{this.type}}" nowrap='nowrap'>
-                                <label class="control-label">{{this.code}}</label>
+                                <label class="control-label">{{#if this.name}}{{this.name}}{{else}}{{this.code}}{{/if}}</label>
                             </td>
                         {{else}}
                             <td class="field {{this.type}}" nowrap='nowrap'>
-                                <label class="control-label">{{this.code}}</label>
+                                <label class="control-label">{{#if this.name}}{{this.name}}{{else}}{{this.code}}{{/if}}</label>
                             </td>
                         {{/if}}
                     {{/each}}
