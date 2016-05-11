@@ -221,18 +221,19 @@ Template.instanceform.helpers
             currentApprove = InstanceManager.getCurrentApprove();
             current_next_steps = currentApprove.next_steps;
             
-            nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
             next_user_ids = [];
-            nextStepUsers.forEach (user)->
-                option = {
-                    id: user.id,
-                    text: user.name
-                }
-                if current_next_steps && current_next_steps.length > 0
-                    if _.contains(current_next_steps[0].users, user.id)
-                        option.selected = true
-                        next_user_ids.push(user.id)
-                next_user_options.push(option)
+            nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
+            if nextStepUsers
+                nextStepUsers.forEach (user)->
+                    option = {
+                        id: user.id,
+                        text: user.name
+                    }
+                    if current_next_steps && current_next_steps.length > 0
+                        if _.contains(current_next_steps[0].users, user.id)
+                            option.selected = true
+                            next_user_ids.push(user.id)
+                    next_user_options.push(option)
 
             if next_user_options.length == 1
                 next_user_options[0].selected = true

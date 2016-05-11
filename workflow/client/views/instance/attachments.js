@@ -1,8 +1,6 @@
 
 Template.instance_attachments.helpers({
-    attachments: function(){
-        return this.attachments;
-    }
+    
 })
 
 
