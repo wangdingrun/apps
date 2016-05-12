@@ -99,6 +99,13 @@
 	"Versions": "版本",
 	"Current Version": "（最新版本）",
 
+	"Instance State approved": " 已核准",
+	"Instance State rejected": " 已驳回",
+	"Instance State terminated": "已取消",
+	"Instance State finished": "已完成",
+	"Instance State pending": "审核中",
+	"Instance State reassigned": "转签核",
+	"Instance State relocated": "重定位",
 
 	"Workflow Designer": "流程设计器",
 	"User Management": "用户管理",
@@ -108,7 +115,4 @@
 
 
 	"Steedos": "华炎云"
-
-
-
 }

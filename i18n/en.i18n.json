@@ -92,6 +92,14 @@
 	"Attachments": "Attachments",
 	"Versions": "Versions",
 	"Current Version": "（Current Version）",
+	
+	"Instance State approved": " Approved",
+	"Instance State rejected": " Rejected",
+	"Instance State terminated": "Cancelled",
+	"Instance State finished": "Completed",
+	"Instance State pending": "In Progress",
+	"Instance State reassigned": "Reassigned",
+	"Instance State relocated": "Relocated",
 
 
 	"Workflow Designer": "Workflow Designer",
