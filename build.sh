@@ -6,4 +6,4 @@ cd npm/npm_bcrypt/
 npm install bcrypt
 
 cd /srv/workflow/
-pm2 restart workflow.0
+pm2 restart workflow.1
