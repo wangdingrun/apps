@@ -53,6 +53,9 @@ Template.instance_traces.helpers({
         case 'reassigned':
             approveStatusIcon = 'glyphicon glyphicon-share-alt';
             break;
+        case 'relocated':
+            approveStatusIcon = 'glyphicon glyphicon-share-alt';
+            break;
         default:
             approveStatusIcon = '';
             break;
@@ -66,16 +69,19 @@ Template.instance_traces.helpers({
 
     switch(approveJudge){
         case 'approved':
-            approveStatusText = "已核准";
+            approveStatusText = TAPi18n.__('Instance State approved');
             break;
         case 'rejected':
-            approveStatusText = "已驳回";
+            approveStatusText = TAPi18n.__('Instance State rejected');
             break;
         case 'terminated':
-            approveStatusText = "已取消";
+            approveStatusText = TAPi18n.__('Instance State terminated');
             break;
         case 'reassigned':
-            approveStatusText = "转签核";
+            approveStatusText = TAPi18n.__('Instance State reassigned');
+            break;
+        case 'relocated':
+            approveStatusText = TAPi18n.__('Instance State relocated');
             break;
         default:
             approveStatusText = "";
