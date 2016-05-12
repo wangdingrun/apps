@@ -11,6 +11,7 @@ Package.onUse(function(api) {
   api.imply('accounts-base', ['client', 'server']);
   api.use('accounts-oauth', ['client', 'server']);
   api.use('simple:json-routes@2.1.0');
+  api.use('coffeescript');
 
 
   api.use('oauth', ['client', 'server']);
@@ -24,6 +25,7 @@ Package.onUse(function(api) {
   api.addFiles('qq_client.js', 'client');
   api.addFiles('qq_server.js', 'server');
   api.addFiles('company_token.js', 'server');
+  api.addFiles('bqq_api.coffee', 'server');
   api.addFiles("qq.js");
 
   api.export('BQQ');
