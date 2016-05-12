@@ -93,6 +93,14 @@ $(function(){
 			}
 			return selectTag;
 
+
+      function init(){
+
+        $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+
+        $("#valueLabel").hide();
+      }
+
       function getValuesObject(){
 
         var vo = new Array();
@@ -172,14 +180,13 @@ $(function(){
 
         $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
         
-        changeValueLabel();
-
-        $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+        init();
 
         if(!options.multiple){
           $(".selectTagOK").hide();
         }else{
           $(".selectTagOK").show();
+          changeValueLabel();
         }
 
 				$("#selectTagModal").modal('show');
