@@ -107,6 +107,17 @@
 	"Instance State reassigned": "转签核",
 	"Instance State relocated": "重定位",
 
+	"Instance Relocate Hint": "请填写重定位的理由。",
+	"Instance Relocate Title": "重定位",
+	"Instance Relocate Reason": "请填写重定位的理由。",
+	"Instance Relocate NewInboxUsers": "请选择重定位审核人。",
+	"Instance Relocate Ok": "重定位提交成功。",
+	"Instance Relocate CurStep": "当前步骤: ",
+
+	// inbox
+	"Inbox Suggestion NextSteps Label":"下一步骤: ",
+	"Inbox Suggestion NextSteps Handler Label":"处理人: ",
+
 	"Workflow Designer": "流程设计器",
 	"User Management": "用户管理",
 

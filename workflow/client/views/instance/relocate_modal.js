@@ -41,7 +41,8 @@ Template.relocate_modal.events({
             var s = WorkflowManager.getInstanceStep(v);
             if (s.step_type == "start" || s.step_type == "end") {
                 $("#relocate_users_p").css("display", "none");
-            } else {
+            }
+            else {
                 var u = WorkflowManager.getSpaceUsers(Session.get("spaceId"));
                 u.forEach(function(user){
                     $("#relocate_users").append("<option value='" + user.id + "'> " + user.name + " </option>");
@@ -51,12 +52,17 @@ Template.relocate_modal.events({
 
                 $("#relocate_users_p").css("display","");
             }
+
             if (s.step_type == "counterSign") {
                 $("#relocate_users").prop("multiple", "multiple");
-            } else {
-                $("#relocate_users").removeAttr("multiple");
+                $("#relocate_users").select2();
             }
-        } else {
+            else {
+                $("#relocate_users").removeAttr("multiple");
+                $("#relocate_users").select2();
+            }
+        }
+        else {
             $("#relocate_users_p").css("display","");
         }
     },
@@ -64,13 +70,12 @@ Template.relocate_modal.events({
     'click #relocate_modal_ok': function (event, template) {
         var sv = $("#relocate_steps").select2().val();
         if (!sv) {
-            toastr.error("请选择步骤。");
             return;
         }
 
         var reason = $("#relocate_modal_text").val();
         if (!reason) {
-            toastr.error("请填写重定位的理由。");
+            toastr.error(TAPi18n.__('Instance Relocate Hint'));
             return;
         }
 
@@ -81,21 +86,24 @@ Template.relocate_modal.events({
             if (instance) {
                 uv = instance.applicant;
             }
-        } else if (s.step_type == "end") {
+        }
+        else if (s.step_type == "end") {
             uv = [];
-        } else {
+        }
+        else {
             var uv = $("#relocate_users").select2().val();
         }
 
         if (s.step_type != "end" && !uv) {
-            toastr.error("请指定处理人。");
+            toastr.error(TAPi18n.__('Instance Relocate NewInboxUsers'));
             return;
         }
 
         var user_ids = [];
         if (uv instanceof Array) {
             user_ids = uv.getEach("value");
-        } else {
+        }
+        else {
             user_ids.push(uv);
         }
 
