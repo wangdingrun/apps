@@ -35,7 +35,30 @@
 }
 
 .selectTag-users > tbody > tr > td{
-    padding: 6px;
+    padding: 4px 6px 4px 6px;
+}
+
+.selectTagModal .modal-footer{
+    text-align: left;
+}
+
+.selectTagModal .selectTagButton{
+    text-align: right;
+    padding-top: 5px;
+}
+
+.selectTagModal .valueLabel {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 4px 6px;
+    color: #555;
+    vertical-align: middle;
+    border-radius: 4px;
+    width: 100%;
+    min-height: 32px;
+    line-height: 22px;
+    cursor: text;
 }
 
 .selectTag-users .checkbox, .selectTag-users .radio{
@@ -57,11 +80,12 @@
     border-radius: 0;
     border-top: 0;
     border-left: 3px solid transparent;
-    color: #444
+    color: #444;
+    font-size: 13px;
 }
 
 .selectTag-users img{
-    max-width: 30px;
+    max-width: 27px;
     margin-right: 5px;
 }
 

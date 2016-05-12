@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
@@ -87,40 +87,63 @@ $(function(){
 				show : show,
 				hide : hide,
 				reload : reloadTag,
-                checked : checked,
-                values :[],
-                valuesObject : getValuesObject
+        checked : checked,
+        values :[],
+        valuesObject : getValuesObject
 			}
 			return selectTag;
 
-            function getValuesObject(){
+      function getValuesObject(){
 
-                var vo = new Array();
-                var v = SelectTag.values;
-                if(v){
+        var vo = new Array();
+        var v = SelectTag.values;
+        if(v){
 
-                    for(var i = 0 ; i < v.length; i ++){
-                       if($options.showUser){
-                            vo.push($options.data.users.findPropertyByPK("id", v[i]));
-                        }else{
-                            vo.push($options.data.orgs.findPropertyByPK("id", v[i]));
-                        } 
-                    }
-                }
-                return vo;
-            }
-
-            function checked(tag){
-                if(tag.type == 'radio'){
-                    selectTag.values = [tag.value];
+            for(var i = 0 ; i < v.length; i ++){
+               if($options.showUser){
+                    vo.push($options.data.users.findPropertyByPK("id", v[i]));
                 }else{
-                    if(tag.checked){
-                        selectTag.values.push(tag.value);
-                    }else{
-                        selectTag.values.remove(selectTag.values.indexOf(tag.value));
-                    }
-                }
+                    vo.push($options.data.orgs.findPropertyByPK("id", v[i]));
+                } 
             }
+        }
+        return vo;
+      }
+
+      function checked(parentTag){
+        var tag = $("input",parentTag)[0];
+        debugger;
+        if(tag.type == 'radio'){
+            selectTag.values = [tag.value];
+            $(".selectTagOK").click();
+        }else{
+            if(tag.checked){
+                if(selectTag.values.indexOf(tag.value) < 0){
+                  selectTag.values.push(tag.value);
+                }
+            }else{
+                selectTag.values.remove(selectTag.values.indexOf(tag.value));
+            }
+
+            changeValueLabel();
+            
+            $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+        }
+      }
+
+      function changeValueLabel(){
+        if(selectTag.values.length > 0){
+          var html = '';
+          selectTag.valuesObject().forEach(function(v){
+            html = html + '\r\n<span class="label label-info">' + v.name + '</span>'
+          });
+          $("#valueLabel").html(html);
+          $("#valueLabel").show();
+        }else{
+          $("#valueLabel").hide();
+        }
+      }
+
 			/*
 			* options : {} 
 			* 	data: {orgs:[],users:[]}
@@ -132,14 +155,14 @@ $(function(){
 			* callback : 点击确认按钮的回调函数
 			*/
 			function show(options,callback){
-                options.values = [];
+        options.values = [];
 
-                if(options.defaultValues && options.defaultValues.length > 0){
-                    selectTag.values = options.defaultValues;
-                    options.defaultValues = [];
-                }else{
-                    selectTag.values = [];
-                }
+        if(options.defaultValues && options.defaultValues.length > 0){
+            selectTag.values = options.defaultValues;
+            options.defaultValues = [];
+        }else{
+            selectTag.values = [];
+        }
 				//检查参数
 				checkOptions(options);
 				
@@ -147,7 +170,17 @@ $(function(){
 				
 				reloadTag($options.orgId);
 
-                $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
+        $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
+        
+        changeValueLabel();
+
+        $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+
+        if(!options.multiple){
+          $(".selectTagOK").hide();
+        }else{
+          $(".selectTagOK").show();
+        }
 
 				$("#selectTagModal").modal('show');
 			};
@@ -179,24 +212,24 @@ $(function(){
 					options.showUser = true;
 				}
 
-                if(!options.orgId){
-                    options.orgId = '';
+        if(!options.orgId){
+            options.orgId = '';
+        }
+
+        if(options.showOrg && options.data.users){
+            options.data.users.forEach(function(u){
+                if(organizations in u){
+                    return ;
+                }
+                if(u.organization instanceof Object){
+                    
+                }else{
+                    u.organization = options.data.orgs.findPropertyByPK("id", u.organization);
                 }
 
-                if(options.showOrg && options.data.users){
-                    options.data.users.forEach(function(u){
-                        if(organizations in u){
-                            return ;
-                        }
-                        if(u.organization instanceof Object){
-                            
-                        }else{
-                            u.organization = options.data.orgs.findPropertyByPK("id", u.organization);
-                        }
-
-                        u.organizations = u.organization.parents.concat(u.organization.id);
-                    });
-                }
+                u.organizations = u.organization.parents.concat(u.organization.id);
+            });
+        }
 				
 				$options = $.extend({},options);
 			};
@@ -206,70 +239,70 @@ $(function(){
 				var sourceTemplate = $("#selectTagTemplate").html();
 				var template = Handlebars.compile(sourceTemplate);
 				$('#selectTagModal-content').html(template(options));
-                $(".selectTag-profile").initial({charCount:1});
-                setDefaultValues(options);
-                //TODO 判断当前的用户数量，大于10就显示分页，否则不显示分页
-                $("#selectTag-users").DataTable({
-                    paging:true,
-                    lengthChange:false,
-                    searching:false,
-                    ordering:false,
-                    info:false,
-                    autoWidth:true,
-                    language:{
-                        oPaginate:{
-                            sFirst:'首页',
-                            sPrevious:'上页',
-                            sNext:'下页',
-                            sLast:'末页'
-                        }
-                    }
-                });
+          $(".selectTag-profile").initial({charCount:1});
+          setDefaultValues(options);
+          //TODO 判断当前的用户数量，大于10就显示分页，否则不显示分页
+          $("#selectTag-users").DataTable({
+              paging:true,
+              lengthChange:false,
+              searching:false,
+              ordering:false,
+              info:false,
+              autoWidth:true,
+              language:{
+                  oPaginate:{
+                      sFirst:'首页',
+                      sPrevious:'上页',
+                      sNext:'下页',
+                      sLast:'末页'
+                  }
+              }
+          });
 			};
 
-            function setDefaultValues(options){
-                var dfs= selectTag.values;
-                dfs.forEach(function(v){
-                    $("#" + v).attr("checked",true);
-                });
-            }
+      function setDefaultValues(options){
+          var dfs= selectTag.values;
+          dfs.forEach(function(v){
+              $("#" + v).attr("checked",true);
+          });
+      }
 
 			function constructorOptions(orgId){
-                var org = {};
+        var org = {};
 				if($options.showOrg){
                     
-                    org = $options.data.orgs.findPropertyByPK("id", orgId);
+          org = $options.data.orgs.findPropertyByPK("id", orgId);
 
-                    if(org){
-                        org.parentOrg = getOrgParent(org.parent);
-                    }else{
-                        org = {};
-                    }
+          if(org){
+              org.parentOrg = getOrgParent(org.parent);
+          }else{
+              org = {};
+          }
 
 					org.children = getOrgChildren(orgId);
 				}
 				org.users = getUsers(orgId);
 
-                $options.org = org;
+        $options.org = org;
 
 				return $options;
 			};
 
-            function getOrgParent(parentOrgId){
-                var org ;
+      function getOrgParent(parentOrgId){
+          var org ;
 
-                if(parentOrgId == '' || parentOrgId == 0){
-                    return ;
-                }else{
-                    org = $options.data.orgs.findPropertyByPK("id", parentOrgId);
-                }
+          if(parentOrgId == '' || parentOrgId == 0){
+              return ;
+          }else{
+              org = $options.data.orgs.findPropertyByPK("id", parentOrgId);
+          }
 
-                if(org.parent != '' && org.parent != 0){
-                    org.parentOrg = getOrgParent(org.parent);
-                }
+          if(org.parent != '' && org.parent != 0){
+              org.parentOrg = getOrgParent(org.parent);
+          }
 
-                return org;
-            };
+          return org;
+      };
 			
 			/*
 			* return 传入orgId的直属组织
@@ -349,7 +382,13 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
   if(!items) 
   	return;
   for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<tr><td><a class='user'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
+    out = out + "<tr onClick='SelectTag.checked(this)' style='cursor:pointer'><td><a class='user'><label style='width:100%'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
+    if(tagType == "radio"){
+      out = out + " style='display:none' "
+    }else{
+      out = out + " style ='margin-top:0;vertical-align:middle'"
+    }
+    out = out +"><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
   }
 	
   return new Handlebars.SafeString(out);
