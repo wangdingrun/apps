@@ -18,12 +18,12 @@
 
     <div class="instance">
         {{#if show_suggestion}}
-            <div class="instance_suggestion box">
+            <div class="instance-suggestion box">
                 <div class="box-body">
 
                     {{#if includes currentStep.step_type 'sign,counterSign'}}
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
                                 <label class="radio-inline">
@@ -37,7 +37,7 @@
                     </div>
                     {{/if}}
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <textarea name="" class="suggestion-control" id="suggestion">{{currentApprove.description}}</textarea>
                                 <span class="help-block"></span>
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">下一步骤&nbsp;:</label>
                                 <select class="nextSteps form-control" name="nextSteps" id="nextSteps" multiple={{next_step_multiple}}>
@@ -56,7 +56,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-md-4">
                             <div class="form-group" id="nextStepUsers_div">
                                 <label class="control-label">处理人&nbsp;:</label>
                                 <select class="nextStepUsers form-control" name="nextStepUsers" id="nextStepUsers" multiple={{next_user_multiple}}>
