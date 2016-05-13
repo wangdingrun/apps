@@ -55,11 +55,11 @@ InstanceManager.getNextStepOptions = function(){
       if (!next_step_id && next_step_options.length>0){
           next_step_options[0].selected = true
           next_step_id = next_step_options[0].id
-          next_step_type = next_step_options[0].step_type
+          next_step_type = next_step_options[0].type
       }
 
       Session.set("next_step_id", next_step_id);
-      //触发selecte2重新加载
+      //触发select重新加载
       Session.set("next_step_multiple", false)
       if (next_step_id){
           if(next_step_type == 'counterSign')
@@ -122,16 +122,16 @@ InstanceManager.getNextUserOptions = function(){
   return next_user_options;
 }
 
-InstanceManager.updateNextUserTagOptions = function(){
-  var next_user_options = InstanceManager.getNextUserOptions();
-  $("#nextStepUsers").empty(); // 清空选项
-  next_user_options.forEach(function(next_user_option){
-    $("#nextStepUsers").append("<option value='" + next_user_option.id + "' >" + next_user_option.text + "</option>");
-    if(next_user_option.selected){
-      $("#nextStepUsers").val(next_user_option.id);
-    }
-  });
-}
+// InstanceManager.updateNextUserTagOptions = function(){
+//   var next_user_options = InstanceManager.getNextUserOptions();
+//   $("#nextStepUsers").empty(); // 清空选项
+//   next_user_options.forEach(function(next_user_option){
+//     $("#nextStepUsers").append("<option value='" + next_user_option.id + "' >" + next_user_option.text + "</option>");
+//     if(next_user_option.selected){
+//       $("#nextStepUsers").val(next_user_option.id);
+//     }
+//   });
+// }
 
 
 InstanceManager.getFormFieldByCode = function(fieldCode){
