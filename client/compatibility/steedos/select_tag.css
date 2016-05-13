@@ -29,6 +29,10 @@
     padding-left: 10px;
 }
 
+.selectTagModal label {
+    cursor: pointer;
+}
+
 .selectTagModal-body{
     overflow-y: auto;
     max-height: 580px; 

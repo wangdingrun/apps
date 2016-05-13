@@ -41,7 +41,7 @@ WorkflowManager.getSpaceUsers = function (spaceId){
   //   users.push(userObject);
   // }
 
-  var spaceUsers = db.space_users.find();
+  var spaceUsers = db.space_users.find({}, {sort: {name:1}});
 
   spaceUsers.forEach(function(spaceUser){
     spaceUser.id = spaceUser.user;

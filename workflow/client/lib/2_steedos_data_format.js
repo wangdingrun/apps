@@ -139,7 +139,7 @@ var s_autoform = function (schema, field){
         
         autoform.disabled = (permission == 'readonly');
 
-        autoform.type = "select2";
+        autoform.type = "selectorg";
         autoform.options = getSpaceOrganizationSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
         break;
     default:

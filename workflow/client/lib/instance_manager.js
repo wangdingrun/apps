@@ -352,7 +352,7 @@ InstanceManager.saveIns = function() {
     var state = instance.state;
     if (state == "draft") {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-      instance.applicant = $("#ins_applicant").select2().val();
+      instance.applicant = $("input[name='ins_applicant']")[0].dataset.values;
       Meteor.call("draft_save_instance", instance, function (error, result) {
         if (result == true)
           toastr.success("暂存成功!");

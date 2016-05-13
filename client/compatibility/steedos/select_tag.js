@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
@@ -99,6 +99,12 @@ $(function(){
         $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
 
         $("#valueLabel").hide();
+
+        if($options.showUser){
+          $("#selectTagModalTitle").html("选择人员");
+        }else{
+          $("#selectTagModalTitle").html("选择部门");
+        }
       }
 
       function getValuesObject(){
@@ -120,7 +126,6 @@ $(function(){
 
       function checked(parentTag){
         var tag = $("input",parentTag)[0];
-        debugger;
         if(tag.type == 'radio'){
             selectTag.values = [tag.value];
             $(".selectTagOK").click();
@@ -246,9 +251,10 @@ $(function(){
 				var sourceTemplate = $("#selectTagTemplate").html();
 				var template = Handlebars.compile(sourceTemplate);
 				$('#selectTagModal-content').html(template(options));
-          $(".selectTag-profile").initial({charCount:1});
+          //$(".selectTag-profile").initial({charCount:1});
           setDefaultValues(options);
           //TODO 判断当前的用户数量，大于10就显示分页，否则不显示分页
+          
           $("#selectTag-users").DataTable({
               paging:true,
               lengthChange:false,
@@ -265,6 +271,7 @@ $(function(){
                   }
               }
           });
+          
 			};
 
       function setDefaultValues(options){
@@ -372,12 +379,19 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
       }
   }else{
         items.forEach(function(item){
-            out = out + "<li><a class='org'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label>";
+            out = out + "<li ><a class='org'><label style='height:100%;cursor:pointer;width:100%' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'";
 
+            if(tagType == "radio"){
+              out = out + " style='display:none' ";
+            }else{
+              out = out + " style ='margin-top:0;vertical-align:middle'";
+            }
+            out = out + "><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label></a>";
+            
             if(item.children && item.children.length > 0){
                 out = out + "<span class='pull-right' style='cursor:pointer;width:30px;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
             }
-            out = out + "</a></li>";
+            out = out + "</li>";
         });
   }
 	
@@ -389,13 +403,13 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
   if(!items) 
   	return;
   for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<tr onClick='SelectTag.checked(this)' style='cursor:pointer'><td><a class='user'><label style='width:100%'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
+    out = out + "<tr ><td ><a class='user' ><label style='height:100%;width:100%;cursor:pointer;' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
     if(tagType == "radio"){
-      out = out + " style='display:none' "
+      out = out + " style='display:none' ";
     }else{
-      out = out + " style ='margin-top:0;vertical-align:middle'"
+      out = out + " style ='margin-top:0;vertical-align:middle'";
     }
-    out = out +"><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
+    out = out +"><span style='vertical-align:middle;padding-left:4px'><img src='/workflow/avatar/"+items[i].email+"' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
   }
 	
   return new Handlebars.SafeString(out);
@@ -416,8 +430,7 @@ Handlebars.registerHelper('breadcrumb', function(data) {
   }
 	
   out = getLi(data.parentOrg);
-  out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' 
-  		+ out;
+  //out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' + out;
   if(data.id && data.id !=0 && data.id !=''){
   	out = out + '<li class="active"><a href="javascript:void(0)">'+data.name+'</a></li>';//SelectTag.reload(\''+data.id+'\')
   }
