@@ -18,7 +18,7 @@
 
     <div class="instance">
         {{#if show_suggestion}}
-            <div class="instance-suggestion box">
+            <div class="instance-suggestion box {{suggestion_box_style}}">
                 <div class="box-body">
 
                     {{#if includes currentStep.step_type 'sign,counterSign'}}
@@ -71,7 +71,7 @@
             </div>
         {{/if}}
 
-        <div class="instance-form box">
+        <div class="instance-form box {{instance_box_style}}">
             <div class="box-header  with-border">
                 <h3 class="box-title">{{instance.name}}</h3>
                 <span class="help-block"></span>

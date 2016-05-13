@@ -23,6 +23,7 @@
             <i class="fa fa-filter"></i>
           </button>
 
+          {{#if hasFlowId}}
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="{{enabled_export}}" title="导出申请单">
               <i class="fa fa-download" aria-hidden="true"></i><span class="caret"></span>
@@ -34,6 +35,7 @@
               <li><a href="#" type="3">All</a></li>
             </ul>
           </div>
+          {{/if}}
           
           <div class="pull-right">
             

@@ -53,6 +53,26 @@ Template.instanceform.helpers
 
         return !ApproveManager.isReadOnly();
 
+    suggestion_box_style: ->
+        judge = Session.get("judge")
+        if judge
+            if (judge == "approved")
+                return "box-success" 
+            else if (judge == "rejected")
+                return "box-danger"
+
+    instance_box_style: ->
+        box = Session.get("box")
+        if box == "inbox" || box == "draft"
+            return
+        ins = WorkflowManager.getInstance();
+        if ins && ins.final_decision
+            if ins.final_decision == "approved"
+                return "box-success" 
+            else if (ins.final_decision == "rejected")
+                return "box-danger"
+
+
     enabled_submit: ->
         ins = WorkflowManager.getInstance();
         if !ins

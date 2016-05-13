@@ -10,6 +10,9 @@ Template.instance_list.helpers
     spaceId: ->
         return Session.get("spaceId");
 
+    hasFlowId: ->
+        return !!Session.get("flowId");
+
     selector: ->
         query = {space: Session.get("spaceId"), flow: Session.get("flowId")}
         box = Session.get("box") 
