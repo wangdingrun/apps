@@ -71,16 +71,16 @@ InstanceManager.getNextStepOptions = function(){
   return next_step_options;
 }
 
-InstanceManager.updateNextStepTagOptions = function(){
-  var next_step_options = InstanceManager.getNextStepOptions();
-  $("#nextSteps").empty(); // 清空选项
-  next_step_options.forEach(function(next_step_option){
-    $("#nextSteps").append("<option value='" + next_step_option.id + "'>" + next_step_option.text + "</option>");
-    if(next_step_option.selected){
-      $("#nextSteps").val(next_step_option.id);
-    }
-  });
-}
+// InstanceManager.updateNextStepTagOptions = function(){
+//   var next_step_options = InstanceManager.getNextStepOptions();
+//   $("#nextSteps").empty(); // 清空选项
+//   next_step_options.forEach(function(next_step_option){
+//     $("#nextSteps").append("<option value='" + next_step_option.id + "'>" + next_step_option.text + "</option>");
+//     if(next_step_option.selected){
+//       $("#nextSteps").val(next_step_option.id);
+//     }
+//   });
+// }
 
 InstanceManager.getNextUserOptions = function(){
   console.log("calculate next_user_options")

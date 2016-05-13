@@ -192,6 +192,7 @@ Template.instanceform.helpers
         return Session.get("judge")
 
     next_step_options: ->
+        form_values = Session.get("form_values")
         return InstanceManager.getNextStepOptions();
 
     next_user_options: ->
@@ -268,10 +269,11 @@ Template.instanceform.events
         if form_version
             formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
         Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
-        InstanceManager.updateNextStepTagOptions();
+        Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
+        #InstanceManager.updateNextStepTagOptions();
         
     'change #nextSteps':(event) ->
-        InstanceManager.updateNextUserTagOptions();
+        #InstanceManager.updateNextUserTagOptions();
     
     'click #instance_back': (event)->
         backURL =  "/space/" + Session.get("spaceId") + "/" + Session.get("box")
