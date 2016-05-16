@@ -1,5 +1,5 @@
-AutoForm.addInputType("selectuser",{
-    template:"afSelectUser",
+AutoForm.addInputType("selectorg",{
+    template:"afSelectOrg",
     valueOut:function(){
         return this[0].dataset.values;
     },
@@ -17,7 +17,7 @@ AutoForm.addInputType("selectuser",{
             context.atts.maxlength = context.max;
         }
 
-        context.atts.class = "selectUser form-control";
+        context.atts.class = "selectOrg form-control";
 
         //context.atts.onclick = 'SelectTag.show({data:{orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()},multiple:false},\"$(\\\"input[name=\''+context.name+'\']\\\").val(SelectTag.values)\")';
         return context;
@@ -26,8 +26,8 @@ AutoForm.addInputType("selectuser",{
 
 
 
-Template.afSelectUser.events({
-  'click .selectUser': function (event, template) {
+Template.afSelectOrg.events({
+  'click .selectOrg': function (event, template) {
     var data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
@@ -37,6 +37,8 @@ Template.afSelectUser.events({
     if(values && values.length > 0){
         options.defaultValues = values.split(",");
     }
+
+    options.showUser = false;
 
     var start_orgId = "";
 
@@ -49,11 +51,11 @@ Template.afSelectUser.events({
 
     options.orgId = start_orgId;
 
-    SelectTag.show(options,"Template.afSelectUser.confirm('"+template.data.name+"')");
+    SelectTag.show(options,"Template.afSelectOrg.confirm('"+template.data.name+"')");
   }
 });
 
-Template.afSelectUser.confirm = function(name){
+Template.afSelectOrg.confirm = function(name){
     var values = SelectTag.values;
     var valuesObject = SelectTag.valuesObject();
     if(valuesObject.length > 0){
@@ -72,10 +74,10 @@ Template.afSelectUser.confirm = function(name){
 
 }
 
-Template.afSelectUser.rendered = function(){
+Template.afSelectOrg.rendered = function(){
     var value = this.data.value;
     var name = this.data.name;
-    if(this.data.atts && this.data.atts.multiple){
+    if(this.data.atts.multiple){
         $("input[name='"+name+"']").val(value ? value.getProperty("name").toString() : '');
         $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
     }else{

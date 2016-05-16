@@ -42,7 +42,7 @@ WorkflowManager.getSpaceUsers = function (spaceId){
   //   users.push(userObject);
   // }
 
-  var spaceUsers = db.space_users.find();
+  var spaceUsers = db.space_users.find({}, {sort: {name:1}});
 
   spaceUsers.forEach(function(spaceUser){
     spaceUser.id = spaceUser.user;
@@ -93,7 +93,6 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
     }
 
     Meteor.call("get_instance_data", instanceId, formCached, flowCached, function(error, result){
-
       if (!result.instance) {
         // 服务端 instance 还没保存好。
         setTimeout(function(){
@@ -101,7 +100,6 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
         }, 300);
         return;
       }
-
       delete WorkflowManager["instanceCache"]
       WorkflowManager.instanceCache = result.instance;
       WorkflowManager.instanceModified.set(false);
@@ -140,6 +138,9 @@ WorkflowManager.getInstanceFormVersion = function (){
 
           if (field.type == 'table'){
             field['sfields'] = field['fields']
+            field['sfields'].forEach(function(sf){
+              sf["permission"] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+            });
             // 因为这个程序会傻傻的执行很多遍，所以不能删除
             delete field['fields']
           }
@@ -147,7 +148,10 @@ WorkflowManager.getInstanceFormVersion = function (){
           if (field.type == 'section'){
             form_fields.push(field);
             if (field.fields){
-              form_fields = form_fields.concat(field.fields);
+              field.fields.forEach(function(f){
+                f['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+                form_fields.push(f);
+              });
             }
           }else{
             form_fields.push(field);

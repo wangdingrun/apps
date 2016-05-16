@@ -70,11 +70,11 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">选择人员</h4>  </div>  <div class="modal-body" id="selectTagModal-body"></div>  <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK">确定</button>  </div></div>  </div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
-		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box box-solid"><div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</script>');
+		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="modal-body selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
 	}
 });
 
@@ -87,32 +87,76 @@ $(function(){
 				show : show,
 				hide : hide,
 				reload : reloadTag,
-                checked : checked,
-                defaultValues : [],
-                values :[],
-                valuesObject : getValuesObject
+        checked : checked,
+        values :[],
+        valuesObject : getValuesObject
 			}
 			return selectTag;
 
-            function getValuesObject(){
-                if($options.showUser){
-                    return $options.data.users.filterProperty("id", SelectTag.values);
+
+      function init(){
+
+        $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+
+        $("#valueLabel").hide();
+
+        if($options.showUser){
+          $("#selectTagModalTitle").html("选择人员");
+        }else{
+          $("#selectTagModalTitle").html("选择部门");
+        }
+      }
+
+      function getValuesObject(){
+
+        var vo = new Array();
+        var v = SelectTag.values;
+        if(v){
+
+            for(var i = 0 ; i < v.length; i ++){
+               if($options.showUser){
+                    vo.push($options.data.users.findPropertyByPK("id", v[i]));
                 }else{
-                    return $options.data.orgs.filterProperty("id", SelectTag.values);
+                    vo.push($options.data.orgs.findPropertyByPK("id", v[i]));
+                } 
+            }
+        }
+        return vo;
+      }
+
+      function checked(parentTag){
+        var tag = $("input",parentTag)[0];
+        if(tag.type == 'radio'){
+            selectTag.values = [tag.value];
+            $(".selectTagOK").click();
+        }else{
+            if(tag.checked){
+                if(selectTag.values.indexOf(tag.value) < 0){
+                  selectTag.values.push(tag.value);
                 }
+            }else{
+                selectTag.values.remove(selectTag.values.indexOf(tag.value));
             }
 
-            function checked(tag){
-                if(tag.type == 'radio'){
-                    selectTag.values = [tag.value];
-                }else{
-                    if(tag.checked){
-                        selectTag.values.push(tag.value);
-                    }else{
-                        selectTag.values.remove(selectTag.values.indexOf(tag.value));
-                    }
-                }
-            }
+            changeValueLabel();
+            
+            $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
+        }
+      }
+
+      function changeValueLabel(){
+        if(selectTag.values.length > 0){
+          var html = '';
+          selectTag.valuesObject().forEach(function(v){
+            html = html + '\r\n<span class="label label-info">' + v.name + '</span>'
+          });
+          $("#valueLabel").html(html);
+          $("#valueLabel").show();
+        }else{
+          $("#valueLabel").hide();
+        }
+      }
+
 			/*
 			* options : {} 
 			* 	data: {orgs:[],users:[]}
@@ -124,13 +168,14 @@ $(function(){
 			* callback : 点击确认按钮的回调函数
 			*/
 			function show(options,callback){
+        options.values = [];
 
-                selectTag.values = [];
-
-                if(selectTag.defaultValues.length > 0){
-                    selectTag.values = selectTag.defaultValues;
-                    selectTag.defaultValues = [];
-                }
+        if(options.defaultValues && options.defaultValues.length > 0){
+            selectTag.values = options.defaultValues;
+            options.defaultValues = [];
+        }else{
+            selectTag.values = [];
+        }
 				//检查参数
 				checkOptions(options);
 				
@@ -138,7 +183,16 @@ $(function(){
 				
 				reloadTag($options.orgId);
 
-                $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
+        $(".selectTagOK").attr('onclick',callback + ";SelectTag.hide();");
+        
+        init();
+
+        if(!options.multiple){
+          $(".selectTagOK").hide();
+        }else{
+          $(".selectTagOK").show();
+          changeValueLabel();
+        }
 
 				$("#selectTagModal").modal('show');
 			};
@@ -170,24 +224,24 @@ $(function(){
 					options.showUser = true;
 				}
 
-                if(!options.orgId){
-                    options.orgId = '';
+        if(!options.orgId){
+            options.orgId = '';
+        }
+
+        if(options.showOrg && options.data.users){
+            options.data.users.forEach(function(u){
+                if(organizations in u){
+                    return ;
+                }
+                if(u.organization instanceof Object){
+                    
+                }else{
+                    u.organization = options.data.orgs.findPropertyByPK("id", u.organization);
                 }
 
-                if(options.showOrg && options.data.users){
-                    options.data.users.forEach(function(u){
-                        if(organizations in u){
-                            return ;
-                        }
-                        if(u.organization instanceof Object){
-                            
-                        }else{
-                            u.organization = options.data.orgs.findPropertyByPK("id", u.organization);
-                        }
-
-                        u.organizations = u.organization.parents.concat(u.organization.id);
-                    });
-                }
+                u.organizations = u.organization.parents.concat(u.organization.id);
+            });
+        }
 				
 				$options = $.extend({},options);
 			};
@@ -196,54 +250,74 @@ $(function(){
 				var options = constructorOptions(orgId);
 				var sourceTemplate = $("#selectTagTemplate").html();
 				var template = Handlebars.compile(sourceTemplate);
-				$('#selectTagModal-body').html(template(options));
-                $(".selectTag-profile").initial({charCount:1});
-                setDefaultValues(options);
+				$('#selectTagModal-content').html(template(options));
+          //$(".selectTag-profile").initial({charCount:1});
+          setDefaultValues(options);
+          //TODO 判断当前的用户数量，大于10就显示分页，否则不显示分页
+          
+          $("#selectTag-users").DataTable({
+              paging:true,
+              lengthChange:false,
+              searching:false,
+              ordering:false,
+              info:false,
+              autoWidth:true,
+              language:{
+                  oPaginate:{
+                      sFirst:'首页',
+                      sPrevious:'上页',
+                      sNext:'下页',
+                      sLast:'末页'
+                  }
+              },
+              pagingType: "numbers"
+          });
+          
 			};
 
-            function setDefaultValues(options){
-                var dfs= selectTag.values;
-                dfs.forEach(function(v){
-                    $("#" + v).attr("checked",true);
-                });
-            }
+      function setDefaultValues(options){
+          var dfs= selectTag.values;
+          dfs.forEach(function(v){
+              $("#" + v).attr("checked",true);
+          });
+      }
 
 			function constructorOptions(orgId){
-                var org = {};
+        var org = {};
 				if($options.showOrg){
                     
-                    org = $options.data.orgs.findPropertyByPK("id", orgId);
+          org = $options.data.orgs.findPropertyByPK("id", orgId);
 
-                    if(org){
-                        org.parentOrg = getOrgParent(org.parent);
-                    }else{
-                        org = {};
-                    }
+          if(org){
+              org.parentOrg = getOrgParent(org.parent);
+          }else{
+              org = {};
+          }
 
 					org.children = getOrgChildren(orgId);
 				}
 				org.users = getUsers(orgId);
 
-                $options.org = org;
+        $options.org = org;
 
 				return $options;
 			};
 
-            function getOrgParent(parentOrgId){
-                var org ;
+      function getOrgParent(parentOrgId){
+          var org ;
 
-                if(parentOrgId == '' || parentOrgId == 0){
-                    return ;
-                }else{
-                    org = $options.data.orgs.findPropertyByPK("id", parentOrgId);
-                }
+          if(parentOrgId == '' || parentOrgId == 0){
+              return ;
+          }else{
+              org = $options.data.orgs.findPropertyByPK("id", parentOrgId);
+          }
 
-                if(org.parent != '' && org.parent != 0){
-                    org.parentOrg = getOrgParent(org.parent);
-                }
+          if(org.parent != '' && org.parent != 0){
+              org.parentOrg = getOrgParent(org.parent);
+          }
 
-                return org;
-            };
+          return org;
+      };
 			
 			/*
 			* return 传入orgId的直属组织
@@ -297,21 +371,28 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
 
   if(showUser){
       for(var i=0, l=items.length; i<l; i++) {
-        out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" + options.fn(items[i]);
+        out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" +"<i class='fa fa-sitemap' aria-hidden='true' style='padding-right:4px'></i>"+ options.fn(items[i]);
         if(items[i].users){
-        	out = out + "<span class='label label-default pull-right'>" + items[i].users.length + "</span>";
+        	out = out + "<span class='pull-right'>" + items[i].users.length + "<span class='glyphicon glyphicon-menu-right' style='font-size:13px;padding-left:5px;color:#ccc'></span></span>";
         }
 
         out = out + "</a></li>";
       }
   }else{
         items.forEach(function(item){
-            out = out + "<li><a class='org'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label>";
+            out = out + "<li ><a class='org'><label style='height:100%;cursor:pointer;width:100%' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'";
 
+            if(tagType == "radio"){
+              out = out + " style='display:none' ";
+            }else{
+              out = out + " style ='margin-top:0;vertical-align:middle;'";
+            }
+            out = out + "><i class='fa fa-sitemap' aria-hidden='true' style='padding-left:4px'></i><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label></a>";
+            
             if(item.children && item.children.length > 0){
                 out = out + "<span class='pull-right' style='cursor:pointer;width:30px;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
             }
-            out = out + "</a></li>";
+            out = out + "</li>";
         });
   }
 	
@@ -323,7 +404,13 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
   if(!items) 
   	return;
   for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<tr><td><a class='user'><label style='cursor:pointer'><input style='margin-top:0;vertical-align:middle' type='"+tagType+"' onClick='SelectTag.checked(this)' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'><span style='vertical-align:middle;padding-left:4px'><img data-name='" + options.fn(items[i]) + "' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
+    out = out + "<tr ><td ><a class='user' ><label style='height:100%;width:100%;cursor:pointer;' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
+    if(tagType == "radio"){
+      out = out + " style='display:none' ";
+    }else{
+      out = out + " style ='margin-top:0;vertical-align:middle'";
+    }
+    out = out +"><span style='vertical-align:middle;padding-left:4px'><img src='/workflow/avatar/"+items[i].email+"' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
   }
 	
   return new Handlebars.SafeString(out);
@@ -344,10 +431,9 @@ Handlebars.registerHelper('breadcrumb', function(data) {
   }
 	
   out = getLi(data.parentOrg);
-  out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' 
-  		+ out;
+  //out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' + out;
   if(data.id && data.id !=0 && data.id !=''){
-  	out = out + '<li class="active"><a href="javascript:SelectTag.reload(\''+data.id+'\')">'+data.name+'</a></li>'
+  	out = out + '<li class="active"><a href="javascript:void(0)">'+data.name+'</a></li>';//SelectTag.reload(\''+data.id+'\')
   }
   return new Handlebars.SafeString(out);
 });

@@ -4,6 +4,12 @@
 formId = 'instanceform';
 
 Template.instanceform.helpers
+    applicantContext: ->
+        steedos_instance = WorkflowManager.getInstance();
+        data = {name:'ins_applicant',atts:{name:'ins_applicant',class:'selectUser',style:'padding:6px 12px;'}} 
+        if not steedos_instance || steedos_instance.state != "draft"
+            data.atts.disabled = true
+        return data;
     instanceId: ->
         return 'instanceform';#"instance_" + Session.get("instanceId");
 
@@ -214,15 +220,17 @@ Template.instanceform.helpers
 Template.instanceform.onRendered ->
     t = this;
 
-    t.$("#ins_applicant").select2();
-
     #t.subscribe "instance_data", Session.get("instanceId"), ->
     #    Tracker.afterFlush -> 
     instance = WorkflowManager.getInstance();
     if !instance
         return;
 
-    $("#ins_applicant").select2().val(instance.applicant).trigger('change');
+    #$("#ins_applicant").select2().val(instance.applicant).trigger('change');
+    #$("#ins_applicant").val(instance.applicant);
+    $("input[name='ins_applicant']")[0].dataset.values = instance.applicant;
+    $("input[name='ins_applicant']").val(instance.applicant_name)
+    
 
     ApproveManager.error = {nextSteps:'',nextStepUsers:''};
 
