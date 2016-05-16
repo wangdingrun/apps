@@ -60,6 +60,8 @@ Template.instance_list.helpers
 Template.instance_list.onRendered ->
     #dataTable = $(".datatable-instances").DataTable();
     #dataTable.select();
+    if !Steedos.isMobile()
+        $(".instance-list").perfectScrollbar();
 
 Template.instance_list.events
 

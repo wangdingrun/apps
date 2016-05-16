@@ -43,3 +43,8 @@ Template.sidebar.helpers
 		if c && (c.finished_count > 0)
 			return c.finished_count;
 		return;
+
+Template.sidebar.onRendered ->
+
+    if !Steedos.isMobile()
+        $(".sidebar").perfectScrollbar();
