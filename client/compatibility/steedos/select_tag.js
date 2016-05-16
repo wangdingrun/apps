@@ -269,7 +269,8 @@ $(function(){
                       sNext:'下页',
                       sLast:'末页'
                   }
-              }
+              },
+              pagingType: "numbers"
           });
           
 			};
@@ -370,7 +371,7 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
 
   if(showUser){
       for(var i=0, l=items.length; i<l; i++) {
-        out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" + options.fn(items[i]);
+        out = out + "<li><a href=\"javascript:SelectTag.reload(\'"+items[i].id+"\')\">" +"<i class='fa fa-sitemap' aria-hidden='true' style='padding-right:4px'></i>"+ options.fn(items[i]);
         if(items[i].users){
         	out = out + "<span class='pull-right'>" + items[i].users.length + "<span class='glyphicon glyphicon-menu-right' style='font-size:13px;padding-left:5px;color:#ccc'></span></span>";
         }
@@ -384,9 +385,9 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
             if(tagType == "radio"){
               out = out + " style='display:none' ";
             }else{
-              out = out + " style ='margin-top:0;vertical-align:middle'";
+              out = out + " style ='margin-top:0;vertical-align:middle;'";
             }
-            out = out + "><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label></a>";
+            out = out + "><i class='fa fa-sitemap' aria-hidden='true' style='padding-left:4px'></i><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label></a>";
             
             if(item.children && item.children.length > 0){
                 out = out + "<span class='pull-right' style='cursor:pointer;width:30px;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
