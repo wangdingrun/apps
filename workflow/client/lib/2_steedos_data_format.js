@@ -89,12 +89,12 @@ var s_autoform = function (schema, field){
         break;
     case 'date' :
         schema.type = String;
-        autoform.readonly = (permission == 'readonly');
+        autoform.disabled = (permission == 'readonly');
         autoform.type = 'bootstrap-datepicker';
         break;
     case 'dateTime' : 
         schema.type = String;
-        autoform.readonly = (permission == 'readonly');
+        autoform.disabled = (permission == 'readonly');
         autoform.type = 'bootstrap-datetimepicker'; 
         break;
     case 'checkbox' :
@@ -173,7 +173,8 @@ var s_schema = function (label, field){
   schema = {};
    
   schema.label = label;
-  schema.optional = !is_required;
+
+  schema.optional = (field.permission == "readonly") || (!is_required);
 
   if(fieldType == 'email'){
     
@@ -185,11 +186,6 @@ var s_schema = function (label, field){
   }
 
   schema.autoform = new s_autoform(schema, field);
-  if(schema.autoform.options && schema.autoform.options.length > 0 && schema.autoform.type=='select2'){
-    if(is_required !=true){
-      schema.autoform.options.unshift({label:'',value:''});
-    }
-  }
 
   schema.autoform.defaultValue = field.default_value;
 
