@@ -3,9 +3,9 @@ AutoForm.addInputType("coreform-multiSelect", {
   valueIsArray: true,
   valueIn: function (val, atts) {
     if (typeof val === "string")
-      return value ? value.split(",") : [];
+      return val ? val.split(",") : [];
     else
-      return value
+      return val
   },
   valueOut: function () {
     var val = [];
