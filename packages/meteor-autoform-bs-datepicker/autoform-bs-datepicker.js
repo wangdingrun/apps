@@ -3,13 +3,11 @@
 AutoForm.addInputType("bootstrap-datepicker", {
   template: "afBootstrapDatepicker",
   valueIn: function (val, atts) {
-    debugger
     if (typeof val === "string")
       val = new Date(val)
     return val;
   },
   valueOut: function () {
-    debugger
     if (this.val()) {
       var val = this.datepicker('getUTCDate');
       return (val instanceof Date) ? val : this.val();

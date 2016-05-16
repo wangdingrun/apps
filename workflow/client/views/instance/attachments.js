@@ -24,7 +24,7 @@ Template.instance_attachment.helpers({
         var box = Session.get("box");
 
         var currentApprove = InstanceManager.getCurrentApprove();
-        if (currentApprove.id == currentApproveId)
+        if (currentApprove && (currentApprove.id == currentApproveId))
             isCurrentApprove = true;
 
         if (box == "draft" || box == "inbox")

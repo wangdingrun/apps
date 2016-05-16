@@ -3,47 +3,47 @@ WorkflowManager_format = {};
 
 
 
-//获取user select2 标签的 options
-var getSpaceUserSelect2Options = function (){
+// //获取user select2 标签的 options
+// var getSpaceUserSelect2Options = function (){
 
-  // todo WorkflowManager.getSpaceUsers(spaceId);
-  // 数据格式转换
+//   // todo WorkflowManager.getSpaceUsers(spaceId);
+//   // 数据格式转换
   
-  var spaceUsers = WorkflowManager.getSpaceUsers();
+//   var spaceUsers = WorkflowManager.getSpaceUsers();
   
-  var options = new Array();
+//   var options = new Array();
 
-  spaceUsers.forEach(
-    function(user){
-        options.push({
-            optgroup : user.organization.fullname,
-            options: [
-                {label : user.name, value : user.id}
-            ]
-        });
-    }
-  );
+//   spaceUsers.forEach(
+//     function(user){
+//         options.push({
+//             optgroup : user.organization.fullname,
+//             options: [
+//                 {label : user.name, value : user.id}
+//             ]
+//         });
+//     }
+//   );
 
-  return options ;
+//   return options ;
 
-};
+// };
 
-//获取group select2 标签的 options
-var getSpaceOrganizationSelect2Options = function(){
-  var spaceOrgs = WorkflowManager.getSpaceOrganizations();
+// //获取group select2 标签的 options
+// var getSpaceOrganizationSelect2Options = function(){
+//   var spaceOrgs = WorkflowManager.getSpaceOrganizations();
   
-  var options = new Array();
+//   var options = new Array();
 
-  spaceOrgs.forEach(
-    function(spaceOrg){
-        options.push(
-            {label : spaceOrg.fullname, value : spaceOrg.id}
-        );
-    }
-  );
+//   spaceOrgs.forEach(
+//     function(spaceOrg){
+//         options.push(
+//             {label : spaceOrg.fullname, value : spaceOrg.id}
+//         );
+//     }
+//   );
 
-  return options ;
-};
+//   return options ;
+// };
 
 var s_autoform = function (schema, field){
 
@@ -100,7 +100,7 @@ var s_autoform = function (schema, field){
     case 'checkbox' :
         schema.type = Boolean;
         autoform.disabled = (permission == 'readonly');
-        autoform.type = 'boolean-checkbox';
+        autoform.type = 'coreform-checkbox';
         break;
     case 'select' : 
         if (is_multiselect){
@@ -115,12 +115,12 @@ var s_autoform = function (schema, field){
     case 'radio' :
         schema.type = [String];
         autoform.disabled = (permission == 'readonly');
-        autoform.type = 'select-radio-inline';
+        autoform.type = 'coreform-radio';
         break;
     case 'multiSelect' : 
         schema.type = [String];
         autoform.disabled = (permission == 'readonly');
-        autoform.type = 'select-checkbox-inline';
+        autoform.type = 'coreform-multiSelect';
         break;
     case 'user' : 
         if (is_multiselect){
@@ -129,6 +129,7 @@ var s_autoform = function (schema, field){
         }else{
           schema.type = String; // 如果是单选，不能设置multiple 参数
         }
+        autoform.readonly = true;
         autoform.disabled = (permission == 'readonly');
         autoform.type = "selectuser";
         break;
@@ -140,6 +141,7 @@ var s_autoform = function (schema, field){
           schema.type = String; // 如果是单选，不能设置multiple 参数
         }
         
+        autoform.readonly = true;
         autoform.disabled = (permission == 'readonly');
 
         autoform.type = "selectorg";
@@ -241,65 +243,65 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
 };
 
 
-var getSchemaValue = function(field,value){
-  var rev ;
-  switch(field.type){
-    case 'checkbox':
-      rev = (value && value != 'false') ? true : false;
-      break;
-    case 'multiSelect':
-      if(value instanceof Array)
-        rev = value;
-      else
-        rev = value ? value.split(",") : [];
-      break;
-    case 'radio':
-      if(value instanceof Array)
-        rev = value
-      else
-        rev = value ? value.split(",") : [];
-    default:
-      rev = value;
-      break;
-  }
-  return rev;
-};
+// var getSchemaValue = function(field,value){
+//   var rev ;
+//   switch(field.type){
+//     // case 'checkbox':
+//     //   rev = (value && value != 'false') ? true : false;
+//     //   break;
+//     // case 'multiSelect':
+//     //   if(value instanceof Array)
+//     //     rev = value;
+//     //   else
+//     //     rev = value ? value.split(",") : [];
+//     //   break;
+//     // case 'radio':
+//     //   if(value instanceof Array)
+//     //     rev = value
+//     //   else
+//     //     rev = value ? value.split(",") : [];
+//     default:
+//       rev = value;
+//       break;
+//   }
+//   return rev;
+// };
 
 
 WorkflowManager_format.getAutoformSchemaValues = function(){
-  var form = WorkflowManager.getInstanceFormVersion();
-  if(!form) return ;
-  var fields = form.fields;
+  // var form = WorkflowManager.getInstanceFormVersion();
+  // if(!form) return ;
+  // var fields = form.fields;
 
-  var values = {};
+  // var values = {};
 
   var instanceValue = InstanceManager.getCurrentValues();
 
-  if(!instanceValue)
-    return ;
+  // if(!instanceValue)
+  //   return ;
 
-  fields.forEach(function(field){
-    if(field.type == 'table'){
-      t_values = new Array();
-      if (field.sfields){
-        if (!instanceValue[field.code])
-          return ;
-        instanceValue[field.code].forEach(function(t_row_value){
-          field.sfields.forEach(function(sfield){
-            //if(sfield.type == 'checkbox'){
-            t_row_value[sfield.code] = getSchemaValue(sfield, t_row_value[sfield.code]);
-            //}
-          });
-          t_values.push(t_row_value);
-          
-        });
-      }
-      values[field.code] = t_values;
-    }else{
-      values[field.code] = getSchemaValue(field, instanceValue[field.code]);
-    }
-  });
-  //console.log("getAutoformSchemaValues ...")
-  //console.log(values);
-  return values;
+  return instanceValue;
+
+  // fields.forEach(function(field){
+  //   if(field.type == 'table'){
+  //     t_values = new Array();
+  //     if (field.sfields){
+  //       if (!instanceValue[field.code])
+  //         return ;
+  //       instanceValue[field.code].forEach(function(t_row_value){
+  //         field.sfields.forEach(function(sfield){
+
+  //           t_row_value[sfield.code] = getSchemaValue(sfield, t_row_value[sfield.code]);
+
+  //         });
+  //         t_values.push(t_row_value);
+  //       });
+  //     }
+  //     values[field.code] = t_values;
+  //   }else{
+  //     values[field.code] = getSchemaValue(field, instanceValue[field.code]);
+  //   }
+  // });
+
+  // return values;
 }

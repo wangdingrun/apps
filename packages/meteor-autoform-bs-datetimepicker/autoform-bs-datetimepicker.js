@@ -18,7 +18,6 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
     return val;
   },
   valueOut: function () {
-    debugger
     if (!this.data("DateTimePicker"))
       return null
     var m = this.data("DateTimePicker").date();
@@ -39,7 +38,6 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
   },
   valueConverters: {
     "string": function (val) {
-      debugger
       return (val instanceof Date) ? val.toString() : val;
     },
     "stringArray": function (val) {
