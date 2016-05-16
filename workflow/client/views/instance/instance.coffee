@@ -280,10 +280,7 @@ Template.instanceform.onRendered ->
     #$("#ins_applicant").select2().val(instance.applicant).trigger('change');
     #$("#ins_applicant").val(instance.applicant);
     $("input[name='ins_applicant']")[0].dataset.values = instance.applicant;
-    ins_applicantObj = WorkflowManager.getUser(instance.applicant);  #直接刷新时，在此处获得不到spaceuser信息
-
-    if ins_applicantObj
-        $("input[name='ins_applicant']").val(ins_applicantObj.name)
+    $("input[name='ins_applicant']").val(instance.applicant_name)
     
 
     if !ApproveManager.isReadOnly()
