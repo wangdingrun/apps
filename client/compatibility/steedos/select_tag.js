@@ -410,7 +410,7 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
     }else{
       out = out + " style ='margin-top:0;vertical-align:middle'";
     }
-    out = out +"><span style='vertical-align:middle;padding-left:4px'><img src='/workflow/avatar/"+items[i].email+"' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
+    out = out +"><span style='vertical-align:middle;padding-left:4px'><img src='/workflow/avatar/"+items[i].name+"' class='selectTag-profile img-circle'>" + options.fn(items[i]) + "</span></label></a></td></tr>";
   }
 	
   return new Handlebars.SafeString(out);

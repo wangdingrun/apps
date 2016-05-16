@@ -90,12 +90,12 @@ var s_autoform = function (schema, field){
     case 'date' :
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'date';
+        autoform.type = 'bootstrap-datepicker';
         break;
     case 'dateTime' : 
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'datetime-local'; 
+        autoform.type = 'bootstrap-datetimepicker'; 
         break;
     case 'checkbox' :
         schema.type = Boolean;
