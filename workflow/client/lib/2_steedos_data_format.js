@@ -65,7 +65,12 @@ var s_autoform = function (schema, field){
     case 'input' :
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'text';
+        if(field.is_textarea){
+          autoform.type = 'textarea';
+          autoform.rows = field.rows;
+        }else{
+          autoform.type = 'text';
+        }
         break;
     /*case 'section' : //div
         schema.type = String;
