@@ -32,6 +32,6 @@ FlowRouter.route '/space',
 			FlowRouter.go "/space/" + Session.get("spaceId");
 			return true
 
-		BlazeLayout.render 'loginLayout',
+		BlazeLayout.render 'masterLayout',
 			main: "space_select"
 

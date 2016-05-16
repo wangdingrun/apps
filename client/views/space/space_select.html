@@ -1,6 +1,13 @@
 <template name="space_select">
 
-<div class="container">
+
+	<section class="content-header">
+		<h1>
+			{{_ "Select Space"}}
+			<small></small>
+		</h1>
+	</section> 
+
 	<section class="content">
 		<div class="row">
 			{{#each spaces}}
@@ -14,29 +21,18 @@
 						<div class="icon">
 							<i class="fa fa-globe"></i>
 						</div>
-						<span class="small-box-footer">{{_ "Select space"}} <i class="fa fa-arrow-circle-right"></i></span>
+						<span class="small-box-footer">{{_ "Select Space"}} <i class="fa fa-arrow-circle-right"></i></span>
 					</div>
 				</a>
 			</div>
 			{{/each}}
-			<div class="col-md-6 col-sm-6 col-xs-12">
-				<a style="cursor: pointer;" id="space_add">
-					<div class="small-box bg-aqua">
-						<div class="inner">
-							<h3 class="fa fa-plus"></h3>
-							<p>&nbsp;</p>
-						</div>
-						<div class="icon">
-							<i class="fa fa-plus"></i>
-						</div>
-						<span class="small-box-footer">{{_ "Add space"}} <i class="fa fa-arrow-circle-right"></i></span>
-					</div>
-				</a>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<button type="button" id="space_add" class="btn btn-block btn-success btn-lg">{{_ "Add space"}}</button>
 			</div>
 		</div>
 	</section>
-
-</div>
 
 
 </template>

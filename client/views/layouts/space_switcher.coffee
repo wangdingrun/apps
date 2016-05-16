@@ -11,7 +11,7 @@ Template.space_switcher.helpers
 			space = db.spaces.findOne(Session.get("spaceId"))
 			if space
 				return space.name
-		return t("Select Space")
+		return t("Workflow")
 
 
 Template.space_switcher.events
