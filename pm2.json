@@ -6,43 +6,14 @@
                 "script": "/srv/workflow/bundle/main.js",
                 "out_file": "/srv/workflow/log/app.log",
                 "error_file": "/srv/workflow/log/err.log",
-                "port": "80",
+                "port": "7100",
                 "env": {
                         "MONGO_URL": "mongodb://localhost:27017/steedos",
                         "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
-                        "ROOT_URL": "http://workflow.steedos.com",
-                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
-                        "PORT": "80"
-                }
-        }, {
-                "name": "workflow.1",
-                "max_memory_restart": "1024M",
-                "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
-                "script": "/srv/workflow/bundle/main.js",
-                "out_file": "/srv/workflow/log/app.log",
-                "error_file": "/srv/workflow/log/err.log",
-                "port": "6000",
-                "env": {
-                        "MONGO_URL": "mongodb://localhost:27017/steedos",
-                        "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
-                        "ROOT_URL": "http://workflow.steedos.com",
-                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
-                        "PORT": "6000"
-                }
-        }, {
-                "name": "workflow.2",
-                "max_memory_restart": "1024M",
-                "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
-                "script": "/srv/workflow/bundle/main.js",
-                "out_file": "/srv/workflow/log/app.log",
-                "error_file": "/srv/workflow/log/err.log",
-                "port": "6001",
-                "env": {
-                        "MONGO_URL": "mongodb://localhost:27017/steedos",
-                        "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
-                        "ROOT_URL": "http://workflow.steedos.com",
-                        "DDP_DEFAULT_CONNECTION_URL": "http://workflow.steedos.com",
-                        "PORT": "6001"
+                        "MULTIPLE_INSTANCES_COLLECTION_NAME": "workflow_instances",
+                        "ROOT_URL": "https://cn.steedos.com/workflow",
+                        "DDP_DEFAULT_CONNECTION_URL": "https://cn.steedos.com/workflow",
+                        "PORT": "7100"
                 }
         }]
 }

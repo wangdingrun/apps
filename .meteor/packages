@@ -3,6 +3,8 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+autoupdate
+
 standard-minifiers
 meteor-base
 mobile-experience
@@ -62,10 +64,13 @@ gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
 faisalman:ua-parser-js
+smoral:sweetalert
 
 alanning:roles
 sach:flow-db-admin
 
+
+steedos:ui
 steedos:connect-bqq
 steedos:lib
 steedos:workflow

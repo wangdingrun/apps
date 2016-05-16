@@ -17,7 +17,7 @@ AccountsTemplates.configure({
   //displayFormLabels: true,
   //forbidClientAccountCreation: true,
   //formValidationFeedback: true,
-  //homeRoutePath: '/',
+  homeRoutePath: '/',
   //showAddRemoveServices: false,
   //showPlaceholders: true,
 

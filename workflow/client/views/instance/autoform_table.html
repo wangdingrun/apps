@@ -20,12 +20,12 @@
                     <tr>
                     {{#each this.sfields}}
                         {{#if this.is_wide}}
-                            <td nowrap="nowrap" style="width:300px;">
-                                <label class="control-label">{{this.code}}</label>
+                            <td class="field {{this.type}}" nowrap='nowrap'>
+                                <label class="control-label">{{#if this.name}}{{this.name}}{{else}}{{this.code}}{{/if}}</label>
                             </td>
                         {{else}}
-                            <td nowrap="nowrap" style='width:150px'>
-                                <label class="control-label">{{this.code}}</label>
+                            <td class="field {{this.type}}" nowrap='nowrap'>
+                                <label class="control-label">{{#if this.name}}{{this.name}}{{else}}{{this.code}}{{/if}}</label>
                             </td>
                         {{/if}}
                     {{/each}}
@@ -34,28 +34,21 @@
                 {{#if equals this.permission 'editable'}}
                 <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                     {{#each this.tableValues}}
-                    <tr class="person-row edit-steedos-table-row" data-toggle="modal" name="{{@index}}row" data-rowindex="{{@index}}" data-method="edit" data-title="编辑">
+                    <tr class="edit-steedos-table-row" data-toggle="modal" name="{{@index}}row" data-rowindex="{{@index}}" data-method="edit" data-title="编辑">
                         {{#each arrayify this}}
-                            <td nowrap="nowrap">
+                            <td class="field {{type}}">
                                 {{{value}}}
                             </td>
-                        {{/each}}<!--
-                        <td nowrap="nowrap">
-                            <span class="panel-controls">
-                                <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
-                                <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
-                            </span>
-                        </td>-->
+                        {{/each}}
                     </tr>
                     {{/each}}
                 </tbody>
                 {{else}}
                 <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                     {{#each this.tableValues}}
-                    <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
-                        <td >{{@index}}</td>
+                    <tr name="{{@index}}row" >
                         {{#each arrayify this}}
-                            <td nowrap="nowrap">
+                            <td class="field {{type}}">
                                 {{{value}}}
                             </td>
                         {{/each}}
@@ -68,7 +61,7 @@
     </div>
     {{#if equals this.permission 'editable'}}
 
-    <div class="modal fade" id="{{this.code}}modal" name="{{this.code}}.modal" data-rowindex="-1" data-formcode="{{this.code}}">
+    <div class="modal fade" id="{{this.code}}modal" name="{{this.code}}.modal" data-rowindex="-1" data-formcode="{{this.code}}" data-backdrop="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">

@@ -312,7 +312,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
 
 ApproveManager.getNextStepsSelectValue = function(){
     console.log("getNextStepsSelectValue");
-    return $("#nextSteps").select2().val();
+    return $("#nextSteps").val();
 }
 
 // ApproveManager.setNextStepsSelectValue = function(steps, value){
@@ -329,7 +329,7 @@ ApproveManager.getNextStepsSelectValue = function(){
 // }
 
 ApproveManager.getNextStepUsersSelectValue = function(){
-    return $("#nextStepUsers").select2().val();
+    return $("#nextStepUsers").val();
 }
 
 // ApproveManager.setNextStepUsersSelectValue = function(value){

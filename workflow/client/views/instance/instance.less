@@ -11,8 +11,10 @@
 }
 
 .autoform-table{
-  align: center;
-  text-align: center;;
+  text-align: left;
+  td.field.number {
+    text-align: right;
+  }
 }
 
 .font-size-h3{
@@ -50,12 +52,7 @@
 }
 
 .approve-item > .name{
-    width: 160px;
     font-weight: bold;
-}
-
-.approve-item > .finish-date{
-    width: 130px;
 }
 
 .approve-item > .approved{
@@ -199,6 +196,7 @@ textarea {
   left: 0px;
   z-index: 100;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .ins-upload .ins-file-version-input {

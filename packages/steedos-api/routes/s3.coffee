@@ -61,6 +61,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
             version_id: fileObj._id
             size: fileObj.size 
           };
+          res.setHeader("x-amz-version-id",fileObj._id);
           res.end(JSON.stringify(resp));
           return
     else
@@ -70,23 +71,21 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
    
 JsonRoutes.add "delete", "/s3/",  (req, res, next) ->
 
-  JsonRoutes.parseFiles req, res ()->
+  collection = cfs.instances
 
-    collection = cfs.instances
+  id = req.query.version_id;
+  if id
+    file = collection.findOne({ _id: id })
+    if file
+      file.remove()
+      resp = {
+        status: "OK"
+      }
+      res.end(JSON.stringify(resp));
+      return
 
-    id = req.query.version_id;
-    if id
-      file = collection.findOne({ _id: id })
-      if file
-        file.remove()
-        resp = {
-          status: "OK"
-        }
-        res.end(JSON.stringify(resp));
-        return
-
-    res.statusCode = 404;
-    res.end();
+  res.statusCode = 404;
+  res.end();
 
    
 JsonRoutes.add "get", "/s3/",  (req, res, next) ->
@@ -94,97 +93,80 @@ JsonRoutes.add "get", "/s3/",  (req, res, next) ->
   id = req.query.version_id;
 
   res.statusCode = 302;
-  res.setHeader "Location", "/api/files/instances/" + id + "?download=1"
+  res.setHeader "Location", Meteor.absoluteUrl("api/files/instances/") + id + "?download=1"
   res.end();
 
 
-JsonRoutes.add "post", "/s3/upgrade",  (req, res, next) ->
-  console.log("/s3/upgrade")
+Meteor.methods 
 
-  fs = Npm.require('fs')
-  mime = Npm.require('mime')
+  s3_upgrade: (min, max) ->
+    console.log("/s3/upgrade")
 
-  root_path = Meteor.settings.fakes3_root
-  console.log(root_path)
-  collection = cfs.instances
+    fs = Npm.require('fs')
+    mime = Npm.require('mime')
 
-  # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
-  deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
-    _rev = version._rev
-    created_by = version.created_by
-    approve = version.approve
-    filename = version.filename || attach_filename;
-    mime_type = mime.lookup(filename)
-    new_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename + "_" + _rev
-    old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
+    root_path = "/mnt/fakes3/10"
+    console.log(root_path)
+    collection = cfs.instances
 
-    readFile = (full_path) ->
-      fs.readFile full_path, Meteor.bindEnvironment(((err, data) ->
-        if err
-          console.log(err)
-          return
+    # 遍历instance 拼出附件路径 到本地找对应文件 分两种情况 1./filename_versionId 2./filename；
+    deal_with_version = (root_path, space, ins_id, version, attach_filename) ->
+      _rev = version._rev
+      if (collection.find({"_id": _rev}).count() >0)
+        return
+      created_by = version.created_by
+      approve = version.approve
+      filename = version.filename || attach_filename;
+      mime_type = mime.lookup(filename)
+      new_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename + "_" + _rev
+      old_path = root_path + "/spaces/" + space + "/workflow/" + ins_id + "/" + filename
 
-        newFile = new FS.File();
-        newFile._id = _rev;
-        newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
-        newFile.attachData data, {type: mime_type}, (err) ->
+      readFile = (full_path) ->
+        data = fs.readFileSync full_path
+         
+        if data
+          newFile = new FS.File();
+          newFile._id = _rev;
+          newFile.metadata = {owner:created_by, space:space, instance:ins_id, approve: approve};
+          newFile.attachData data, {type: mime_type}
           newFile.name(filename)
-          collection.insert newFile, (err, fileObj) ->
-            if err
-              console.log(err)
-            else
-              console.log(fileObj._id)
-              # fileObj.on("stored", () ->
-              #   console.log("onStored")
-              # )
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
-
-    fs.stat(new_path, Meteor.bindEnvironment(((err, stat) ->
-        if stat && stat.isFile()
+          fileObj = collection.insert newFile
+          console.log(fileObj._id)
+          
+      try 
+        n = fs.statSync new_path
+        if n && n.isFile()
           readFile new_path
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
-    )
+      catch error
+        try 
+          old = fs.statSync old_path
+          if old && old.isFile()
+            readFile old_path
+        catch error
+          console.error("file not found: " + old_path)
+          
 
-    fs.stat(old_path, Meteor.bindEnvironment(((err, stat) ->
-        if stat && stat.isFile()
-          readFile old_path
-        ), ->
-          console.log("Meteor.bindEnvironment failed")
-        )
-    )
+    count = db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}}).count();
+    console.log("all instances: " + count)
+    
+    b = new Date()
 
-  console.log(db.instances.find({"attachments.current": {$ne: null}}).count())
-  b = new Date()
+    i = min
+    db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}, skip: min, limit: max-min}).forEach (ins) ->
+      i = i + 1
+      console.log(i + ":" + ins.name)
+      attachs = ins.attachments
+      space = ins.space
+      ins_id = ins._id
+      attachs.forEach (att) ->
+        deal_with_version root_path, space, ins_id, att.current, att.filename
+        if att.historys
+          att.historys.forEach (his) ->
+            deal_with_version root_path, space, ins_id, his, att.filename
 
-  db.instances.find({"attachments.current": {$ne: null}}).forEach (ins) ->
-    attachs = ins.attachments
-    space = ins.space
-    ins_id = ins._id
-    attachs.forEach (att) ->
-      deal_with_version root_path, space, ins_id, att.current, att.filename
-      if att.historys
-        att.historys.forEach (his) ->
-          deal_with_version root_path, space, ins_id, his, att.filename
+    console.log(new Date() - b)
 
-  console.log(new Date() - b)
-  res.statusCode = 204
-  res.end()
-
-
-
-JsonRoutes.add "post", "/s3/remove",  (req, res, next) ->
-  cfs.instances.remove({"metadata.space":"519f004e8e296a1c5f00001d"})
-  res.statusCode = 204
-  res.end()
-
-
-
-
-
+    return "ok"
 
 
 

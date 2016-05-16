@@ -4,12 +4,12 @@ WorkflowManager_format = {};
 
 
 //获取user select2 标签的 options
-var getSpaceUserSelect2Options = function (spaceId){
+var getSpaceUserSelect2Options = function (){
 
   // todo WorkflowManager.getSpaceUsers(spaceId);
   // 数据格式转换
   
-  var spaceUsers = WorkflowManager.getSpaceUsers(spaceId);
+  var spaceUsers = WorkflowManager.getSpaceUsers();
   
   var options = new Array();
 
@@ -29,8 +29,8 @@ var getSpaceUserSelect2Options = function (spaceId){
 };
 
 //获取group select2 标签的 options
-var getSpaceOrganizationSelect2Options = function(spaceId){
-  var spaceOrgs = WorkflowManager.getSpaceOrganizations(spaceId);
+var getSpaceOrganizationSelect2Options = function(){
+  var spaceOrgs = WorkflowManager.getSpaceOrganizations();
   
   var options = new Array();
 
@@ -105,7 +105,7 @@ var s_autoform = function (schema, field){
           schema.type = String;
         }
         autoform.readonly = (permission == 'readonly');
-        autoform.type = (permission == 'readonly') ? 'text' : 'select2';
+        autoform.type = (permission == 'readonly') ? 'text' : 'select';
         break;
     case 'radio' :
         schema.type = [String];
@@ -124,10 +124,8 @@ var s_autoform = function (schema, field){
         }else{
           schema.type = String; // 如果是单选，不能设置multiple 参数
         }
-        
         autoform.disabled = (permission == 'readonly');
         autoform.type = "selectuser";
-        autoform.options = getSpaceUserSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
         break;
     case 'group' : 
         if (is_multiselect){
@@ -140,7 +138,7 @@ var s_autoform = function (schema, field){
         autoform.disabled = (permission == 'readonly');
 
         autoform.type = "selectorg";
-        autoform.options = getSpaceOrganizationSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
+
         break;
     default:
         schema.type = String;

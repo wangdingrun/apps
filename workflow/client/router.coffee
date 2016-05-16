@@ -1,51 +1,72 @@
-workflowRoutes = FlowRouter.group 
-	prefix: '/workflow',
-	name: 'workflow',
-	triggersEnter: [
-		(context, redirect) ->
-			#console.log('running workflow triggers');
-			if !Meteor.userId()
-				redirect('/sign-in');
-
-	]
- 
+checkUserSigned = (context, redirect) ->
+	if !Meteor.userId()
+		redirect('/sign-in');
 
 
-workflowRoutes.route '/inbox', 
+FlowRouter.route '/space/:spaceId', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		BlazeLayout.render 'masterLayout',
-			main: "workflow_main"
+		if !Meteor.userId()
+			FlowRouter.go '/sign-in';
+		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
+		FlowRouter.go "/space/" + params.spaceId + "/inbox/"
+
+		# Tracker.autorun (c) ->
+		# 	if FlowRouter.subsReady() is true
+		# 		Meteor.defer ->
+		# 			FlowRouter.go "/space/" + params.spaceId + "/inbox/"
+		# 		c.stop()
 
 
-workflowRoutes.route '/:box/:spaceId', 
+
+FlowRouter.route '/space/:spaceId/:box/', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
+		Session.set("instanceId", null); 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
-		if (Steedos.isMobile())
-			$(".instance-list-wrapper").show();
-			$(".instance-wrapper").hide();
+		
+		$(".instance-wrapper").hide();
+		$(".instance-list-wrapper").show();
 
-workflowRoutes.route '/:box/:spaceId/:instanceId', 
+
+FlowRouter.route '/space/:spaceId/:box/:instanceId', 
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 
+		Session.set("spaceId", params.spaceId);
+		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"
+		$(document.body).addClass "loading";
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
 
-			Session.set("spaceId", params.spaceId);
+			Session.set("judge", null);
+			Session.set("next_step_id", null);
+			Session.set("next_step_multiple", null);
+			Session.set("next_user_multiple", null);
 			Session.set("instanceId", params.instanceId);
 			Session.set("box", params.box);
+
 			BlazeLayout.render 'masterLayout',
 				main: "workflow_main"
 
 			if (Steedos.isMobile())
-				$(".instance-list-wrapper").hide();
 				$(".instance-wrapper").show();
+				$(".instance-list-wrapper").hide();
+			else
+				$(".instance-wrapper").show();
+				$(".instance-list-wrapper").show();
+
+			$(document.body).removeClass "loading";
+
 
 	triggersExit: [
 		()->

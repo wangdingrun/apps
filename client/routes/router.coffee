@@ -1,10 +1,10 @@
 FlowRouter.route '/', 
 	action: (params, queryParams)->
 		if (!Meteor.userId())
-			FlowRouter.go("/sign-in");
-		else
-			FlowRouter.go("/workflow/inbox");
-
+			FlowRouter.go "/sign-in";
+		else 
+			FlowRouter.go "/space";
+		
 
 
 FlowRouter.route '/logout', 
@@ -17,7 +17,21 @@ FlowRouter.route '/logout',
 
 FlowRouter.route '/account/profile', 
 	action: (params, queryParams)->
-		if Meteor.user()
+		if Meteor.userId()
 			BlazeLayout.render 'masterLayout',
 				main: "profile"
+
+
+FlowRouter.route '/space', 
+	action: (params, queryParams)->
+		if !Meteor.userId()
+			FlowRouter.go "/sign-in";
+			return true
+
+		if Session.get("spaceId")
+			FlowRouter.go "/space/" + Session.get("spaceId");
+			return true
+
+		BlazeLayout.render 'masterLayout',
+			main: "space_select"
 

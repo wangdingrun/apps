@@ -1,6 +1,13 @@
 
 Template.instance_attachments.helpers({
-
+    
+    enabled_add_attachment: function() {
+        if (Session.get("box")=="draft" || Session.get("box")=="inbox")
+            return "";
+        else
+            return "display: none;";
+        
+    } 
 })
 
 
@@ -35,7 +42,7 @@ Template.instance_attachment.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
  
 })
@@ -43,12 +50,6 @@ Template.instance_attachment.helpers({
 Template.instance_attachment.events({
     "click [name='ins_attach_version']": function (event, template) {
         Session.set("attach_id", event.target.id);
-    }
-})
-
-Template.upload_progress_bar_modal.helpers({
-    isUploading: function () {
-        return Session.get("progress_file_id");
     }
 })
 
@@ -70,6 +71,8 @@ Template._file_DeleteButton.events({
 Template.ins_attach_version_modal.helpers({
 
     attach: function () {
+        WorkflowManager.instanceModified.get();
+
         var ins_id, ins_attach_id;
         ins_id = Session.get("instanceId");
         ins_attach_id = Session.get("attach_id");
@@ -96,6 +99,14 @@ Template.ins_attach_version_modal.helpers({
         var owner_name = attachVersion.created_by_name;
         var uploadedAt = attachVersion.created;
         return owner_name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm");
+    },
+
+    enabled_add_attachment: function() {
+        if (Session.get("box")=="draft" || Session.get("box")=="inbox")
+            return "";
+        else
+            return "display: none;";
+        
     },
 
     current_can_delete: function (currentApproveId, historys) {
@@ -127,7 +138,7 @@ Template.ins_attach_version_modal.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return window.location.origin + "/api/files/instances/" + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
     }
 })
 

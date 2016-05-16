@@ -3,7 +3,6 @@ bcrypt = NpmModuleBcrypt;
 bcryptHash = Meteor.wrapAsync(bcrypt.hash);
 bcryptCompare = Meteor.wrapAsync(bcrypt.compare);
 
-
 JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 
 	cookies = new Cookies( req, res );
@@ -25,8 +24,17 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 			"services.resume.loginTokens.hashedToken": hashedToken
 		if user
 			# set cookie to response
-			cookies.set("X-User-Id", userId)
-			cookies.set("X-Auth-Token", authToken)
+			# maxAge 3 month
+			cookies.set "X-User-Id", userId, 
+				domain: Steedos.uri.domain(),
+				maxAge: 90*60*60*24*1000,
+				httpOnly: false
+
+			cookies.set "X-Auth-Token", authToken, 
+				domain: Steedos.uri.domain(),
+				maxAge: 90*60*60*24*1000,
+				httpOnly: false
+
 			JsonRoutes.sendResult res, 
 				data: 
 					userId: user._id
@@ -60,8 +68,8 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 JsonRoutes.add "post", "/se/ws/1/logout", (req, res, next) ->
 
 	cookies = new Cookies( req, res );
-	cookies.set("X-User-Id", "")
-	cookies.set("X-Auth-Token", "")
+	cookies.set("X-User-Id")
+	cookies.set("X-Auth-Token")
 
 	res.end();
 
@@ -94,8 +102,15 @@ JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
 	Accounts._insertHashedLoginToken user._id, {hashedToken}
 
 	# set cookie to response
-	cookies.set("X-User-Id", user._id)
-	cookies.set("X-Auth-Token", authToken.token)
+	# maxAge 3 month
+	cookies.set "X-User-Id", user._id, 
+		domain: Steedos.uri.domain(),
+		maxAge: 90*60*60*24*1000,
+		httpOnly: false
+	cookies.set "X-Auth-Token", authToken.token, 
+		domain: Steedos.uri.domain(),
+		maxAge: 90*60*60*24*1000,
+		httpOnly: false
 
 	JsonRoutes.sendResult res, 
 		data: 

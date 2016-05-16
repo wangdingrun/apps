@@ -1,5 +1,4 @@
 {
-	"Steedos": "华炎云",
 	"Steedos Workflow": "审批王",
 	"Forgot Password": "忘记密码",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
@@ -75,11 +74,57 @@
 	"Account": "账户",
 	"Account Settings": "账户设置",
 	"Select Space": "选择工作区",
+	"Add space": "新增工作区",
 	
 	"APPLICATIONS": "应用",
 	"Workflow": "审批王",
 
-	"bqq": "企业QQ"
+	"bqq": "企业QQ",
+
+	"OK": "确认",
+	"Cancel": "取消",
+
+	"Attachment deleted successfully": "附件删除成功!",
+	"Attachment was added successfully": "附件添加成功!",
 
 
+	"Saved successfully": "暂存成功!",
+	"Added successfully": "创建成功!",
+	"Deleted successfully": "删除成功!",
+	"Submitted successfully": "提交成功!",
+	"Canceled successfully": "取消申请成功!",
+	"Reasigned successfully": "转签核成功!",
+	"Relocated successfully": "转签核成功!",
+
+	"Attachments": "附件",
+	"Versions": "版本",
+	"Current Version": "（最新版本）",
+
+	"Instance State approved": " 已核准",
+	"Instance State rejected": " 已驳回",
+	"Instance State terminated": "已取消",
+	"Instance State finished": "已完成",
+	"Instance State pending": "审核中",
+	"Instance State reassigned": "转签核",
+	"Instance State relocated": "重定位",
+
+	"Instance Relocate Hint": "请填写重定位的理由。",
+	"Instance Relocate Title": "重定位",
+	"Instance Relocate Reason": "请填写重定位的理由。",
+	"Instance Relocate NewInboxUsers": "请选择重定位审核人。",
+	"Instance Relocate Ok": "重定位提交成功。",
+	"Instance Relocate CurStep": "当前步骤: ",
+
+	// inbox
+	"Inbox Suggestion NextSteps Label":"下一步骤: ",
+	"Inbox Suggestion NextSteps Handler Label":"处理人: ",
+
+	"Workflow Designer": "流程设计器",
+	"User Management": "用户管理",
+
+
+
+
+
+	"Steedos": "华炎云"
 }

@@ -1,7 +1,8 @@
 WorkflowManager = {
   formVersionsCache: {},
   flowVersionsCache: {},
-  instanceCache: null
+  instanceCache: null,
+  instanceModified: new ReactiveVar(false)
 };
 
 /*-------------------data source------------------*/
@@ -92,8 +93,16 @@ WorkflowManager.callInstanceDataMethod = function(instanceId, callback){
     }
 
     Meteor.call("get_instance_data", instanceId, formCached, flowCached, function(error, result){
+      if (!result.instance) {
+        // 服务端 instance 还没保存好。
+        setTimeout(function(){
+          WorkflowManager.callInstanceDataMethod(instanceId, callback);
+        }, 300);
+        return;
+      }
       delete WorkflowManager["instanceCache"]
       WorkflowManager.instanceCache = result.instance;
+      WorkflowManager.instanceModified.set(false);
       if (result.form_version){
         console.log("get form version " + result.form_version._id)
         WorkflowManager.formVersionsCache[result.form_version._id] = result.form_version
@@ -120,9 +129,6 @@ WorkflowManager.getInstanceFormVersion = function (){
 
   if (instance) {
 
-      if (instance.form_version_cached)
-        return instance.form_version_cached
-
       rev = EJSON.clone(WorkflowManager.formVersionsCache[instance.form_version])
 
       field_permission = WorkflowManager.getInstanceFieldPermission();
@@ -132,6 +138,9 @@ WorkflowManager.getInstanceFormVersion = function (){
 
           if (field.type == 'table'){
             field['sfields'] = field['fields']
+            field['sfields'].forEach(function(sf){
+              sf["permission"] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+            });
             // 因为这个程序会傻傻的执行很多遍，所以不能删除
             delete field['fields']
           }
@@ -151,7 +160,6 @@ WorkflowManager.getInstanceFormVersion = function (){
       );
 
       rev.fields = form_fields;
-      instance.form_version_cached = rev
   }
 
   return rev;
@@ -160,9 +168,7 @@ WorkflowManager.getInstanceFormVersion = function (){
 WorkflowManager.getInstanceFlowVersion = function (){
   instance = WorkflowManager.getInstance();
   if (instance){
-      if (!instance.flow_version_cached)
-        instance.flow_version_cached = EJSON.clone(WorkflowManager.flowVersionsCache[instance.flow_version])
-      return instance.flow_version_cached
+      return EJSON.clone(WorkflowManager.flowVersionsCache[instance.flow_version])
   }
 };
 

@@ -26,11 +26,11 @@ Template.AdminLTE.onCreated(function () {
 
 });
 
-// Template.AdminLTE.onDestroyed(function () {
-//   // this.removeClasses();
-//   // this.style.remove();
-//   // this.skin.remove();
-// });
+Template.AdminLTE.onDestroyed(function () {
+  this.removeClasses();
+  // this.style.remove();
+  // this.skin.remove();
+});
 
 Template.AdminLTE.helpers({
   isReady: function () {
@@ -66,6 +66,13 @@ Template.AdminLTE.events({
   },
 
   'click .content-wrapper': function (e, t) {
+
+    if (e.target && e.target.getAttribute)
+      if (e.target.getAttribute("data-toggle") == "offcanvas")
+        return
+    if (e.target && e.target.parentElement && e.target.parentElement.getAttribute)
+      if (e.target.parentElement.getAttribute("data-toggle") == "offcanvas")
+        return
     //Enable hide menu when clicking on the content-wrapper on small screens
     if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
       $("body").removeClass('sidebar-open');
@@ -103,6 +110,11 @@ Template.AdminLTE.events({
         parent.find('li.active').removeClass('active');
         parent_li.addClass('active');
       });
+    }
+    else if ($(window).width() < (screenSizes.sm - 1)) {
+
+      $("body").removeClass('sidebar-open');
+      $("body").removeClass('sidebar-collapse')
     }
     //if this isn't a link, prevent the page from being redirected
     if (checkElement.is('.treeview-menu')) {

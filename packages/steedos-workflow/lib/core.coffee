@@ -1,4 +1,4 @@
-@Steedos = @db = {}
+@Workflow = {}
 
 @TabularTables = {};
 

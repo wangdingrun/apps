@@ -56,16 +56,14 @@ db.space_users.adminConfig =
 		spaces: db.spaces.adminConfig
 		organizations: db.organizations.adminConfig
 		space_users: db.space_users.adminConfig
-	dashboard:
-		homeUrl: Meteor.absoluteUrl()
 
 # set first user as admin
-if Meteor.isServer
-	adminUser = Meteor.users.findOne({},{sort:{createdAt:1}})
-	if adminUser
-		adminUserId = adminUser._id
-		if !Roles.userIsInRole(adminUserId, ['admin'])
-			Roles.addUsersToRoles adminUserId, ['admin'], Roles.GLOBAL_GROUP
+# if Meteor.isServer
+# 	adminUser = Meteor.users.findOne({},{sort:{createdAt:1}})
+# 	if adminUser
+# 		adminUserId = adminUser._id
+# 		if !Roles.userIsInRole(adminUserId, ['admin'])
+# 			Roles.addUsersToRoles adminUserId, ['admin'], Roles.GLOBAL_GROUP
 
 if Meteor.isClient
 	Meteor.startup ->

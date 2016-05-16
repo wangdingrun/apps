@@ -1,21 +1,25 @@
 <template name="loginLayout">
 
-    <div class="skin-green layout-top-nav">
+    <div class="skin-green layout-top-nav steedos">
 
         <div class="wrapper">
             <header class="main-header">
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="/" class="navbar-brand"><b>{{_ "Steedos Workflow"}}</b></a>
+                            <a href="{{urlPrefix}}" class="navbar-brand"><b>{{_ "Steedos Workflow"}}</b></a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="fa fa-bars"></i>
                             </button>
                         </div>
                         <div class="navbar-collapse pull-left collapse" id="navbar-collapse" aria-expanded="false" style="height: 1px;">
                           <ul class="nav navbar-nav">
-                                <li><a href="/sign-in">{{_ 'Log in'}}</a></li>
-                                <li><a href="/sign-up">{{_ 'Sign up'}}</a></li>
+                            {{#if isLoggedout}}
+                                <li><a href="{{urlPrefix}}/sign-in">{{_ 'Log in'}}</a></li>
+                                <li><a href="{{urlPrefix}}/sign-up">{{_ 'Sign up'}}</a></li>
+                            {{else}}
+                                <li><a href="{{urlPrefix}}/logout">{{_ 'Sign out'}}</a></li>
+                            {{/if}}
                           </ul>
                           
                         </div>

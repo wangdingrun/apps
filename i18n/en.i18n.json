@@ -1,5 +1,4 @@
 {
-	"Steedos": "Steedos",
 	"Steedos Workflow": "Steedos Workflow",
 	"Forgot Password": "Forgot Password",
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
@@ -52,9 +51,9 @@
 
 	"Home": "Home",
 	"Profile": "Profile",
-	"APPROVAL": "APPROVAL",
-	"MY APPLICANT": "MY APPLICANT",
-	"SETTINGS": "SETTINGS",
+	"APPROVAL": "Approval",
+	"MY APPLICANT": "My Applicant",
+	"SETTINGS": "Settings",
 	"Settings": "Settings",
 	"Help": "Help",
 	"New": "New",
@@ -70,10 +69,56 @@
 	"Account": "Account",
 	"Account Settings": "Account Settings",
 	"Select Space": "Select Space",
+	"Add space": "Add space",
 
 	"APPLICATIONS": "APPLICATIONS",
 	"Workflow": "Workflow",
 
-	"bqq": "Business QQ"
+	"bqq": "Business QQ",
 
+	"OK": "OK",
+	"Cancel": "Cancel",
+
+	"Attachment deleted successfully": "Attachment deleted successfully!",
+	"Attachment was added successfully": "Attachment was added successfully!",
+
+	"Saved successfully": "Saved successfully!",
+	"Added successfully": "Added successfully!",
+	"Deleted successfully": "Deleted successfully!",
+	"Submitted successfully": "Submitted successfully!",
+	"Canceled successfully": "Canceled successfully!",
+	"Reasigned successfully": "Reasigned successfully!",
+	"Relocated successfully": "Relocated successfully!",
+
+	"Attachments": "Attachments",
+	"Versions": "Versions",
+	"Current Version": "（Current Version）",
+	
+	"Instance State approved": " Approved",
+	"Instance State rejected": " Rejected",
+	"Instance State terminated": "Cancelled",
+	"Instance State finished": "Completed",
+	"Instance State pending": "In Progress",
+	"Instance State reassigned": "Reassigned",
+	"Instance State relocated": "Relocated",
+
+	"Instance Relocate Hint": "Enter your comments here.",
+	"Instance Relocate Title": "Relocate",
+	"Instance Relocate Reason": "Comments is required.",
+	"Instance Relocate NewInboxUsers": "Please select a user.",
+	"Instance Relocate Ok": "Relocated successfully.",
+	"Instance Relocate CurStep": "Current Step: ",
+
+	// inbox
+	"Inbox Suggestion NextSteps Label":"Next step: ",
+	"Inbox Suggestion NextSteps Handler Label":"Assignee: ",
+
+	"Workflow Designer": "Workflow Designer",
+	"User Management": "User Management",
+
+
+
+
+
+	"Steedos": "Steedos"
 }

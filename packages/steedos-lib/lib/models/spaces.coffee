@@ -109,22 +109,22 @@ db.spaces.helpers
                 user_accepted: user_accepted
         
 
-if Meteor.isClient
+# if Meteor.isClient
 
-    db.spaces.find().observeChanges
-        added: (_id, fields) ->
-            if !Session.get("spaceId")
-                Meteor.call "setSpaceId", _id, ->
-                    Session.set("spaceId", _id)
+#     db.spaces.find().observeChanges
+#         added: (_id, fields) ->
+#             if !Session.get("spaceId")
+#                 Meteor.call "setSpaceId", _id, ->
+#                     Session.set("spaceId", _id)
                 
-        removed: (_id)->
-            if Session.get("spaceId") == _id
-                spaceId = null
-                nextSpace = db.spaces.findOne()
-                if nextSpace
-                    spaceId  = nextSpace._id
-                Meteor.call "setSpaceId", spaceId, ->
-                    Session.set("spaceId", spaceId)
+#         removed: (_id)->
+#             if Session.get("spaceId") == _id
+#                 spaceId = null
+#                 nextSpace = db.spaces.findOne()
+#                 if nextSpace
+#                     spaceId  = nextSpace._id
+#                 Meteor.call "setSpaceId", spaceId, ->
+#                     Session.set("spaceId", spaceId)
 
 if Meteor.isServer
     

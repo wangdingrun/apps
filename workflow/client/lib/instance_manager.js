@@ -11,6 +11,129 @@ InstanceManager.getFormField = function(fieldId){
     return null;
 }
 
+
+InstanceManager.getNextStepOptions = function(){
+  console.log("calculate next_step_options")
+  if (ApproveManager.isReadOnly())
+      return []
+
+  var instance = WorkflowManager.getInstance();
+  var currentApprove = InstanceManager.getCurrentApprove();
+  var current_next_steps = currentApprove.next_steps;
+  var judge = Session.get("judge");
+  var currentStep = InstanceManager.getCurrentStep();
+  var form_version = WorkflowManager.getInstanceFormVersion();
+  // 待办：获取表单值
+  var autoFormDoc = {};
+  if(AutoForm.getFormValues("instanceform")){
+    autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+  }
+  
+  var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+
+  var next_step_options = []
+  if (nextSteps && nextSteps.length > 0){
+      var next_step_id = null;
+      var next_step_type = null
+      nextSteps.forEach(function(step){
+        var option = {
+              id: step.id,
+              text: step.name,
+              type: step.step_type
+          }
+          if (current_next_steps && current_next_steps.length > 0){
+              if (current_next_steps[0].step == step.id){
+                  option.selected = true
+                  next_step_id = step.id
+                  next_step_type = step.step_type
+              }
+          }
+          next_step_options.push(option)
+      });
+          
+      // 默认选中第一个
+      if (!next_step_id && next_step_options.length>0){
+          next_step_options[0].selected = true
+          next_step_id = next_step_options[0].id
+          next_step_type = next_step_options[0].type
+      }
+
+      Session.set("next_step_id", next_step_id);
+      //触发select重新加载
+      Session.set("next_step_multiple", false)
+      if (next_step_id){
+          if(next_step_type == 'counterSign')
+              Session.set("next_user_multiple", true)
+          else
+              Session.set("next_user_multiple", false)
+      }
+  }
+  return next_step_options;
+}
+
+// InstanceManager.updateNextStepTagOptions = function(){
+//   var next_step_options = InstanceManager.getNextStepOptions();
+//   $("#nextSteps").empty(); // 清空选项
+//   next_step_options.forEach(function(next_step_option){
+//     $("#nextSteps").append("<option value='" + next_step_option.id + "'>" + next_step_option.text + "</option>");
+//     if(next_step_option.selected){
+//       $("#nextSteps").val(next_step_option.id);
+//     }
+//   });
+// }
+
+InstanceManager.getNextUserOptions = function(){
+  console.log("calculate next_user_options")
+
+  var next_user_options = []
+
+  var next_step_id = Session.get("next_step_id");
+  var next_user_multiple = Session.get("next_user_multiple")
+  if (next_step_id){
+
+      var instance = WorkflowManager.getInstance();
+      var currentApprove = InstanceManager.getCurrentApprove();
+      var current_next_steps = currentApprove.next_steps;
+      
+      var next_user_ids = [];
+      var nextStepUsers = ApproveManager.getNextStepUsers(instance, next_step_id);
+      if (nextStepUsers){
+          nextStepUsers.forEach(function(user){
+            var option = {
+                  id: user.id,
+                  text: user.name
+              }
+              if (current_next_steps && current_next_steps.length > 0){
+                  if (_.contains(current_next_steps[0].users, user.id)){
+                      option.selected = true
+                      next_user_ids.push(user.id)
+                  }
+              }
+              next_user_options.push(option)
+          });
+
+      }
+      if (next_user_options.length > 0){ //==1
+          next_user_options[0].selected = true
+          next_user_ids.push(next_user_options[0].id)
+      }
+  }
+
+  return next_user_options;
+}
+
+// InstanceManager.updateNextUserTagOptions = function(){
+//   var next_user_options = InstanceManager.getNextUserOptions();
+//   $("#nextStepUsers").empty(); // 清空选项
+//   next_user_options.forEach(function(next_user_option){
+//     $("#nextStepUsers").append("<option value='" + next_user_option.id + "' >" + next_user_option.text + "</option>");
+//     if(next_user_option.selected){
+//       $("#nextStepUsers").val(next_user_option.id);
+//     }
+//   });
+// }
+
+
 InstanceManager.getFormFieldByCode = function(fieldCode){
     var instanceFields = WorkflowManager.getInstanceFields();
     var field = instanceFields.filterProperty("code", fieldCode);
@@ -354,8 +477,9 @@ InstanceManager.saveIns = function() {
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       instance.applicant = $("input[name='ins_applicant']")[0].dataset.values;
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        WorkflowManager.instanceModified.set(false)
         if (result == true)
-          toastr.success("暂存成功!");
+          toastr.success(TAPi18n.__('Saved successfully'));
         else 
           toastr.error(error);
       });
@@ -363,8 +487,9 @@ InstanceManager.saveIns = function() {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        WorkflowManager.instanceModified.set(false)
         if (result == true)
-          toastr.success("暂存成功!");
+          toastr.success(TAPi18n.__('Saved successfully'));
         else 
           toastr.error(error);
       });
@@ -451,7 +576,7 @@ InstanceManager.relocateIns = function (step_id, user_ids, reason) {
 
 // 归档
 InstanceManager.archiveIns = function (insId) {
-  var instance = db.instances.findOne(insId);
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     if (instance.is_archived==true)
       return;
@@ -462,7 +587,7 @@ InstanceManager.archiveIns = function (insId) {
 // 添加附件
 InstanceManager.addAttach = function (fileObj, isAddVersion) {
   console.log("InstanceManager.addAttach");
-  var instance = db.instances.findOne(fileObj.metadata.instance);
+  var instance = WorkflowManager.getInstance();
   if (instance) {
     var state = instance.state;
 
@@ -521,26 +646,32 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         attachs = [attach];
       }
     }
+    WorkflowManager.instanceModified.set(true);
 
     if (state == "draft") {
       instance.attachments = attachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        Session.set('change_date', new Date());
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件添加成功!");
+          toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
         }
       });
     } else if (state == "pending") {
-      var myApprove = InstanceManager.getMyApprove();
+      var myApprove = {};
+      $.extend(myApprove, InstanceManager.getMyApprove());
       myApprove.attachments = attachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        Session.set('change_date', new Date());
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件添加成功!");
+          toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
         }
@@ -569,26 +700,33 @@ InstanceManager.removeAttach = function () {
           }
         }
     })
+    WorkflowManager.instanceModified.set(true);
 
     if (state == "draft") {
       instance.attachments = newAttachs;
       instance.traces[0].approves[0] = InstanceManager.getMyApprove();
       Meteor.call("draft_save_instance", instance, function (error, result) {
+        Session.set('change_date', new Date());
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件删除成功!");
+          toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);
         }
       });
     } else if (state == "pending") {
-      var myApprove = InstanceManager.getMyApprove();
+      instance.attachments = newAttachs;
+      var myApprove = {};
+      $.extend(myApprove, InstanceManager.getMyApprove());
       myApprove.attachments = newAttachs;
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
+        Session.set('change_date', new Date());
+        WorkflowManager.instanceModified.set(false);
         if (result == true) {
           $('#upload_progress_bar').modal('hide');
-          toastr.success("附件删除成功!");
+          toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);
         }
