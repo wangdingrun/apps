@@ -286,7 +286,7 @@ function adjustFieldValue(field,value){
         value = value.toString();
         break;
       case 'dateTime':
-        value = $.format.date(value,'yyyy-MM-ddTHH:mm');
+        value = value; //$.format.date(value,"yyyy-MM-ddTHH:mm'Z");
         break;
       case 'group':
         value = WorkflowManager.getFormulaOrgObjects(value);

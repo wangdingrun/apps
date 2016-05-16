@@ -1,6 +1,8 @@
 AutoForm.addInputType("bootstrap-datetimepicker", {
   template: "afBootstrapDateTimePicker",
   valueIn: function (val, atts) {
+    if (typeof val === "string")
+      val = new Date(val)
     // datetimepicker expects the date to represent local time,
     // so we need to adjust it if there's a timezoneId specified
     var timezoneId = atts.timezoneId;
@@ -16,9 +18,9 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
     return val;
   },
   valueOut: function () {
+    debugger
     if (!this.data("DateTimePicker"))
       return null
-    debugger
     var m = this.data("DateTimePicker").date();
     
     if (!m) {
@@ -37,6 +39,7 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
   },
   valueConverters: {
     "string": function (val) {
+      debugger
       return (val instanceof Date) ? val.toString() : val;
     },
     "stringArray": function (val) {
@@ -102,9 +105,9 @@ Template.afBootstrapDateTimePicker.rendered = function () {
 
     // set field value
     if (data.value instanceof Date) {
-      dtp.setDate(data.value);
+      dtp.date(data.value);
     } else {
-      dtp.setDate(); // clear
+      dtp.date(); // clear
     }
 
     // set start date if there's a min in the schema
