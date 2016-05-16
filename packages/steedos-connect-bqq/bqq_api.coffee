@@ -98,6 +98,7 @@ BQQ.userGet = ()->
 
 # BQQ.syncCompany({ expires_in: 7776000,refresh_token: '8cfbcf279c61028750ad5bcec13d8b03',company_id: 'c4609934c326caf9fd0053823bb99947',company_token: '07ded6f5c4c31706018434f88a94b461' })
 BQQ.syncCompany = (oauth) ->
+  BQQ.company = oauth
 
   now = new Date
   # 工作区
