@@ -78,6 +78,18 @@ db.organizations._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform: 
 			omit: true
+	created:
+        type: Date,
+        optional: true
+  created_by:
+      type: String,
+      optional: true
+  modified:
+      type: Date,
+      optional: true
+  modified_by:
+      type: String,
+      optional: true
 
 if Meteor.isClient
 	db.organizations._simpleSchema.i18n("db_organizations")

@@ -97,9 +97,9 @@ if Meteor.isServer
         # 根据locale和模板创建表单流程
         template_space_id = null
         if Meteor.user().locale == "zh-cn"
-            template_space_id = Meteor.settings.template_space_zh_cn
+            template_space_id = "526621803349041651000a1a"
         else
-            template_space_id = Meteor.settings.template_space_en_us
+            template_space_id = "526785fb3349041651000a75"
         db.forms.find({"space": template_space_id, "state": "enabled"}).forEach (template_form) ->
             # Form
             new_form = {}

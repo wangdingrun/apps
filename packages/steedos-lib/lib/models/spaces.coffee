@@ -1,7 +1,7 @@
 db.spaces = new Meteor.Collection('spaces')
 
 
-db.spaces.attachSchema new SimpleSchema
+db.spaces._simpleSchema = new SimpleSchema
     name: 
         type: String,
         # unique: true,
@@ -66,10 +66,36 @@ db.spaces.attachSchema new SimpleSchema
                 return balance.value>0
             else
                 this.unset()
+    created:
+        type: Date,
+        optional: true
+    created_by:
+        type: String,
+        optional: true
+    modified:
+        type: Date,
+        optional: true
+    modified_by:
+        type: String,
+        optional: true
+    "services.bqq.expires_in":
+        type: Number,
+        optional: true
+    "services.bqq.company_id":
+        type: String,
+        optional: true
+    "services.bqq.company_token":
+        type: String,
+        optional: true
+    "services.bqq.refresh_token":
+        type: String,
+        optional: true
 
 
 if Meteor.isClient
-    db.spaces.simpleSchema().i18n("db_spaces")
+    db.spaces._simpleSchema.i18n("db_spaces")
+
+db.spaces.attachSchema(db.spaces._simpleSchema)
 
 
 db.spaces.helpers
