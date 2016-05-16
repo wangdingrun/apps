@@ -22,7 +22,7 @@ Template.autoform_table.helpers({
 
     var rowObj = {};
     for(var i = 0 ; i < sfield.length ; i++){
-      rowObj[sfield[i].code] = {value:'',type:sfield[i].type};
+      rowObj[sfield[i].code] = {value:sfield[i].default_value,type:sfield[i].type};
     }
     ROWOBJ = rowObj;
     return JSON.stringify(rowObj);
@@ -89,7 +89,6 @@ Template.autoform_table.events({
       var formId = steedosTable.formid;
 
       var rowObj = JSON.parse(steedosTable.rowobj);
-
       //获取新增行的index;
       var row_index
       if (AutoForm.arrayTracker.info[formId][tableCode].array){

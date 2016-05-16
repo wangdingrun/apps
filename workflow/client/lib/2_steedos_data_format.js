@@ -184,9 +184,10 @@ var s_schema = function (label, field){
     if(is_required !=true){
       schema.autoform.options.unshift({label:'',value:''});
     }
-
-    schema.autoform.defaultValue = schema.autoform.options[0].value;
   }
+
+  schema.autoform.defaultValue = field.default_value;
+
   return schema;
 };
 
