@@ -241,7 +241,7 @@ InstanceManager.checkFormFieldValue = function(field){
     var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
     var parent_group = $("#" + field.id).parent();
     var message = '';
-    if(field.required){
+    if(field.parentNode.dataset.required == "true"){
       if(!field.value || field.value == '' || field.length < 1){
           var fo = InstanceManager.getFormFieldByCode(field.name);
           var titleName = field.name
