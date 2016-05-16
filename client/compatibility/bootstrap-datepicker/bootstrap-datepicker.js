@@ -799,7 +799,8 @@
 				this._trigger('clearDate');
 
 			this.fill();
-			this.element.change();
+			//初始化时不触发 change 事件
+			//this.element.change();
 			return this;
 		},
 
