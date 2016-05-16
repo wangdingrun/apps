@@ -26,13 +26,13 @@ Meteor.methods({
             var user = db.users.findOne(applicant_id, {fields: {name: 1}});
             var applicant = db.space_users.find({space: space_id, user: applicant_id}, {fields: {organization: 1}});
             var org_id = applicant.fetch()[0].organization;
-            var organization = db.organizations.findOne(org_id, {fields: {name: 1, full_name: 1}});
+            var organization = db.organizations.findOne(org_id, {fields: {name: 1, fullname: 1}});
 
             setObj.applicant = applicant_id;
             setObj.applicant_name = user.name;
             setObj.applicant_organization = org_id;
             setObj.applicant_organization_name = organization.name;
-            setObj.applicant_organization_fullname = organization.full_name;
+            setObj.applicant_organization_fullname = organization.fullname;
 
             traces.forEach(function(t){
                 t.approves.forEach(function(a){
