@@ -139,14 +139,21 @@ BQQ.syncCompany = (oauth) ->
   admin_ids = []
   user_data.items.forEach (u) ->
     console.log("新建用户")
-    doc = {}
-    doc.name = u.realname
-    doc.locale = "zh-cn"
-    doc.created = now
-    doc.modified = now
-    doc.services = {bqq:{id: u.open_id}}
-    console.log(doc)
-    user_id = db.users.direct.insert(doc)
+    user_id = null
+    uq = db.users.find({"services.bqq.id": u.open_id})
+    if uq.count() > 0
+      console.log('用户已存在')
+      user_id = uq.fetch()[0]._id
+    else
+      console.log('用户不存在')
+      doc = {}
+      doc.name = u.realname
+      doc.locale = "zh-cn"
+      doc.created = now
+      doc.modified = now
+      doc.services = {bqq:{id: u.open_id}}
+      console.log(doc)
+      user_id = db.users.direct.insert(doc)
 
     if u.role_id == 0
       owner_id = user_id
@@ -159,18 +166,26 @@ BQQ.syncCompany = (oauth) ->
   # 新建工作区
   if owner_id
     console.log("新建工作区")
-    s_doc = {}
-    s_doc._id = "bqq-" + space_data.company_id
-    s_doc.name = space_data.company_name
-    s_doc.owner = owner_id
-    s_doc.admins = admin_ids.concat([owner_id])
-    s_doc.created = now
-    s_doc.created_by = owner_id
-    s_doc.modified = now
-    s_doc.modified_by = owner_id
-    s_doc.services = { bqq:{ expires_in: oauth.expires_in, refresh_token: oauth.refresh_token, company_id: oauth.company_id, company_token: oauth.company_token }}
-    console.log(s_doc)
-    space_id = db.spaces.direct.insert(s_doc)
+    space_id = null
+    s_id = "bqq-" + space_data.company_id
+    sq = db.spaces.find({_id: s_id})
+    if sq.count() > 0
+      console.log('工作区已存在')
+      space_id = s_id
+    else
+      console.log('工作区不存在')
+      s_doc = {}
+      s_doc._id = s_id
+      s_doc.name = space_data.company_name
+      s_doc.owner = owner_id
+      s_doc.admins = admin_ids.concat([owner_id])
+      s_doc.created = now
+      s_doc.created_by = owner_id
+      s_doc.modified = now
+      s_doc.modified_by = owner_id
+      s_doc.services = { bqq:{ expires_in: oauth.expires_in, refresh_token: oauth.refresh_token, company_id: oauth.company_id, company_token: oauth.company_token }}
+      console.log(s_doc)
+      space_id = db.spaces.direct.insert(s_doc)
 
 
   # 部门
@@ -202,20 +217,26 @@ BQQ.syncCompany = (oauth) ->
             )
     if orgs.length > 0
       orgs.forEach (o) ->
-        org_doc = {}
-        org_doc._id = "bqq-" + company_id + "-" + o.dept_id
-        org_doc.space = space_id
-        org_doc.name = o.dept_name
-        if p_dept_id > 0
-          org_doc.parent = "bqq-" + company_id + "-" + p_dept_id
-        if p_dept_id == 0
-          org_doc.is_company = true
-        org_doc.created = now
-        org_doc.created_by = owner_id
-        org_doc.modified = now
-        org_doc.modified_by = owner_id
-        console.log(org_doc)
-        org_id = db.organizations.direct.insert(org_doc)
+        org_id = null
+        o_id = "bqq-" + company_id + "-" + o.dept_id
+        oq = db.organizations.find({_id: o_id})
+        if oq.count() > 0
+          org_id = o_id
+        else
+          org_doc = {}
+          org_doc._id = o_id
+          org_doc.space = space_id
+          org_doc.name = o.dept_name
+          if p_dept_id > 0
+            org_doc.parent = "bqq-" + company_id + "-" + p_dept_id
+          if p_dept_id == 0
+            org_doc.is_company = true
+          org_doc.created = now
+          org_doc.created_by = owner_id
+          org_doc.modified = now
+          org_doc.modified_by = owner_id
+          console.log(org_doc)
+          org_id = db.organizations.direct.insert(org_doc)
         if org_id
           create_org(depts, o.dept_id, space_id, company_id, owner_id)
 
@@ -227,42 +248,54 @@ BQQ.syncCompany = (oauth) ->
   # 新建space_user
   user_data.items.forEach (u) ->
     console.log("新建space_user")
-    su_doc = {}
-    su_doc._id = "bqq-" + u.open_id
-    su_doc.user = u.user_id
-    su_doc.space = space_id
-    su_doc.user_accepted = true
-    su_doc.name = u.realname
-    su_doc.created = now
-    su_doc.created_by = owner_id
+    su_id = "bqq-" + u.open_id
+    suq = db.space_users.find({_id: su_id})
+    if suq.count() == 0
+      console.log('space_user不存在')
+      su_doc = {}
+      su_doc._id = su_id
+      su_doc.user = u.user_id
+      su_doc.space = space_id
+      su_doc.user_accepted = true
+      su_doc.name = u.realname
+      su_doc.created = now
+      su_doc.created_by = owner_id
 
-    p_dept_id = null
-    if u.p_dept_id && u.p_dept_id.length >0
-      p_dept_id = u.p_dept_id[0]
-    if p_dept_id
-      su_doc.organization = "bqq-" + space_data.company_id + "-" + p_dept_id
-    console.log(su_doc)
-    space_user_id = db.space_users.direct.insert(su_doc)
-    if space_user_id
-      # update org users
-      if su_doc.organization
-        organizationObj = db.organizations.findOne(su_doc.organization)
-        organizationObj.updateUsers()
+      p_dept_id = null
+      if u.p_dept_id && u.p_dept_id.length >0
+        p_dept_id = u.p_dept_id[0]
+      if p_dept_id
+        su_doc.organization = "bqq-" + space_data.company_id + "-" + p_dept_id
+      console.log(su_doc)
+      space_user_id = db.space_users.direct.insert(su_doc)
+      if space_user_id
+        # update org users
+        if su_doc.organization
+          organizationObj = db.organizations.findOne(su_doc.organization)
+          organizationObj.updateUsers()
 
-      # users_changelogs
-      ucl_doc = {}
-      ucl_doc.change_date = moment().format('YYYYMMDD')
-      ucl_doc.operator = owner_id
-      ucl_doc.space = space_id
-      ucl_doc.operation = "add"
-      ucl_doc.user = u.user_id
-      ucl_doc.created = now
-      ucl_doc.created_by = owner_id
+        # users_changelogs
+        ucl_doc = {}
+        ucl_doc.change_date = moment().format('YYYYMMDD')
+        ucl_doc.operator = owner_id
+        ucl_doc.space = space_id
+        ucl_doc.operation = "add"
+        ucl_doc.user = u.user_id
+        ucl_doc.created = now
+        ucl_doc.created_by = owner_id
 
-      count = db.space_users.direct.find({space: space_id}).count()
-      ucl_doc.user_count = count
-      console.log(ucl_doc)
-      db.users_changelogs.direct.insert(ucl_doc)
+        count = db.space_users.direct.find({space: space_id}).count()
+        ucl_doc.user_count = count
+        console.log(ucl_doc)
+        db.users_changelogs.direct.insert(ucl_doc)
+
+  # 更新space_user直属上级
+  user_data.items.forEach (u) ->
+    if u.p_open_id
+      console.log('更新space_user直属上级')
+      console.log(u.realname)
+      manager = db.space_users.findOne("bqq-"+u.p_open_id, {fields: {user: 1}})
+      db.space_users.direct.update("bqq-"+u.open_id, {$set:{manager: manager.user}})
 
 
   # 更新 org
