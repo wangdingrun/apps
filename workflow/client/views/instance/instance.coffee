@@ -209,16 +209,25 @@ Template.instanceform.helpers
         console.log("next_user_context run ...");
         users = InstanceManager.getNextUserOptions();
 
-        data = {dataset:{},name:'nextStepUsers',atts:{name:'nextStepUsers',class:'selectUser nextStepUsers form-control',style:'padding:6px 12px;'}};
+        data = {dataset:{},name:'nextStepUsers',atts:{name:'nextStepUsers',id:'nextStepUsers',class:'selectUser nextStepUsers form-control',style:'padding:6px 12px;'}};
         
         next_user = $("input[name='nextStepUsers']");
         if next_user && next_user.length > 0
-            next_user[0].dataset.user = users.getProperty("id")
-            next_user[0].dataset.showOrg = false;
+            if !Session.get("next_step_users_showOrg")
+                next_user[0].dataset.user = users.getProperty("id")
+                next_user[0].dataset.showOrg = false;
+            else
+                delete next_user[0].dataset.user
+                delete next_user[0].dataset.showOrg
+            
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
             if users.length >0
                 next_user[0].value = users[0].text;
                 next_user[0].dataset.values = users[0].id
+            else
+                next_user[0].value = "";
+                next_user[0].dataset.values = "";
+
         else
             data.dataset['user']= users.getProperty("id")
             data.dataset['showOrg'] = false;
