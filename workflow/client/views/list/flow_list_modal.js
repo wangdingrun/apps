@@ -22,7 +22,8 @@ Template.flow_list_modal.events({
       });
       forms.forEach(function(f) {
         db.flows.find({
-          form: f._id
+          form: f._id,
+          state: "enabled"
         }).forEach(function(fl) {
           if (flow_id == fl._id) {
             o.nodes.push({
@@ -79,7 +80,7 @@ Template.flow_list_modal.events({
     }
     else if (event.relatedTarget.name == "show_flows_btn") {
       $('#tree').treeview({
-        data: [{text:"所有流程", nodes:data}]
+        data: [{text:TAPi18n.__('All flows'), nodes:data}]
       });
       $('#tree').on('nodeSelected', function(event, data) {
         if (data.flow_id) {
