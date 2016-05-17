@@ -52,8 +52,8 @@ SteedosAPI.setupLogout = () ->
 		.done ( data ) ->
 			console.log(data)
 
-Accounts.onLogin ()->
-	SteedosAPI.setupValidate();
 
 Meteor.startup ->
 	SteedosAPI.setupValidate();
+	Accounts.onLogin ()->
+		SteedosAPI.setupValidate();
