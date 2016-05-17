@@ -37,7 +37,7 @@ Template.autoform_table.helpers({
   arrayify: function (obj){
       var result = [];
       var fValue;
-      for(var key in obj){
+      for(var key in ROWOBJ){
         fValue = obj[key];
         switch(ROWOBJ[key].type){
           case 'user':

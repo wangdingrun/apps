@@ -207,15 +207,19 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
       
       afFields[stField.code] = {
                                   type : Array,
-                                  optional : false,
+                                  optional : true,
                                   minCount : 0,
                                   maxCount : 200,
-                                  autoform : {sfieldcodes:[]}
+                                  //initialCount: 0,
+                                  autoform : {
+                                    sfieldcodes:[],
+                                    initialCount: 0,
+                                  }
                                 };
 
       afFields[stField.code + ".$"] = {
                                         type:Object,
-                                        optional:false
+                                        optional:true
                                       };
 
       var sfieldcodes = new Array();
@@ -277,31 +281,14 @@ WorkflowManager_format.getAutoformSchemaValues = function(){
 
   var instanceValue = InstanceManager.getCurrentValues();
 
-  // if(!instanceValue)
-  //   return ;
-
-  return instanceValue;
+  if(!instanceValue)
+    instanceValue = {}
 
   // fields.forEach(function(field){
-  //   if(field.type == 'table'){
-  //     t_values = new Array();
-  //     if (field.sfields){
-  //       if (!instanceValue[field.code])
-  //         return ;
-  //       instanceValue[field.code].forEach(function(t_row_value){
-  //         field.sfields.forEach(function(sfield){
-
-  //           t_row_value[sfield.code] = getSchemaValue(sfield, t_row_value[sfield.code]);
-
-  //         });
-  //         t_values.push(t_row_value);
-  //       });
-  //     }
-  //     values[field.code] = t_values;
-  //   }else{
-  //     values[field.code] = getSchemaValue(field, instanceValue[field.code]);
-  //   }
+  //   if(field.type == 'table')
+  //     if (!instanceValue[field.code])
+  //       instanceValue[field.code] = []
   // });
 
-  // return values;
+  return instanceValue;
 }
