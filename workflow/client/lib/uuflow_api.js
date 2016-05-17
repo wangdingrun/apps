@@ -31,6 +31,13 @@ UUflow_api.post_draft = function(flowId) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       FlowRouter.go("/space/" + Session.get("spaceId") + "/draft/" + responseText.ChangeSet.inserts.Instances[0].id);
 
       $('#flow_list_modal').modal('hide');
@@ -62,6 +69,12 @@ UUflow_api.put_draft = function(instance) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
       toastr.success(TAPi18n.__('Saved successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -96,6 +109,13 @@ UUflow_api.delete_draft = function(instanceId) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+      
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Deleted successfully'));
     },
@@ -126,6 +146,14 @@ UUflow_api.post_submit = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Submitted successfully'));
@@ -157,6 +185,13 @@ UUflow_api.put_approvals = function(approve) {
     contentType: "text/plain",
 
     success: function(responseText, status) {
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       toastr.success(TAPi18n.__('Saved successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -186,6 +221,14 @@ UUflow_api.post_engine = function(approve) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Submitted successfully'));
     },
@@ -218,6 +261,14 @@ UUflow_api.post_terminate = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Canceled successfully'));
@@ -251,6 +302,14 @@ UUflow_api.put_reassign = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       $('#reassign_modal').modal('hide');
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Reasigned successfully'));
@@ -284,6 +343,14 @@ UUflow_api.put_relocate = function(instance) {
 
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
+
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
+
       $('#relocate_modal').modal('hide');
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
@@ -318,6 +385,12 @@ UUflow_api.post_archive = function(insId) {
     success: function(responseText, status) {
       $(document.body).removeClass("loading");
       
+      if (responseText.errors) {
+        responseText.errors.forEach(function(e){
+          toastr.error(e.errorMessage);
+        })
+        return;
+      }
     },
     error: function(xhr, msg, ex) {
       $(document.body).removeClass("loading");
