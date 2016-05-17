@@ -59,11 +59,8 @@
                         <div class="col-md-4">
                             <div class="form-group" id="nextStepUsers_div">
                                 <label class="control-label">处理人&nbsp;:</label>
-                                <select class="nextStepUsers form-control" name="nextStepUsers" id="nextStepUsers" multiple={{next_user_multiple}}>
-                                    {{#each next_user_options }}
-                                        <option value="{{id}}" selected={{selected}}>{{text}}</option>
-                                    {{/each}}
-                                </select>
+                                
+                                {{>Template.dynamic  template="afSelectUser" data=next_user_context}}
                             </div>
                         </div>
                     </div>

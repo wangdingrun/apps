@@ -201,8 +201,34 @@ Template.instanceform.helpers
         form_values = Session.get("form_values")
         return InstanceManager.getNextStepOptions();
 
-    next_user_options: ->
-        return InstanceManager.getNextUserOptions();
+    #next_user_options: ->
+    #    console.log("next_user_options run ...");
+    #    return InstanceManager.getNextUserOptions();
+
+    next_user_context: ->
+        console.log("next_user_context run ...");
+        users = InstanceManager.getNextUserOptions();
+
+        data = {dataset:{},name:'nextStepUsers',atts:{name:'nextStepUsers',class:'selectUser nextStepUsers form-control',style:'padding:6px 12px;'}};
+        
+        next_user = $("input[name='nextStepUsers']");
+        if next_user && next_user.length > 0
+            next_user[0].dataset.user = users.getProperty("id")
+            next_user[0].dataset.showOrg = false;
+            next_user[0].dataset.multiple = Session.get("next_user_multiple");
+            if users.length >0
+                next_user[0].value = users[0].text;
+                next_user[0].dataset.values = users[0].id
+        else
+            data.dataset['user']= users.getProperty("id")
+            data.dataset['showOrg'] = false;
+            data.dataset['multiple'] = Session.get("next_user_multiple");
+            if users.length >0
+                data.value = users[0].text;
+                data.dataset['values'] = users[0].id
+            
+
+        return data;
 
     next_step_multiple: ->
         Session.get("next_step_multiple")

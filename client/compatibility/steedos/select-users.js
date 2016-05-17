@@ -28,12 +28,37 @@ AutoForm.addInputType("selectuser",{
 
 Template.afSelectUser.events({
   'click .selectUser': function (event, template) {
-    var data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
+    //console.log("click .selectUser...");
+    //console.log("s1 is " + parseInt(new Date().getTime()/1000));
+    var dataset = $("input[name='"+template.data.name+"']")[0].dataset;
+
+    var data,multiple,showOrg=true;
+
+    if(dataset.user){
+        data = {users:WorkflowManager.getUsers(dataset.user.split(","))};
+        //console.log("s1.1 is " + parseInt(new Date().getTime()/1000));
+    }else{
+        data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
+    }
+
+    if(dataset.multiple){
+        multiple = dataset.multiple == 'true' ? true : false
+    }else{
+        multiple = template.data.atts.multiple
+    }
+
+    if(dataset.showOrg && dataset.showOrg == 'false'){
+        showOrg = false;
+    }
+    
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
     var options = {};
+
     options.data = data;
-    options.multiple = template.data.atts.multiple;
+    options.multiple = multiple;
+    options.showOrg = showOrg;
+    
     if(values && values.length > 0){
         options.defaultValues = values.split(",");
     }
@@ -48,8 +73,9 @@ Template.afSelectUser.events({
     }
 
     options.orgId = start_orgId;
-
+    //console.log("s2 is " + parseInt(new Date().getTime()/1000));
     SelectTag.show(options,"Template.afSelectUser.confirm('"+template.data.name+"')");
+    //console.log("s3 is " + parseInt(new Date().getTime()/1000));
   }
 });
 
@@ -57,7 +83,7 @@ Template.afSelectUser.confirm = function(name){
     var values = SelectTag.values;
     var valuesObject = SelectTag.valuesObject();
     if(valuesObject.length > 0){
-        if($("input[name='"+name+"']")[0].multiple){
+        if($("input[name='"+name+"']")[0].multiple || $("input[name='"+name+"']")[0].dataset.multiple=='true'){
             $("input[name='"+name+"']").val(valuesObject.getProperty("name").toString());
             $("input[name='"+name+"']")[0].dataset.values = values;
         }else{
@@ -75,12 +101,19 @@ Template.afSelectUser.confirm = function(name){
 Template.afSelectUser.rendered = function(){
     var value = this.data.value;
     var name = this.data.name;
+    var dataset = this.data.dataset;
     if(this.data.atts && this.data.atts.multiple){
         $("input[name='"+name+"']").val(value ? value.getProperty("name").toString() : '');
         $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
     }else{
         $("input[name='"+name+"']").val(value ? value.name : '');
         $("input[name='"+name+"']")[0].dataset.values = value ? value.id : ''; 
+    }
+
+    if(dataset){
+        for(var dk in dataset){
+            $("input[name='"+name+"']")[0].dataset[dk] = dataset[dk]
+        }
     }
     
 }

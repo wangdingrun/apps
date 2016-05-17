@@ -368,11 +368,15 @@ WorkflowManager.getUser = function (userId){
 WorkflowManager.getUsers = function (userIds){
 
   var users = new Array();
-
   if(userIds){
-    userIds.forEach(function(userId){
-      users.push(WorkflowManager.getUser(userId));
-    });
+    var spaceUsers = WorkflowManager.getSpaceUsers("")
+    spaceUsers.forEach(
+      function(user){
+          if (userIds.includes(user.id )){
+            users.push(user);
+          }
+      }
+    );
   }
 
   return users;
