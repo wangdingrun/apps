@@ -67,6 +67,8 @@ InstanceManager.getNextStepOptions = function(){
           else
               Session.set("next_user_multiple", false)
       }
+  }else{
+    Session.set("next_step_id", null);
   }
   return next_step_options;
 }
