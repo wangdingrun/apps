@@ -90,12 +90,28 @@ var s_autoform = function (schema, field){
     case 'date' :
         schema.type = String;
         autoform.disabled = (permission == 'readonly');
-        autoform.type = 'bootstrap-datepicker';
+        if (Steedos.isMobile())
+          autoform.type = 'date';
+        else {
+          autoform.type = 'bootstrap-datetimepicker';
+          autoform.dateTimePickerOptions = {
+            showClear: true,
+            format: "YYYY-MM-DD"
+          }
+        }
         break;
     case 'dateTime' : 
         schema.type = String;
         autoform.disabled = (permission == 'readonly');
-        autoform.type = 'bootstrap-datetimepicker'; 
+        if (Steedos.isMobile())
+          autoform.type = 'datetime-local';
+        else {
+          autoform.type = 'bootstrap-datetimepicker';
+          autoform.dateTimePickerOptions = {
+            showClear: true,
+            format: "YYYY-MM-DD HH:mm Z"
+          }
+        }
         break;
     case 'checkbox' :
         schema.type = Boolean;
