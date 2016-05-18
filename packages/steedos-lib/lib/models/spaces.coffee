@@ -90,6 +90,12 @@ db.spaces._simpleSchema = new SimpleSchema
     "services.bqq.refresh_token":
         type: String,
         optional: true
+    "services.bqq.user_list_timestamp":
+        type: Number,
+        optional: true
+    "services.bqq.dept_list_timestamp":
+        type: Number,
+        optional: true
 
 
 if Meteor.isClient

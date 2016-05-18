@@ -18,12 +18,17 @@ JsonRoutes.add("get", "/api/bqq/companyToken", function (req, res, next) {
     if (response.error_code) // if the http response was an error
         throw response.msg;
 
+    if (response.data.ret > 0) 
+      throw response.data.msg;
+
   } catch (err) {
     throw _.extend(new Error("Failed to complete OAuth handshake with QQ. " + err.message),
                    {response: err.response});
   }
 
-  console.log(response.data)
+  console.log(response.data);
+
+  BQQ.syncCompany(response.data.data);
 
   JsonRoutes.sendResult(res, {
     data: {
