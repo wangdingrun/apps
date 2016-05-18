@@ -103,7 +103,7 @@ InstanceManager.getNextUserOptions = function(){
           nextStepUsers.forEach(function(user){
             var option = {
                   id: user.id,
-                  text: user.name
+                  name: user.name
               }
               if (current_next_steps && current_next_steps.length > 0){
                   if (_.contains(current_next_steps[0].users, user.id)){

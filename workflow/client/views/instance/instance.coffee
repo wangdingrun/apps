@@ -222,7 +222,7 @@ Template.instanceform.helpers
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
             if users.length >0
-                next_user[0].value = users[0].text;
+                next_user[0].value = users[0].name;
                 next_user[0].dataset.values = users[0].id
             else
                 next_user[0].value = "";
@@ -233,7 +233,7 @@ Template.instanceform.helpers
             data.dataset['showOrg'] = false;
             data.dataset['multiple'] = Session.get("next_user_multiple");
             if users.length >0
-                data.value = users[0].text;
+                data.value = users[0]
                 data.dataset['values'] = users[0].id
             
 
