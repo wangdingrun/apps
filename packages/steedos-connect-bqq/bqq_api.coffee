@@ -284,50 +284,7 @@ BQQ.syncCompany = (oauth) ->
 
 
   # 部门
-  create_org = (depts, p_dept_id, space_id, company_id, owner_id) ->
-    orgs = depts.filter((d) -> 
-              if d.p_dept_id == p_dept_id
-                return true
-            )
-    if orgs.length > 0
-      orgs.forEach (o) ->
-        org_id = null
-        o_id = "bqq-" + company_id + "-" + o.dept_id
-        oq = db.organizations.find({_id: o_id})
-        if oq.count() > 0
-          org_id = o_id
-          org = oq.fetch()[0]
-          org_doc = {}
-          if org.name != o.dept_name
-            org_doc.name = o.dept_name
-
-          if org_doc.hasOwnProperty('name')
-            console.log('修改部门: ' + o.dept_name)
-            console.log(org_doc)
-            org_doc.modified = now
-            org_doc.modified_by = owner_id
-            db.organizations.direct.update(org._id, {$set: org_doc})
-
-        else
-          console.log('新增部门')
-          org_doc = {}
-          org_doc._id = o_id
-          org_doc.space = space_id
-          org_doc.name = o.dept_name
-          if p_dept_id > 0
-            org_doc.parent = "bqq-" + company_id + "-" + p_dept_id
-          if p_dept_id == 0
-            org_doc.is_company = true
-          org_doc.created = now
-          org_doc.created_by = owner_id
-          org_doc.modified = now
-          org_doc.modified_by = owner_id
-          console.log(org_doc)
-          org_id = db.organizations.direct.insert(org_doc)
-        if org_id
-          create_org(depts, o.dept_id, space_id, company_id, owner_id)
-
-  create_org(org_data.items, 0, space_id, space_data.company_id, owner_id)
+  BQQ.createOrg(org_data.items, 0, space_id, space_data.company_id, owner_id)
 
 
   # 新建space_user
@@ -428,85 +385,133 @@ BQQ.syncCompany = (oauth) ->
       console.log('新增表单流程模板')
       root_org_id = root_org._id
       template_space_id = "526621803349041651000a1a"
-      db.forms.find({"space": template_space_id, "state": "enabled"}).forEach (template_form) ->
-        # Form
-        new_form = {}
-        new_form._id = db.forms._makeNewID()
-        new_form.name = template_form.name
-        new_form.state = "enabled"
-        new_form.is_deleted = false
-        new_form.is_valid = template_form.is_valid
-        new_form.space = space_id
-        new_form.description = template_form.description
-        new_form.help_text = template_form.help_text
-        new_form.error_message = template_form.error_message
-        new_form.created_by = owner_id
-        new_form.created = now
-
-        current = {}
-        current._id = Meteor.uuid()
-        current.form = new_form._id
-        current._rev = 1
-        current.start_date = now
-        current.fields = template_form.current.fields
-        current.created_by = owner_id
-        current.created = now
-        current.modified_by = owner_id
-        current.modified = now
-        new_form.current = current
-        new_form.historys = []
-        new_form_id = db.forms.direct.insert(new_form)
-
-        db.flows.find({"space": template_space_id, "form": template_form._id, "state": "enabled"}).forEach (template_flow) ->
-          # flow
-          new_flow = {}
-          new_flow._id = db.flows._makeNewID()
-          new_flow.space = space_id
-          new_flow.form = new_form_id
-          new_flow.name = template_flow.name
-          new_flow.name_formula = template_flow.name_formula
-          new_flow.code_formula = template_flow.code_formula
-          new_flow.flowtype = template_flow.flowtype
-          new_flow.state = "enabled"
-          new_flow.description = template_flow.description
-          new_flow.help_text = template_flow.help_text
-          new_flow.error_message = template_flow.error_message
-          new_flow.app = template_flow.app
-          new_flow.current_no = 0
-          new_flow.is_deleted = false
-          new_flow.is_valid = true
-          new_flow.error_message = template_flow.error_message
-          new_flow.created_by = owner_id
-          new_flow.created = now
-
-          new_current = {}
-          new_current._id = Meteor.uuid()
-          new_current._rev = 1
-          new_current.flow = new_flow._id
-          new_current.form_version = new_form.current._id
-          new_current.start_date = now
-          new_current.steps = template_flow.current.steps
-          new_current.created_by = owner_id
-          new_current.created = now
-          new_current.modified_by = owner_id
-          new_current.modified = now
-
-          new_perms = {}
-          new_perms._id = Meteor.uuid()
-          new_perms.orgs_can_add = [root_org_id]
-
-          new_flow.perms = new_perms
-          new_flow.current = new_current
-          new_flow.historys = []
-          
-          db.flows.direct.insert(new_flow)
+      BQQ.createTemplateFormAndFlow(template_space_id, root_org_id, owner_id)
 
 
   # 更新space.services.bqq user_list_timestamp dept_list_timestamp
   db.spaces.direct.update(space_id, {$set: {"services.bqq.user_list_timestamp": user_data.timestamp, "services.bqq.dept_list_timestamp": org_data.timestamp}})
 
+BQQ.createOrg = (depts, p_dept_id, space_id, company_id, owner_id) ->
+  now = new Date
+  orgs = depts.filter((d) -> 
+            if d.p_dept_id == p_dept_id
+              return true
+          )
+  if orgs.length > 0
+    orgs.forEach (o) ->
+      org_id = null
+      o_id = "bqq-" + company_id + "-" + o.dept_id
+      oq = db.organizations.find({_id: o_id})
+      if oq.count() > 0
+        org_id = o_id
+        org = oq.fetch()[0]
+        org_doc = {}
+        if org.name != o.dept_name
+          org_doc.name = o.dept_name
+
+        if org_doc.hasOwnProperty('name')
+          console.log('修改部门: ' + o.dept_name)
+          console.log(org_doc)
+          org_doc.modified = now
+          org_doc.modified_by = owner_id
+          db.organizations.direct.update(org._id, {$set: org_doc})
+
+      else
+        console.log('新增部门')
+        org_doc = {}
+        org_doc._id = o_id
+        org_doc.space = space_id
+        org_doc.name = o.dept_name
+        if p_dept_id > 0
+          org_doc.parent = "bqq-" + company_id + "-" + p_dept_id
+        if p_dept_id == 0
+          org_doc.is_company = true
+        org_doc.created = now
+        org_doc.created_by = owner_id
+        org_doc.modified = now
+        org_doc.modified_by = owner_id
+        console.log(org_doc)
+        org_id = db.organizations.direct.insert(org_doc)
+      if org_id
+        BQQ.createOrg(depts, o.dept_id, space_id, company_id, owner_id)
 
 
+
+BQQ.createTemplateFormAndFlow = (template_space_id, space_id, root_org_id, owner_id) ->
+  console.log('新建表单流程模板')
+  now = new Date
+  db.forms.find({"space": template_space_id, "state": "enabled"}).forEach (template_form) ->
+    # Form
+    new_form = {}
+    new_form._id = db.forms._makeNewID()
+    new_form.name = template_form.name
+    new_form.state = "enabled"
+    new_form.is_deleted = false
+    new_form.is_valid = template_form.is_valid
+    new_form.space = space_id
+    new_form.description = template_form.description
+    new_form.help_text = template_form.help_text
+    new_form.error_message = template_form.error_message
+    new_form.created_by = owner_id
+    new_form.created = now
+
+    current = {}
+    current._id = Meteor.uuid()
+    current.form = new_form._id
+    current._rev = 1
+    current.start_date = now
+    current.fields = template_form.current.fields
+    current.created_by = owner_id
+    current.created = now
+    current.modified_by = owner_id
+    current.modified = now
+    new_form.current = current
+    new_form.historys = []
+    new_form_id = db.forms.direct.insert(new_form)
+
+    db.flows.find({"space": template_space_id, "form": template_form._id, "state": "enabled"}).forEach (template_flow) ->
+      # flow
+      new_flow = {}
+      new_flow._id = db.flows._makeNewID()
+      new_flow.space = space_id
+      new_flow.form = new_form_id
+      new_flow.name = template_flow.name
+      new_flow.name_formula = template_flow.name_formula
+      new_flow.code_formula = template_flow.code_formula
+      new_flow.flowtype = template_flow.flowtype
+      new_flow.state = "enabled"
+      new_flow.description = template_flow.description
+      new_flow.help_text = template_flow.help_text
+      new_flow.error_message = template_flow.error_message
+      new_flow.app = template_flow.app
+      new_flow.current_no = 0
+      new_flow.is_deleted = false
+      new_flow.is_valid = true
+      new_flow.error_message = template_flow.error_message
+      new_flow.created_by = owner_id
+      new_flow.created = now
+
+      new_current = {}
+      new_current._id = Meteor.uuid()
+      new_current._rev = 1
+      new_current.flow = new_flow._id
+      new_current.form_version = new_form.current._id
+      new_current.start_date = now
+      new_current.steps = template_flow.current.steps
+      new_current.created_by = owner_id
+      new_current.created = now
+      new_current.modified_by = owner_id
+      new_current.modified = now
+
+      new_perms = {}
+      new_perms._id = Meteor.uuid()
+      new_perms.orgs_can_add = [root_org_id]
+
+      new_flow.perms = new_perms
+      new_flow.current = new_current
+      new_flow.historys = []
+      
+      db.flows.direct.insert(new_flow)
 
 
 BQQ.syncByTimestamp = () ->

@@ -306,7 +306,7 @@ $(function(){
       function getOrgParent(parentOrgId){
           var org ;
 
-          if(parentOrgId == '' || parentOrgId == 0){
+          if(parentOrgId == '' || parentOrgId == 0 || !parentOrgId){
               return ;
           }else{
               org = $options.data.orgs.findPropertyByPK("id", parentOrgId);

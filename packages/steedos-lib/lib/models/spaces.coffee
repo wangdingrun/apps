@@ -175,10 +175,10 @@ if Meteor.isServer
 
     db.spaces.after.insert (userId, doc) ->
         console.log("db.spaces.after.insert")
-        if (doc.admins)
-            space = db.spaces.findOne(doc._id)
-            _.each doc.admins, (admin) ->
-                space.join_space(admin, true)
+        # if (doc.admins)
+        #     space = db.spaces.findOne(doc._id)
+        #     _.each doc.admins, (admin) ->
+        #         space.join_space(admin, true)
             
 
     db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -209,9 +209,9 @@ if Meteor.isServer
         self = this
         modifier.$set = modifier.$set || {};
 
-        if (modifier.$set.admins)
-            _.each modifier.$set.admins, (admin) ->
-                self.transform().join_space(admin, true)
+        # if (modifier.$set.admins)
+        #     _.each modifier.$set.admins, (admin) ->
+        #         self.transform().join_space(admin, true)
 
     db.spaces.before.remove (userId, doc) ->
         # only space owner can remove space
