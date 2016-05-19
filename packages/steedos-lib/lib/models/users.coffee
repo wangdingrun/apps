@@ -91,14 +91,6 @@ db.users.helpers
 		else if this.emails[0]
 			return this.emails[0].address
 
-	avatarURL: ->
-		if this.avatar
-			return Meteor.absoluteUrl("/api/files/avatars/" + this.avatar)
-		else if this.username
-			return Meteor.absoluteUrl("/avatar/" + this.username)
-		else if this.emails && this.emails.length>0
-			return Meteor.absoluteUrl("/avatar/" + this.emails[0].address)
-
 
 if Meteor.isServer
 
