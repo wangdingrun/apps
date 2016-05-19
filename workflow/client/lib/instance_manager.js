@@ -683,7 +683,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
-          $('#upload_progress_bar').modal('hide');
+
           toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
@@ -698,7 +698,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
-          $('#upload_progress_bar').modal('hide');
+
           toastr.success(TAPi18n.__('Attachment was added successfully'));
         } else {
           toastr.error(error);
@@ -737,7 +737,7 @@ InstanceManager.removeAttach = function () {
         Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
-          $('#upload_progress_bar').modal('hide');
+
           toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);
@@ -753,7 +753,7 @@ InstanceManager.removeAttach = function () {
         Session.set('change_date', new Date());
         WorkflowManager.instanceModified.set(false);
         if (result == true) {
-          $('#upload_progress_bar').modal('hide');
+
           toastr.success(TAPi18n.__('Attachment deleted successfully'));
         } else {
           toastr.error(error);

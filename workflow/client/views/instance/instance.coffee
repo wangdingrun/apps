@@ -407,6 +407,7 @@ Template.instanceform.events
                         $(document.body).removeClass("loading");
                         $('.loading-text').text ""
                         InstanceManager.addAttach(fileObj, false);
+                        fileObj.removeListener("uploaded");
                      
                
            
