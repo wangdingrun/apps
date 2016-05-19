@@ -116,7 +116,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
     if (!nextStep)
         return ;
 
-    var applicant = WorkflowManager.getUser(instance.applicant);
+    var applicant = WorkflowManager.getUser(InstanceManager.getApplicantUserId());
     Session.set("next_step_users_showOrg",false);
     switch(nextStep.step_type){
         case 'condition':
