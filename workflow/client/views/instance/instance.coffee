@@ -225,9 +225,13 @@ Template.instanceform.helpers
             if users.length == 1
                 next_user[0].value = users[0].name;
                 next_user[0].dataset.values = users[0].id
+                data.value = users[0].name
+                data.dataset['values'] = users[0].id
             else
                 next_user[0].value = "";
                 next_user[0].dataset.values = "";
+                data.value = ""
+                data.dataset['values'] = ""
 
         else
             
@@ -270,7 +274,6 @@ Template.instanceform.onRendered ->
     
 
     ApproveManager.error = {nextSteps:'',nextStepUsers:''};
-
     if !ApproveManager.isReadOnly()
         currentApprove = InstanceManager.getCurrentApprove();
 
