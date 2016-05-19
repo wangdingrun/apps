@@ -60,16 +60,16 @@ Template.afSelectOrg.confirm = function(name){
     var valuesObject = SelectTag.valuesObject();
     if(valuesObject.length > 0){
         if($("input[name='"+name+"']")[0].multiple){
-            $("input[name='"+name+"']").val(valuesObject.getProperty("name").toString());
             $("input[name='"+name+"']")[0].dataset.values = values;
+            $("input[name='"+name+"']").val(valuesObject.getProperty("name").toString()).trigger("change");
         }else{
-            $("input[name='"+name+"']").val(valuesObject[0].name);
             $("input[name='"+name+"']")[0].dataset.values = values[0];
+            $("input[name='"+name+"']").val(valuesObject[0].name).trigger("change");
         }
         
     }else{
-        $("input[name='"+name+"']").val('');
         $("input[name='"+name+"']")[0].dataset.values = '';
+        $("input[name='"+name+"']").val('').trigger("change");
     }
 
 }
