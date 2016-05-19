@@ -51,7 +51,7 @@
                                 <label class="control-label">下一步骤&nbsp;:</label>
                                 <select class="nextSteps form-control" name="nextSteps" id="nextSteps" multiple={{next_step_multiple}}>
                                     {{#each next_step_options }}
-                                        <option value="{{id}}" selected={{selected}}>{{text}}</option>
+                                        <option value="{{id}}" selected={{selected}} steptype={{type}}>{{text}}</option>
                                     {{/each}}
                                 </select>
                             </div>

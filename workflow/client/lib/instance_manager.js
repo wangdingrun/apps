@@ -13,6 +13,7 @@ InstanceManager.getFormField = function(fieldId){
 
 
 InstanceManager.getNextStepOptions = function(){
+  
   console.log("calculate next_step_options")
   if (ApproveManager.isReadOnly())
       return []

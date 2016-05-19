@@ -207,6 +207,7 @@ Template.instanceform.helpers
 
     next_user_context: ->
         console.log("next_user_context run ...");
+        form_values = Session.get("form_values")
         users = InstanceManager.getNextUserOptions();
 
         data = {dataset:{},name:'nextStepUsers',atts:{name:'nextStepUsers',id:'nextStepUsers',class:'selectUser nextStepUsers form-control',style:'padding:6px 12px;'}};
@@ -221,7 +222,7 @@ Template.instanceform.helpers
                 delete next_user[0].dataset.showOrg
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
-            if users.length >0
+            if users.length == 1
                 next_user[0].value = users[0].name;
                 next_user[0].dataset.values = users[0].id
             else
@@ -229,14 +230,15 @@ Template.instanceform.helpers
                 next_user[0].dataset.values = "";
 
         else
-            data.dataset['user']= users.getProperty("id")
-            data.dataset['showOrg'] = false;
+            
+            if !Session.get("next_step_users_showOrg")
+                data.dataset['user']= users.getProperty("id")
+                data.dataset['showOrg'] = false;
+
             data.dataset['multiple'] = Session.get("next_user_multiple");
-            if users.length >0
+            if users.length == 1
                 data.value = users[0]
                 data.dataset['values'] = users[0].id
-            
-
         return data;
 
     next_step_multiple: ->
@@ -283,12 +285,21 @@ Template.instanceform.onRendered ->
 
 Template.instanceform.events
     
-    'change .suggestion,.form-control': (event) ->
-        console.log("change .suggestion,.form-control");
+    'change .suggestion': (event) ->
+        console.log("change .suggestion");
         if ApproveManager.isReadOnly()
             return ;
         judge = $("[name='judge']").filter(':checked').val();
         Session.set("judge", judge);
+
+    'change .nextSteps': (event) ->
+        if event.target.name == 'nextSteps'
+            if $("#nextSteps").find("option:selected").attr("steptype") == 'counterSign'
+                Session.set("next_user_multiple", true)
+            else
+                Session.set("next_user_multiple", false)
+            Session.set("next_step_id",$("#nextSteps").val())
+        
 
     'change #suggestion': (event) ->
         console.log("change #suggestion");
@@ -297,7 +308,7 @@ Template.instanceform.events
         InstanceManager.checkSuggestion();
         
 
-    'change .form-control': (event)->
+    'change .instance-form .form-control': (event)->
         if ApproveManager.isReadOnly()
             return ;
         
