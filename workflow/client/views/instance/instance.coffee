@@ -6,7 +6,7 @@ formId = 'instanceform';
 Template.instanceform.helpers
     applicantContext: ->
         steedos_instance = WorkflowManager.getInstance();
-        data = {name:'ins_applicant',atts:{name:'ins_applicant',class:'selectUser',style:'padding:6px 12px;'}} 
+        data = {name:'ins_applicant',atts:{name:'ins_applicant',id:'ins_applicant',class:'selectUser form-control',style:'padding:6px 12px;width:25%;display:inline'}} 
         if not steedos_instance || steedos_instance.state != "draft"
             data.atts.disabled = true
         return data;
@@ -307,8 +307,7 @@ Template.instanceform.events
         console.log("change #suggestion");
         if ApproveManager.isReadOnly()
             return ;
-        InstanceManager.checkSuggestion();
-        
+        InstanceManager.checkSuggestion();  
 
     'change .instance-form .form-control': (event)->
         if ApproveManager.isReadOnly()
@@ -328,8 +327,6 @@ Template.instanceform.events
         Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
         #InstanceManager.updateNextStepTagOptions();
         
-    'change #nextSteps':(event) ->
-        #InstanceManager.updateNextUserTagOptions();
     
     'click #instance_back': (event)->
         backURL =  "/space/" + Session.get("spaceId") + "/" + Session.get("box")

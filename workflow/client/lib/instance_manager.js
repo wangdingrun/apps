@@ -150,8 +150,14 @@ InstanceManager.getFormFieldByCode = function(fieldCode){
 
 InstanceManager.getApplicantUserId = function(){
   var instance = WorkflowManager.getInstance();
-  if(instance)
-    return instance.applicant;
+  if(instance){
+    var ins_applicant = $("#ins_applicant");
+    if(instance.state == 'draft' && ins_applicant && ins_applicant.length ==1 ){
+      return ins_applicant[0].dataset.values;
+    }else{
+      return instance.applicant;
+    }
+  }
   return '';
 }
 
