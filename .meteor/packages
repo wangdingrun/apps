@@ -59,7 +59,6 @@ aldeed:tabular
 aldeed:autoform
 aldeed:collection2
 aldeed:autoform-select2
-aldeed:autoform-bs-datepicker
 aldeed:autoform-bs-datetimepicker 
 
 gwendall:simple-schema-i18n
