@@ -29,7 +29,10 @@ AutoForm.addInputType("selectuser",{
 Template.afSelectUser.events({
   'click .selectUser': function (event, template) {
     //console.log("click .selectUser...");
-    //console.log("s1 is " + parseInt(new Date().getTime()/1000));
+    //console.log("s1 is " + parseInt(new Date().getTime()/1000
+    if ("disabled" in template.data.atts)
+        return;
+
     var dataset = $("input[name='"+template.data.name+"']")[0].dataset;
 
     var data,multiple,showOrg=true;

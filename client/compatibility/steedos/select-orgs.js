@@ -28,6 +28,8 @@ AutoForm.addInputType("selectorg",{
 
 Template.afSelectOrg.events({
   'click .selectOrg': function (event, template) {
+    if ("disabled" in template.data.atts)
+        return;
     var data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
