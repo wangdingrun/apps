@@ -2,6 +2,12 @@ var ROWOBJ = {};
 
 Template.autoform_table.helpers({
 
+  tableName: function(){
+    if (this.name)
+      return this.name
+    else
+      return this.code
+  },
   equals: function(a,b) {
     return autoform_table_Helpers.equals(a,b);
   },
