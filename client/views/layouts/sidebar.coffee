@@ -11,7 +11,7 @@ Template.sidebar.helpers
 		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 		
 	avatar: ->
-		return Meteor.user()?.avatarURL()
+		return Meteor.absoluteUrl("/avatar/" + Meteor.userId());
 
 	spaceId: ->
 		return Session.get("spaceId");

@@ -2,12 +2,21 @@ Meteor.startup ->
 	
 	WebApp.connectHandlers.use '/avatar/', (req, res, next) ->
 		this.params =
-			username: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
+			userId: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
 
-		if this.params.username[0] isnt '@'
-			file = null; #RocketChatFileAvatarInstance.getFileWithReadStream this.params.username
-		else
-			this.params.username = this.params.username.replace '@', ''
+		user = db.users.findOne(this.params.userId);
+		if !user
+			res.writeHead 304
+			res.end()
+			return
+
+		if user.avatar
+			res.setHeader "Location", Meteor.absoluteUrl("/api/files/avatars/" + user.avatar)
+			res.writeHead 302
+			res.end()
+			return
+
+		username = user.name;
 
 		res.setHeader 'Content-Disposition', 'inline'
 
@@ -17,17 +26,10 @@ Meteor.startup ->
 
 			colors = ['#F44336','#E91E63','#9C27B0','#673AB7','#3F51B5','#2196F3','#03A9F4','#00BCD4','#009688','#4CAF50','#8BC34A','#CDDC39','#FFC107','#FF9800','#FF5722','#795548','#9E9E9E','#607D8B']
 
-			username = this.params.username.replace('.jpg', '')
 			position = username.length % colors.length
 			color = colors[position]
 
-			#username = username.replace(/[^A-Za-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.)|(\.$)/g, '')
-			#usernameParts = username.split('.')
 			initials = ''
-			#if usernameParts.length > 1
-			#	initials = _.first(usernameParts)[0] + _.last(usernameParts)[0]
-			#else
-			#initials = username.replace(/[^A-Za-z0-9]/g, '').substr(0, 2)
 			if username.charCodeAt(0)>255
 				initials = username.substr(0, 1)
 			else
