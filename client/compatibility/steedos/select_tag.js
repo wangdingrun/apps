@@ -70,11 +70,11 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
-		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="modal-body selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
+		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
 	}
 });
 
@@ -194,6 +194,7 @@ $(function(){
           changeValueLabel();
         }
 
+        $("#selectTagModal-content").css("max-height", ($(window).height()-180) + "px")
 				$("#selectTagModal").modal('show');
 			};
 			
