@@ -385,7 +385,7 @@ BQQ.syncCompany = (oauth) ->
       console.log('新增表单流程模板')
       root_org_id = root_org._id
       template_space_id = "526621803349041651000a1a"
-      BQQ.createTemplateFormAndFlow(template_space_id, root_org_id, owner_id)
+      BQQ.createTemplateFormAndFlow(template_space_id, space_id, root_org_id, owner_id)
 
 
   # 更新space.services.bqq user_list_timestamp dept_list_timestamp
