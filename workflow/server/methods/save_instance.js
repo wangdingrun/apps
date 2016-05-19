@@ -3,7 +3,7 @@ Meteor.methods({
     draft_save_instance: function (ins) {
         if (!this.userId)
             return;
-
+        var result = true;
         var setObj = {};
         var traces = ins.traces;
         var flow = db.flows.findOne(ins.flow, {fields: {"current._id": 1, "current.form_version": 1}});
@@ -16,6 +16,7 @@ Meteor.methods({
         setObj.attachments = ins.attachments;
         
         if (flow.current._id != ins.flow_version) {
+            result = "upgraded"
             // 流程已升级
             setObj.flow_version = flow.current._id;
             setObj.form_version = flow.current.form_version;
@@ -46,7 +47,7 @@ Meteor.methods({
         setObj.traces = traces;
 
         db.instances.update({_id:ins._id}, {$set: setObj});
-        return true;
+        return result;
     },
 
     inbox_save_instance: function (approve) {
