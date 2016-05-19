@@ -28,6 +28,8 @@ InstanceManager.getNextStepOptions = function(){
   var autoFormDoc = {};
   if(AutoForm.getFormValues("instanceform")){
     autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+  }else if(Session.get("form_values")){
+    autoFormDoc = Session.get("form_values")
   }
   
   var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
