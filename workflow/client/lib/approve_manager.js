@@ -331,7 +331,8 @@ ApproveManager.getNextStepsSelectValue = function(){
 
 ApproveManager.getNextStepUsersSelectValue = function(){
     //return $("#nextStepUsers").val();
-    return $("input[name='nextStepUsers']")[0].dataset.values;
+    var values = $("input[name='nextStepUsers']")[0].dataset.values;
+    return values.split(",");
 }
 
 // ApproveManager.setNextStepUsersSelectValue = function(value){

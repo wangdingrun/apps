@@ -462,7 +462,7 @@ InstanceManager.getMyApprove = function(){
         var nextStepUsers = new Array();
         if(selectedNextStepUsers instanceof Array){
             selectedNextStepUsers.forEach(function(su){
-              nextStepUsers.push(su.value);
+              nextStepUsers.push(su);
             });
         } else if (selectedNextStepUsers){
             nextStepUsers.push(selectedNextStepUsers);
