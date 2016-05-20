@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div id="valueLabel" class="valueLabel"></div><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><ui id="valueLabel" class="valueLabel "></ui><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
@@ -148,9 +148,24 @@ $(function(){
         if(selectTag.values.length > 0){
           var html = '';
           selectTag.valuesObject().forEach(function(v){
-            html = html + '\r\n<span class="label label-info">' + v.name + '</span>'
+            html = html + '\r\n<li data-value='+v.id+'>' + v.name + '</li>'
           });
           $("#valueLabel").html(html);
+
+          Sortable.create($("#valueLabel")[0], {
+            group:"words",
+            animation:150,
+            onRemove:function(event){console.log("onRemove...")},
+            onEnd: function(event){
+              var values = [];
+              $("#valueLabel li").each(function(){
+                var li = this;
+                values.push(li.dataset.value);
+              });
+              selectTag.values = values;
+            }
+          })
+
           $("#valueLabel").show();
         }else{
           $("#valueLabel").hide();
