@@ -2,7 +2,8 @@ WorkflowManager = {
   formVersionsCache: {},
   flowVersionsCache: {},
   instanceCache: null,
-  instanceModified: new ReactiveVar(false)
+  instanceModified: new ReactiveVar(false),
+  spaceUsersCache:{}
 };
 
 /*-------------------data source------------------*/
@@ -41,6 +42,9 @@ WorkflowManager.getSpaceUsers = function (spaceId){
 
   //   users.push(userObject);
   // }
+  if(WorkflowManager.spaceUsersCache[Session.get("spaceId")] !=null){
+    return WorkflowManager.spaceUsersCache[Session.get("spaceId")];
+  }
 
   var spaceUsers = db.space_users.find({}, {sort: {name:1}});
 
@@ -50,6 +54,8 @@ WorkflowManager.getSpaceUsers = function (spaceId){
     spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
     users.push(spaceUser);
   })
+
+  WorkflowManager.spaceUsersCache[Session.get("spaceId")] = users;
 
   return users;
 };

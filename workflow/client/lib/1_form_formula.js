@@ -167,13 +167,12 @@ Form_formula.field_values = null;
 
 Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fields){
     console.log('Form_formula.run......');
+    var startTrack = new Date * 1;
     var run = false;
     if (!Form_formula.field_values || true){
-        //console.debug("Form_formula.init_formula_values: 重新计算field_values");
-        var startTrack = new Date * 1;
+        console.debug("消耗时间s0 ：" + (new Date * 1 - startTrack) + "ms");
         Form_formula.field_values = init_formula_values(fields,autoFormDoc);
-        //console.log("Form_formula.field_values is \n" + JSON.stringify(Form_formula.field_values));
-        //console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
+        console.debug("消耗时间s1 ：" + (new Date * 1 - startTrack) + "ms");
     }
 
     //var field_permission = WorkflowManager.getInstanceFieldPermission();
@@ -194,6 +193,8 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
             $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
         }
     }
+    console.debug("消耗时间s2 ：" + (new Date * 1 - startTrack) + "ms");
+    console.log('Form_formula.run end......');
 };
 
 Form_formula.getNextStepsFromCondition = function(step, autoFormDoc, fields){
@@ -284,14 +285,6 @@ function init_formula_values(fields, autoFormDoc){
     //申请人
     __values["applicant"] = WorkflowManager.getFormulaUserObject(InstanceManager.getApplicantUserId());
 
-    //approver 当前用户
-    // var currentUserId = CS.getPath('currentUser.id');
-    // __approverValues = this.getUserValues(spaceId, currentUserId, 'approver');
-    // //applicant 申请人
-    // __applicantValues = this.getUserValues(spaceId, applicantId, 'applicant');
-
-    // __values = SC.mixin(__values, __approverValues, __applicantValues);
-    //debugger;
     return __values;
 };
 
