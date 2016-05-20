@@ -404,7 +404,6 @@ Template.instanceform.events
                 if err
                     toastr.error(err);
                 else
-                    Session.set("progress_file_id", fileObj._id);
                     #$('.loading-text').text fileObj.uploadProgress() + "%"
                     fileObj.on "uploaded", ()->
                         $(document.body).removeClass("loading");

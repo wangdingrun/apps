@@ -624,6 +624,11 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     var curTime = new Date();
     var userId = Meteor.userId();
     var fileName = fileObj.name();
+    console.log(fileName);
+    if (fileName == "image.jpg") {
+      fileName = "image-" + (new Date().toLocaleString()) + ".jpg"
+    }
+    console.log(fileName);
     
     var attachs = instance.attachments || [];
     var hasRepeatedFile = false;
