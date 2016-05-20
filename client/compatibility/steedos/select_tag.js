@@ -405,7 +405,7 @@ Handlebars.registerHelper('userList', function(items, tagType, options) {
   if(!items) 
   	return;
   for(var i=0, l=items.length; i<l; i++) {
-    out = out + "<tr ><td ><a class='user' ><label style='height:100%;width:100%;cursor:pointer;' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
+    out = out + "<tr ><td ><a class='user' ><label style='height:100%;width:100%;cursor:pointer;margin-bottom:2px;margin-top:2px;' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-user' id='"+items[i].id+"' value='"+items[i].id+"'";
     if(tagType == "radio"){
       out = out + " style='display:none' ";
     }else{
