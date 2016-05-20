@@ -175,8 +175,15 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
         //console.log("Form_formula.field_values is \n" + JSON.stringify(Form_formula.field_values));
         //console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
     }
+
+    //var field_permission = WorkflowManager.getInstanceFieldPermission();
     for(var i = 0 ; i < formula_fields.length; i++){
         formula_field = formula_fields[i];
+
+        /*if(field_permission[formula_field.code] != 'editable'){
+            continue;
+        }*/
+
         if (code=='' || formula_field.formula.indexOf("[\"" + code + "\"]") > -1 || true){
             run = true;
         }
