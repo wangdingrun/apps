@@ -105,7 +105,7 @@ Template.afSelectUser.rendered = function(){
     var value = this.data.value;
     var name = this.data.name;
     var dataset = this.data.dataset;
-    if(this.data.atts && this.data.atts.multiple){
+    if((value instanceof Array) || (this.data.atts && this.data.atts.multiple)){
         $("input[name='"+name+"']").val(value ? value.getProperty("name").toString() : '');
         $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
     }else{

@@ -214,17 +214,16 @@ Template.instanceform.helpers
         
         next_user = $("input[name='nextStepUsers']");
         
-        next_user_id = []
-        next_user_name = []
+        
+        selectedUser = [];
+
 
         users.forEach (user) ->
             if user.selected 
-                next_user_id.push(user.id);
-                next_user_name.push(user.name);
+                selectedUser.push(user);
 
-        if users.length == 1 && next_user_id.length < 1 
-            next_user_id = [users[0].id]
-            next_user_name = [users[0].name]
+        if users.length == 1 && selectedUser.length < 1 
+            selectedUser = [users[0]];
         
 
         if next_user && next_user.length > 0
@@ -236,18 +235,23 @@ Template.instanceform.helpers
                 delete next_user[0].dataset.showOrg
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
+            
+            next_userIds = []
+            next_userIdObjs = []
+            if next_user[0].value!=""
+                next_userIds = next_user[0].dataset.values.split(",");
+                next_userIdObjs = users.filterProperty("id",next_userIds)
 
-            next_userIds = next_user[0].dataset.values.split(",");
-            next_userIdObjs = users.filterProperty("id",next_userIds)
             if next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length
-                data.value = next_user[0].value
-                data.dataset['values'] = next_user[0].dataset.values
+                next_user[0].value = next_userIdObjs.getProperty("name").toString();
+                next_user[0].dataset.values = next_userIdObjs.getProperty("id").toString();
+                data.value = next_user[0].value;
+                data.dataset['values'] = next_user[0].dataset.values;
             else
-                next_user[0].value = next_user_name.toString();
-                next_user[0].dataset.values = next_user_id.toString()
-                data.value = next_user_name.toString()
-                data.dataset['values'] = next_user_id.toString()
-
+                next_user[0].value = selectedUser.getProperty("name").toString();
+                next_user[0].dataset.values = selectedUser.getProperty("id").toString()
+                data.value = next_user[0].value
+                data.dataset['values'] = selectedUser.getProperty("id").toString()
         else
             
             if !Session.get("next_step_users_showOrg")
@@ -256,8 +260,8 @@ Template.instanceform.helpers
 
             data.dataset['multiple'] = Session.get("next_user_multiple");
 
-            data.value = next_user_name.toString()
-            data.dataset['values'] = next_user_id.toString()
+            data.value = selectedUser
+            data.dataset['values'] = selectedUser.getProperty("id").toString()
 
 
 
