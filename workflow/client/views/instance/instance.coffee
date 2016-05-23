@@ -224,11 +224,14 @@ Template.instanceform.helpers
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
             next_userIds = next_user[0].dataset.values.split(",");
             next_userIdObjs = users.filterProperty("id",next_userIds)
-            if users.length == 1 || (next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length)
+            if users.length == 1
                 next_user[0].value = users[0].name;
                 next_user[0].dataset.values = users[0].id
                 data.value = users[0].name
                 data.dataset['values'] = users[0].id
+            else if next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length
+                data.value = next_user[0].value
+                data.dataset['values'] = next_user[0].dataset.values
             else
                 next_user[0].value = "";
                 next_user[0].dataset.values = "";
