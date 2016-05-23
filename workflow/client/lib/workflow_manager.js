@@ -2,8 +2,7 @@ WorkflowManager = {
   formVersionsCache: {},
   flowVersionsCache: {},
   instanceCache: null,
-  instanceModified: new ReactiveVar(false),
-  spaceUsersCache:{}
+  instanceModified: new ReactiveVar(false)
 };
 
 /*-------------------data source------------------*/
@@ -26,26 +25,12 @@ WorkflowManager.getSpaceOrganizations = function (spaceId){
   return orgs;
 };
 
+
 //获取space下的所有用户
 WorkflowManager.getSpaceUsers = function (spaceId){
-  
+
   var users = new Array();
-
-  // for(var i = 0 ; i < 15 ; i++){
-    
-  //   var userObject = new Object();
-  //   userObject.id = i + "56fdsfsd8f79s8df7s8fsdfusdi";
-  //   userObject.steedos_id = i + "baozhoutao@hotoa.com";
-  //   userObject.name = i + "包周涛";
-  //   userObject.organization = WorkflowManager.getUserOrganization(spaceId, userObject.id);
-  //   userObject.roles = WorkflowManager.getUserRoles(spaceId, userObject.id);
-
-  //   users.push(userObject);
-  // }
-  if(WorkflowManager.spaceUsersCache[Session.get("spaceId")] !=null){
-    return WorkflowManager.spaceUsersCache[Session.get("spaceId")];
-  }
-
+  
   var spaceUsers = db.space_users.find({}, {sort: {name:1}});
 
   spaceUsers.forEach(function(spaceUser){
@@ -53,9 +38,8 @@ WorkflowManager.getSpaceUsers = function (spaceId){
     spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
     spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
     users.push(spaceUser);
+    
   })
-
-  WorkflowManager.spaceUsersCache[Session.get("spaceId")] = users;
 
   return users;
 };
@@ -287,16 +271,9 @@ WorkflowManager.getOrganization = function(orgId){
     return ;
   }
 
-  var spaceOrgs = WorkflowManager.getSpaceOrganizations("") , spaceOrg = {};
+  var spaceOrg = db.organizations.findOne(orgId);
 
-  spaceOrgs.forEach(
-    function(org){
-        if (org.id == orgId){
-          spaceOrg = org;
-          return ;
-        }
-    }
-  );
+  spaceOrg.id = spaceOrg._id;
 
   return spaceOrg;
 };
@@ -346,7 +323,6 @@ WorkflowManager.getRole = function(roleId){
 };
 
 WorkflowManager.getUser = function (userId){
-
   if (!userId) {
     return ;
   }
@@ -357,17 +333,12 @@ WorkflowManager.getUser = function (userId){
   
   }
 
-  var spaceUsers = WorkflowManager.getSpaceUsers("") , spaceUser = {};
+  var spaceUser = db.space_users.findOne({user:userId});
 
-  spaceUsers.forEach(
-    function(user){
-        if (user.id == userId){
-          spaceUser = user;
-          return ;
-        }
-    }
-  );
-
+  spaceUser.id = spaceUser.user;
+  spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
+  spaceUser.roles = WorkflowManager.getUserRoles(Session.get("spaceId"), spaceUser.organization.id, spaceUser.id);
+  
   return spaceUser;
 };
 
