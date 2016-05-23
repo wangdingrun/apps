@@ -118,10 +118,10 @@ InstanceManager.getNextUserOptions = function(){
           });
 
       }
-      if (next_user_options.length > 0){ //==1
-          next_user_options[0].selected = true
-          next_user_ids.push(next_user_options[0].id)
-      }
+      //if ( next_user_options.length > 0){ //==1
+      //    next_user_options[0].selected = true
+      //    next_user_ids.push(next_user_options[0].id)
+      //}
   }
 
   return next_user_options;

@@ -213,6 +213,20 @@ Template.instanceform.helpers
         data = {dataset:{},name:'nextStepUsers',atts:{name:'nextStepUsers',id:'nextStepUsers',class:'selectUser nextStepUsers form-control',style:'padding:6px 12px;'}};
         
         next_user = $("input[name='nextStepUsers']");
+        
+        next_user_id = []
+        next_user_name = []
+
+        users.forEach (user) ->
+            if user.selected 
+                next_user_id.push(user.id);
+                next_user_name.push(user.name);
+
+        if users.length == 1 && next_user_id.length < 1 
+            next_user_id = [users[0].id]
+            next_user_name = [users[0].name]
+        
+
         if next_user && next_user.length > 0
             if !Session.get("next_step_users_showOrg")
                 next_user[0].dataset.userOptions = users.getProperty("id")
@@ -222,21 +236,17 @@ Template.instanceform.helpers
                 delete next_user[0].dataset.showOrg
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
+
             next_userIds = next_user[0].dataset.values.split(",");
             next_userIdObjs = users.filterProperty("id",next_userIds)
-            if users.length == 1
-                next_user[0].value = users[0].name;
-                next_user[0].dataset.values = users[0].id
-                data.value = users[0].name
-                data.dataset['values'] = users[0].id
-            else if next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length
+            if next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length
                 data.value = next_user[0].value
                 data.dataset['values'] = next_user[0].dataset.values
             else
-                next_user[0].value = "";
-                next_user[0].dataset.values = "";
-                data.value = ""
-                data.dataset['values'] = ""
+                next_user[0].value = next_user_name.toString();
+                next_user[0].dataset.values = next_user_id.toString()
+                data.value = next_user_name.toString()
+                data.dataset['values'] = next_user_id.toString()
 
         else
             
@@ -245,9 +255,12 @@ Template.instanceform.helpers
                 data.dataset['showOrg'] = false;
 
             data.dataset['multiple'] = Session.get("next_user_multiple");
-            if users.length == 1
-                data.value = users[0]
-                data.dataset['values'] = users[0].id
+
+            data.value = next_user_name.toString()
+            data.dataset['values'] = next_user_id.toString()
+
+
+
         return data;
 
     next_step_multiple: ->
