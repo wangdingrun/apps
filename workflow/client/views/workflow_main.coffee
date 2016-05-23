@@ -4,6 +4,12 @@ Template.workflow_main.helpers
 		return Session.get("instanceId")
 
 
+	showInstance: ->
+		if !Session.get("instanceId")
+			return false;
+		return Steedos.subsReady() 
+
+
 Template.workflow_main.onCreated ->
 
 	$(window).resize ->

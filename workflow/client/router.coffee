@@ -47,6 +47,17 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 
 		console.log "call get_instance_data"
 		$(document.body).addClass "loading";
+
+		BlazeLayout.render 'masterLayout',
+			main: "workflow_main"
+
+		if (Steedos.isMobile())
+			$(".instance-wrapper").show();
+			$(".instance-list-wrapper").hide();
+		else
+			$(".instance-wrapper").show();
+			$(".instance-list-wrapper").show();
+			
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
 
@@ -57,15 +68,6 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 			Session.set("instanceId", params.instanceId);
 			Session.set("box", params.box);
 
-			BlazeLayout.render 'masterLayout',
-				main: "workflow_main"
-
-			if (Steedos.isMobile())
-				$(".instance-wrapper").show();
-				$(".instance-list-wrapper").hide();
-			else
-				$(".instance-wrapper").show();
-				$(".instance-list-wrapper").show();
 
 			$(document.body).removeClass "loading";
 
