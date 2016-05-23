@@ -215,10 +215,10 @@ Template.instanceform.helpers
         next_user = $("input[name='nextStepUsers']");
         if next_user && next_user.length > 0
             if !Session.get("next_step_users_showOrg")
-                next_user[0].dataset.user = users.getProperty("id")
+                next_user[0].dataset.userOptions = users.getProperty("id")
                 next_user[0].dataset.showOrg = false;
             else
-                delete next_user[0].dataset.user
+                delete next_user[0].dataset.userOptions
                 delete next_user[0].dataset.showOrg
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
@@ -238,7 +238,7 @@ Template.instanceform.helpers
         else
             
             if !Session.get("next_step_users_showOrg")
-                data.dataset['user']= users.getProperty("id")
+                data.dataset['userOptions']= users.getProperty("id")
                 data.dataset['showOrg'] = false;
 
             data.dataset['multiple'] = Session.get("next_user_multiple");

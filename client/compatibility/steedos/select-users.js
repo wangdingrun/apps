@@ -37,8 +37,8 @@ Template.afSelectUser.events({
 
     var data,multiple,showOrg=true;
 
-    if(dataset.user){
-        data = {users:WorkflowManager.getUsers(dataset.user.split(","))};
+    if(dataset.userOptions){
+        data = {users:WorkflowManager.getUsers(dataset.userOptions.split(","))};
         //console.log("s1.1 is " + parseInt(new Date().getTime()/1000));
     }else{
         data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
