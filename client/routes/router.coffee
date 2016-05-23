@@ -12,6 +12,7 @@ FlowRouter.route '/logout',
 		#AccountsTemplates.logout();
 		Meteor.logout ()->
 			SteedosAPI.setupLogout();
+			Session.set("spaceId", null);
 			FlowRouter.go("/");
 
 
@@ -27,7 +28,6 @@ FlowRouter.route '/space',
 		if !Meteor.userId()
 			FlowRouter.go "/sign-in";
 			return true
-
 
 		BlazeLayout.render 'masterLayout',
 			main: "space_select"
