@@ -222,7 +222,9 @@ Template.instanceform.helpers
                 delete next_user[0].dataset.showOrg
             
             next_user[0].dataset.multiple = Session.get("next_user_multiple");
-            if users.length == 1
+            next_userIds = next_user[0].dataset.values.split(",");
+            next_userIdObjs = users.filterProperty("id",next_userIds)
+            if users.length == 1 || (next_userIds.length > 0 && next_userIdObjs.length > 0 && next_userIds.length = next_userIdObjs.length)
                 next_user[0].value = users[0].name;
                 next_user[0].dataset.values = users[0].id
                 data.value = users[0].name
