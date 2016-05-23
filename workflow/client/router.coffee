@@ -23,7 +23,8 @@ FlowRouter.route '/space/:spaceId',
 FlowRouter.route '/space/:spaceId/:box/', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		Session.set("spaceId", params.spaceId);
+		if Session.get("spaceId") != params.spaceId 
+			Session.set("spaceId", params.spaceId);
 		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
@@ -39,7 +40,8 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 
-		Session.set("spaceId", params.spaceId);
+		if Session.get("spaceId") != params.spaceId 
+			Session.set("spaceId", params.spaceId);
 		localStorage.setItem("spaceId", params.spaceId);
 		Session.set("instanceId", null);
 
