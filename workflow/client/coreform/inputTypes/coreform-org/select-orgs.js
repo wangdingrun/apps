@@ -1,5 +1,10 @@
 AutoForm.addInputType("selectorg",{
     template:"afSelectOrg",
+    valueIn: function(val, atts){
+        if("string" == typeof(val))
+            val = WorkflowManager.getFormulaOrgObjects(val);
+        return val;
+    },
     valueOut:function(){
         return this[0].dataset.values;
     },
@@ -30,7 +35,7 @@ Template.afSelectOrg.events({
   'click .selectOrg': function (event, template) {
     if ("disabled" in template.data.atts)
         return;
-    var data = {orgs:WorkflowManager.getSpaceOrganizations() , users:WorkflowManager.getSpaceUsers()};
+    var data = {orgs:WorkflowManager.getSpaceOrganizations()};
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
     var options = {};

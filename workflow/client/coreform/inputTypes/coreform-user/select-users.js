@@ -1,5 +1,10 @@
 AutoForm.addInputType("selectuser",{
     template:"afSelectUser",
+    valueIn: function(val, atts){
+        if("string" == typeof(val))
+            val = WorkflowManager.getFormulaUserObjects(val);
+        return val;
+    },
     valueOut:function(){
         return this[0].dataset.values;
     },
