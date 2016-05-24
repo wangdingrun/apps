@@ -17,7 +17,7 @@ BQQ.requestCredential = function (options, credentialRequestCompleteCallback) {
     return;
   }
   var credentialToken = Random.secret();
-  var loginStyle = OAuth._loginStyle('bqq', config, options);
+  var loginStyle = "redirect"; //OAuth._loginStyle('bqq', config, options);
   var scope = (options && options.requestPermissions) || ['get_user_info'];
   var flatScope = _.map(scope, encodeURIComponent).join('+');
 
