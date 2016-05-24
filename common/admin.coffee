@@ -53,7 +53,7 @@ db.space_users.adminConfig =
 	autoForm:
 		omitFields: ['createdAt', 'updatedAt', 'created', 'created_by', 'modified', 'modified_by']
 	collections: 
-		spaces: db.spaces.adminConfig
+		#spaces: db.spaces.adminConfig
 		organizations: db.organizations.adminConfig
 		space_users: db.space_users.adminConfig
 
