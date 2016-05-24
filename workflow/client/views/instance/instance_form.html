@@ -80,29 +80,27 @@
             </div>
             <div class="box-body">
                 {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
-                    <div class="row">
-                        {{#each steedos_form.fields}}
-                            {{#if equals this.type 'table'}}
-                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
-                                
-                                {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
+                    {{#each steedos_form.fields}}
+                        {{#if equals this.type 'table'}}
+                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
+                            
+                            {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
+                            </div>
+                        {{else}}
+                            {{#if equals this.type 'section'}}
+                                <div class="col-md-12">
+                                    <div class='panel panel-default section'>
+                                        <div class="panel-heading"><div class="panel-title">{{this.code}}</div></div>
+                                    </div>
                                 </div>
                             {{else}}
-                                {{#if equals this.type 'section'}}
-                                    <div class="col-md-12">
-                                        <div class='panel panel-default section'>
-                                            <div class="panel-heading"><div class="panel-title">{{this.code}}</div></div>
-                                        </div>
-                                    </div>
-                                {{else}}
-                                    <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
-                                    {{> afFormGroup name=this.code}}
-                                    </div>
-                                {{/if}}
+                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+                                {{> afFormGroup name=this.code}}
+                                </div>
                             {{/if}}
-                            
-                        {{/each}}
-                    </div>
+                        {{/if}}
+                        
+                    {{/each}}
                 {{/autoForm}}
             </div>
 
