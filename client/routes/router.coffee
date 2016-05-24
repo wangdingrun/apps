@@ -32,3 +32,24 @@ FlowRouter.route '/space',
 		BlazeLayout.render 'masterLayout',
 			main: "space_select"
 
+FlowRouter.route '/bqq/sso', 
+	action: (params, queryParams)->
+		userId = queryParams.userId
+		loginToken = queryParams.authToken
+		returnurl = queryParams.returnurl
+
+		console.log "sso login for " + userId
+		userId && Accounts.connection.setUserId(userId);
+		Accounts.loginWithToken loginToken,  (err) ->
+			if (err) 
+				Meteor._debug("Error logging in with token: " + err);
+				Accounts.makeClientLoggedOut();
+		
+			if FlowRouter
+				FlowRouter.go(returnurl)
+			else
+				document.location.href = Meteor.absoluteUrl ""
+
+
+
+
