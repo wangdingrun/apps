@@ -16,6 +16,12 @@ Meteor.startup ->
 			res.end()
 			return
 
+		if user.avatarURL
+			res.setHeader "Location", user.avatarURL
+			res.writeHead 302
+			res.end()
+			return
+
 		username = user.name;
 
 		res.setHeader 'Content-Disposition', 'inline'
