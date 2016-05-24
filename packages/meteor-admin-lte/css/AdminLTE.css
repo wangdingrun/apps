@@ -904,10 +904,10 @@ a:focus {
  * -------------------------
  */
 /*Dropdowns in general*/
-.dropdown-menu {
+/*.dropdown-menu {
   box-shadow: none;
   border-color: #eee;
-}
+}*/
 .dropdown-menu > li > a {
   color: #777;
 }
