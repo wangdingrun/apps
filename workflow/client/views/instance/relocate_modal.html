@@ -8,10 +8,14 @@
         </div>
 
         <div class="modal-body">
-          <p><span>{{_ "Instance Relocate CurStep"}}</span>{{currentStepName}}</p>
-          <p><span>{{_ "Inbox Suggestion NextSteps Label"}}</span><select class="suggestion-control" id="relocate_steps"></select></p>
-          <p id="relocate_users_p"><span>{{_ "Inbox Suggestion NextSteps Handler Label"}}</span><select class="suggestion-control" id="relocate_users"></select></p>
-          <textarea class="form-control" id="relocate_modal_text" placeholder={{_ "Instance Relocate Reason"}}></textarea>
+          {{#autoForm id='relocate' schema=fields doc=values }}
+            <p><span>{{_ "Instance Relocate CurStep"}}</span><label id="relocate_currentStepName"></label></p>
+            <p><span>{{_ "Inbox Suggestion NextSteps Label"}}</span><select class="suggestion-control" id="relocate_steps"></select></p>
+            <p id="relocate_users_p">
+            {{> afFormGroup name="relocate_users"}}
+            </p>
+            <textarea class="form-control" id="relocate_modal_text" placeholder={{_ "Instance Relocate Reason"}}></textarea>
+          {{/autoForm}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
