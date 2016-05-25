@@ -10,7 +10,10 @@ Template.profile.helpers
 		return Meteor.userId()
 
 	getGravatarURL: (user, size) ->
-		return Meteor.user()?.avatarURL()
+		return Meteor.absoluteUrl('avatar/' + Meteor.userId());
+
+	absoluteUrl: ()->
+		return Meteor.absoluteUrl('');
 
 
 Template.profile.onRendered ->
