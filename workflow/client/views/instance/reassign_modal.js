@@ -1,41 +1,39 @@
 Template.reassign_modal.helpers({
-
-    currentStepName: function () {
-        var s = InstanceManager.getCurrentStep();
-        if (s)
-            return s.name;
-        return "";
+    
+    fields: function(){
+        return new SimpleSchema({reassign_users:{autoform:{type:"selectuser"},optional:true,type:String,label:"处理人"}});
     },
-
+    
+    values: function(){
+        return {};
+    }
 })
 
 
 Template.reassign_modal.events({
 
-    'shown.bs.modal #reassign_modal': function (event) {
-        $("#reassign_users").select2();
-        $("#reassign_users").empty();
+    'show.bs.modal #reassign_modal': function (event) {
+        
+        var reassign_users = $("input[name='reassign_users']")[0];
+        
+        reassign_users.value = "";
+        reassign_users.dataset.values = '';
+
         $("#reassign_modal_text").val(null);
 
-        var u = WorkflowManager.getSpaceUsers(Session.get("spaceId"));
         var s = InstanceManager.getCurrentStep();
 
+        $("#reassign_currentStepName").html(s.name);
+
         if (s.step_type == "counterSign") {
-            $("#reassign_users").prop("multiple", "multiple");
+            reassign_users.dataset.multiple = true;
         } else {
-            $("#reassign_users").removeAttr("multiple");
+            reassign_users.dataset.multiple = false;
         }
-
-        u.forEach(function(user){
-            $("#reassign_users").append("<option value='" + user.id + "'> " + user.name + " </option>");
-        })
-
-        $("#reassign_users").select2().val(null);
-        $("#reassign_users").select2().val();
     },
 
     'click #reassign_modal_ok': function (event, template) {
-        var val = $("#reassign_users").select2().val();
+        var val = AutoForm.getFieldValue("reassign_users","reassign");
         if (!val) {
             toastr.error("请指定处理人。");
             return;
@@ -47,12 +45,7 @@ Template.reassign_modal.events({
             return;
         }
 
-        var user_ids = [];
-        if (val instanceof Array) {
-            user_ids = val.getEach("value");
-        } else {
-            user_ids.push(val);
-        }
+        var user_ids = val.split(",");
 
         InstanceManager.reassignIns(user_ids, reason);
     },
