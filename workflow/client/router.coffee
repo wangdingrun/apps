@@ -46,10 +46,11 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"
-		$(document.body).addClass "loading";
 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
+			
+		$(document.body).addClass "loading";
 
 		if (Steedos.isMobile())
 			$(".instance-wrapper").show();
