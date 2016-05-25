@@ -13,7 +13,7 @@ Template.loginLayout.onCreated ->
         self = this;
 
         $(window).resize ->
-                $(".content-wrapper").height($(window).height() - 50);
+                $(".content-wrapper").css("min-height", $(window).height() + "px");
 
 
 Template.loginLayout.onRendered ->
@@ -22,3 +22,14 @@ Template.loginLayout.onRendered ->
 
         if ($("body").hasClass('sidebar-open')) 
                 $("body").removeClass('sidebar-open');
+
+Template.loginLayout.events
+
+        'click #btnLogout': (e, t) ->
+                FlowRouter.go("/logout")
+
+        'click #btnSignIn': (e, t) ->
+                FlowRouter.go("/sign-in")
+                
+        'click #btnSignUp': (e, t) ->
+                FlowRouter.go("/sign-up")
