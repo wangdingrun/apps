@@ -13,7 +13,7 @@ Template.relocate_modal.helpers({
 
 Template.relocate_modal.events({
 
-    'shown.bs.modal #relocate_modal': function (event) {
+    'show.bs.modal #relocate_modal': function (event) {
         // $("#relocate_steps").select2();
         $("#relocate_steps").empty();
         
