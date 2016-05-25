@@ -108,7 +108,7 @@ JsonRoutes.add("get", "/api/bqq/notify", function (req, res, next) {
     var hashedToken = Accounts._hashLoginToken(authToken.token);
     Accounts._insertHashedLoginToken(userId, {hashedToken: hashedToken});
 
-    var sso_url = '/workflow/bqq/sso?userId=' + userId + '&authToken=' + authToken.token + '&returnurl=' + returnurl;
+    var sso_url = '/workflow/api/bqq/sso?userId=' + userId + '&authToken=' + authToken.token + '&returnurl=' + returnurl;
 
     JsonRoutes.sendResult(res, {
       headers: {

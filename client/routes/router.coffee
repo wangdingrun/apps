@@ -32,7 +32,7 @@ FlowRouter.route '/space',
 		BlazeLayout.render 'masterLayout',
 			main: "space_select"
 
-FlowRouter.route '/bqq/sso', 
+FlowRouter.route '/api/bqq/sso', 
 	action: (params, queryParams)->
 		userId = queryParams.userId
 		loginToken = queryParams.authToken
