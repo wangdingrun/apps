@@ -46,6 +46,24 @@ autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode ,fieldTyp
                 $("input[name='" + fieldCode + "'][value='"+v+"']").attr("checked","checked");
             });
         }
+    }else if(fieldType =='user'){
+        if (value){
+            var user = WorkflowManager.getUsers(value)
+            $("[name='" + fieldCode + "']").val(user.getProperty("name").toString());
+            $("[name='" + fieldCode + "']")[0].dataset.values = user.getProperty("id").toString();
+        }else{
+            $("[name='" + fieldCode + "']").val("");
+            $("[name='" + fieldCode + "']")[0].dataset.values = "";
+        }
+    }else if(fieldType =='group'){
+        if (value){
+            var org = WorkflowManager.getOrganizations(value)
+            $("[name='" + fieldCode + "']").val(org.getProperty("name").toString());
+            $("[name='" + fieldCode + "']")[0].dataset.values = org.getProperty("id").toString();
+        }else{
+            $("[name='" + fieldCode + "']").val("");
+            $("[name='" + fieldCode + "']")[0].dataset.values = "";
+        }
     }else{
         $("[name='" + fieldCode + "']").val(value);
     }
@@ -57,13 +75,26 @@ autoform_table_Helpers.getTableModal = function (tableCode){
 };
 
 autoform_table_Helpers.getTableModalValue = function (fieldCode){
-    var val = $("[name='" + fieldCode + "']").val()
-    var type = $("[name='" + fieldCode + "']").attr("type")
+
+    var fieldJ = $("[name='" + fieldCode + "']");
+
+    var val = fieldJ.val(), type = fieldJ.attr("type"), classAttr=fieldJ.attr("class"), multiple = fieldJ[0].multiple
     if(type == 'number'){
         val = val.to_float();
     }else if (type == 'checkbox'){
-        val = $("[name='" + fieldCode + "']")[0].checked;
+        val = fieldJ[0].checked;
     }
+
+
+    if(classAttr.indexOf("selectOrg") > -1 || classAttr.indexOf("selectUser") > -1){
+        val = fieldJ[0].dataset.values;
+    }
+
+
+    if(multiple){
+        val = val ? val.split(",") : []
+    }
+
     return val;
 }
 
@@ -141,12 +172,12 @@ autoform_table_Helpers.getTDValue = function(tableCode, fieldCode, rowobj){
     switch(rowobj[fieldCode].type){
         case 'user' :
             if($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()){
-                td_value = WorkflowManager.getUser($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()).name
+                td_value = WorkflowManager.getUsers($("[name='"+(tableCode + ".$." + fieldCode)+"']")[0].dataset.values.split(",")).getProperty("name").toString()
             }    
             break;
         case 'group':
             if($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()){
-                td_value = WorkflowManager.getOrganization($("[name='"+(tableCode + ".$." + fieldCode)+"']").val()).name
+                td_value = WorkflowManager.getOrganizations($("[name='"+(tableCode + ".$." + fieldCode)+"']")[0].dataset.values.split(",")).getProperty("name").toString()
             }    
             break;
         case 'checkbox':
@@ -225,6 +256,14 @@ var get_tr_html = function(row_index, tableCode, rowobj){
 autoform_table_Helpers.update_autoFormArrayItem = function(row_index, tableCode, rowobj){
     for(var key in rowobj){
         switch(rowobj[key].type){
+            case 'group':
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].value = $("[name='"+(tableCode + ".$." + key)+"']")[0].value;
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].dataset.values = $("[name='"+(tableCode + ".$." + key)+"']")[0].dataset.values;
+                break;
+            case 'user':
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].value = $("[name='"+(tableCode + ".$." + key)+"']")[0].value;
+                $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].dataset.values = $("[name='"+(tableCode + ".$." + key)+"']")[0].dataset.values;
+                break;
             case 'checkbox':
                 $("[name='"+(tableCode + "."+row_index+"." + key)+"']")[0].checked = $("[name='"+(tableCode + ".$." + key)+"']")[0].checked;
                 break;

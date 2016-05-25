@@ -47,10 +47,18 @@ Template.autoform_table.helpers({
         fValue = obj[key];
         switch(ROWOBJ[key].type){
           case 'user':
-              fValue = fValue ? fValue.name : '';
+            if(fValue instanceof Array){
+              fValue = fValue ? fValue.getProperty("name").toString() : '';
+            }else{
+              fValue = fValue ? fValue.name : '';  
+            }
             break;
           case 'group':
-            fValue = fValue ? fValue.name : '';
+            if(fValue instanceof Array){
+              fValue = fValue ? fValue.getProperty("name").toString() : '';
+            }else{
+              fValue = fValue ? fValue.name : '';  
+            }
             break;
           case 'checkbox':
             if(!fValue){ fValue = ''; break;} 
