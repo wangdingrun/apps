@@ -14,7 +14,7 @@ Template.relocate_modal.helpers({
 Template.relocate_modal.events({
 
     'shown.bs.modal #relocate_modal': function (event) {
-        $("#relocate_steps").select2();
+        // $("#relocate_steps").select2();
         $("#relocate_steps").empty();
         
 
@@ -36,14 +36,12 @@ Template.relocate_modal.events({
             })
         }
 
-        $("#relocate_steps").select2().val(null);
-        $("#relocate_steps").select2().val();
-
+        $("#relocate_steps").val(null);
         $("#relocate_modal_text").val(null);
     },
 
     'change #relocate_steps': function (event) {
-        var v = $("#relocate_steps").select2().val();
+        var v = $("#relocate_steps").val();
         var relocate_users = $("input[name='relocate_users']")[0];
         if (v) {
             var s = WorkflowManager.getInstanceStep(v);
@@ -66,7 +64,7 @@ Template.relocate_modal.events({
     },
 
     'click #relocate_modal_ok': function (event, template) {
-        var sv = $("#relocate_steps").select2().val();
+        var sv = $("#relocate_steps").val();
         if (!sv) {
             return;
         }
