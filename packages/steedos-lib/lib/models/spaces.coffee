@@ -96,6 +96,9 @@ db.spaces._simpleSchema = new SimpleSchema
     "services.bqq.dept_list_timestamp":
         type: Number,
         optional: true
+    "services.bqq.modified":
+        type: Number,
+        optional: true
 
 
 if Meteor.isClient

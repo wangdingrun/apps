@@ -117,6 +117,12 @@ JsonRoutes.add("get", "/api/bqq/notify", function (req, res, next) {
       code: 301
     });
   } else {
+    var now_time = new Date().getTime();
+    var space = db.spaces.findOne({"services.bqq.company_id": company_id});
+    if (space) {
+      db.spaces.direct.update(space._id, {$set:{"services.bqq.modified": now_time}});
+    }
+
 
 
     JsonRoutes.sendResult(res, {
