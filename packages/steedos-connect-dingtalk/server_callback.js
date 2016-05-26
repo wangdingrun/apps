@@ -6,7 +6,7 @@ var WXBizMsgCrypt = Npm.require('wechat-crypto');
 var config = {
   token: "steedos",
   encodingAESKey: "vr8r85bhgaruo482zilcyf6uezqwpxpf88w77t70dow",
-  suiteId: null
+  suiteId: "suitedjcpb8olmececers"
 }
 
 //suite4xxxxxxxxxxxxxxx 是钉钉默认测试suiteid 
