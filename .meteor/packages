@@ -73,6 +73,7 @@ sach:flow-db-admin
 
 steedos:ui
 steedos:connect-bqq
+steedos:connect-dingtalk
 steedos:lib
 steedos:workflow
 steedos:api
