@@ -6,11 +6,11 @@ var WXBizMsgCrypt = Npm.require('wechat-crypto');
 var config = {
   token: "steedos",
   encodingAESKey: "vr8r85bhgaruo482zilcyf6uezqwpxpf88w77t70dow",
-  suiteId: "suitedjcpb8olmececers"
+  suiteKey: "suitedjcpb8olmececers"
 }
 
 //suite4xxxxxxxxxxxxxxx 是钉钉默认测试suiteid 
-var newCrypt = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.suiteid || 'suite4xxxxxxxxxxxxxxx');
+var newCrypt = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.suiteKey || 'suite4xxxxxxxxxxxxxxx');
 var TICKET_EXPIRES_IN = config.ticket_expires_in || 1000 * 60 * 20 //20分钟
 
 JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
