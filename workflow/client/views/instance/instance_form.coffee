@@ -10,6 +10,7 @@ Template.instanceform.helpers
         if not steedos_instance || steedos_instance.state != "draft"
             data.atts.disabled = true
         return data;
+
     instanceId: ->
         return 'instanceform';#"instance_" + Session.get("instanceId");
 
@@ -46,6 +47,7 @@ Template.instanceform.helpers
         form_version = WorkflowManager.getInstanceFormVersion();
         if form_version
             return new SimpleSchema(WorkflowManager_format.getAutoformSchema(form_version));
+            
     doc_values: ->
         WorkflowManager_format.getAutoformSchemaValues();
 
@@ -60,21 +62,21 @@ Template.instanceform.helpers
             else if (ins.final_decision == "rejected")
                 return "box-danger"
 
-    is_disabled: ->
-        ins = WorkflowManager.getInstance();
-        if !ins
-            return;
-        if ins.state!="draft"
-            return "disabled";
-        return;
+    #is_disabled: ->
+    #    ins = WorkflowManager.getInstance();
+    #    if !ins
+    #        return;
+    #    if ins.state!="draft"
+    #        return "disabled";
+    #    return;
     
 
-    attachments: ->
-        # instance 修改时重算
-        WorkflowManager.instanceModified.get();
-        
-        instance = WorkflowManager.getInstance();
-        return instance.attachments;
+    #attachments: ->
+    #    # instance 修改时重算
+    #    WorkflowManager.instanceModified.get();
+    #    
+    #    instance = WorkflowManager.getInstance();
+    #    return instance.attachments;
 
 Template.instanceform.onRendered ->
     t = this;
@@ -143,13 +145,3 @@ Template.instanceform.events
         setTimeout ->
            Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
         ,101
-
-    
-                     
-               
-           
-
-
-
-
-
