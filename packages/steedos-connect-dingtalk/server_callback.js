@@ -58,7 +58,9 @@ JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
 });
 
 Dingtalk.processCallback = function(message, req, res, next) {
+    console.log('message', message);
 
+    res.reply();
 }
 
 Dingtalk._jsonWrapper = function(timestamp, nonce, text) {
