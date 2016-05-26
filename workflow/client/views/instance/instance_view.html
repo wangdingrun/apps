@@ -1,0 +1,13 @@
+<template name="instance_view">
+    {{> instance_button}}
+    <div class="instance">
+        {{> instance_suggestion}}
+
+        {{> instanceform}}
+
+        {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
+
+        {{> Template.dynamic template="instance_traces" data=instance.traces}}
+
+    </div>
+</template>

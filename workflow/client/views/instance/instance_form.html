@@ -1,0 +1,43 @@
+<template name="instanceform">
+
+        <div class="instance-form box {{instance_box_style}}">
+            <div class="box-header  with-border">
+                <h3 class="box-title">{{instance.name}}</h3>
+                <span class="help-block"></span>
+
+                <div class="applicant-wrapper">
+                    <label class="control-label">提交人&nbsp;:</label>
+                    {{>Template.dynamic  template="afSelectUser" data=applicantContext}}
+                </div>
+            </div>
+            <div class="box-body">
+                {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
+                    {{#each steedos_form.fields}}
+                        {{#if equals this.type 'table'}}
+                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
+                            
+                            {{> Template.dynamic template="autoform_table" data=(innersubformContext this)}}
+                            </div>
+                        {{else}}
+                            {{#if equals this.type 'section'}}
+                                <div class="col-md-12">
+                                    <div class='panel panel-default section'>
+                                        <div class="panel-heading"><div class="panel-title">{{this.code}}</div></div>
+                                    </div>
+                                </div>
+                            {{else}}
+                                <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+                                {{> afFormGroup name=this.code}}
+                                </div>
+                            {{/if}}
+                        {{/if}}
+                        
+                    {{/each}}
+                {{/autoForm}}
+            </div>
+
+        </div>
+
+</template>
+
+
