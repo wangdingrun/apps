@@ -10,7 +10,7 @@ db.spaces._simpleSchema = new SimpleSchema
         type: String,
         optional: true,
         autoform:
-            type: "select2",
+            type: "select",
             options: ->
                 options = []
                 selector = {}
@@ -31,7 +31,7 @@ db.spaces._simpleSchema = new SimpleSchema
         type: [String],
         optional: true,
         autoform: 
-            type: "select2",
+            type: "select",
             afFieldInput: 
                 multiple: true
             options: ->
@@ -94,6 +94,9 @@ db.spaces._simpleSchema = new SimpleSchema
         type: Number,
         optional: true
     "services.bqq.dept_list_timestamp":
+        type: Number,
+        optional: true
+    "services.bqq.modified":
         type: Number,
         optional: true
 

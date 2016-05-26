@@ -26,7 +26,6 @@ Package.onUse(function(api) {
 	api.use('aldeed:collection2');
 	api.use('aldeed:tabular');
 	api.use('aldeed:autoform');
-	api.use('aldeed:autoform-select2');
 	api.use('matb33:collection-hooks');
 
 	api.use('steedos:lib');

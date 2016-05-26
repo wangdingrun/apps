@@ -44,6 +44,12 @@ Template.sidebar.helpers
 			return c.finished_count;
 		return;
 
+	isAdmin: ->
+		s = db.spaces.findOne(Session.get('spaceId'))
+		if s
+			return s.admins.includes(Meteor.userId())
+		return false
+
 Template.sidebar.onRendered ->
 
     if !Steedos.isMobile()

@@ -34,7 +34,7 @@ db.users._simpleSchema = new SimpleSchema
 			"zh-cn"
 		],
 		autoform: 
-			type: "select2",
+			type: "select",
 			options: [{
 				label: "Chinese",
 				value: "zh-cn"
@@ -47,7 +47,7 @@ db.users._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true,
 		autoform:
-			type: "select2",
+			type: "select",
 			options: ->
 				if Meteor.isClient
 					return Steedos._timezones

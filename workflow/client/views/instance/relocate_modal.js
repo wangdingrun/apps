@@ -1,24 +1,32 @@
 Template.relocate_modal.helpers({
 
-    currentStepName: function () {
-        var s = InstanceManager.getCurrentStep();
-        if (s)
-            return s.name;
-        return "";
+    fields: function(){
+        return new SimpleSchema({relocate_users:{autoform:{type:"selectuser"},optional:true,type:String,label:TAPi18n.__("Inbox Suggestion NextSteps Handler Label")}});
     },
+    
+    values: function(){
+        return {};
+    }
 
 })
 
 
 Template.relocate_modal.events({
 
-    'shown.bs.modal #relocate_modal': function (event) {
-        $("#relocate_steps").select2();
+    'show.bs.modal #relocate_modal': function (event) {
+        // $("#relocate_steps").select2();
         $("#relocate_steps").empty();
-        $("#relocate_users").select2();
-        $("#relocate_users").empty();
+        
+
+        var relocate_users = $("input[name='relocate_users']")[0];
+        
+        relocate_users.value = "";
+        relocate_users.dataset.values = '';
         
         var c = InstanceManager.getCurrentStep();
+
+        $("#relocate_currentStepName").html(c.name);
+
         var ins_steps = WorkflowManager.getInstanceSteps();
         if (ins_steps) {
             ins_steps.forEach(function(s){
@@ -28,38 +36,26 @@ Template.relocate_modal.events({
             })
         }
 
-        $("#relocate_steps").select2().val(null);
-        $("#relocate_steps").select2().val();
-        $("#relocate_users").select2().val(null);
-        $("#relocate_users").select2().val();
+        $("#relocate_steps").val(null);
         $("#relocate_modal_text").val(null);
     },
 
     'change #relocate_steps': function (event) {
-        var v = $("#relocate_steps").select2().val();
+        var v = $("#relocate_steps").val();
+        var relocate_users = $("input[name='relocate_users']")[0];
         if (v) {
             var s = WorkflowManager.getInstanceStep(v);
             if (s.step_type == "start" || s.step_type == "end") {
                 $("#relocate_users_p").css("display", "none");
-            }
-            else {
-                var u = WorkflowManager.getSpaceUsers(Session.get("spaceId"));
-                u.forEach(function(user){
-                    $("#relocate_users").append("<option value='" + user.id + "'> " + user.name + " </option>");
-                })
-                $("#relocate_users").select2().val(null);
-                $("#relocate_users").select2().val();
-
+            }else{
                 $("#relocate_users_p").css("display","");
             }
 
             if (s.step_type == "counterSign") {
-                $("#relocate_users").prop("multiple", "multiple");
-                $("#relocate_users").select2();
+                relocate_users.dataset.multiple = true;
             }
             else {
-                $("#relocate_users").removeAttr("multiple");
-                $("#relocate_users").select2();
+                relocate_users.dataset.multiple = false;
             }
         }
         else {
@@ -68,7 +64,7 @@ Template.relocate_modal.events({
     },
 
     'click #relocate_modal_ok': function (event, template) {
-        var sv = $("#relocate_steps").select2().val();
+        var sv = $("#relocate_steps").val();
         if (!sv) {
             return;
         }
@@ -88,10 +84,10 @@ Template.relocate_modal.events({
             }
         }
         else if (s.step_type == "end") {
-            uv = [];
+            uv = null;
         }
         else {
-            var uv = $("#relocate_users").select2().val();
+            uv = AutoForm.getFieldValue("relocate_users","relocate");
         }
 
         if (s.step_type != "end" && !uv) {
@@ -100,11 +96,9 @@ Template.relocate_modal.events({
         }
 
         var user_ids = [];
-        if (uv instanceof Array) {
-            user_ids = uv.getEach("value");
-        }
-        else {
-            user_ids.push(uv);
+        
+        if(uv){
+            user_ids = uv.split(",");
         }
 
         InstanceManager.relocateIns(sv, user_ids, reason);

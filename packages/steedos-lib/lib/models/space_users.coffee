@@ -25,44 +25,13 @@ db.space_users._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true,
 		autoform: 
-			type: "select2",
-			options: ->
-				options = [{
-					label: " - ",
-					value: ""
-				}]
-				objs = db.organizations.find({}, 
-					{
-						sort: {fullname:1}
-					}
-				)
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.fullname,
-						value: obj._id
-					})
-				return options
+			type: "selectorg"
 
 	manager: 
 		type: String,
 		optional: true,
 		autoform:
-			type: "select2"
-			options: ->
-				options = [{
-					label: " - ",
-					value: ""
-				}]
-				selector = {}
-				if Session.get("spaceId")
-					selector = {space: Session.get("spaceId")}
-
-				objs = db.space_users.find(selector, {name:1, sort: {name:1}})
-				objs.forEach (obj) ->
-					options.push
-						label: obj.name,
-						value: obj.user
-				return options
+			type: "selectuser"
 
 	user_accepted: 
 		type: Boolean,

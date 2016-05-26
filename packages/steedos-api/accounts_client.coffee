@@ -32,10 +32,10 @@ SteedosAPI.setupValidate = ()->
 					Meteor._debug("Error logging in with token: " + err);
 					Accounts.makeClientLoggedOut();
 			
-				if FlowRouter
-					FlowRouter.go("/")
-				else
-					document.location.href = Meteor.absoluteUrl ""
+				# if FlowRouter
+				# 	FlowRouter.go("/")
+				# else
+				# 	document.location.href = Meteor.absoluteUrl ""
 		
 			
 

@@ -16,23 +16,7 @@ db.organizations._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true,
 		autoform:
-			type: "select2",
-			options: ->
-				options = [{
-					label: "",
-					value: ""
-				}]
-				objs = db.organizations.find({}, 
-						{
-							fields: {fullname: 1}, 
-							sort: {fullname:1}
-						})
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.fullname,
-						value: obj._id
-					})
-				return options
+			type: "selectorg"
 	sort_no: 
 		type: Number,
 		optional: true,
@@ -43,7 +27,7 @@ db.organizations._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform: 
 			omit: true,
-			type: "select2",
+			type: "select",
 			afFieldInput: 
 				multiple: true
 			options: ->

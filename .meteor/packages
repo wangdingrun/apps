@@ -58,7 +58,6 @@ percolate:migrations
 aldeed:tabular
 aldeed:autoform
 aldeed:collection2
-aldeed:autoform-select2
 aldeed:autoform-bs-datetimepicker 
 
 gwendall:simple-schema-i18n
@@ -74,6 +73,7 @@ sach:flow-db-admin
 
 steedos:ui
 steedos:connect-bqq
+steedos:connect-dingtalk
 steedos:lib
 steedos:workflow
 steedos:api

@@ -279,8 +279,12 @@ WorkflowManager.getOrganization = function(orgId){
 };
 
 WorkflowManager.getOrganizations = function(orgIds){
-  if(!orgIds || !(orgIds instanceof Array)){
+  if(!orgIds){
     return [];
+  }
+
+  if("string" == typeof(orgIds)){
+    return [WorkflowManager.getOrganization(orgIds)]
   }
 
   var orgs = new Array();
@@ -343,6 +347,10 @@ WorkflowManager.getUser = function (userId){
 };
 
 WorkflowManager.getUsers = function (userIds){
+
+  if("string" == typeof(userIds)){
+    return [WorkflowManager.getUser(orgId)]
+  }
 
   var users = new Array();
   if(userIds){

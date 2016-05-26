@@ -49,12 +49,14 @@
                 <a href="{{urlPrefix}}/space/{{spaceId}}/monitor/"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
             </li>
             <li class="header">{{_ "SETTINGS"}}</li>
-            <li>
-                <a href="/designer/current/zh-cn" target="_designer"><i class="fa fa-gears"></i><span>{{_ "Workflow Designer"}}</span></a>
-            </li>
-            <li>
-                <a href="{{urlPrefix}}/admin"><i class="fa fa-gears"></i><span>{{_ "User Management"}}</span></a>
-            </li>
+            {{#if isAdmin}}
+              <li>
+                  <a href="/designer/current/zh-cn" target="_designer"><i class="fa fa-gears"></i><span>{{_ "Workflow Designer"}}</span></a>
+              </li>
+              <li>
+                  <a href="{{urlPrefix}}/admin"><i class="fa fa-gears"></i><span>{{_ "User Management"}}</span></a>
+              </li>
+            {{/if}}
             <li>
                 <a href="#">
                   <i class="fa fa-user"></i> <span>{{_ "Account"}}</span>
