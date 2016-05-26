@@ -396,18 +396,21 @@ Handlebars.registerHelper('orgList', function(items, tagType, showUser, options)
       }
   }else{
         items.forEach(function(item){
-            out = out + "<li ><a class='org'><label style='height:100%;cursor:pointer;width:100%' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'";
+            out = out + "<li ><a class='org'><label style='height:100%;cursor:pointer;width:70%' onClick='SelectTag.checked(this)'><input type='"+tagType+"' name='selectTag-org' id='"+item.id+"' value='"+item.id+"'";
 
             if(tagType == "radio"){
               out = out + " style='display:none' ";
             }else{
               out = out + " style ='margin-top:0;vertical-align:middle;'";
             }
-            out = out + "><i class='fa fa-sitemap' aria-hidden='true' style='padding-left:4px'></i><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label></a>";
+            out = out + "><i class='fa fa-sitemap' aria-hidden='true' style='padding-left:4px'></i><span style='vertical-align:middle;padding-left:4px'>" + options.fn(item) + "</span></label>";
             
             if(item.children && item.children.length > 0){
-                out = out + "<span class='pull-right' style='cursor:pointer;width:30px;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
+                out = out + "<span class='pull-right' style='cursor:pointer;width:30%;text-align:right' onClick=\"javascript:SelectTag.reload(\'"+item.id+"\')\"><i class='fa fa-angle-right' aria-hidden='true'></i></span>";
             }
+
+            out = out + "</a>";
+
             out = out + "</li>";
         });
   }
