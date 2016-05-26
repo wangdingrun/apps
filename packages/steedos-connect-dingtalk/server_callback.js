@@ -4,7 +4,7 @@ var WXBizMsgCrypt = Npm.require('wechat-crypto');
 //钉钉文档：http://ddtalk.github.io/dingTalkDoc/?spm=a3140.7785475.0.0.p5bAUd#2-回调接口（分为五个回调类型）
 
 var config = {
-  token: "SteedosWorkflow",
+  token: "steedos",
   encodingAESKey: "vr8r85bhgaruo482zilcyf6uezqwpxpf88w77t70dow",
   suiteId: null
 }
@@ -15,6 +15,8 @@ var TICKET_EXPIRES_IN = config.ticket_expires_in || 1000 * 60 * 20 //20分钟
 
 JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
 
+  console.log(req.query);
+  console.log(req.body);
   var signature = req.query.signature;
   var timestamp = req.query.timestamp;
   var nonce = req.query.nonce;
@@ -30,13 +32,17 @@ JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
   var message = JSON.parse(result.message);
   if (message.EventType === 'check_update_suite_url' || message.EventType === 'check_create_suite_url') { //创建套件第一步，验证有效性。
     var Random = message.Random;
-    result = DingTalk._jsonWrapper(timestamp, nonce, Random);
-    res.json(result);
+    result = Dingtalk._jsonWrapper(timestamp, nonce, Random);
+    JsonRoutes.sendResult(res, {
+      data: result
+    });
 
   } else {
     res.reply = function() { //返回加密后的success
-      result = DingTalk._jsonWrapper(timestamp, nonce, 'success');
-      res.json(result);
+      result = Dingtalk._jsonWrapper(timestamp, nonce, 'success');
+      JsonRoutes.sendResult(res, {
+        data: result
+      });
     }
 
     if (config.saveTicket && message.EventType === 'suite_ticket') {
