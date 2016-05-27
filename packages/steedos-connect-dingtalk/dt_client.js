@@ -1,4 +1,3 @@
-
 Meteor.loginWithDingtalk = function(options, callback) {
   // support a callback without options
   if (!callback && typeof options === "function") {
@@ -10,7 +9,9 @@ Meteor.loginWithDingtalk = function(options, callback) {
   Dingtalk.requestCredential(options, credentialRequestCompleteCallback);
 };
 
-Dingtalk = {};
+Dingtalk.isMobile = function(){
+  return $(window).width() < 767
+}
 
 Dingtalk.requestCredential = function (options, credentialRequestCompleteCallback) {
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
@@ -29,8 +30,10 @@ Dingtalk.requestCredential = function (options, credentialRequestCompleteCallbac
   var scope = (options && options.requestPermissions) || ['snsapi_login'];
   var flatScope = _.map(scope, encodeURIComponent).join('+');
 
-  var loginUrl =
-    'https://oapi.dingtalk.com/connect/qrconnect' +
+  var oauthUrl = "https://oapi.dingtalk.com/connect/qrconnect" 
+  if (Dingtalk.isMobile())
+    oauthUrl = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize'
+  var loginUrl = oauthUrl +
       '?appid=' + config.clientId +
       '&response_type=code' +
       '&scope=' + flatScope +

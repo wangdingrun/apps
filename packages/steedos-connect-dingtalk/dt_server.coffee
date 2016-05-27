@@ -82,7 +82,6 @@ Dingtalk.getTokenResponse = (query) ->
 		throw new Error("Dingtalk user_info not found.")
 
 	response.user_info = userInfo.data.user_info;
-	response.corp_info = userInfo.data.corp_info;
 
 	return response
 

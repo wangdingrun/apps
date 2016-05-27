@@ -31,6 +31,5 @@ Package.onUse(function(api) {
 
   api.export('BQQ');
 
-  api.addFiles('qq_login_button.css', 'client');
 
 });

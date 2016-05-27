@@ -79,7 +79,8 @@
 	"APPLICATIONS": "应用",
 	"Workflow": "审批王",
 
-	"bqq": "企业QQ",
+	"bqq": "企点",
+	"dingtalk": "钉钉",
 
 	"OK": "确认",
 	"Cancel": "取消",
