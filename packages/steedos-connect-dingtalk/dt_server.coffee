@@ -7,22 +7,24 @@ Accounts.addAutopublishFields({
 Dingtalk.oauth = 
 	config: ServiceConfiguration.configurations.findOne({service: 'dingtalk'}),
 	access_token: null
+	access_token_expired: Date.now()
 
 
 Dingtalk.refreshAccessToken = () ->
-	response = HTTP.get "https://oapi.dingtalk.com/sns/gettoken", 
-		params: 
-			appid: Dingtalk.oauth.config.clientId,
-			appsecret: OAuth.openSecret(Dingtalk.oauth.config.secret),
-	   
-	console.log(response.data)
 
-	if response.data && response.data.access_token
-		Dingtalk.oauth.access_token = response.data.access_token
-		setTimeout(Dingtalk.refreshAccessToken, 60 * 1000 * 110)
-	else 
-		setTimeout(Dingtalk.refreshAccessToken, 2000)
+	if !Dingtalk.oauth.access_token || (Date.now() > Dingtalk.oauth.access_token_expired) 
+    
+		response = HTTP.get "https://oapi.dingtalk.com/sns/gettoken", 
+			params: 
+				appid: Dingtalk.oauth.config.clientId,
+				appsecret: OAuth.openSecret(Dingtalk.oauth.config.secret),
+		   
+		console.log(response.data)
 
+		if response.data && response.data.access_token
+			Dingtalk.oauth.access_token = response.data.access_token
+			Dingtalk.oauth.access_token_expired = Date.now() + 60 * 1000 *110
+		
 
 Dingtalk.refreshAccessToken();
 
@@ -33,6 +35,8 @@ Dingtalk.getTokenResponse = (query) ->
 
 	if (!Dingtalk.oauth.config)
 		throw new ServiceConfiguration.ConfigError();
+
+	Dingtalk.refreshAccessToken();
 
 	if (!Dingtalk.oauth.access_token)
 		throw new Error("Dingtalk app access token not found.")
