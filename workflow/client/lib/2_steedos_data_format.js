@@ -72,11 +72,11 @@ var s_autoform = function (schema, field){
           autoform.type = 'text';
         }
         break;
-    /*case 'section' : //div
+    case 'section' : //div
         schema.type = String;
-        autoform.readonly = (permission == 'readonly');
-        autoform.type = 'text';
-        break;*/
+        autoform.readonly = true;
+        autoform.type = 'section';
+        break;
     case 'geolocation' : //地理位置
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
@@ -183,7 +183,7 @@ var s_autoform = function (schema, field){
 
 var s_schema = function (label, field){
 
-  var fieldType = field.fieldType, is_required = field.is_required;
+  var fieldType = field.type, is_required = field.is_required;
 
   schema = {};
    
@@ -203,6 +203,10 @@ var s_schema = function (label, field){
   schema.autoform = new s_autoform(schema, field);
 
   schema.autoform.defaultValue = field.default_value;
+
+  if (fieldType == 'section'){
+    schema.autoform.description = field.description
+  }
 
   return schema;
 };
