@@ -64,7 +64,7 @@ JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 						region: "SH"
 						timezone: "GMT+8"
 					webservices:
-						Meteor.settings.public.webservices
+						Steedos.settings.webservices
 			return
 
 
@@ -132,5 +132,5 @@ JsonRoutes.add "post", "/api/setup/login", (req, res, next) ->
 				region: "SH"
 				timezone: "GMT+8"
 			webservices:
-				Meteor.settings.public.webservices
+				Steedos.settings.webservices
 

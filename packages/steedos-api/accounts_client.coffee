@@ -17,8 +17,7 @@ Setup.loginWithCookie = (onSuccess) ->
 Setup.validate = ()->
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
-	if (userId == Cookies.get("X-User-Id") and (loginToken == Cookies.get("X-Auth-Token")))
-		return
+
 	requestData = {}
 	if userId and loginToken
 		requestData = 
@@ -34,6 +33,9 @@ Setup.validate = ()->
 			withCredentials: true
 		crossDomain: true
 	.done ( data ) ->
+		if data.webservices
+			Steedos.settings.webservices = data.webservices
+			
 		# login by cookie
 		# Setup.loginWithCookie();
 

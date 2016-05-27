@@ -3,7 +3,10 @@
 # @namespace Steedos
 ###
 
-Steedos = db = {}
+db = {}
+Steedos = 
+	settings: {}
+	db: db
 
 if Meteor.isClient
 	Steedos._timezones = _.map moment.tz.names(), (name) ->

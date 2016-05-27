@@ -102,7 +102,7 @@ JsonRoutes.add("get", "/api/bqq/notify", function (req, res, next) {
     var hashedToken = Accounts._hashLoginToken(authToken.token);
     Accounts._insertHashedLoginToken(userId, {hashedToken: hashedToken});
 
-    Steedos.Setup.setAuthCookies(req, res, userId, authToken)
+    Setup.setAuthCookies(req, res, userId, authToken)
 
     //var sso_url = '/workflow/sso?userId=' + userId + '&authToken=' + authToken.token + '&redirect=' + returnurl;
 
