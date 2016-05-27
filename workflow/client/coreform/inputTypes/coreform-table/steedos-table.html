@@ -1,0 +1,46 @@
+<template name="afTable">
+    <p>555</p>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{afFieldLabelText name=this.atts.name}}</div>
+        {{#if afFieldIsInvalid name=this.atts.name}}
+        <div class="panel-body has-error">
+          <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
+        </div>
+        {{/if}}
+
+
+        <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}table">
+            <tr>
+                <td>1{{atts.keys}}2</td>
+                <td>1{{keys}}2</td>
+                {{#each this.atts.keys}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+
+
+        </table>
+
+        <ul class="list-group">
+          {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+          <li class="list-group-item autoform-array-item">
+            <div>
+              <div class="autoform-remove-item-wrap">
+                {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+                <button type="button" class="btn btn-primary autoform-remove-item"><span class="glyphicon glyphicon-minus"></span></button>
+                {{/if}}
+              </div>
+              <div class="autoform-array-item-body">
+                {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+              </div>
+            </div>
+          </li>
+          {{/afEachArrayItem}}
+          {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+          <li class="list-group-item">
+            <button type="button" class="btn btn-primary autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}"><span class="glyphicon glyphicon-plus"></span></button>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+</template>

@@ -212,55 +212,48 @@ var s_schema = function (label, field){
 };
 
 WorkflowManager_format.getAutoformSchema = function (steedosForm){
-  var afFields = {};
-  var stFields = steedosForm.fields;
-  for(var i = 0; i < stFields.length; i ++){
+  var fieldSchema = {};
+  var fields = steedosForm.fields;
+  for(var i = 0; i < fields.length; i ++){
 
-    var stField = stFields[i];
+    var field = fields[i];
 
-    var label = (stField.name !=null && stField.name.length > 0) ? stField.name : stField.code ;
+    var label = (field.name !=null && field.name.length > 0) ? field.name : field.code ;
    
-    if (stField.type == 'table'){
+    if (field.type == 'table'){
       
-      afFields[stField.code] = {
+      fieldSchema[field.code] = {
                                   type : Array,
                                   optional : true,
                                   minCount : 0,
                                   maxCount : 200,
                                   //initialCount: 0,
                                   autoform : {
-                                    sfieldcodes:[],
+                                    schema:[],
                                     initialCount: 0,
+                                    type:"table"
                                   }
                                 };
 
-      afFields[stField.code + ".$"] = {
-                                        type:Object,
-                                        optional:true
-                                      };
+      fieldSchema[field.code + ".$"] = {type:Object}
 
-      var sfieldcodes = new Array();
-      for(var si = 0 ; si < stField.sfields.length; si++){
+      for(var si = 0 ; si < field.sfields.length; si++){
        
-        var sstField = stField.sfields[si];
-        
-        sfieldcodes.push(sstField.code);
+        var tableField = field.sfields[si];
 
-        afFields[stField.code + ".$." + sstField.code] = new s_schema(sstField.code, sstField);
+        tableField_schema = new s_schema(tableField.code, tableField);
+
+        fieldSchema[field.code + ".$." + tableField.code] = tableField_schema;
         
       }
 
-      afFields[stField.code].autoform.sfieldcodes = sfieldcodes;
-
     }else{
       
-      afFields[stField.code] = new s_schema(label, stField);
+      fieldSchema[field.code] = new s_schema(label, field);
     
     }
   }
-  //console.log("afFields is");
-  //console.log(JSON.stringify(afFields));
-  return afFields;
+  return fieldSchema;
 };
 
 
