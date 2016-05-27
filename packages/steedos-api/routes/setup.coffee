@@ -3,7 +3,28 @@ bcrypt = NpmModuleBcrypt;
 bcryptHash = Meteor.wrapAsync(bcrypt.hash);
 bcryptCompare = Meteor.wrapAsync(bcrypt.compare);
 
-JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
+Setup.clearAuthCookies = (req, res) ->
+		cookies = new Cookies( req, res );
+		cookies.set("X-User-Id")
+		cookies.set("X-Auth-Token")
+
+Setup.setAuthCookies = (req, res, userId, authToken) ->
+		cookies = new Cookies( req, res );
+		# set cookie to response
+		# maxAge 3 month
+		cookies.set "X-User-Id", userId, 
+			domain: Steedos.uri.domain(),
+			maxAge: 90*60*60*24*1000,
+			httpOnly: false
+
+		cookies.set "X-Auth-Token", authToken, 
+			domain: Steedos.uri.domain(),
+			maxAge: 90*60*60*24*1000,
+			httpOnly: false
+
+
+
+JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 
 	cookies = new Cookies( req, res );
 
@@ -23,17 +44,7 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 			_id: userId,
 			"services.resume.loginTokens.hashedToken": hashedToken
 		if user
-			# set cookie to response
-			# maxAge 3 month
-			cookies.set "X-User-Id", userId, 
-				domain: Steedos.uri.domain(),
-				maxAge: 90*60*60*24*1000,
-				httpOnly: false
-
-			cookies.set "X-Auth-Token", authToken, 
-				domain: Steedos.uri.domain(),
-				maxAge: 90*60*60*24*1000,
-				httpOnly: false
+			Setup.setAuthCookies(req, res, userId, authToken)
 
 			JsonRoutes.sendResult res, 
 				data: 
@@ -65,16 +76,14 @@ JsonRoutes.add "post", "/se/ws/1/validate", (req, res, next) ->
 			"success": false
 
 
-JsonRoutes.add "post", "/se/ws/1/logout", (req, res, next) ->
+JsonRoutes.add "post", "/api/setup/logout", (req, res, next) ->
 
-	cookies = new Cookies( req, res );
-	cookies.set("X-User-Id")
-	cookies.set("X-Auth-Token")
+	Setup.clearAuthCookies(req, res)
 
 	res.end();
 
 
-JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
+JsonRoutes.add "post", "/api/setup/login", (req, res, next) ->
 
 	cookies = new Cookies( req, res );
 
@@ -103,14 +112,7 @@ JsonRoutes.add "post", "/se/ws/1/login", (req, res, next) ->
 
 	# set cookie to response
 	# maxAge 3 month
-	cookies.set "X-User-Id", user._id, 
-		domain: Steedos.uri.domain(),
-		maxAge: 90*60*60*24*1000,
-		httpOnly: false
-	cookies.set "X-Auth-Token", authToken.token, 
-		domain: Steedos.uri.domain(),
-		maxAge: 90*60*60*24*1000,
-		httpOnly: false
+	Setup.setAuthCookies(req, res, user._id, authToken.token)
 
 	JsonRoutes.sendResult res, 
 		data: 

@@ -56,14 +56,15 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
       newFile.attachData req.files[0].data, {type: req.files[0].mimeType}, (err) ->
         newFile.name(req.files[0].filename);
 
-        collection.insert newFile,  (err, fileObj) ->
-          resp = {
-            version_id: fileObj._id,
-            size: 1024 #fileObj.size 
-          };
-          res.setHeader("x-amz-version-id",fileObj._id);
-          res.end(JSON.stringify(resp));
-          return
+        fileObj = collection.insert newFile
+
+        resp = {
+          version_id: fileObj._id,
+          size: fileObj.size 
+        };
+        res.setHeader("x-amz-version-id",fileObj._id);
+        res.end(JSON.stringify(resp));
+        return
     else
       res.statusCode = 500;
       res.end();
