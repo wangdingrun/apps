@@ -32,7 +32,7 @@
     <tr>
         <td class="ins-attach-view">
             <a href="{{getUrl current}}" target="_parent">{{filename}}</a>
-            <a style="cursor: pointer;margin-left: 10px;" data-toggle="modal" data-target="#ins_attach_version" name="ins_attach_version" id="{{_id}}" >{{_ "Versions"}}</a>
+            <a style="cursor: pointer;margin-left: 10px;" name="ins_attach_version" id="{{_id}}" >{{_ "Versions"}}</a>
             {{#if can_delete current.approve historys}}
                 {{> _file_DeleteButton file_id=current._rev}}
             {{/if}}

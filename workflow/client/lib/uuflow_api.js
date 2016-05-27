@@ -40,7 +40,7 @@ UUflow_api.post_draft = function(flowId) {
 
       FlowRouter.go("/space/" + Session.get("spaceId") + "/draft/" + responseText.ChangeSet.inserts.Instances[0].id);
 
-      $('#flow_list_modal').modal('hide');
+      Modal.hide('flow_list_modal');
       toastr.success(TAPi18n.__('Added successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -310,7 +310,7 @@ UUflow_api.put_reassign = function(instance) {
         return;
       }
 
-      $('#reassign_modal').modal('hide');
+      Modal.hide('reassign_modal');
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Reasigned successfully'));
     },
@@ -351,7 +351,7 @@ UUflow_api.put_relocate = function(instance) {
         return;
       }
 
-      $('#relocate_modal').modal('hide');
+      Modal.hide('relocate_modal');
       FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Relocated successfully'));

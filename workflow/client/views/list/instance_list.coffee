@@ -97,6 +97,14 @@ Template.instance_list.events
     'click [name="show_all_ins"]': (event) ->
         Session.set("flowId", undefined);
 
+    'click [name="create_ins_btn"]': (event) ->
+        Session.set('flow_list_modal_type', 'create')
+        Modal.show('flow_list_modal')
+
+    'click [name="show_flows_btn"]': (event) ->
+        Session.set('flow_list_modal_type', 'show')
+        Modal.show('flow_list_modal')
+
 
 
 
