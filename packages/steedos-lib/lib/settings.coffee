@@ -33,3 +33,25 @@ Meteor.startup ->
 			contacts: 
 				status: "active",
 				url: "/"
+
+	Steedos.settings.oauth = 
+		bqq: 
+			clientId: "200626779",
+			secret: "UkQ6G6gFJwJBfYuv",
+			scope: "get_user_info"
+		dingtalk: 
+			clientId: "dingoa7enhp5nfiip75vmk",
+			secret: "NAlKUjGGWrffcAss9nMSd68DTUggYhg559HQT7kpACDcyu7g1PpUdBcXAOlBWZtX",
+			scope: "snsapi_login"
+
+
+	_.each Steedos.settings.oauth, (v, k)->
+
+		ServiceConfiguration.configurations.remove
+			service: k
+	
+		ServiceConfiguration.configurations.insert
+			service: k,
+			clientId: v.clientId,
+			scope: v.scope,
+			secret: v.secret

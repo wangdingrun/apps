@@ -88,7 +88,7 @@ db.users.helpers
 			return this.name
 		else if this.username
 			return this.username
-		else if this.emails[0]
+		else if this.emails and this.emails[0]
 			return this.emails[0].address
 
 
@@ -120,11 +120,15 @@ if Meteor.isServer
 		if (doc.profile?.name && !doc.name)
 			doc.name = doc.profile.name
 
-		if (doc.steedos_id && !doc.name)
+		if !doc.steedos_id
+			doc._id = db.users._makeNewID()
+			doc.steedos_id = doc._id 
+
+		if !doc.name
 			doc.name = doc.steedos_id.split('@')[0]
 
-		if (doc.steedos_id && !doc.username)
-			doc.username = doc.steedos_id.replace("@","_").replace(".","_")
+		# if !doc.username
+		# 	doc.username = doc.steedos_id.replace("@","_").replace(".","_")
 
 		_.each doc.emails, (obj)->
 			db.users.checkEmailValid(obj.address);

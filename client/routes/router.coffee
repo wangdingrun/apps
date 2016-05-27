@@ -11,9 +11,9 @@ FlowRouter.route '/logout',
 	action: (params, queryParams)->
 		#AccountsTemplates.logout();
 		Meteor.logout ()->
-			Steedos.Setup.logout();
+			Setup.logout();
 			Session.set("spaceId", null);
-			FlowRouter.go("/");
+			FlowRouter.go("/sign-in");
 
 
 FlowRouter.route '/account/profile', 

@@ -6,7 +6,8 @@ Package.describe({
 });
 
 Npm.depends({
-  "wechat-crypto": "0.0.2"
+  "wechat-crypto": "0.0.2",
+  "request": "2.65.0"
 });
 
 Package.onUse(function(api) {
@@ -26,6 +27,11 @@ Package.onUse(function(api) {
   api.use('underscore', 'server');
   api.use('service-configuration', ['client', 'server']);
 
+  api.addFiles('dt.js', ['client', 'server']);
+
+  api.addFiles('dt_client.js', 'client');
+  api.addFiles('dt_corp_api.js', 'server');
+  api.addFiles('dt_server.coffee', 'server');
   api.addFiles('server_callback.js', 'server');
 
   api.export('Dingtalk');

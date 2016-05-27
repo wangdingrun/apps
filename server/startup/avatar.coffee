@@ -23,6 +23,8 @@ Meteor.startup ->
 			return
 
 		username = user.name;
+		if !username
+			username = ""
 
 		res.setHeader 'Content-Disposition', 'inline'
 
