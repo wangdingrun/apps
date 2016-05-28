@@ -23,19 +23,21 @@
       {{#if showTermsLink}}
         {{> atTermsLink}}
       {{/if}}
-      {{#if showSignInLink}}
+<!--       {{#if showSignInLink}}
         {{> atSigninLink}}
-      {{/if}}
-      {{#if showSignUpLink}}
+      {{/if}} -->
+      <!-- {{#if showSignUpLink}}
         {{> atSignupLink}}
+      {{/if}} -->
+      {{#if showForgotPasswordLink}}
         {{> atPwdLink}}
-        
-        {{#if showOauthServices}}
-          {{> atOauth}}
-        {{/if}}
       {{/if}}
       {{#if showResendVerificationEmailLink}}
         {{> atResendVerificationEmailLink}}
+      {{/if}}
+      
+      {{#if showOauthServices}}
+        {{> atOauth}}
       {{/if}}
     </div>
   {{/unless}}
