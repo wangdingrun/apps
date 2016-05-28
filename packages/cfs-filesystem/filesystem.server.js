@@ -54,6 +54,10 @@ FS.Store.FileSystem = function(name, options) {
     createReadStream: function(fileKey, options) {
       // this is the Storage adapter scope
       var filepath = path.join(absolutePath, fileKey);
+
+      exists = fs.existsSync(filepath);
+      if (!exists)
+        throw new Meteor.Error(404, "Not Found", 'No file found');
       
       // return the read stream - Options allow { start, end }
       return fs.createReadStream(filepath, options);
