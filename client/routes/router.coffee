@@ -13,7 +13,7 @@ FlowRouter.route '/logout',
 		Meteor.logout ()->
 			Setup.logout();
 			Session.set("spaceId", null);
-			FlowRouter.go("/sign-in");
+			FlowRouter.go("/");
 
 
 FlowRouter.route '/account/profile', 
