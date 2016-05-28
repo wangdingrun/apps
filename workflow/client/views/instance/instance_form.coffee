@@ -54,7 +54,12 @@ Template.instanceform.helpers
     instance_box_style: ->
         box = Session.get("box")
         if box == "inbox" || box == "draft"
-            return
+            judge = Session.get("judge")
+            if judge
+                if (judge == "approved")
+                    return "box-success" 
+                else if (judge == "rejected")
+                    return "box-danger"
         ins = WorkflowManager.getInstance();
         if ins && ins.final_decision
             if ins.final_decision == "approved"
