@@ -1,7 +1,15 @@
 <template name="afTable">
-    <p>555</p>
+    <p>7777888888</p>
     <div class="panel panel-default">
-        <div class="panel-heading">{{afFieldLabelText name=this.atts.name}}</div>
+        <div class="panel-heading">
+          {{afFieldLabelText name=this.atts.name}}
+          <div class="pull-right">
+              <span class="panel-controls">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary steedosTable-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}" style='padding:2px 6px;'><span class="glyphicon glyphicon-plus"></span></button>
+              </span>
+          </div>
+        </div>
         {{#if afFieldIsInvalid name=this.atts.name}}
         <div class="panel-body has-error">
           <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
@@ -10,37 +18,42 @@
 
 
         <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}table">
-            <tr>
-                <td>1{{atts.keys}}2</td>
-                <td>1{{keys}}2</td>
-                {{#each this.atts.keys}}
-                    <td>{{this}}</td>
-                {{/each}}
-            </tr>
+            <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
+            </thead>
+            <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
+              
+            </tbody>
+
+            <tfoot>
+              {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+                <tr>
+                  <td id="{{../name}}Tbody_modal{{index}}_tr">
+                    <div class="modal fade steedos_table_modal" id="{{../name}}Tbody_modal{{index}}" name="{{this.code}}.modal" data-rowindex="-1" data-formcode="{{this.code}}" data-backdrop="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="{{this.code}}-modal-header">编辑</h4>
+                              </div>
+                              <div class="modal-body">
+                                {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+                              </div>
+                              <div class="modal-footer">
+                                <div class="pull-left">
+                                    <button type="button" class="btn btn-default autoform-remove-item">删除</button>
+                                </div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" id="steedos-table-ok-button" class="btn btn-primary">好</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  </td>
+                </tr>
+                {{/afEachArrayItem}}
+            </tfoot>
+            
 
         </table>
-
-        <ul class="list-group">
-          {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-          <li class="list-group-item autoform-array-item">
-            <div>
-              <div class="autoform-remove-item-wrap">
-                {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
-                <button type="button" class="btn btn-primary autoform-remove-item"><span class="glyphicon glyphicon-minus"></span></button>
-                {{/if}}
-              </div>
-              <div class="autoform-array-item-body">
-                {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
-              </div>
-            </div>
-          </li>
-          {{/afEachArrayItem}}
-          {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-          <li class="list-group-item">
-            <button type="button" class="btn btn-primary autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}"><span class="glyphicon glyphicon-plus"></span></button>
-          </li>
-          {{/if}}
-        </ul>
       </div>
 </template>
