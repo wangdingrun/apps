@@ -11,5 +11,6 @@
     "apiKey": "sDfG6F30DnSW0KjNDdGREqcY",
     "secret": "uOyudjcjUMBae9zb823eLhINFHQtnTFC"
   },
+  "appName": "workflow",
   "production": true
 }

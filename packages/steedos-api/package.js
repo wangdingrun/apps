@@ -32,6 +32,7 @@ Package.onUse(function(api) {
   	api.use('simple:json-routes');
 	api.use('cfs:standard-packages');
 	api.use('nimble:restivus');
+	api.use('raix:push');
 
 	api.use('steedos:lib');
 	api.use('steedos:workflow');
