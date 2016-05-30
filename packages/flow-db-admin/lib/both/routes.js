@@ -40,7 +40,7 @@ fadminRoutes.route('/',{
 	],
 	action: function ()
 	{
-		BlazeLayout.render('fAdminLayout', {main: 'AdminDashboard'});
+		BlazeLayout.render(AdminConfig.layout, {main: 'AdminDashboard'});
 	}
 });
 
@@ -55,12 +55,12 @@ fadminRoutes.route('/view/:collectionName',{
 	}],
 	triggersExit: [
 		function(context){
-			BlazeLayout.render('fAdminLayout',{main: 'AdminLoading'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminLoading'});
 		}
 	],
 	action: function(params)
 	{
-		BlazeLayout.render('fAdminLayout',{main: 'AdminDashboardView'});
+		BlazeLayout.render(AdminConfig.layout,{main: 'AdminDashboardView'});
 	}
 });
 
@@ -73,14 +73,14 @@ fadminRoutes.route('/new/:collectionName',{
 	}],
 	triggersExit: [
 		function(context){
-			BlazeLayout.render('fAdminLayout',{main: 'AdminLoading'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminLoading'});
 		}
 	],
 	action: function(params)
 	{	if(params.collectionName == 'Users')
-			BlazeLayout.render('fAdminLayout',{main: 'AdminDashboardUsersNew'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminDashboardUsersNew'});
 		else
-			BlazeLayout.render('fAdminLayout',{main: 'AdminDashboardNew'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminDashboardNew'});
 	}
 });
 
@@ -98,7 +98,7 @@ fadminRoutes.route('/edit/:collectionName/:_id',{
 	}],
 	triggersExit: [
 		function(context){
-			BlazeLayout.render('fAdminLayout',{main: 'AdminLoading'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminLoading'});
 			Session.set('admin_id',null);
 		}
 	],
@@ -109,8 +109,8 @@ fadminRoutes.route('/edit/:collectionName/:_id',{
 	action: function(params)
 	{
 		if(params.collectionName == 'Users')
-			BlazeLayout.render('fAdminLayout',{main: 'AdminDashboardUsersEdit'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminDashboardUsersEdit'});
 		else
-			BlazeLayout.render('fAdminLayout',{main: 'AdminDashboardEdit'});
+			BlazeLayout.render(AdminConfig.layout,{main: 'AdminDashboardEdit'});
 	}
 });

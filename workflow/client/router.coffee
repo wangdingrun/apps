@@ -2,14 +2,13 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		redirect('/sign-in');
 
-
 FlowRouter.route '/space/:spaceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if !Meteor.userId()
 			FlowRouter.go '/sign-in';
 		Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId", params.spaceId);
+		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
 		FlowRouter.go "/space/" + params.spaceId + "/inbox/"
 
 		# Tracker.autorun (c) ->
@@ -25,7 +24,7 @@ FlowRouter.route '/space/:spaceId/:box/',
 	action: (params, queryParams)->
 		if Session.get("spaceId") != params.spaceId 
 			Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId", params.spaceId);
+		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
 		Session.set("instanceId", null); 
@@ -42,7 +41,7 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 
 		if Session.get("spaceId") != params.spaceId 
 			Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId", params.spaceId);
+		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
 		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"

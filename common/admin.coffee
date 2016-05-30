@@ -5,6 +5,7 @@
 
 db.spaces.adminConfig = 
 	icon: "globe"
+	color: "green"
 	label: ->
 		return t("db_spaces")
 	tableColumns: [
@@ -18,6 +19,7 @@ db.spaces.adminConfig =
 
 db.organizations.adminConfig =
 	icon: "sitemap"
+	color: "green"
 	label: ->
 		return t("db_organizations")
 	tableColumns: [
@@ -31,23 +33,25 @@ db.organizations.adminConfig =
 	selector: {space: "-1"}
 
 db.space_users.adminConfig = 
-		icon: "users"
-		label: ->
-			return t("db_space_users")
-		tableColumns: [
-			{name: "name"},
-			{name: "organization_name()"},
-			{name: "space_name()"},
-			{name: "user_accepted"}
-		]
-		extraFields: ["space", "user", 'organization', "manager"]
-		newFormFields: "space,email"
-		editFormFields: "space,name,manager,user_accepted"
-		selector: {space: "-1"}
+	icon: "users"
+	color: "green"
+	label: ->
+		return t("db_space_users")
+	tableColumns: [
+		{name: "name"},
+		{name: "organization_name()"},
+		{name: "space_name()"},
+		{name: "user_accepted"}
+	]
+	extraFields: ["space", "user", 'organization', "manager"]
+	newFormFields: "space,email"
+	editFormFields: "space,name,manager,user_accepted"
+	selector: {space: "-1"}
 
 @AdminConfig = 
 	name: "Steedos Admin"
 	skin: "green"
+	layout: "adminLayout"
 	userSchema: null,
 	userSchema: db.users._simpleSchema,
 	autoForm:

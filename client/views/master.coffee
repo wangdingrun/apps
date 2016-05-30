@@ -21,6 +21,8 @@ Template.masterLayout.onRendered ->
 
 
 Template.masterLayout.helpers 
+	loading: ->
+		return Session.get("loading")
 	minHeight: ->
 		return Template.instance().minHeight.get() + 'px'
 	

@@ -51,10 +51,21 @@
             <li class="header">{{_ "SETTINGS"}}</li>
             {{#if isAdmin}}
               <li>
-                  <a href="/designer/current/zh-cn" target="_designer"><i class="fa fa-gears"></i><span>{{_ "Workflow Designer"}}</span></a>
-              </li>
-              <li>
-                  <a href="{{urlPrefix}}/admin"><i class="fa fa-gears"></i><span>{{_ "User Management"}}</span></a>
+                <a href="#">
+                  <i class="fa fa-gears"></i><span>{{_ "System Settings"}}</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="{{urlPrefix}}/admin/view/organizations"><i class="fa fa-sitemap"></i><span>{{_ "db_organizations"}}</span></a>
+                  </li>
+                  <li>
+                    <a href="{{urlPrefix}}/admin/view/space_users"><i class="fa fa-users"></i><span>{{_ "db_space_users"}}</span></a>
+                  </li>
+                  <li>
+                    <a href="/designer/current/zh-cn" target="_designer"><i class="fa fa-gears"></i><span>{{_ "Workflow Designer"}}</span></a>
+                  </li>
+                </ul>
               </li>
             {{/if}}
             <li>

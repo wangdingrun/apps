@@ -1,0 +1,57 @@
+<template name="adminLayout">
+  <div class="steedos admin">
+        {{# AdminLTE skin="green" sidebarMini="true" }}
+        	{{> sidebar}}
+
+
+        	<div class="content-wrapper" style="min-height: {{minHeight}}">
+                <div class="connection-status">
+        		{{> status}}
+                </div>
+                <div class="navigation-bar">
+
+                      <button type="button" class="btn btn-default" data-toggle="offcanvas">
+                        <i class="fa fa-bars"></i>
+                      </button>
+
+                      <span class="navigation-title">
+                        {{#if $.Session.get 'admin_collection_name'}}
+                            {{admin_collection_title}}
+                        {{else}}
+                            {{_ "System Settings"}}
+                        {{/if}}
+                      </span>
+                      <div class="pull-right">
+                        {{#if $.Session.get 'admin_collection_name'}}
+                            <a href="{{urlPrefix}}/admin/new/{{$.Session.get 'admin_collection_name'}}/" class="btn btn-success" id="admin_create_btn">
+                            {{_ "New"}}
+                            </a>
+                        {{/if}}
+
+                      </div>
+                </div>
+                
+                <section class="content">
+                     {{#if $.Session.get 'admin_collection_name'}}
+                     <ol class="breadcrumb">
+                        <li><a href="{{urlPrefix}}/admin">{{_ "System Settings"}}</a></li>
+                        {{#if $.Session.get 'admin_collection_name'}}
+                            <li><a href="{{urlPrefix}}/admin/view/{{$.Session.get 'admin_collection_name'}}/">{{admin_collection_title}}</a></li>
+                        {{/if}}
+                        {{#if $.Session.equals 'admin_collection_page' 'new'}}
+                            <li>New</li>
+                        {{/if}}
+                        {{#if $.Session.equals 'admin_collection_page' 'edit'}}
+                            <li>Edit</li>
+                        {{/if}}
+                    </ol>
+                    {{/if}}
+        	       {{> Template.dynamic template=main}}
+                </section>
+            </div>
+        {{/ AdminLTE}}
+    
+    {{> steedosLoading}}
+  </div>
+</template>
+
