@@ -26,7 +26,7 @@ Dingtalk.refreshAccessToken = () ->
 			Dingtalk.oauth.access_token_expired = Date.now() + 60 * 1000 *110
 		
 
-Dingtalk.refreshAccessToken();
+#Dingtalk.refreshAccessToken();
 
 
 Dingtalk.getTokenResponse = (query) ->

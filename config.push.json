@@ -1,0 +1,15 @@
+{
+  "apn": {
+    "key": "/srv/git/steedos-certs/push/apns-key-workflow.pem",
+    "cert": "/srv/git/steedos-certs/push/apns-cert-workflow.pem"
+  },
+  "gcm": {
+    "apiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "projectNumber": "xxxxxxxxxxxx"
+  },
+  "baidu": {
+    "apiKey": "sDfG6F30DnSW0KjNDdGREqcY",
+    "secret": "uOyudjcjUMBae9zb823eLhINFHQtnTFC"
+  },
+  "production": true,
+}
