@@ -1,7 +1,7 @@
 {
   "apn": {
-    "key": "apns-key-workflow.pem",
-    "cert": "apns-cert-workflow.pem"
+    "key": "push/apns-key-workflow.pem",
+    "cert": "push/apns-cert-workflow.pem"
   },
   "gcm": {
     "apiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -11,5 +11,5 @@
     "apiKey": "sDfG6F30DnSW0KjNDdGREqcY",
     "secret": "uOyudjcjUMBae9zb823eLhINFHQtnTFC"
   },
-  "production": true,
+  "production": true
 }
