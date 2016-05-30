@@ -1,24 +1,30 @@
 JsonRoutes.add "post", "/api/push/message", (req, res, next) ->
-        Push.send
-                from: 'steedos',
-                title: 'Hello',
-                text: 'world',
-                badge: 999,
-                query: 
+    if req.body?.pushTopic and req.body.userIds and req.body.data
+        message = 
+            from: "steedos"
+            appName: req.body.pushTopic
+            userId: 
+                "$in": userIds
+        if req.body.data.alertTitle?
+            message["title"] = req.body.data.alertTitle
+        if req.body.data.alert?
+            message["text"] = req.body.data.alert
+        if req.body.data.badge?
+            message["badge"] = req.body.data.badge + ""
+        if req.body.data.sound?
+            message["sound"] = req.body.data.sound
+        #if req.body.data.data?
+        #    message["data"] = req.body.data.data
+        Push.send message
 
 
 Meteor.methods
-        Meteor.methods
-                userNotification: (text,title,userId) ->
-                        var badge = 1
-                        Push.send
-                            from: 'steedos',
-                            title: title,
-                            text: text,
-                            badge: badge,
-                            payload:
-                                title: title,
-                            query:
-                                userId: userId #this will send to a specific Meteor.user()._id
-                            
-               
+        pushSend: (text,title,badge,userId) ->
+                Push.send
+                    from: 'steedos',
+                    title: title,
+                    text: text,
+                    badge: badge,
+                    query: 
+                        userId: userId
+                        appName: "workflow"

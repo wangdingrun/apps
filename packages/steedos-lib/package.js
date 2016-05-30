@@ -46,7 +46,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/array_includes.js');
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/settings.coffee', ['client', 'server']);
-	api.addFiles('lib/push.coffee', ['client', 'server']);
 	api.addFiles('lib/tapi18n.coffee');
 
 	api.addFiles('lib/models/users.coffee');
