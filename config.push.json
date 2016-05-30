@@ -1,7 +1,7 @@
 {
   "apn": {
-    "key": "/srv/git/steedos-certs/push/apns-key-workflow.pem",
-    "cert": "/srv/git/steedos-certs/push/apns-cert-workflow.pem"
+    "key": "apns-key-workflow.pem",
+    "cert": "apns-cert-workflow.pem"
   },
   "gcm": {
     "apiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
