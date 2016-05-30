@@ -6,8 +6,6 @@ Template.space_select.helpers
                 return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 
 Template.space_select.onRendered ->
-  if (Session.get("spaceId"))
-    FlowRouter.go("/space/" + Session.get("spaceId") + "/inbox/")
 
 Template.space_select.events
   "click #space_add": (event, template) ->

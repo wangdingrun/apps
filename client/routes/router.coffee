@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go "/sign-in";
 		else 
-			FlowRouter.go "/space";
+			FlowRouter.go "/loading";
 		
 
 
@@ -31,5 +31,12 @@ FlowRouter.route '/space',
 
 		BlazeLayout.render 'masterLayout',
 			main: "space_select"
+
+
+FlowRouter.route '/loading', 
+	action: (params, queryParams)->
+		BlazeLayout.render 'masterLayout',
+			main: "loading"
+
 
 

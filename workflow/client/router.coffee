@@ -74,5 +74,5 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 
 	triggersExit: [
 		()->
-			Session.set("instanceId", null)
+			#Session.set("instanceId", null)
 	]

@@ -11,17 +11,19 @@ Session.set("space_loaded", false)
 Session.set("startup_loaded", false)
 Meteor.startup ->
 
-	Steedos.subs.my_spaces = Meteor.subscribe "my_spaces", Meteor.userId(), ()->
-		Session.set("space_loaded", true)
-		if (!Session.get("spaceId"))
-			savedSpaceId = localStorage.getItem("spaceId:" + Meteor.userId())
-			if savedSpaceId
-				Session.set("spaceId", savedSpaceId) 
-			else
-				Session.set("spaceId", db.spaces.findOne()._id)
-			FlowRouter.go "/space/" + Session.get("spaceId") + "/inbox/";
-
 	Tracker.autorun (c)->
+		if Meteor.userId()
+			Steedos.subs.my_spaces = Meteor.subscribe "my_spaces", Meteor.userId(), ()->
+				Session.set("space_loaded", true)
+				if (!Session.get("spaceId"))
+					savedSpaceId = localStorage.getItem("spaceId:" + Meteor.userId())
+					if savedSpaceId
+						Session.set("spaceId", savedSpaceId) 
+					else
+						Session.set("spaceId", db.spaces.findOne()._id)
+
+					FlowRouter.go("/space/" + Session.get("spaceId") + "/inbox/")
+
 		if Session.get("spaceId")
 			Steedos.subs.space_users = Meteor.subscribe("space_users", Session.get("spaceId"))
 			Steedos.subs.organizations = Meteor.subscribe("organizations", Session.get("spaceId"))
