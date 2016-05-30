@@ -50,11 +50,48 @@ Template.afTable.helpers({
         }
 
         return SteedosTable.getTr(keys, value, index);
+    },
+
+    getValueIndex : function(formId, table){
+        var item_length = 1;
+
+        if (AutoForm.arrayTracker.info[formId][name].array){
+        
+          item_length = AutoForm.arrayTracker.info[formId][name].array.length;
+        
+        }
+
+        return item_length - 1;
     }
 });
 
 
-Template.afTable.events({
+Template.autoForm.events({
+
+    'change .form-control,.checkbox input,.af-radio-group input,.af-checkbox-group input': function(event, template){
+        debugger;
+        console.log("autoform_table form-control change");
+
+        var name = event.target.name;
+        var p = name.split(".")
+        
+        var table = p[0], index = p[1], field = p[2];
+
+        var formId = "instanceform";
+
+        var item_formula = JSON.parse($("#"+table+"Table")[0].dataset.item_formula);
+
+        var form_values = AutoForm.getFormValues(formId).insertDoc;
+
+        var item_values = form_values[table][index];
+
+        var table_fields = WorkflowManager.getInstanceFields().findPropertyByPK("code",table).sfields;
+
+        Form_formula.run(field, table + "."+ index + ".", item_formula, item_values, table_fields);
+
+        SteedosTable.updateItem(formId, table, index);
+    },
+
     'click .steedosTable-add-item': function(event, template) {
         event.preventDefault();
 
@@ -78,15 +115,32 @@ Template.afTable.events({
           item_length = AutoForm.arrayTracker.info[formId][name].array.length;
         
         }
-
-        SteedosTable.showModal(name + "Tbody_modal" + (item_length - 1));
+        setTimeout('SteedosTable.showModal(\'' + name + "Tbody_modal" + (item_length - 1) + '\')', 1);  //等待deps.changed执行完成后，执行弹出显示
     },
 
     'click .steedosTable-edit-item': function(event, template){
         debugger; 
-        var name = template.data.name;
+        var name = event.currentTarget.dataset.field;
         var index = event.currentTarget.dataset.index;
         SteedosTable.showModal(name + "Tbody_modal" + index);
+    },
+
+
+    'click .steedosTable-remove-item': function(event, template){
+        var self = this;
+        var formId = "instanceform";
+        
+        var table = self.arrayFieldName;
+        var index = self.index;
+
+        AutoForm.arrayTracker.removeFromFieldAtIndex(formId, table, index, AutoForm.getFormSchema(formId),0,5000);
+
+        setTimeout(function(){SteedosTable.removeItem(table, index)}, 1);
+    },
+
+    'click #steedosTable-close-modal': function(event, template){
+        debugger;
+        SteedosTable.hideModal();
     }
 })
 
@@ -100,17 +154,76 @@ Template.afTable.rendered = function(){
 
     var keys =  SteedosTable.getKeys(formId,field);
 
+    var instanceFields = WorkflowManager.getInstanceFields();
+
+    if(instanceFields){
+        var fieldObject = instanceFields.findPropertyByPK("code",field);
+
+        if(fieldObject){
+            $("#"+field+"Table")[0].dataset.item_formula = JSON.stringify(Form_formula.getFormulaFieldVariable("Form_formula.field_values", fieldObject.sfields))
+        }
+    }
+    
+
     $("#"+field+"Thead").html(SteedosTable.getThead(keys));
     debugger;
 
-    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys,this.data.value));  
+    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys, field, this.data.value));  
 };
 
 SteedosTable = {};
 
+
+SteedosTable.addItem = function(formId, field, index){
+    var keys = SteedosTable.getKeys(formId,field);
+    var form_values = AutoForm.getFormValues(formId).insertDoc;
+    var item_values = form_values[field][index]
+    $("#"+field+"Tbody").append(SteedosTable.getTr(keys, item_values, index, field));
+
+}
+
+SteedosTable.updateItem = function(formId, field, index){
+    var item = $("#" + field + "_item_" + index);
+
+    if(item && item.length > 0){
+        var keys = SteedosTable.getKeys(formId,field);
+        var form_values = AutoForm.getFormValues(formId).insertDoc;
+        var item_values = form_values[field][index];
+        var tds = "";
+        keys.forEach(function(key){
+            
+            var value = item_values[key];
+
+            tds = tds + SteedosTable.getTd(value);
+            
+        });
+
+        item.empty();
+
+        item.append(tds);
+
+    }else{
+
+        SteedosTable.addItem(formId, field, index);
+    }
+}
+
+SteedosTable.removeItem = function(field, index){
+    debugger;
+    $("#" + field + "_item_" + index).remove();
+    //AutoForm.arrayTracker.info[formId][name].array.remove(index);
+}
+
+SteedosTable.updateTbody = function(formId, field){
+    var keys = SteedosTable.getKeys(formId,field);
+    var form_values = AutoForm.getFormValues(formId).insertDoc;
+    var field_value = form_values[field]
+    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys, field, field_value)); 
+}
+
 SteedosTable.showModal = function(modalId){
     var modal = $("#" + modalId)
-    $("body").append(modal);   //将弹出框添加到body下
+    //$("body").append(modal);   //将弹出框添加到body下
     modal.modal("show");
 }
 
@@ -118,7 +231,7 @@ SteedosTable.showModal = function(modalId){
 SteedosTable.hideModal = function(modalId){
     var modal = $("#" + modalId);
     modal.modal("hide");
-    $("#"+modalId + "_tr").append(modal); //将弹出框放回原处，否则AutoForm取不到值
+    //$("#"+modalId + "_tr").append(modal); //将弹出框放回原处，否则AutoForm取不到值
 }
 
 SteedosTable.getKeys = function(formId,field){
@@ -150,24 +263,24 @@ SteedosTable.getThead = function(keys){
     return thead;
 }
 
-SteedosTable.getTbody = function(keys, values){
+SteedosTable.getTbody = function(keys, field, values){
     var tbody = "";
 
     if(values instanceof Array){
         values.forEach(function(value,index){
-            tbody = tbody + SteedosTable.getTr(keys, value, index);
+            tbody = tbody + SteedosTable.getTr(keys, value, index, field);
         });
     }
 
     return tbody;
 }
 
-SteedosTable.getTr = function(keys, trValue, index){
-    var tr = "<tr class='steedosTable-edit-item' data-index='"+index+"'>";
+SteedosTable.getTr = function(keys, item_values, index, field){
+    var tr = "<tr id='"+field+"_item_"+index+"' class='steedosTable-edit-item' data-index='" + index + "' data-field='" + field + "'>";
     var tds = "";
     keys.forEach(function(key){
         
-        var value = trValue[key];
+        var value = item_values[key];
 
         tds = tds + SteedosTable.getTd(value);
         

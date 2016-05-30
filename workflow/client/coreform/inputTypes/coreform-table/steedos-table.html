@@ -1,5 +1,5 @@
 <template name="afTable">
-    <p>7777888888</p>
+    <p>0003</p>
     <div class="panel panel-default">
         <div class="panel-heading">
           {{afFieldLabelText name=this.atts.name}}
@@ -17,7 +17,7 @@
         {{/if}}
 
 
-        <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}table">
+        <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table">
             <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
             </thead>
@@ -40,10 +40,10 @@
                               </div>
                               <div class="modal-footer">
                                 <div class="pull-left">
-                                    <button type="button" class="btn btn-default autoform-remove-item">删除</button>
+                                    <button type="button" class="btn btn-default steedosTable-remove-item">删除</button>
                                 </div>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" id="steedos-table-ok-button" class="btn btn-primary">好</button>
+                                <button type="button" class="btn btn-default steedosTable-close-modal" onclick="SteedosTable.hideModal('{{../name}}Tbody_modal{{index}}')">关闭</button>
+                                <button type="button" class="btn btn-primary steedosTable-ok-modal">好</button>
                               </div>
                             </div>
                         </div>

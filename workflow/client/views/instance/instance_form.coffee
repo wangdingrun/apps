@@ -129,7 +129,7 @@ Template.instanceform.events
         #InstanceManager.updateNextStepTagOptions();
 
     # 子表删除行时，执行主表公式计算
-    'click .remove-steedos-table-row': (event, template)->
+    'click .steedosTable-remove-item': (event, template)->
         console.log("instanceform form-control change");
         code = event.target.name;
 
