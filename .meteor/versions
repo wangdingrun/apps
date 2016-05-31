@@ -102,6 +102,7 @@ oauth@1.1.6
 oauth2@1.1.5
 observe-sequence@1.0.7
 ordered-dict@1.0.4
+peppelg:bootstrap-3-modal@1.0.4
 percolate:migrations@0.9.6
 promise@0.5.1
 raix:eventemitter@0.1.3
