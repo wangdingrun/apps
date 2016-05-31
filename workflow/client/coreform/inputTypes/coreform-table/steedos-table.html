@@ -17,43 +17,13 @@
         {{/if}}
 
 
-        <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table">
+        <table class="table table-bordered table-condensed autoform-table steedos-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table" data-schema-key="{{this.name}}">
             <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
             </thead>
             <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
               
             </tbody>
-
-            <tfoot>
-              {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-                <tr>
-                  <td id="{{../name}}Tbody_modal{{index}}_tr">
-                    <div class="modal fade steedos_table_modal" id="{{../name}}Tbody_modal{{index}}" name="{{this.code}}.modal" data-rowindex="-1" data-formcode="{{this.code}}" data-backdrop="false">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h4 class="modal-title" id="{{this.code}}-modal-header">编辑</h4>
-                              </div>
-                              <div class="modal-body">
-                                {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
-                              </div>
-                              <div class="modal-footer">
-                                <div class="pull-left">
-                                    <button type="button" class="btn btn-default steedosTable-remove-item">删除</button>
-                                </div>
-                                <button type="button" class="btn btn-default steedosTable-close-modal" onclick="SteedosTable.hideModal('{{../name}}Tbody_modal{{index}}')">关闭</button>
-                                <button type="button" class="btn btn-primary steedosTable-ok-modal">好</button>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                  </td>
-                </tr>
-                {{/afEachArrayItem}}
-            </tfoot>
-            
-
         </table>
       </div>
 </template>

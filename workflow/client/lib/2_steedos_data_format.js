@@ -211,6 +211,21 @@ var s_schema = function (label, field){
   return schema;
 };
 
+
+WorkflowManager_format.getTableItemSchema = function(field){
+  var fieldSchema = {};
+  if(field.type == 'table'){
+    fieldSchema[field.code] = {type: Object, optional: true};
+
+    field.sfields.forEach(function(sfield){
+      sfields_schema = new s_schema(sfield.code, sfield);
+      fieldSchema[field.code + "." + sfield.code] = sfields_schema;
+    });
+  }
+
+  return fieldSchema;
+}
+
 WorkflowManager_format.getAutoformSchema = function (steedosForm){
   var fieldSchema = {};
   var fields = steedosForm.fields;

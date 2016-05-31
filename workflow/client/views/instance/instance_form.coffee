@@ -108,9 +108,9 @@ Template.instanceform.onRendered ->
         #在此处初始化session 中的 form_values 变量，用于触发下一步步骤计算
         Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
 
-Template.instanceform.events 
+Template.autoForm.events 
 
-    'change .instance-form .form-control': (event)->
+    'change .instance-form .form-control, .instance-form .steedos-table': (event)->
         if ApproveManager.isReadOnly()
             return ;
         
