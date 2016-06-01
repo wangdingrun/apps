@@ -30,7 +30,6 @@ coffeescript
 
 underscorestring:underscore.string
 momentjs:moment
-mrt:moment-timezone
 
 
 fortawesome:fontawesome

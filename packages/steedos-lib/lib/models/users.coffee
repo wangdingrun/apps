@@ -43,15 +43,7 @@ db.users._simpleSchema = new SimpleSchema
 				label: "English",
 				value: "en-us"
 			}]
-	timezone: 
-		type: String,
-		optional: true,
-		autoform:
-			type: "select",
-			options: ->
-				if Meteor.isClient
-					return Steedos._timezones
-
+	
 	email_notification:
 		type: Boolean
 		optional: true
@@ -172,9 +164,7 @@ if Meteor.isServer
 				name: 1
 				company: 1
 				mobile: 1
-				avatar: 1
 				locale: 1
-				timezone: 1
 				username: 1
 				utcOffset: 1
 				settings: 1

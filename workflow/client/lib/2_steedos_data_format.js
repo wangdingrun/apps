@@ -101,7 +101,7 @@ var s_autoform = function (schema, field){
         }
         break;
     case 'dateTime' : 
-        schema.type = String;
+        schema.type = Date;
         autoform.disabled = (permission == 'readonly');
         if (Steedos.isMobile())
           autoform.type = 'datetime-local';

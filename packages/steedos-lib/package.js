@@ -31,7 +31,6 @@ Package.onUse(function(api) {
 	api.use(['webapp'], 'server');
 
 	api.use('momentjs:moment', 'client');
-	api.use('mrt:moment-timezone', 'client');
 
 	// TAPi18n
 	api.use('templating', 'client');
@@ -47,6 +46,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/settings.coffee', ['client', 'server']);
 	api.addFiles('lib/tapi18n.coffee');
+	api.addFiles('lib/utc_offset.coffee');
 
 	api.addFiles('lib/models/users.coffee');
 	api.addFiles('lib/models/spaces.coffee');
