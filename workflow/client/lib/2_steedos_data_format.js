@@ -109,7 +109,7 @@ var s_autoform = function (schema, field){
           autoform.type = 'bootstrap-datetimepicker';
           autoform.dateTimePickerOptions = {
             showClear: true,
-            format: "YYYY-MM-DD HH:mm Z"
+            format: "YYYY-MM-DD HH:mm"
           }
         }
         break;
