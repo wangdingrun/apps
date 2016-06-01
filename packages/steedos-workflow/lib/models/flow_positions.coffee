@@ -28,7 +28,7 @@ db.flow_positions._simpleSchema = new SimpleSchema
 			type: "selectorg"
 
 	users: 
-		type: String,
+		type: [String],
 		optional: true,
 		autoform:
 			type: "selectuser"
@@ -36,7 +36,7 @@ db.flow_positions._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.flow_positions._simpleSchema.i18n("flow_positions")
+	db.flow_positions._simpleSchema.i18n("db_flow_positions")
 
 db.flow_positions.attachSchema(db.flow_positions._simpleSchema)
 
@@ -52,10 +52,31 @@ db.flow_positions.helpers
 		return org && org.name;
 	
 	users_name: ->
-		if (!this.users)
+		if (!this.users instanceof Array)
 			return ""
 		users = db.space_users.find({user: {$in: this.users}}, {fields: {name:1}});
 		names = []
 		users.forEach (user) ->
 			names.push(user.name)
 		return names.toString();
+
+
+		
+if Meteor.isServer
+
+	db.flow_positions.before.insert (userId, doc) ->
+
+		doc.created_by = userId;
+		doc.created = new Date();
+
+		if !doc.space
+			throw new Meteor.Error(400, t("space_users_error.space_required"));
+
+
+	db.flow_positions.before.update (userId, doc, fieldNames, modifier, options) ->
+
+		modifier.$set = modifier.$set || {};
+
+		modifier.$set.modified_by = userId;
+		modifier.$set.modified = new Date();
+

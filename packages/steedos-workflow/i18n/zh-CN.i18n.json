@@ -1,8 +1,21 @@
 {
 	"Steedos Workflow": "审批王",
 
+        "db_instances": "申请单",
         "db_instances_name": "标题",
         "db_instances_applicant_name": "申请人",
         "db_instances_modified": "更新日期",
-        "db_instances_applicant_organization_name": "部门"
+        "db_instances_applicant_organization_name": "部门",
+
+
+        "db_flow_roles": "角色",
+        "db_flow_roles_name": "角色名称",
+
+        "db_flow_positions": "岗位",
+        "db_flow_positions_role": "角色",
+        "db_flow_positions_org": "部门",
+        "db_flow_positions_users": "人员",
+        "db_flow_positions_role_name()": "角色",
+        "db_flow_positions_org_name()": "部门",
+        "db_flow_positions_users_name()": "用户"
 }

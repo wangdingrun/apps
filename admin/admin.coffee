@@ -7,7 +7,7 @@
 
 db.spaces.adminConfig = 
 	icon: "globe"
-	color: "green"
+	color: "blue"
 	label: ->
 		return t("db_spaces")
 	tableColumns: [
@@ -85,7 +85,7 @@ db.flow_positions.adminConfig =
 	autoForm:
 		omitFields: ['createdAt', 'updatedAt', 'created', 'created_by', 'modified', 'modified_by']
 	collections: 
-		#spaces: db.spaces.adminConfig
+		spaces: db.spaces.adminConfig
 		organizations: db.organizations.adminConfig
 		space_users: db.space_users.adminConfig
 		flow_roles: db.flow_roles.adminConfig
@@ -102,9 +102,11 @@ db.flow_positions.adminConfig =
 if Meteor.isClient
 	Meteor.startup ->
 		Tracker.autorun ->
+
+			if AdminTables["spaces"]
+				AdminTables["spaces"].selector = {owner: Meteor.userId()}
+
 			if Session.get("spaceId")
-				if AdminTables["spaces"]
-					AdminTables["spaces"].selector = {_id: Session.get("spaceId")}
 				if AdminTables["space_users"]
 					AdminTables["space_users"].selector = {space: Session.get("spaceId")}
 				if AdminTables["organizations"]

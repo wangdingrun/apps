@@ -37,6 +37,7 @@ Package.onUse(function(api) {
     ],
     both);
 
+  api.use('tap:i18n', ['client', 'server']);
   api.use(['less@1.0.0 || 2.5.0','session','jquery','templating'],'client')
 
   api.use(['email'],'server')
