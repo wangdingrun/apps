@@ -132,6 +132,7 @@ steedos:admin-lte@0.0.2
 steedos:api@0.0.1
 steedos:connect-bqq@0.0.1
 steedos:connect-dingtalk@0.0.1
+steedos:cors@0.0.1
 steedos:lib@0.0.1
 steedos:ui@0.0.1
 steedos:workflow@0.0.1

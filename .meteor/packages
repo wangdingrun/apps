@@ -71,6 +71,7 @@ alanning:roles
 sach:flow-db-admin
 
 
+steedos:cors
 steedos:ui
 steedos:connect-bqq
 steedos:connect-dingtalk
