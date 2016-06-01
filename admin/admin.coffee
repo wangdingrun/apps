@@ -2,6 +2,8 @@
 @spaces = db.spaces
 @space_users = db.space_users
 @organizations = db.organizations
+@flow_roles = db.flow_roles
+@flow_positions = db.flow_positions
 
 db.spaces.adminConfig = 
 	icon: "globe"
@@ -48,6 +50,32 @@ db.space_users.adminConfig =
 	editFormFields: "space,name,manager,user_accepted"
 	selector: {space: "-1"}
 
+db.flow_roles.adminConfig = 
+	icon: "users"
+	color: "green"
+	label: ->
+		return t("db_flow_roles")
+	tableColumns: [
+		{name: "name"},
+	]
+	extraFields: []
+	newFormFields: "space,name"
+	selector: {space: "-1"}
+
+db.flow_positions.adminConfig = 
+	icon: "users"
+	color: "green"
+	label: ->
+		return t("db_flow_positions")
+	tableColumns: [
+		{name: "role_name()"},
+		{name: "org_name()"},
+		{name: "users_name()"},
+	]
+	extraFields: ["role", "org", "users"]
+	newFormFields: "space,role,org,users"
+	selector: {space: "-1"}
+
 @AdminConfig = 
 	name: "Steedos Admin"
 	skin: "green"
@@ -60,6 +88,8 @@ db.space_users.adminConfig =
 		#spaces: db.spaces.adminConfig
 		organizations: db.organizations.adminConfig
 		space_users: db.space_users.adminConfig
+		flow_roles: db.flow_roles.adminConfig
+		flow_positions: db.flow_positions.adminConfig
 
 # set first user as admin
 # if Meteor.isServer
@@ -79,3 +109,7 @@ if Meteor.isClient
 					AdminTables["space_users"].selector = {space: Session.get("spaceId")}
 				if AdminTables["organizations"]
 					AdminTables["organizations"].selector = {space: Session.get("spaceId")}
+				if AdminTables["flow_roles"]
+					AdminTables["flow_roles"].selector = {space: Session.get("spaceId")}
+				if AdminTables["flow_positions"]
+					AdminTables["flow_positions"].selector = {space: Session.get("spaceId")}
