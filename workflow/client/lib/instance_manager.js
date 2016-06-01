@@ -1,5 +1,18 @@
 InstanceManager = {};
 
+
+InstanceManager.runFormula = function(fieldCode){
+  var form_version = WorkflowManager.getInstanceFormVersion();
+  var formula_fields = []
+  if(form_version)
+    formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+
+  Form_formula.run(fieldCode, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+  
+  Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
+}
+
+
 InstanceManager.getFormField = function(fieldId){
     var instanceFields = WorkflowManager.getInstanceFields();
     var field = instanceFields.filterProperty("_id", fieldId);
@@ -252,8 +265,15 @@ InstanceManager.checkFormFieldValue = function(field){
     var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
     var parent_group = $("#" + field.id).parent();
     var message = '';
-    if(field.parentNode.dataset.required == "true"){
-      if(!field.value || field.value == '' || field.length < 1){
+    if(field.parentNode.dataset.required == "true" || ((field.type == "checkbox" || field.type == "radio") && field.parentNode.parentNode.parentNode.dataset.required == "true")){
+      var  fileValue = "";
+      if(field.type == "checkbox" || field.type == "radio"){
+        fileValue = $("[name='" + field.name + "']:checked").val();
+      }else{
+        fileValue = field.value;
+      }
+
+      if(!fileValue || fileValue == '' || fileValue.length < 1){
           var fo = InstanceManager.getFormFieldByCode(field.name);
           var titleName = field.name
           if(fo){
@@ -268,10 +288,14 @@ InstanceManager.checkFormFieldValue = function(field){
           message = '邮件地址格式错误';
     }
 
-    if(message=='')
+    if(message==''){
       removeMessage(parent_group);
-    else
+      return true;
+    }
+    else{
       showMessage(parent_group, message);
+      return false;
+    }
 }
 
 InstanceManager.getFormFieldValue = function(fieldCode){

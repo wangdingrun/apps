@@ -1,5 +1,5 @@
 <template name="afTable">
-    <p>0003</p>
+    <p>0005</p>
     <div class="panel panel-default">
         <div class="panel-heading">
           {{afFieldLabelText name=this.atts.name}}
@@ -11,19 +11,21 @@
           </div>
         </div>
         {{#if afFieldIsInvalid name=this.atts.name}}
-        <div class="panel-body has-error">
+        <div class="panel-body has-error" >
           <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
         </div>
         {{/if}}
 
+        <div class="panel-body" style="padding:0px;overflow-x:auto;">
 
-        <table class="table table-bordered table-condensed autoform-table steedos-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table" data-schema-key="{{this.name}}">
-            <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
+          <table class="table table-bordered table-condensed autoform-table steedos-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table" data-schema-key="{{this.name}}">
+              <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
-            </thead>
-            <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
-              
-            </tbody>
-        </table>
+              </thead>
+              <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
+                
+              </tbody>
+          </table>
+        </div>
       </div>
 </template>

@@ -1,5 +1,5 @@
 <template name="steedosTableModal">
-    <div class="modal fade">
+    <div class="modal fade steedos-table-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!--
@@ -14,7 +14,13 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    {{#if equals this.method 'edit'}}
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-default remove-steedos-table-row">删除</button>
+                        </div>
+                    {{/if}}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary steedos-table-ok-button">好</button>
                 </div>
 
             </div>

@@ -169,6 +169,11 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
     console.log('Form_formula.run......');
     var startTrack = new Date * 1;
     var run = false;
+
+    if(!formula_fields || formula_fields.length < 1){
+        return ;
+    }
+
     if (!Form_formula.field_values || true){
         console.debug("消耗时间s0 ：" + (new Date * 1 - startTrack) + "ms");
         Form_formula.field_values = init_formula_values(fields,autoFormDoc);
