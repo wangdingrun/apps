@@ -3,8 +3,6 @@ SteedosTable = {};
 
 SteedosTable.formId = "instanceform";
 
-SteedosTable.valueHash = {};
-
 SteedosTable.checkItem = function(field, item_index){
     var fieldObj = SteedosTable.getField(field);
 
@@ -24,9 +22,31 @@ SteedosTable.checkItem = function(field, item_index){
     return rev;
 }
 
+SteedosTable.setTableItemValue = function(field, item_index, item_value){
+
+    var tableValue = SteedosTable.getTableValue(field);
+    tableValue[item_index] = item_value;
+}
+
+SteedosTable.getTableItemValue = function(field, item_index){
+    return SteedosTable.getTableValue(field)[item_index];   
+}
+
+SteedosTable.removeTableItem = function(field, item_index){
+    var item_value = SteedosTable.getTableItemValue(field, item_index);
+    item_value.removed = true;
+}
+
+SteedosTable.setTableValue = function(field,value){
+    $("#" + field + "Table").val({val:value});
+}
+
+SteedosTable.getTableValue = function(field){
+    return $("#" + field + "Table").val().val;
+}
 
 SteedosTable.getValidValue = function(field){
-    var value = SteedosTable.valueHash[field];
+    var value = SteedosTable.getTableValue(field);
 
     if(!value){
         return 
@@ -39,10 +59,36 @@ SteedosTable.getValidValue = function(field){
             validValue.push(v);
         }
     });
-
     return validValue;
 }
 
+
+SteedosTable.handleUserOrg = function(field, values){
+
+    if(!values || !(values instanceof Array)){
+        return values;
+    }
+
+    var fieldObj = SteedosTable.getField(field);
+
+    values.forEach(function(v){
+        fieldObj.sfields.forEach(function(f){
+            if(f.type == 'user' || f.type == 'group'){
+                var value = v[f.code]
+                if(f.is_multiselect ){
+                    if(value && value.length > 0 && typeof(value[0]) == 'object'){
+                        v[f.code] = v[f.code].getProperty("id");
+                    }
+                }else{
+                    if(value && typeof(value) == 'object'){
+                        v[f.code] = v[f.code].id;
+                    }
+                }
+            }
+        });
+    });
+    return values;
+}
 
 SteedosTable.getField = function(field){
     var instanceFields =  WorkflowManager.getInstanceFields();
@@ -71,17 +117,14 @@ SteedosTable.getModalData = function(field, index){
 
     data.value = {};
 
-    data.value[field] = SteedosTable.getItemValue(field, index);
+    data.value[field] = SteedosTable.getTableItemValue(field, index);
 
     data.index = index ; 
     
     return data;
 }
 
-SteedosTable.getItemValue = function(field, item_index){
-   
-    return SteedosTable.valueHash[field][item_index];
-}
+
 
 SteedosTable.getItemModalValue = function(field, item_index){
     
@@ -130,12 +173,16 @@ SteedosTable.updateItem = function(field, index){
         SteedosTable.addItem(field, index);
     }
 
-    if(SteedosTable.valueHash[field]){
+    if(SteedosTable.getTableValue(field)){
 
-        SteedosTable.valueHash[field][index] = item_value;
+        SteedosTable.setTableItemValue(field, index, item_value);
+
+        //SteedosTable.valueHash[field][index] = item_value;
     
     }else{
-        SteedosTable.valueHash[field] = [item_value];
+        //SteedosTable.valueHash[field] = [item_value];
+
+        SteedosTable.setTableValue(field, [item_value])
 
     }
 
@@ -148,7 +195,7 @@ SteedosTable.removeItem = function(field, index){
     
     $("#" + field + "_item_" + index).hide();
 
-    SteedosTable.valueHash[field][index]["removed"] = true;
+    SteedosTable.removeTableItem(field, index);
 
     InstanceManager.runFormula(field);
 }
@@ -222,7 +269,7 @@ SteedosTable.getThead = function(field){
     return thead;
 }
 
-SteedosTable.getTbody = function(keys, field, values){
+SteedosTable.getTbody = function(keys, field, values, editable){
     var tbody = "";
 
     if(values instanceof Array){
@@ -260,60 +307,60 @@ SteedosTable.getTr = function(keys, item_value, index, field){
 
 SteedosTable.getTd = function(field, value){
     var td = "";
-    if(value){
-        td = "<td>" + SteedosTable.getTDValue(field, value) + "</td>"
-    }else{
-        td = "<td></td>"
-    }
+    
+    td = "<td>" + SteedosTable.getTDValue(field, value) + "</td>"
+    
     return td;
 }
 
 
 SteedosTable.getTDValue = function(field, value){
     var td_value = "";
-    if(!field || !value){
+    if(!field){
         return td_value
     }
 
     switch(field.type){
         case 'user' :
-
-            if(field.is_multiselect){
-                if(value.length > 0){
-                    if("string" == typeof(value[0])){
-                        td_value = WorkflowManager.getUsers(value).getProperty("name").toString();
-                    }else{
-                        td_value = value.getProperty("name").toString();
-                    } 
-                }
-            }else{
-                if("string" == typeof(value)){
-                    td_value = WorkflowManager.getUser(value).name
+            if(value){
+                if(field.is_multiselect){
+                    if(value.length > 0){
+                        if("string" == typeof(value[0])){
+                            td_value = WorkflowManager.getUsers(value).getProperty("name").toString();
+                        }else{
+                            td_value = value.getProperty("name").toString();
+                        } 
+                    }
                 }else{
-                    td_value = value.name;
-                } 
-            }   
+                    if("string" == typeof(value)){
+                        td_value = WorkflowManager.getUser(value).name
+                    }else{
+                        td_value = value.name;
+                    } 
+                }   
+            }
             break;
         case 'group':
-
-            if(field.is_multiselect){
-                if(value.length > 0){
-                    if("string" == typeof(value[0])){
-                        td_value = WorkflowManager.getOrganizations(value).getProperty("name").toString();
+            if(value){
+                if(field.is_multiselect){
+                    if(value.length > 0){
+                        if("string" == typeof(value[0])){
+                            td_value = WorkflowManager.getOrganizations(value).getProperty("name").toString();
+                        }else{
+                            td_value = value.getProperty("name").toString();
+                        } 
+                    }
+                }else{
+                    if("string" == typeof(value)){
+                        td_value = WorkflowManager.getOrganization(value).name;
                     }else{
-                        td_value = value.getProperty("name").toString();
+                        td_value = value.name;
                     } 
                 }
-            }else{
-                if("string" == typeof(value)){
-                    td_value = WorkflowManager.getOrganization(value).name;
-                }else{
-                    td_value = value.name;
-                } 
             }   
             break;
         case 'checkbox':
-            if (value){
+            if (value === true || value == 'true'){
                 td_value = '是';
             }else{
                 td_value = '否';
@@ -345,7 +392,6 @@ SteedosTable.getTDValue = function(field, value){
     return td_value;
 };
 
-
 AutoForm.addInputType("table",{
     template:"afTable",
     valueOut:function(){
@@ -365,27 +411,28 @@ AutoForm.addInputType("table",{
         if(typeof context.atts.maxlength ==='undefined' && typeof context.max === 'number'){
             context.atts.maxlength = context.max;
         }
-
         return context;
     }
 });
-
 
 Template.afTable.events({
     'click .steedosTable-add-item': function(event, template) {
        
         var name = template.data.name;
 
-        var new_item_index = SteedosTable.valueHash[name] ? SteedosTable.valueHash[name].length : 0;
+        var tableValue = SteedosTable.getTableValue(name);
+
+        var new_item_index = tableValue ? tableValue.length : 0;
 
         SteedosTable.showModal(name, new_item_index, "add");
     },
 
     'click .steedosTable-edit-item': function(event, template){
-        debugger; 
-        var name = event.currentTarget.dataset.field;
-        var index = event.currentTarget.dataset.index;
-        SteedosTable.showModal(name, index, "edit");
+        if(template.data.atts.editable){
+            var name = event.currentTarget.dataset.field;
+            var index = event.currentTarget.dataset.index;
+            SteedosTable.showModal(name, index, "edit");
+        }
     }
 });
 
@@ -393,17 +440,15 @@ Template.afTable.events({
 
 
 Template.afTable.rendered = function(){
-    debugger;
 
     var field = this.data.name;
 
     var keys =  SteedosTable.getKeys(field);
-    
-    SteedosTable.valueHash[field] = this.data.value;
+    var validValue = SteedosTable.handleUserOrg(field, this.data.value);
+    SteedosTable.setTableValue(field, validValue);
 
     $("#"+field+"Thead").html(SteedosTable.getThead(field));
-    debugger;
 
-    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys, field, this.data.value));  
+    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field)));  
 };
 

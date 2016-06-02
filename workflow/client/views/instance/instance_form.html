@@ -14,7 +14,7 @@
                 {{#autoForm id=instanceId schema=fields type=form_types doc=doc_values meteormethod='instance'}}
                     {{#each steedos_form.fields}}
                         
-                        {{#if equals this.type 'section'}}
+                        {{#if includes this.type 'section,table'}}
                             <div class="col-md-12">
                                 {{> afFormGroup name=this.code label=false}}
                             </div>

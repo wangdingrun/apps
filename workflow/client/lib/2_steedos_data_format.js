@@ -243,10 +243,12 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
                                   minCount : 0,
                                   maxCount : 200,
                                   //initialCount: 0,
+
                                   autoform : {
                                     schema:[],
                                     initialCount: 0,
-                                    type:"table"
+                                    type:"table",
+                                    editable: field.permission == 'editable' ? true : false
                                   }
                                 };
 

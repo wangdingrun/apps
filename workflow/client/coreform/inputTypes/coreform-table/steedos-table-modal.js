@@ -49,7 +49,6 @@ Template.steedosTableModal.events({
     },
 
     'click .steedos-table-modal .remove-steedos-table-row': function(event, template){
-        debugger;
         var field = template.data.field.code;
         var item_index = template.data.index;
         SteedosTable.removeItem(field, item_index);
@@ -57,16 +56,18 @@ Template.steedosTableModal.events({
     },
 
     'click .steedos-table-modal .steedos-table-ok-button': function(event, template){
-        debugger;
         var field = template.data.field.code;
         var item_index = template.data.index;
 
-        //检测item 字段值: 必填及数据格式
-        if(!SteedosTable.checkItem(field, item_index)){
-            return ;
-        }
+        var item_value = SteedosTable.getItemModalValue(field, item_index);
+        if(item_value){
+            //检测item 字段值: 必填及数据格式
+            if(!SteedosTable.checkItem(field, item_index)){
+                return ;
+            }
 
-        SteedosTable.updateItem(field, item_index);
+            SteedosTable.updateItem(field, item_index);
+        }
         Modal.hide();
     },
 

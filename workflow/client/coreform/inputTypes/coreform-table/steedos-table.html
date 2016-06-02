@@ -1,14 +1,15 @@
 <template name="afTable">
-    <p>0005</p>
     <div class="panel panel-default">
         <div class="panel-heading">
-          {{afFieldLabelText name=this.atts.name}}
-          <div class="pull-right">
-              <span class="panel-controls">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary steedosTable-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}" style='padding:2px 6px;'><span class="glyphicon glyphicon-plus"></span></button>
-              </span>
-          </div>
+          <label class='control-label'>{{afFieldLabelText name=this.atts.name}}</label>
+         {{#if atts.editable}}
+            <div class="pull-right">
+                <span class="panel-controls">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary steedosTable-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}" style='padding:2px 6px;'><span class="glyphicon glyphicon-plus"></span></button>
+                </span>
+            </div>
+          {{/if}}
         </div>
         {{#if afFieldIsInvalid name=this.atts.name}}
         <div class="panel-body has-error" >
