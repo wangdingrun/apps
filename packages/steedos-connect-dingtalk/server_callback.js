@@ -43,21 +43,61 @@ JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
       });
     }
 
-    if (config.saveTicket && message.EventType === 'suite_ticket') {
-      var data = {
-        value: message.SuiteTicket,
-        expires: Number(message.TimeStamp) + TICKET_EXPIRES_IN
-      }
-      config.saveTicket(data, function(err) {
-        if (err) {
-          return next(err);
-        } else {
-          res.reply();
+    if (message.EventType === 'suite_ticket') {
+      // var data = {
+      //   value: message.SuiteTicket,
+      //   expires: Number(message.TimeStamp) + TICKET_EXPIRES_IN
+      // }
+      // config.saveTicket(data, function(err) {
+      //   if (err) {
+      //     return next(err);
+      //   } else {
+      //     res.reply();
+      //   }
+      // });
+      console.log('EventType is suite_ticket');
+      var o = ServiceConfiguration.configurations.findOne({service: "dingtalk"});
+      if (o) {
+        r = Dingtalk.suiteAccessTokenGet(o.suite_key, o.suite_secret, message.SuiteTicket);
+        console.log(r);
+        if (r && r.suite_access_token) {
+          ServiceConfiguration.configurations.update(o._id, {$set: {"suite_ticket": message.SuiteTicket, "suite_access_token": r.suite_access_token}});
         }
-      });
+
+      }
+
+
+      res.reply();
     }else{
       Dingtalk.processCallback(message, req, res, next);
     }
+
+    // 回调向ISV推送临时授权码
+    if (message.EventType === 'tmp_auth_code') {
+      var tmp_auth_code = message.AuthCode;
+      // var suiteKey = message.SuiteKey;
+      var o = ServiceConfiguration.configurations.findOne({service: "dingtalk"});
+      if (o && o.suite_access_token) {
+
+        r = Dingtalk.permanentCodeGet(o.suite_access_token, tmp_auth_code);
+        if (r && r.permanent_code) {
+
+          // 同步
+          var permanent_code = r.permanent_code;
+          var auth_corp_info = r.auth_corp_info;
+
+          var at = Dingtalk.corpTokenGet(o.suite_access_token, auth_corp_info.corpid, permanent_code);
+          if (at && at.access_token) {
+            Dingtalk.syncCompany(at.access_token, auth_corp_info, permanent_code);
+          }
+
+        }
+
+      }
+
+      res.reply();
+    }
+
   };
 });
 

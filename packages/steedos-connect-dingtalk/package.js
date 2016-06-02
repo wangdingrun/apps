@@ -33,6 +33,7 @@ Package.onUse(function(api) {
   api.addFiles('dt_corp_api.js', 'server');
   api.addFiles('dt_server.coffee', 'server');
   api.addFiles('server_callback.js', 'server');
+  api.addFiles('dt_api.coffee', 'server');
 
   api.export('Dingtalk');
 
