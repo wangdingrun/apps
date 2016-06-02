@@ -237,7 +237,7 @@ InstanceManager.checkNextStepUser = function(){
   var nextStepId = ApproveManager.getNextStepsSelectValue();
   var nextStep = WorkflowManager.getInstanceStep(nextStepId);
   
-  if((value && value != '-1') || (nextStep && nextStep.step_type == 'end'))
+  if(value.length > 0 || (nextStep && nextStep.step_type == 'end'))
     removeMessage(nextStepUsers_parent_group);
   else
     showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
