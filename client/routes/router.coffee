@@ -19,7 +19,7 @@ FlowRouter.route '/logout',
 FlowRouter.route '/account/profile', 
 	action: (params, queryParams)->
 		if Meteor.userId()
-			BlazeLayout.render 'masterLayout',
+			BlazeLayout.render 'adminLayout',
 				main: "profile"
 
 

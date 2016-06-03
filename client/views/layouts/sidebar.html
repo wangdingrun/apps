@@ -48,42 +48,18 @@
             <li class="{{boxClass 'monitor'}}">
                 <a href="{{urlPrefix}}/space/{{spaceId}}/monitor/"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
             </li>
-            <li class="header">{{_ "SETTINGS"}}</li>
-            {{#if isAdmin}}
-              <li>
-                <a href="{{urlPrefix}}/admin/">
-                  <i class="fa fa-gears"></i><span>{{_ "System Settings"}}</span>
-                  <!-- <i class="fa fa-angle-left pull-right"></i> -->
-                </a>
-                <!-- <ul class="treeview-menu">
-                  <li>
-                    <a href="{{urlPrefix}}/admin/view/organizations"><i class="fa fa-sitemap"></i><span>{{_ "db_organizations"}}</span></a>
-                  </li>
-                  <li>
-                    <a href="{{urlPrefix}}/admin/view/space_users"><i class="fa fa-users"></i><span>{{_ "db_space_users"}}</span></a>
-                  </li>
-                </ul> -->
-              </li>
-              <li>
-                <a href="/designer/current/zh-cn" target="_designer"><i class="fa fa-random"></i><span>{{_ "Workflow Designer"}}</span></a>
-              </li>
-            {{/if}}
+            <li class="header">{{_ "Steedos"}}</li>
             <li>
-                <a href="#">
-                  <i class="fa fa-user"></i> <span>{{_ "Account"}}</span>
-                  <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li>
-                    <a href="{{urlPrefix}}/account/profile/"><i class="fa fa-support"></i><span>{{_ "Account Settings"}}</span></a>
-                  </li>
-                  <li>
-                      <a href="https://www.steedos.com/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
-                  </li>
-                  <li>
-                      <a href="{{urlPrefix}}/logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
-                  </li>
-                </ul>
+              <a href="{{urlPrefix}}/admin/">
+                <i class="fa fa-gears"></i><span>{{_ "Settings"}}</span>
+                <!-- <i class="fa fa-angle-left pull-right"></i> -->
+              </a>
+            </li>
+            <li>
+                <a href="/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
+            </li>
+            <li>
+                <a href="{{urlPrefix}}/logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
             </li>
           </ul>
         </div>

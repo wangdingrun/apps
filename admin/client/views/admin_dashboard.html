@@ -1,0 +1,103 @@
+<template name="override_AdminDashboard">
+
+	<div class="cell">
+
+		<div class="bd">
+		    <div class="weui_cells_title">{{_ "Account Settings"}}</div>
+		    <div class="weui_cells weui_cells_access">
+		        <a class="weui_cell" href="/workflow/account/profile/#profile">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-user"></i>&nbsp;{{_ "Profile"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/account/profile/#avatar">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-file-image-o"></i>&nbsp;{{_ "Avatar"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/account/profile/#password">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-lock"></i>&nbsp;{{_ "Password"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		    </div>
+		</div>
+
+		{{#if isSpaceAdmin}}
+		<div class="bd">
+		    <div class="weui_cells_title">{{spaceName}}</div>
+		    <div class="weui_cells weui_cells_access">
+		        <a class="weui_cell" href="/designer/current/zh-cn/" target="_blank">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-random"></i>&nbsp;{{_ "Workflow Designer"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/admin/view/organizations">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-sitemap"></i>&nbsp;{{_ "db_organizations"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/admin/view/space_users">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-users"></i>&nbsp;{{_ "db_space_users"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/admin/view/flow_roles">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-graduation-cap"></i>&nbsp;{{_ "db_flow_roles"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		        <a class="weui_cell" href="/workflow/admin/view/flow_positions">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-smile-o"></i>&nbsp;{{_ "db_flow_positions"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		    </div>
+		</div>
+
+		{{/if}}
+
+		<div class="bd">
+		    <div class="weui_cells weui_cells_access">
+		        <a class="weui_cell" href="/workflow/admin/view/spaces">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-university"></i>&nbsp;{{_ "db_spaces"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		    </div>
+		</div>
+
+		<div class="bd">
+		    <div class="weui_cells weui_cells_access">
+		        <a class="weui_cell" href="/cn/help/" target="_blank">
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <i class="fa fa-question-circle"></i>&nbsp;{{_ "Help"}}
+		            </div>
+		            <div class="weui_cell_ft">
+		            </div>
+		        </a>
+		    </div>
+		</div>
+
+
+	</div>
+
+</template>
