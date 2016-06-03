@@ -386,7 +386,7 @@ SteedosTable.getTDValue = function(field, value){
             }
             break;
         default:
-            td_value = value;
+            td_value = value ? value : '';
             break;
     }
     return td_value;
