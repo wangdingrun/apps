@@ -1,11 +1,12 @@
 AutoForm.addInputType("coreform-radio", {
   template: "afRadioGroupInline",
-  valueIn: function (val, atts) {
-    if (typeof val === "string")
-      return val ? val.split(",") : [];
-    else
-      return val
-  },
+  // 此段代码会导致不能正常显示选中的值
+  // valueIn: function (val, atts) {
+  //   if (typeof val === "string")
+  //     return val ? val.split(",") : [];
+  //   else
+  //     return val
+  // },
   valueOut: function () {
     return this.find('input[type=radio]:checked').val();
   },
@@ -14,7 +15,6 @@ AutoForm.addInputType("coreform-radio", {
 
     // build items list
     context.items = [];
-
     // Add all defined options
     _.each(context.selectOptions, function(opt) {
       context.items.push({

@@ -3,6 +3,11 @@ AutoForm.addInputType("selectorg",{
     valueIn: function(val, atts){
         if("string" == typeof(val))
             val = WorkflowManager.getFormulaOrgObjects(val);
+
+        if(val instanceof Array && val.length > 0 && "string" == typeof(val[0])){
+            val = WorkflowManager.getFormulaOrgObjects(val);
+        }
+        
         return val;
     },
     valueOut:function(){

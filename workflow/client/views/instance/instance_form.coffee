@@ -115,7 +115,7 @@ Template.instanceform.onRendered ->
 
 Template.instanceform.events 
 
-    'change .instance-form .form-control': (event)->
+    'change .instance-form .form-control, .steedos-table-modal-body': (event)->
         if ApproveManager.isReadOnly()
             return ;
         
@@ -125,28 +125,32 @@ Template.instanceform.events
 
         InstanceManager.checkFormFieldValue(event.target);
 
-        form_version = WorkflowManager.getInstanceFormVersion();
-        formula_fields = []
-        if form_version
-            formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
-        Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
-        Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
+        InstanceManager.runFormula(code);
+
+        # form_version = WorkflowManager.getInstanceFormVersion();
+        # formula_fields = []
+        # if form_version
+        #     formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+        # Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+        # Session.set("form_values", AutoForm.getFormValues("instanceform").insertDoc);
         #InstanceManager.updateNextStepTagOptions();
 
     # 子表删除行时，执行主表公式计算
-    'click .remove-steedos-table-row': (event, template)->
+    'click .steedosTable-remove-item': (event, template)->
         console.log("instanceform form-control change");
         code = event.target.name;
 
-        form_version = WorkflowManager.getInstanceFormVersion();
-        formula_fields = []
-        if form_version
-            formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
+        InstanceManager.runFormula(code);
+
+        # form_version = WorkflowManager.getInstanceFormVersion();
+        # formula_fields = []
+        # if form_version
+        #     formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
 
         # autoform-inputs 中 markChanged 函数中，对template 的更新延迟了100毫秒，
         # 此处为了能拿到删除列后最新的数据，此处等待markChanged执行完成后，再进行计算公式.
         # 此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。
 
-        setTimeout ->
-           Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
-        ,101
+        # setTimeout ->
+        #    Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+        # ,101
