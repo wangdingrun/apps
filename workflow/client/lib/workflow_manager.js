@@ -31,14 +31,15 @@ WorkflowManager.getSpaceUsers = function (spaceId){
 
   var users = new Array();
   
-  var spaceUsers = db.space_users.find({}, {sort: {name:1}});
+  var spaceUsers = db.space_users.find({user_accepted:true}, {sort: {name:1}});
 
   spaceUsers.forEach(function(spaceUser){
     spaceUser.id = spaceUser.user;
     spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
-    spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
-    users.push(spaceUser);
-    
+    if(spaceUser.organization){
+      spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
+      users.push(spaceUser);
+    }
   })
 
   return users;
@@ -275,6 +276,10 @@ WorkflowManager.getOrganization = function(orgId){
 
   var spaceOrg = db.organizations.findOne(orgId);
 
+  if(!spaceOrg){
+    return ;
+  }
+
   spaceOrg.id = spaceOrg._id;
 
   return spaceOrg;
@@ -341,8 +346,13 @@ WorkflowManager.getUser = function (userId){
 
   var spaceUser = db.space_users.findOne({user:userId});
 
+  if(!spaceUser){ return}
+
   spaceUser.id = spaceUser.user;
   spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
+  if(!spaceUser.organization){
+    return ;
+  }
   spaceUser.roles = WorkflowManager.getUserRoles(Session.get("spaceId"), spaceUser.organization.id, spaceUser.id);
   
   return spaceUser;
@@ -356,14 +366,17 @@ WorkflowManager.getUsers = function (userIds){
 
   var users = new Array();
   if(userIds){
-    var spaceUsers = WorkflowManager.getSpaceUsers("")
-    spaceUsers.forEach(
-      function(user){
-          if (userIds.includes(user.id )){
-            users.push(user);
-          }
+
+    var spaceUsers = db.space_users.find({user:{$in:userIds}});
+
+    spaceUsers.forEach(function(spaceUser){
+      spaceUser.id = spaceUser.user;
+      spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
+      if(spaceUser.organization){
+        spaceUser.roles = WorkflowManager.getUserRoles(Session.get("spaceId"), spaceUser.organization.id, spaceUser.id);
+        users.push(spaceUser);
       }
-    );
+    })
   }
 
   return users;
@@ -410,7 +423,7 @@ WorkflowManager.getRoleUsersbyOrgAndRole = function(spaceId, orgId, roleId){
 
   if(orgPositions.length == 0){
     var organization = WorkflowManager.getOrganization(orgId);
-    if(organization.parent != '')
+    if(organization && organization.parent != '')
       roleUsers = roleUsers.concat(WorkflowManager.getRoleUsersbyOrgAndRole(spaceId, organization.parent, roleId));
   }
 
