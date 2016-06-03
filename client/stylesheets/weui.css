@@ -7,7 +7,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-body {
+/*body {
   line-height: 1.6;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -20,7 +20,7 @@ a img {
 }
 a {
   text-decoration: none;
-}
+}*/
 @font-face {
   font-weight: normal;
   font-style: normal;
