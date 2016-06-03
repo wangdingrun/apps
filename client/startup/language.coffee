@@ -1,13 +1,15 @@
+
+Steedos.defaultUserLanguage = ->
+	lng = window.navigator.userLanguage || window.navigator.language || 'en'
+	if lng.indexOf("zh") >=0
+		return "zh-cn"
+	else
+		return "en-us"
+
 Meteor.startup ->
 
 	Meteor.subscribe("userData")
 
-	@defaultUserLanguage = ->
-		lng = window.navigator.userLanguage || window.navigator.language || 'en'
-		if lng.indexOf("zh") >=0
-			return "zh-cn"
-		else
-			return "en-us"
 		
 	loadedLaguages = []
 
@@ -45,6 +47,6 @@ Meteor.startup ->
 				setLanguage Meteor.user().locale
 				c.stop()
 
-	userLanguage = defaultUserLanguage()
+	userLanguage = Steedos.defaultUserLanguage()
 
 	setLanguage userLanguage

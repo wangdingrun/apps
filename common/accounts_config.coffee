@@ -1,25 +1,24 @@
-// Options
-AccountsTemplates.configure({
+# Options
+AccountsTemplates.configure
   defaultLayout: 'loginLayout',
-  defaultLayoutRegions: {
+  defaultLayoutRegions: 
     nav: 'loginNav',
-  },
   defaultContentRegion: 'main',
 
   showForgotPasswordLink: true,
   overrideLoginErrors: true,
   enablePasswordChange: true,
 
-  // sendVerificationEmail: true,
-  // enforceEmailVerification: true,
-  //confirmPassword: true,
-  //continuousValidation: false,
-  //displayFormLabels: true,
-  //forbidClientAccountCreation: true,
-  //formValidationFeedback: true,
+  # sendVerificationEmail: true,
+  # enforceEmailVerification: true,
+  # confirmPassword: true,
+  # continuousValidation: false,
+  # displayFormLabels: true,
+  # forbidClientAccountCreation: true,
+  # formValidationFeedback: true,
   homeRoutePath: '/',
-  //showAddRemoveServices: false,
-  //showPlaceholders: true,
+  # showAddRemoveServices: false,
+  # showPlaceholders: true,
 
   negativeValidation: true,
   positiveValidation: true,
@@ -27,10 +26,13 @@ AccountsTemplates.configure({
   positiveFeedback: true,
   showLabels: false,
 
-  // Privacy Policy and Terms of Use
-  //privacyUrl: 'privacy',
-  //termsUrl: 'terms-of-use',
-});
+  # Privacy Policy and Terms of Use
+  # privacyUrl: 'privacy',
+  # termsUrl: 'terms-of-use',
+
+  preSignUpHook: (password, options) ->
+    options.profile.locale = Steedos.defaultUserLanguage();
+
 
 
 

@@ -6,10 +6,7 @@ Template.sidebar.helpers
 			return Meteor.user().displayName()
 		else
 			return " "
-
-	urlPrefix: ->
-		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
-		
+	
 	avatar: ->
 		return Meteor.absoluteUrl("/avatar/" + Meteor.userId());
 
@@ -47,13 +44,7 @@ Template.sidebar.helpers
 			return c.finished_count;
 		return;
 
-	isAdmin: ->
-		s = db.spaces.findOne(Session.get('spaceId'))
-		if s
-			return s.admins.includes(Meteor.userId())
-		return false
+# Template.sidebar.onRendered ->
 
-Template.sidebar.onRendered ->
-
-    if !Steedos.isMobile()
-        $(".sidebar").perfectScrollbar();
+#     if !Steedos.isMobile()
+#         $(".sidebar").perfectScrollbar();

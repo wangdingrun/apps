@@ -29,13 +29,13 @@ FlowRouter.route '/space',
 			FlowRouter.go "/sign-in";
 			return true
 
-		BlazeLayout.render 'masterLayout',
+		BlazeLayout.render 'loginLayout',
 			main: "space_select"
 
 
 FlowRouter.route '/loading', 
 	action: (params, queryParams)->
-		BlazeLayout.render 'masterLayout',
+		BlazeLayout.render 'loginLayout',
 			main: "loading"
 
 

@@ -1,8 +1,5 @@
 Template.space_switcher.helpers
 
-	spaceCount: ->
-		return db.spaces.find().count()
-		
 	spaces: ->
 		return db.spaces.find();
 

@@ -26,15 +26,12 @@ Package.onUse(function(api) {
         api.addFiles('lib/Modernizr.js', 'client');
 
         api.addFiles('lib/steedos.coffee', 'client');
-        api.addFiles('lib/modal.coffee', 'client');
+        api.addFiles('lib/helpers.coffee', 'client');
 
         api.addFiles('utils/_lesshat.import.less', 'client');
         api.addFiles('utils/_keyframes.import.less', 'client');
         api.addFiles('views/loading.html', 'client');
         api.addFiles('views/loading.less', 'client');
-        api.addFiles('views/modal.html', 'client');
-        api.addFiles('views/modal.coffee', 'client');
-        api.addFiles('views/modal.less', 'client');
 });
 
 Package.onTest(function(api) {
