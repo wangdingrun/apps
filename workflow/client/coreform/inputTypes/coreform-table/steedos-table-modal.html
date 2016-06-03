@@ -2,24 +2,23 @@
     <div class="modal fade steedos-table-modal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!--
-                <div class="modal-header">
-                    <h4 class="modal-title">编辑</h4>
-                </div>-->
+                {{#autoForm id=(getId this) schema=(getSchema this) doc=this.value}}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="selectTagModalTitle">{{afFieldLabelText name=this.field.code}}</h4> 
+                    </div>
 
-                <div class="modal-body">
-                    {{#autoForm id=(getId this) schema=(getSchema this) doc=this.value}}
-                        {{> afObjectField name=this.field.code }}
-                    {{/autoForm}}
-                </div>
-
+                    <div class="modal-body steedos-table-modal-body">
+                        {{> afObjectField name=this.field.code}}
+                    </div>
+                {{/autoForm}}
                 <div class="modal-footer">
                     {{#if equals this.method 'edit'}}
                         <div class="pull-left">
                             <button type="button" class="btn btn-default remove-steedos-table-row">删除</button>
                         </div>
                     {{/if}}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary steedos-table-ok-button">好</button>
                 </div>
 

@@ -209,6 +209,8 @@ SteedosTable.showModal = function(field, index, method){
 
     Modal.show("steedosTableModal", modalData);
 
+    $(".steedos-table-modal-body").css("max-height", ($(window).height()-180) + "px");
+
 }
 
 SteedosTable.getKeys = function(field){
