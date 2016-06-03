@@ -450,7 +450,7 @@ Handlebars.registerHelper('breadcrumb', function(data) {
   }
 	
   out = getLi(data.parentOrg);
-  //out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' + out;
+  out = '<li><a href="javascript:SelectTag.reload(\'\')"><i class="fa fa-home"></i></a></li>' + out;
   if(data.id && data.id !=0 && data.id !=''){
   	out = out + '<li class="active"><a href="javascript:void(0)">'+data.name+'</a></li>';//SelectTag.reload(\''+data.id+'\')
   }
