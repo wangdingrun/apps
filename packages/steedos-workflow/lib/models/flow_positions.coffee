@@ -21,18 +21,16 @@ db.flow_positions._simpleSchema = new SimpleSchema
 						label: obj.name,
 						value: obj._id
 				return options
-	org: 
-		type: String,
-		optional: true,
-		autoform: 
-			type: "selectorg"
-
 	users: 
 		type: [String],
-		optional: true,
 		autoform:
 			type: "selectuser"
 			multiple: true
+
+	org: 
+		type: String,
+		autoform: 
+			type: "selectorg"
 
 
 if Meteor.isClient
