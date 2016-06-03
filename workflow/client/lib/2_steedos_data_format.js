@@ -215,10 +215,13 @@ var s_schema = function (label, field){
 WorkflowManager_format.getTableItemSchema = function(field){
   var fieldSchema = {};
   if(field.type == 'table'){
-    fieldSchema[field.code] = {type: Object, optional: true};
+    var label = (field.name !=null && field.name.length > 0) ? field.name : field.code ;
+    fieldSchema[field.code] = {type: Object, optional: true, label: label};
 
     field.sfields.forEach(function(sfield){
-      sfields_schema = new s_schema(sfield.code, sfield);
+      label = (sfield.name !=null && sfield.name.length > 0) ? sfield.name : sfield.code ;
+
+      sfields_schema = new s_schema(label, sfield);
       fieldSchema[field.code + "." + sfield.code] = sfields_schema;
     });
   }
@@ -243,7 +246,7 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
                                   minCount : 0,
                                   maxCount : 200,
                                   //initialCount: 0,
-
+                                  label: label,
                                   autoform : {
                                     schema:[],
                                     initialCount: 0,
@@ -252,13 +255,15 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
                                   }
                                 };
 
-      fieldSchema[field.code + ".$"] = {type:Object}
+      fieldSchema[field.code + ".$"] = {type:Object,label: label}
 
       for(var si = 0 ; si < field.sfields.length; si++){
-       
+        
         var tableField = field.sfields[si];
 
-        tableField_schema = new s_schema(tableField.code, tableField);
+        label = (tableField.name !=null && tableField.name.length > 0) ? tableField.name : tableField.code ;
+
+        tableField_schema = new s_schema(label, tableField);
 
         fieldSchema[field.code + ".$." + tableField.code] = tableField_schema;
         
