@@ -57,11 +57,14 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
         newFile.name(req.files[0].filename);
 
         fileObj = collection.insert newFile
+        size = fileObj.original.size 
+        if !size 
+          size = 1024
 
-        resp = {
+        resp = 
           version_id: fileObj._id,
-          size: fileObj.size 
-        };
+          size: size
+          
         res.setHeader("x-amz-version-id",fileObj._id);
         res.end(JSON.stringify(resp));
         return
