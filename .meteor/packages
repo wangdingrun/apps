@@ -5,6 +5,7 @@
 
 autoupdate
 
+standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -78,5 +79,3 @@ steedos:lib
 steedos:workflow
 steedos:api
 peppelg:bootstrap-3-modal
-standard-minifier-css
-standard-minifier-js
