@@ -48,12 +48,12 @@ Template.steedosTableModal.events({
         //SteedosTable.updateItem(table, item_index);
     },
 
-    'click .steedos-table-modal .remove-steedos-table-row': function(event, template){
-        var field = template.data.field.code;
-        var item_index = template.data.index;
-        SteedosTable.removeItem(field, item_index);
-        Modal.hide();
-    },
+    // 'click .steedos-table-modal .remove-steedos-table-item': function(event, template){
+    //     var field = template.data.field.code;
+    //     var item_index = template.data.index;
+    //     SteedosTable.removeItem(field, item_index);
+    //     Modal.hide();
+    // },
 
     'click .steedos-table-modal .steedos-table-ok-button': function(event, template){
         var field = template.data.field.code;
