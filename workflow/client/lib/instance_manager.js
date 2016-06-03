@@ -439,6 +439,7 @@ InstanceManager.getCurrentValues = function(){
 }
 
 InstanceManager.clone = function(obj){
+  if(!obj){return}
   return JSON.parse(JSON.stringify(obj))
 }
 
