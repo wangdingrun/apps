@@ -1,9 +1,20 @@
 {
 	"Steedos Workflow": "Steedos Workflow",
 
+        "db_instances": "Instances",
         "db_instances_name": "Title",
         "db_instances_applicant_name": "Applicant",
         "db_instances_modified": "Modified",
-        "db_instances_applicant_organization_name": "Organization"
+        "db_instances_applicant_organization_name": "Organization",
 
+        "db_flow_roles": "Flow Roles",
+        "db_flow_roles_name": "Name",
+
+        "db_flow_positions": "Flow Positions",
+        "db_flow_positions_role": "Role",
+        "db_flow_positions_org": "Organization",
+        "db_flow_positions_users": "Users",
+        "db_flow_positions_role_name()": "Role",
+        "db_flow_positions_org_name()": "Organization",
+        "db_flow_positions_users_name()": "Users"
 }

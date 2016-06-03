@@ -131,4 +131,10 @@ Template.instance_button.events
             InstanceManager.terminateIns(reason);
             sweetAlert.close();
 
+    'click #instance_reassign': (event, template) ->
+        Modal.show('reassign_modal')
+
+    'click #instance_relocate': (event, template) ->
+        Modal.show('relocate_modal')
+
     

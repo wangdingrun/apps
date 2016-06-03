@@ -1,4 +1,4 @@
-export DB_SERVER=192.168.0.23
+export DB_SERVER=127.0.0.1
 
 export MONGO_URL="mongodb://$DB_SERVER/steedos"
 export MONGO_OPLOG_URL="mongodb://$DB_SERVER/local"

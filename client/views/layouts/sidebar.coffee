@@ -14,7 +14,10 @@ Template.sidebar.helpers
 		return Meteor.absoluteUrl("/avatar/" + Meteor.userId());
 
 	spaceId: ->
-		return Session.get("spaceId");
+		if Session.get("spaceId")
+			return Session.get("spaceId")
+		else
+			return localStorage.getItem("spaceId:" + Meteor.userId())
 
 	boxClass: (boxName)->
 		if Session.get("box") == boxName

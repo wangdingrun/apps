@@ -1,9 +1,23 @@
 # call validate when login success
-@SteedosAPI = {}
+Setup.loginWithCookie = (onSuccess) ->
+	userId = Cookies.get("X-User-Id")
+	authToken = Cookies.get("X-Auth-Token")
+	console.log "cookie login for " + userId
+	if userId and authToken
+		if Meteor.userId() != userId
+			Accounts.connection.setUserId(userId);
+			Accounts.loginWithToken authToken,  (err) ->
+				if (err) 
+					Meteor._debug("Error logging in with token: " + err);
+					Accounts.makeClientLoggedOut();
+				else if onSuccess
+					onSuccess();
 
-SteedosAPI.setupValidate = ()->
+
+Setup.validate = ()->
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
+
 	requestData = {}
 	if userId and loginToken
 		requestData = 
@@ -11,7 +25,7 @@ SteedosAPI.setupValidate = ()->
 			"X-Auth-Token": loginToken
 	$.ajax
 		type: "POST",
-		url: Meteor.absoluteUrl("se/ws/1/validate"),
+		url: Meteor.absoluteUrl("api/setup/validate"),
 		contentType: "application/json",
 		dataType: 'json',
 		data: JSON.stringify(requestData),
@@ -19,32 +33,37 @@ SteedosAPI.setupValidate = ()->
 			withCredentials: true
 		crossDomain: true
 	.done ( data ) ->
-		# login by cookie
-		if data.userId and data.authToken and not userId
-
-			userId = data.userId
-			loginToken = data.authToken
-
-			console.log "sso login for " + userId
-			userId && Accounts.connection.setUserId(userId);
-			Accounts.loginWithToken loginToken,  (err) ->
-				if (err) 
-					Meteor._debug("Error logging in with token: " + err);
-					Accounts.makeClientLoggedOut();
+		if data.webservices
+			Steedos.settings.webservices = data.webservices
 			
-				# if FlowRouter
-				# 	FlowRouter.go("/")
-				# else
-				# 	document.location.href = Meteor.absoluteUrl ""
+		# login by cookie
+		# Setup.loginWithCookie();
+
+		# if data.userId and data.authToken and not userId
+
+		# 	userId = data.userId
+		# 	loginToken = data.authToken
+
+		# 	console.log "sso login for " + userId
+		# 	userId && Accounts.connection.setUserId(userId);
+		# 	Accounts.loginWithToken loginToken,  (err) ->
+		# 		if (err) 
+		# 			Meteor._debug("Error logging in with token: " + err);
+		# 			Accounts.makeClientLoggedOut();
+			
+		# 		# if FlowRouter
+		# 		# 	FlowRouter.go("/")
+		# 		# else
+		# 		# 	document.location.href = Meteor.absoluteUrl ""
 		
 			
 
 
-SteedosAPI.setupLogout = () ->
+Setup.logout = () ->
 
 		$.ajax
 			type: "POST",
-			url: Meteor.absoluteUrl("se/ws/1/logout"),
+			url: Meteor.absoluteUrl("api/setup/logout"),
 			dataType: 'json',
 			xhrFields: 
 			   withCredentials: true
@@ -54,6 +73,7 @@ SteedosAPI.setupLogout = () ->
 
 
 Meteor.startup ->
-	SteedosAPI.setupValidate();
+	if (!Accounts._storedUserId())
+		Setup.loginWithCookie()
 	Accounts.onLogin ()->
-		SteedosAPI.setupValidate();
+		Setup.validate();

@@ -10,42 +10,32 @@ db.spaces._simpleSchema = new SimpleSchema
         type: String,
         optional: true,
         autoform:
-            type: "select",
-            options: ->
-                options = []
-                selector = {}
-                if Session.get("spaceId")
-                    selector = {space: Session.get("spaceId")}
-
-                objs = db.space_users.find(selector, {name:1, sort: {name:1}})
-                objs.forEach (obj) ->
-                    options.push
-                        label: obj.name,
-                        value: obj.user
-                return options
-
+            type: "selectuser"
             defaultValue: ->
                 return Meteor.userId
 
     admins: 
         type: [String],
         optional: true,
-        autoform: 
-            type: "select",
-            afFieldInput: 
-                multiple: true
-            options: ->
-                options = []
-                selector = {}
-                if Session.get("spaceId")
-                    selector = {space: Session.get("spaceId")}
+        autoform:
+            type: "selectuser"
+            multiple: true
+        # autoform: 
+        #     type: "select",
+        #     afFieldInput: 
+        #         multiple: true
+        #     options: ->
+        #         options = []
+        #         selector = {}
+        #         if Session.get("spaceId")
+        #             selector = {space: Session.get("spaceId")}
 
-                objs = db.space_users.find(selector, {name:1, sort: {name:1}})
-                objs.forEach (obj) ->
-                    options.push
-                        label: obj.name,
-                        value: obj.user
-                return options
+        #         objs = db.space_users.find(selector, {name:1, sort: {name:1}})
+        #         objs.forEach (obj) ->
+        #             options.push
+        #                 label: obj.name,
+        #                 value: obj.user
+        #         return options
 
     balance: 
         type: Number,
@@ -78,27 +68,33 @@ db.spaces._simpleSchema = new SimpleSchema
     modified_by:
         type: String,
         optional: true
-    "services.bqq.expires_in":
-        type: Number,
-        optional: true
-    "services.bqq.company_id":
-        type: String,
-        optional: true
-    "services.bqq.company_token":
-        type: String,
-        optional: true
-    "services.bqq.refresh_token":
-        type: String,
-        optional: true
-    "services.bqq.user_list_timestamp":
-        type: Number,
-        optional: true
-    "services.bqq.dept_list_timestamp":
-        type: Number,
-        optional: true
-    "services.bqq.modified":
-        type: Number,
-        optional: true
+    services:
+        type: Object
+        optional: true,
+        blackbox: true
+        autoform:
+            omit: true
+    # "services.bqq.expires_in":
+    #     type: Number,
+    #     optional: true
+    # "services.bqq.company_id":
+    #     type: String,
+    #     optional: true
+    # "services.bqq.company_token":
+    #     type: String,
+    #     optional: true
+    # "services.bqq.refresh_token":
+    #     type: String,
+    #     optional: true
+    # "services.bqq.user_list_timestamp":
+    #     type: Number,
+    #     optional: true
+    # "services.bqq.dept_list_timestamp":
+    #     type: Number,
+    #     optional: true
+    # "services.bqq.modified":
+    #     type: Number,
+    #     optional: true
 
 
 if Meteor.isClient
@@ -217,12 +213,14 @@ if Meteor.isServer
         #         self.transform().join_space(admin, true)
 
     db.spaces.before.remove (userId, doc) ->
-        # only space owner can remove space
-        if doc.owner != userId
-            throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+        throw new Meteor.Error(400, "暂不支持删除工作区操作");
 
-        db.space_users.direct.remove({space: doc._id});
-        db.organizations.direct.remove({space: doc._id});
+        # only space owner can remove space
+        # if doc.owner != userId
+        #     throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+
+        # db.space_users.direct.remove({space: doc._id});
+        # db.organizations.direct.remove({space: doc._id});
         
 
     Meteor.methods

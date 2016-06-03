@@ -1,15 +1,13 @@
 <template name="atForm">
   {{#unless hide}}
-    <div class="at-form">
+    <div class="at-form text-center">
       {{#if showTitle}}
         {{> atTitle}}
       {{/if}}
-      {{#if showOauthServices}}
-        {{> atOauth}}
-      {{/if}}
-      {{#if showServicesSeparator}}
+
+<!--       {{#if showServicesSeparator}}
         {{> atSep}}
-      {{/if}}
+      {{/if}} -->
       {{#if showError}}
         {{> atError}}
       {{/if}}
@@ -25,14 +23,21 @@
       {{#if showTermsLink}}
         {{> atTermsLink}}
       {{/if}}
-      {{#if showSignInLink}}
+<!--       {{#if showSignInLink}}
         {{> atSigninLink}}
-      {{/if}}
-      {{#if showSignUpLink}}
+      {{/if}} -->
+      <!-- {{#if showSignUpLink}}
         {{> atSignupLink}}
+      {{/if}} -->
+      {{#if showForgotPasswordLink}}
+        {{> atPwdLink}}
       {{/if}}
       {{#if showResendVerificationEmailLink}}
         {{> atResendVerificationEmailLink}}
+      {{/if}}
+      
+      {{#if showOauthServices}}
+        {{> atOauth}}
       {{/if}}
     </div>
   {{/unless}}

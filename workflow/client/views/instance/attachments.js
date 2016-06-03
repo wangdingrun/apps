@@ -50,6 +50,7 @@ Template.instance_attachment.helpers({
 Template.instance_attachment.events({
     "click [name='ins_attach_version']": function (event, template) {
         Session.set("attach_id", event.target.id);
+        Modal.show('ins_attach_version_modal');
     }
 })
 

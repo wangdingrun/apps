@@ -69,16 +69,15 @@ Template.flow_list_modal.events({
       });
     });
 
-    if (event.relatedTarget.name == "create_ins_btn") {
+    if (Session.get('flow_list_modal_type') == "create") {
       $('#tree').treeview({
         data: data
       });
       $('#tree').on('nodeSelected', function(event, data) {
         InstanceManager.newIns(data.flow_id);
       });
-      Session.set("flow_list_modal_type", "create");
     }
-    else if (event.relatedTarget.name == "show_flows_btn") {
+    else if (Session.get('flow_list_modal_type') == "show") {
       $('#tree').treeview({
         data: [{text:TAPi18n.__('All flows'), nodes:data}]
       });
@@ -89,9 +88,8 @@ Template.flow_list_modal.events({
         else {
           Session.set("flowId", undefined);
         }
-        $('#flow_list_modal').modal('hide');
+        Modal.hide('flow_list_modal');
       });
-      Session.set("flow_list_modal_type", "show");
     }
       
   },

@@ -1,10 +1,10 @@
 Template.space_switcher.helpers
 
 	spaceCount: ->
-		return Steedos.spaces.find().count()
+		return db.spaces.find().count()
 		
 	spaces: ->
-		return Steedos.spaces.find();
+		return db.spaces.find();
 
 	spaceName: ->
 		if Session.get("spaceId")

@@ -18,7 +18,6 @@ Template.profile.helpers
 
 Template.profile.onRendered ->
 
-    $('select.dropdown').dropdown()
 
 Template.profile.onCreated ->
 

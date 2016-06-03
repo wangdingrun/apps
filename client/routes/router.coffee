@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go "/sign-in";
 		else 
-			FlowRouter.go "/space";
+			FlowRouter.go "/loading";
 		
 
 
@@ -11,7 +11,7 @@ FlowRouter.route '/logout',
 	action: (params, queryParams)->
 		#AccountsTemplates.logout();
 		Meteor.logout ()->
-			SteedosAPI.setupLogout();
+			Setup.logout();
 			Session.set("spaceId", null);
 			FlowRouter.go("/");
 
@@ -32,24 +32,11 @@ FlowRouter.route '/space',
 		BlazeLayout.render 'masterLayout',
 			main: "space_select"
 
-FlowRouter.route '/api/bqq/sso', 
+
+FlowRouter.route '/loading', 
 	action: (params, queryParams)->
-		userId = queryParams.userId
-		loginToken = queryParams.authToken
-		returnurl = queryParams.returnurl
-
-		console.log "sso login for " + userId
-		userId && Accounts.connection.setUserId(userId);
-		Accounts.loginWithToken loginToken,  (err) ->
-			if (err) 
-				Meteor._debug("Error logging in with token: " + err);
-				Accounts.makeClientLoggedOut();
-		
-			if FlowRouter
-				FlowRouter.go(returnurl)
-			else
-				document.location.href = Meteor.absoluteUrl ""
-
+		BlazeLayout.render 'masterLayout',
+			main: "loading"
 
 
 

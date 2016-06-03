@@ -6,14 +6,14 @@
                 "script": "/srv/workflow/bundle/main.js",
                 "out_file": "/srv/workflow/log/app.log",
                 "error_file": "/srv/workflow/log/err.log",
-                "port": "7100",
+                "port": "6100",
                 "env": {
                         "MONGO_URL": "mongodb://localhost:27017/steedos",
                         "MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
                         "MULTIPLE_INSTANCES_COLLECTION_NAME": "workflow_instances",
                         "ROOT_URL": "https://cn.steedos.com/workflow",
                         "DDP_DEFAULT_CONNECTION_URL": "https://cn.steedos.com/workflow",
-                        "PORT": "7100"
+                        "PORT": "6100"
                 }
         }]
 }

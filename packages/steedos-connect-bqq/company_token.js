@@ -67,12 +67,6 @@ JsonRoutes.add("get", "/api/bqq/notify", function (req, res, next) {
     var oauth = space.services.bqq;
 
     try {
-      console.log("============");
-      console.log(company_id);
-      console.log(oauth.company_token);
-      console.log(open_id);
-      console.log(config.clientId);
-      console.log(hashskey);
       var response = HTTP.get(
         "https://openapi.b.qq.com/api/login/verifyhashskey", {
           params: {
@@ -108,11 +102,13 @@ JsonRoutes.add("get", "/api/bqq/notify", function (req, res, next) {
     var hashedToken = Accounts._hashLoginToken(authToken.token);
     Accounts._insertHashedLoginToken(userId, {hashedToken: hashedToken});
 
-    var sso_url = '/workflow/api/bqq/sso?userId=' + userId + '&authToken=' + authToken.token + '&returnurl=' + returnurl;
+    Setup.setAuthCookies(req, res, userId, authToken)
+
+    //var sso_url = '/workflow/sso?userId=' + userId + '&authToken=' + authToken.token + '&redirect=' + returnurl;
 
     JsonRoutes.sendResult(res, {
       headers: {
-        'Location': sso_url,
+        'Location': returnurl,
       },
       code: 301
     });

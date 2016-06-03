@@ -8,12 +8,12 @@
                 <nav class="navbar navbar-static-top">
                             <a href="{{urlPrefix}}" class="navbar-brand">
                                 <img src="/workflow/favicons/android-chrome-72x72.png" width="30" height="30">
-                                <b>&nbsp;{{_ "Steedos Workflow"}}</b>
+                                <b>&nbsp;</b>
                             </a>
 
                             <div class="pull-right header-buttons" >
                                 {{#if isLoggedout}}
-                                    <button type="button" id="btnSignIn" class="btn btn-success" >{{_ 'Log in'}}</button>&nbsp;
+                                    <button type="button" id="btnSignIn" class="btn btn-primary" >{{_ 'Log in'}}</button>&nbsp;
                                     <button type="button" id="btnSignUp" class="btn btn-default">{{_ 'Sign up'}}</button>
                                 {{else}}
                                     <button type="button" id="btnLogout" class="btn btn-default">{{_ 'Sign out'}}</button>

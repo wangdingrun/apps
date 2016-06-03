@@ -12,6 +12,7 @@ Package.onUse(function(api) {
   api.use('accounts-oauth', ['client', 'server']);
   api.use('simple:json-routes@2.1.0');
   api.use('coffeescript');
+  api.use('steedos:api');
 
 
   api.use('oauth', ['client', 'server']);
@@ -30,6 +31,5 @@ Package.onUse(function(api) {
 
   api.export('BQQ');
 
-  api.addFiles('qq_login_button.css', 'client');
 
 });

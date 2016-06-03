@@ -80,6 +80,7 @@
 	"Workflow": "审批王",
 
 	"bqq": "企业QQ",
+	"dingtalk": "钉钉",
 
 	"OK": "确认",
 	"Cancel": "取消",
@@ -129,6 +130,8 @@
 
 
 
+	"atTitle": "审批王",
+	"System Settings": "系统设置",
 
 	"Steedos": "华炎云"
 }

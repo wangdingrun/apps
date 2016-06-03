@@ -5,18 +5,18 @@ Meteor.startup ->
 	@defaultUserLanguage = ->
 		lng = window.navigator.userLanguage || window.navigator.language || 'en'
 		if lng.indexOf("zh") >=0
-			return "zh-CN"
+			return "zh-cn"
 		else
-			return "en"
+			return "en-us"
 		
 	loadedLaguages = []
 
-	# Only support [en, zh-CN]
+	# Only support [en-us, zh-cn]
 	setLanguage = (language) ->
 
 		if language == "zh-cn"
 			language = "zh-CN"
-		if language == "en-us"
+		else 
 			language = "en"
 
 		Session.set("language", language)
@@ -28,16 +28,16 @@ Meteor.startup ->
 
 		TAPi18n.setLanguage(language)
 
-		if language == "zh-CN"
-			T9n.setLanguage "zh_cn"
-		else
-			T9n.setLanguage "en"
+		# if language == "zh-CN"
+		# 	T9n.setLanguage "zh_cn"
+		# else
+		# 	T9n.setLanguage "en"
 
-		language = language.toLowerCase()
-		if language isnt 'en'
-			Meteor.call 'loadLocale', language, (err, localeFn) ->
-				Function(localeFn)()
-				moment.locale(language)
+		# language = language.toLowerCase()
+		# if language isnt 'en'
+		# 	Meteor.call 'loadLocale', language, (err, localeFn) ->
+		# 		Function(localeFn)()
+		# 		moment.locale(language)
 
 	Tracker.autorun (c) ->
 		if Meteor.user()
