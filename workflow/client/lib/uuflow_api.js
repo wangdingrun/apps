@@ -1,7 +1,5 @@
 UUflow_api = {};
 
-Steedos.settings.webservices.uuflow.url = "";
-
 // 新建instance（申请单）
 UUflow_api.post_draft = function(flowId) {
   var uobj = {};
