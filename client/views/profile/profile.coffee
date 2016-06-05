@@ -4,16 +4,14 @@ Template.profile.helpers
 		return db.users._simpleSchema;
 
 	user: ->
-		return db.users.findOne(Meteor.userId())
+		return Meteor.user()
 
 	userId: ->
 		return Meteor.userId()
 
 	getGravatarURL: (user, size) ->
-		return Meteor.absoluteUrl('avatar/' + Meteor.userId());
-
-	absoluteUrl: ()->
-		return Meteor.absoluteUrl('');
+		if Meteor.user()
+			return Meteor.absoluteUrl('avatar/' + Meteor.userId());
 
 
 Template.profile.onRendered ->
@@ -54,13 +52,16 @@ Template.profile.events
 		t.changePassword()
 
 	'change .avatar-file': (event, template) ->
-		files = event.target.files;
-		_.each files, (file) ->
-			db.avatars.insert file,  (err, fileObj) ->
-				# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-				Meteor.call "saveUserProfile", 
-					avatar: fileObj._id
-			
+		file = event.target.files[0];
+		fileObj = db.avatars.insert file
+		# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+		Meteor.call "saveUserProfile", 
+			avatar: fileObj._id
+		setTimeout(()->
+			imgURL = Meteor.absoluteUrl("avatar/" + Meteor.userId())
+			$(".avatar-preview").attr("src", imgURL + "?time=" + new Date());
+		,3000)
+		
 Meteor.startup ->
 	
 	AutoForm.hooks
