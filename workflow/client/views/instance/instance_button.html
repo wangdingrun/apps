@@ -1,8 +1,6 @@
 <template name="instance_button">
     <div class="navigation-bar btn-group">
-        {{#if isMobile}}
-        <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-left"></i></button>
-        {{/if}}
+
         <button type="button" class="btn btn-success" id="instance_submit" style={{enabled_submit}}>提交</button>
         <button type="button" class="btn btn-default" id="instance_update" title="保存" style={{enabled_save}}><i class="fa fa-save"></i></button>
         <button type="button" class="btn btn-default" id="instance_remove" title="删除" style={{enabled_delete}}><i class="fa fa-remove"></i></button>
@@ -13,5 +11,9 @@
         <button type="button" class="btn btn-default" id="instance_reassign" title="转签核" style={{enabled_reassign}}><i class="fa fa-user"></i></button>
         <button type="button" class="btn btn-default" id="instance_relocate" title="重定位" style={{enabled_relocate}}><i class="fa fa-random"></i></button>
         <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
+
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" id="instance_back" title="返回"><i class="fa fa-chevron-right"></i></button>
+        </div>
     </div>
 </template>

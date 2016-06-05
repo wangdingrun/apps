@@ -27,12 +27,12 @@ FlowRouter.route '/space/:spaceId/:box/',
 		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
-		Session.set("instanceId", null); 
+		#Session.set("instanceId", null); 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 		
-		$(".instance-wrapper").hide();
-		$(".instance-list-wrapper").show();
+		# $(".instance-list-wrapper").show();
+		$(".workflow-main").removeClass("instance-show")
 
 
 FlowRouter.route '/space/:spaceId/:box/:instanceId', 
@@ -42,7 +42,7 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 		if Session.get("spaceId") != params.spaceId 
 			Session.set("spaceId", params.spaceId);
 		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
-		Session.set("instanceId", null);
+		#Session.set("instanceId", null);
 
 		console.log "call get_instance_data"
 
@@ -51,12 +51,12 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 			
 		$(document.body).addClass "loading";
 
-		if (Steedos.isMobile())
-			$(".instance-wrapper").show();
-			$(".instance-list-wrapper").hide();
-		else
-			$(".instance-wrapper").show();
-			$(".instance-list-wrapper").show();
+		# if (Steedos.isMobile())
+		# 	$(".instance-wrapper").show();
+		# 	$(".instance-list-wrapper").hide();
+		# else
+		# 	$(".instance-wrapper").show();
+		# 	$(".instance-list-wrapper").show();
 			
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
@@ -70,6 +70,7 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 
 
 			$(document.body).removeClass "loading";
+			$(".workflow-main").addClass("instance-show")
 
 
 	triggersExit: [
