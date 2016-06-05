@@ -211,17 +211,20 @@
         .instance-list-wrapper {
             display: block;
             width: 100%;
+            left: 0;
             border-right: 0px;
+            transition: 0.3s ease-in-out;
         }
         .instance-wrapper {
             left: 100%;
             width: 100%;
+            transition: 0.3s ease-in-out;
         }   
     }
     .workflow-main.instance-show {
         .instance-list-wrapper {
             //display: none;
-            right: 100%;
+            left: -100%;
             width: 100%;
             transition: 0.3s ease-in-out;
         }   
