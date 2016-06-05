@@ -41,10 +41,7 @@ Template.instance_button.helpers
 
     enabled_print: ->
         # TODO 手机打印
-        if Meteor.isCordova
-            return "display: none;";
-        else
-            return "";
+        return "";
 
 
     enabled_add_attachment: -> 
