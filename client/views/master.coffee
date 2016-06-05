@@ -11,7 +11,7 @@ Template.masterLayout.onCreated ->
 Template.masterLayout.onRendered ->
 
 	if !Meteor.userId()
-		Router.go "/sign-in"
+		FlowRouter.go "/sign-in"
 
 	self = this;
 	self.minHeight.set($(window).height());

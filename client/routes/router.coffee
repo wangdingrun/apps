@@ -32,7 +32,6 @@ FlowRouter.route '/space',
 		BlazeLayout.render 'loginLayout',
 			main: "space_select"
 
-
 FlowRouter.route '/loading', 
 	action: (params, queryParams)->
 		BlazeLayout.render 'loginLayout',

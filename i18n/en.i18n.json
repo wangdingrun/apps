@@ -121,7 +121,8 @@
 
 	"Flow upgraded": "The flow has been upgraded. Please make sure this request meet the requirements of the new version.",
 
-
+	"Apps": "Apps",
+	
 	"atTitle": "Steedos Workflow",
 	"Steedos": "Steedos"
 }

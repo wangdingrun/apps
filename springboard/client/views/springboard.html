@@ -1,0 +1,66 @@
+<template name="springboard">
+
+<div class="navigation-bar">
+
+    <button type="button" class="btn btn-default" data-toggle="offcanvas">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <span class="navigation-title">
+            {{_ "Steedos"}}
+    </span>
+    <div class="pull-right">
+    </div>
+</div>
+<div class="springboard">
+    <!-- <div class="hd">
+        <h1 class="page_title">华炎云</h1>
+        <p class="page_desc">无论海角天边，华炎总在你身边</p>
+    </div> -->
+    <div class="bd">
+        <div class="weui_grids">
+            <a href="{{absoluteUrl}}" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <img src="{{absoluteUrl}}images/apps/workflow/AppIcon76x76@2x.png" width="76" height="76">
+                </div>
+                <p class="weui_grid_label">
+                    {{_ "Steedos Workflow"}}
+                </p>
+            </a>
+            <a href="/chat" class="weui_grid" target="_blank">
+                <div class="weui_grid_icon">
+                    <img src="{{absoluteUrl}}images/apps/chat/AppIcon76x76@2x.png" width="76" height="76">
+                </div>
+                <p class="weui_grid_label">
+                    {{_ "Steedos Chat"}}
+                </p>
+            </a>
+            <a href="/drive" class="weui_grid" target="_blank">
+                <div class="weui_grid_icon">
+                    <img src="{{absoluteUrl}}images/apps/drive/AppIcon76x76@2x.png" width="76" height="76">
+                </div>
+                <p class="weui_grid_label">
+                    {{_ "Steedos Drive"}}
+                </p>
+            </a>
+            <a href="https://mail.steedos.com" class="weui_grid" target="_blank">
+                <div class="weui_grid_icon">
+                    <img src="{{absoluteUrl}}images/apps/mail/AppIcon76x76@2x.png" width="76" height="76">
+                </div>
+                <p class="weui_grid_label">
+                    {{_ "Steedos Mail"}}
+                </p>
+            </a>
+            <a href="{{absoluteUrl}}admin" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <img src="{{absoluteUrl}}images/apps/steedos/AppIcon76x76@2x.png" width="76" height="76">
+                </div>
+                <p class="weui_grid_label">
+                    {{_ "Settings"}}
+                </p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</template>
