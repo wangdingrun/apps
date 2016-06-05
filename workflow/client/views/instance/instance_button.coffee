@@ -93,7 +93,7 @@ Template.instance_button.events
         FlowRouter.go(backURL)
 
     'click #instance_to_print': (event)->
-        UUflow_api.print($("#instanceId").val());
+        UUflow_api.print(Session.get("instanceId"));
 
 
     'click #instance_update': (event)->
