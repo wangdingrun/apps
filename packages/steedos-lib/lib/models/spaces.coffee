@@ -160,6 +160,9 @@ db.spaces.helpers
 if Meteor.isServer
     
     db.spaces.before.insert (userId, doc) ->
+        if !userId and doc.owner
+            userId = doc.owner
+
         doc.created_by = userId
         doc.created = new Date()
         doc.modified_by = userId
@@ -174,10 +177,10 @@ if Meteor.isServer
 
     db.spaces.after.insert (userId, doc) ->
         console.log("db.spaces.after.insert")
-        # if (doc.admins)
-        #     space = db.spaces.findOne(doc._id)
-        #     _.each doc.admins, (admin) ->
-        #         space.join_space(admin, true)
+        if (doc.admins)
+            space = db.spaces.findOne(doc._id)
+            _.each doc.admins, (admin) ->
+                space.join_space(admin, true)
             
 
     db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->

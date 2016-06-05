@@ -112,6 +112,9 @@ if Meteor.isServer
 		if (doc.profile?.name && !doc.name)
 			doc.name = doc.profile.name
 
+		if (doc.profile?.locale && !doc.locale)
+			doc.locale = doc.profile.locale
+
 		if !doc.steedos_id
 			doc._id = db.users._makeNewID()
 			doc.steedos_id = doc._id 
@@ -125,6 +128,14 @@ if Meteor.isServer
 		_.each doc.emails, (obj)->
 			db.users.checkEmailValid(obj.address);
 		
+
+	db.users.after.insert (userId, doc) ->
+		console.log("db.users.after.insert")
+		db.spaces.insert
+			name: doc.name + " " + t("db_spaces")
+			owner: doc._id
+			admins: [doc._id]
+
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		if modifier.$unset && modifier.$unset.steedos_id == ""

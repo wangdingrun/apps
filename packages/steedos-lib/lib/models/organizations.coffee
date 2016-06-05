@@ -149,7 +149,7 @@ if (Meteor.isServer)
 		if !space
 			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
 		# only space admin can update space_users
-		if space.admins.indexOf(userId) < 0
+		if userId and space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
 		if doc.users
 			throw new Meteor.Error(400, t("organizations_error.users_readonly"));
@@ -281,13 +281,13 @@ if (Meteor.isServer)
 		unless this.userId
 			return this.ready()
 		
+		unless this.spaceId
+			return this.ready()
+
 		user = db.users.findOne(this.userId);
 
-		selector = {}
-		if spaceId
-			selector.space = spaceId
-		else 
-			selector.space = {$in: user.spaces()}
+		selector = 
+			space: spaceId
 
 		console.log '[publish] organizations ' + spaceId
 

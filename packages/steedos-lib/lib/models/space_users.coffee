@@ -88,7 +88,7 @@ if (Meteor.isServer)
 		space = db.spaces.findOne(doc.space)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
-		if space.admins.indexOf(userId) < 0
+		if userId and space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 			
 		if (!doc.user) && (doc.email)

@@ -442,11 +442,7 @@ Dingtalk.syncCompany = (access_token, auth_corp_info, permanent_code) ->
     root_org_query = db.organizations.find({space: space_id, is_company: true}, {fields: {_id: 1}})
     root_org = root_org_query.fetch()[0]
     if root_org
-      console.log('新增表单流程模板')
-      root_org_id = root_org._id
-      template_space_id = "526621803349041651000a1a"
-      BQQ.createTemplateFormAndFlow(template_space_id, space_id, root_org_id, owner_id)
-
+      db.spaces.createTemplateFormAndFlow(space_id)
 
 
 Dingtalk.createOrg = (depts, parentid, space_id, company_id, owner_id) ->
