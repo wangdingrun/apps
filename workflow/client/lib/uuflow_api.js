@@ -409,7 +409,7 @@ UUflow_api.get_export = function (spaceId, flowId, type) {
   uobj.timezoneoffset = new Date().getTimezoneOffset();
   uobj.type = type;
   var url = Steedos.settings.webservices.uuflow.url + "/uf/export/excel?" + $.param(uobj);
-  window.open(url, "_blank");
+  window.open(url, '_blank', 'EnableViewPortScale=yes');
 }
 
 // 打印
@@ -418,5 +418,5 @@ UUflow_api.print = function(instanceId){
   uobj["X-User-Id"] = Meteor.userId();
   uobj["X-Auth-Token"] = Accounts._storedLoginToken();
   uobj.id = instanceId;
-  window.open(Steedos.settings.webservices.uuflow.url + "/uf/print?" + $.param(uobj));
+  window.open(Steedos.settings.webservices.uuflow.url + "/uf/print?" + $.param(uobj), '_blank', 'EnableViewPortScale=yes');
 }
