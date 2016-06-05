@@ -31,16 +31,17 @@ if Meteor.isServer
 		if !org_id
 			return false
 
-		# 创建spaceuser
-		spaceUser = {}
-		spaceUser.user = user._id
-		spaceUser.space = space_id
-		spaceUser.organization = org_id
-		spaceUser.name = user.name
-		spaceUser.email = user.email
-		spaceUser.mobile = user.mobile
-		spaceUser.user_accepted = true
-		db.space_users.insert(spaceUser)
+		# 创建 spaces 时会自动创建 space_user
+		# # 创建spaceuser
+		# spaceUser = {}
+		# spaceUser.user = user._id
+		# spaceUser.space = space_id
+		# spaceUser.organization = org_id
+		# spaceUser.name = user.name
+		# spaceUser.email = user.email
+		# spaceUser.mobile = user.mobile
+		# spaceUser.user_accepted = true
+		# db.space_users.insert(spaceUser)
 
 		# 新建5个部门
 		if user.locale == "zh-cn"
@@ -124,6 +125,9 @@ if Meteor.isServer
 		root_org = db.organizations.findOne({space: space_id, is_company: true})
 		if !root_org
 			return false;
+
+		if db.forms.find({space: space_id}).count()>0
+			return;
 
 		# 根据locale和模板创建表单流程
 		template_space_id = null

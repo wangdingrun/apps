@@ -25,6 +25,7 @@
 	"db_apps_url": "URL",
 	"db_apps_iconURL": "IconURL",
 
+	"db_space": "Space",
 	"db_spaces": "Spaces",
 	"db_spaces_name": "Name",
 	"db_spaces_admins": "Admins",

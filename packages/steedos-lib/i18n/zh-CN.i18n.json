@@ -25,6 +25,7 @@
 	"db_apps_url": "链接",
 	"db_apps_iconURL": "图标链接",
 	
+	"db_space": "工作区",
 	"db_spaces": "工作区",
 	"db_spaces_name": "名称",
 	"db_spaces_admins": "管理员",
