@@ -232,7 +232,10 @@ Dingtalk.syncCompany = (access_token, auth_corp_info, permanent_code) ->
       if user.name != u.name
         doc.name = u.name
 
-      if doc.hasOwnProperty('name')
+      if user.avatarURL != u.avatar
+        user.avatarURL = u.avatar
+
+      if doc.hasOwnProperty('name') || doc.hasOwnProperty('avatarURL')
         console.log('修改用户: ' + u.name)
         console.log(doc)
         doc.modified = now
@@ -246,6 +249,7 @@ Dingtalk.syncCompany = (access_token, auth_corp_info, permanent_code) ->
       doc.created = now
       doc.modified = now
       doc.services = {dingtalk:{id: u.dingId}}
+      doc.avatarURL = u.avatar
       console.log(doc)
       user_id = db.users.direct.insert(doc)
 
