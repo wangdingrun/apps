@@ -281,8 +281,8 @@ if (Meteor.isServer)
 		unless this.userId
 			return this.ready()
 		
-		unless this.spaceId
-			return this.ready()
+		# unless this.spaceId
+		# 	return this.ready()
 
 		user = db.users.findOne(this.userId);
 
