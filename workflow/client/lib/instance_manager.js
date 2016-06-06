@@ -457,7 +457,7 @@ InstanceManager.getCurrentApprove = function(){
   if(currentTraces.length < 1)
     return ;
 
-  var currentApproves = currentTraces[0].approves.filterProperty("handler", Meteor.userId());
+  var currentApproves = currentTraces[0].approves.filterProperty("is_finished", false).filterProperty("handler", Meteor.userId());
   
   var currentApprove = currentApproves.length > 0 ? currentApproves[0] : null;
   
