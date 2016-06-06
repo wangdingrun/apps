@@ -100,7 +100,16 @@ Template.instance_button.events
         InstanceManager.saveIns();
 
     'click #instance_remove': (event)->
-        InstanceManager.deleteIns();
+        swal {   
+            title: t("Are you sure?"),    
+            type: "warning",   
+            showCancelButton: true,  
+            cancelButtonText: t('Cancel'), 
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: t('OK'),   
+            closeOnConfirm: true 
+        }, () ->  
+            InstanceManager.deleteIns()
 
     'click #instance_submit': (event)->
         InstanceManager.checkFormValue();
