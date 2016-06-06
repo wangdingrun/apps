@@ -45,6 +45,20 @@ WorkflowManager_format = {};
 //   return options ;
 // };
 
+var number_step = function(digits){
+  if(digits && typeof(digits) == 'number' && digits > 0){
+    var step = '0.';
+
+    for(var i = 0 ; i < (digits-1); i ++){
+      step = step + '0';
+    }
+
+    step = step + '1';
+
+    return step;
+  }
+}
+
 var s_autoform = function (schema, field){
 
   type = field.type;
@@ -85,7 +99,8 @@ var s_autoform = function (schema, field){
     case 'number' :
         schema.type = Number;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'number'; //控制有效位数
+        autoform.type = 'number';
+        autoform.step = number_step(field.digits); //控制有效位数
         break;
     case 'date' :
         schema.type = String;

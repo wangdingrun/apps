@@ -72,6 +72,9 @@ Form_formula.getFormulaFieldVariable = function(prefix,fields){
         if (field.type != "table"&&field.type != "section"){
             if (field.formula && field.formula!=''){
                 formula["code"] = field.code;
+                if(field.type == 'number'){
+                    formula["digits"] = field.digits;
+                }
                 formula["formula"] = '{' + field.code + '}=' + field.formula + ";"
                 formulas.push(formula);
             }
@@ -82,6 +85,9 @@ Form_formula.getFormulaFieldVariable = function(prefix,fields){
                     if(sectionFields[k].formula && sectionFields[k].formula != ''){
                         var formula = new Object();
                         formula["code"] = sectionFields[k].code;
+                        if(sectionFields[k].type == 'number'){
+                            formula["digits"] = sectionFields[k].digits;
+                        }
                         formula["formula"] = '{' + sectionFields[k].code + '}=' + sectionFields[k].formula + ";"
                         formulas.push(formula);
                     }
@@ -195,7 +201,15 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
             //console.log("formula is " + formula_field.formula);
             //console.log("fileValue is " + fileValue);
-            $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
+            if('digits' in formula_field){
+                var value = Form_formula.field_values[formula_field.code];
+                if(typeof(value) == 'number'){
+                    value = value.toFixed(formula_field.digits);
+                }
+                $("[name='" + field_prefix + formula_field.code + "']").val(value);
+            }else{
+                $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
+            }
         }
     }
     console.debug("消耗时间s2 ：" + (new Date * 1 - startTrack) + "ms");
