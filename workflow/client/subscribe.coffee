@@ -22,10 +22,6 @@ Meteor.startup ->
 					else if db.spaces.findOne()
 						Session.set("spaceId", db.spaces.findOne()._id)
 
-					if Session.get("spaceId")
-						FlowRouter.go("/space/" + Session.get("spaceId") + "/inbox/")
-					else
-						FlowRouter.go("/space/")
 
 		if Session.get("spaceId")
 			Steedos.subs.space_users = Meteor.subscribe("space_users", Session.get("spaceId"))

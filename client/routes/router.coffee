@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go "/sign-in";
 		else 
-			FlowRouter.go "/loading";
+			FlowRouter.go "/springboard";
 		
 
 

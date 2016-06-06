@@ -2,6 +2,15 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		redirect('/sign-in');
 
+
+FlowRouter.route '/workflow',
+	action: (params, queryParams)->
+		if Session.get("spaceId")
+			FlowRouter.go("/space/" + Session.get("spaceId") + "/inbox/")
+		else
+			FlowRouter.go("/space/")
+
+
 FlowRouter.route '/space/:spaceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
@@ -10,13 +19,6 @@ FlowRouter.route '/space/:spaceId',
 		Session.set("spaceId", params.spaceId);
 		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
 		FlowRouter.go "/space/" + params.spaceId + "/inbox/"
-
-		# Tracker.autorun (c) ->
-		# 	if FlowRouter.subsReady() is true
-		# 		Meteor.defer ->
-		# 			FlowRouter.go "/space/" + params.spaceId + "/inbox/"
-		# 		c.stop()
-
 
 
 FlowRouter.route '/space/:spaceId/:box/', 
@@ -31,7 +33,6 @@ FlowRouter.route '/space/:spaceId/:box/',
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 		
-		# $(".instance-list-wrapper").show();
 		$(".workflow-main").removeClass("instance-show")
 
 
@@ -51,13 +52,6 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 			
 		$(document.body).addClass "loading";
 
-		# if (Steedos.isMobile())
-		# 	$(".instance-wrapper").show();
-		# 	$(".instance-list-wrapper").hide();
-		# else
-		# 	$(".instance-wrapper").show();
-		# 	$(".instance-list-wrapper").show();
-			
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
 
@@ -75,5 +69,4 @@ FlowRouter.route '/space/:spaceId/:box/:instanceId',
 
 	triggersExit: [
 		()->
-			#Session.set("instanceId", null)
 	]
