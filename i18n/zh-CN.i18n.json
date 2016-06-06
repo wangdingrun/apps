@@ -132,6 +132,8 @@
 
 	"atTitle": "审批王",
 	"System Settings": "系统设置",
-
+	"signIn Steedos": "登录华炎云",
+	"signUp Steedos": "注册华炎云账户",
+	"forgotPwd Steedos": "重置华炎云密码",
 	"Steedos": "华炎云"
 }

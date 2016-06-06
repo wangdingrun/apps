@@ -1,0 +1,50 @@
+{
+  "public" : {
+    "webservices" : {
+      "account" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "admin" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "attachments" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "chat" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "contacts" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "keyvalue" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "push" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "s3" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "ubiquity" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "uuflow" : {
+        "status" : "active",
+        "url" : ""
+      },
+      "www" : {
+        "status" : "active",
+        "url" : "https://www.steedos.com"
+      }
+    }
+  }
+}

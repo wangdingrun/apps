@@ -124,5 +124,8 @@
 	"Apps": "Apps",
 	
 	"atTitle": "Steedos Workflow",
+	"signIn Steedos": "Sign In Steedos",
+	"signUp Steedos": "Create Steedos Account",
+	"forgotPwd Steedos": "Reset Steedos Password",
 	"Steedos": "Steedos"
 }

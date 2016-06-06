@@ -42,3 +42,7 @@ AccountsTemplates.configureRoute('resetPwd');
 AccountsTemplates.configureRoute('signIn');
 AccountsTemplates.configureRoute('signUp');
 AccountsTemplates.configureRoute('verifyEmail');
+
+AccountsTemplates.texts.title.signIn = t("signIn Steedos")
+AccountsTemplates.texts.title.signUp = t("signUp Steedos")
+AccountsTemplates.texts.title.forgotPwd = t("forgotPwd Steedos")
