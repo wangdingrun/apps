@@ -346,75 +346,83 @@ SteedosTable.getTDValue = function(field, value){
     if(!field){
         return td_value
     }
+    try{
 
-    switch(field.type){
-        case 'user' :
-            if(value){
-                if(field.is_multiselect){
-                    if(value.length > 0){
-                        if("string" == typeof(value[0])){
-                            td_value = WorkflowManager.getUsers(value).getProperty("name").toString();
-                        }else{
-                            td_value = value.getProperty("name").toString();
-                        } 
-                    }
-                }else{
-                    if("string" == typeof(value)){
-                        td_value = WorkflowManager.getUser(value).name
+        switch(field.type){
+            case 'user' :
+                if(value){
+                    if(field.is_multiselect){
+                        if(value.length > 0){
+                            if("string" == typeof(value[0])){
+                                td_value = WorkflowManager.getUsers(value).getProperty("name").toString();
+                            }else{
+                                td_value = value.getProperty("name").toString();
+                            } 
+                        }
                     }else{
-                        td_value = value.name;
-                    } 
-                }   
-            }
-            break;
-        case 'group':
-            if(value){
-                if(field.is_multiselect){
-                    if(value.length > 0){
-                        if("string" == typeof(value[0])){
-                            td_value = WorkflowManager.getOrganizations(value).getProperty("name").toString();
+                        if("string" == typeof(value)){
+                            var u = WorkflowManager.getUser(value);
+                            td_value = u ? u.name : '';
                         }else{
-                            td_value = value.getProperty("name").toString();
+                            td_value = value.name;
                         } 
-                    }
-                }else{
-                    if("string" == typeof(value)){
-                        td_value = WorkflowManager.getOrganization(value).name;
-                    }else{
-                        td_value = value.name;
-                    } 
+                    }   
                 }
-            }   
-            break;
-        case 'checkbox':
-            if (value === true || value == 'true'){
-                td_value = '是';
-            }else{
-                td_value = '否';
-            }
-            break;
-        case 'email':
-            td_value = value ? "<a href='mailto:"+value+"'>"+value+"</a>" : "";
-            break;
-        case 'url':
-            td_value = value ?  "<a href='http://"+value+"' target='_blank'>http://"+value+"</a>" : "";
-            break;
-        case 'password':
-            td_value = '******';
-            break;
-        case 'date':
-            if(value){
-                td_value = $.format.date(value,'yyyy-MM-dd');
-            }
-            break;
-        case 'dateTime':
-            if(value){
-                td_value = $.format.date(value,'yyyy-MM-dd HH:mm');
-            }
-            break;
-        default:
-            td_value = value ? value : '';
-            break;
+                break;
+            case 'group':
+                if(value){
+                    if(field.is_multiselect){
+                        if(value.length > 0){
+                            if("string" == typeof(value[0])){
+                                td_value = WorkflowManager.getOrganizations(value).getProperty("name").toString();
+                            }else{
+                                td_value = value.getProperty("name").toString();
+                            } 
+                        }
+                    }else{
+                        if("string" == typeof(value)){
+                            var o = WorkflowManager.getOrganization(value);
+                            td_value = o ? o.name : '';
+                        }else{
+                            td_value = value.name;
+                        } 
+                    }
+                }   
+                break;
+            case 'checkbox':
+                if (value === true || value == 'true'){
+                    td_value = '是';
+                }else{
+                    td_value = '否';
+                }
+                break;
+            case 'email':
+                td_value = value ? "<a href='mailto:"+value+"'>"+value+"</a>" : "";
+                break;
+            case 'url':
+                td_value = value ?  "<a href='http://"+value+"' target='_blank'>http://"+value+"</a>" : "";
+                break;
+            case 'password':
+                td_value = '******';
+                break;
+            case 'date':
+                if(value){
+                    td_value = $.format.date(value,'yyyy-MM-dd');
+                }
+                break;
+            case 'dateTime':
+                if(value){
+                    td_value = $.format.date(value,'yyyy-MM-dd HH:mm');
+                }
+                break;
+            default:
+                td_value = value ? value : '';
+                break;
+        }
+    }catch(e){
+        e;
+
+        return '';
     }
     return td_value;
 };
