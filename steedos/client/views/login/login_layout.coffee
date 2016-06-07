@@ -23,10 +23,10 @@ Template.loginLayout.onRendered ->
 Template.loginLayout.events
 
         'click #btnLogout': (e, t) ->
-                FlowRouter.go("/logout")
+                FlowRouter.go("/steedos/logout")
 
         'click #btnSignIn': (e, t) ->
-                FlowRouter.go("/sign-in")
+                FlowRouter.go("/steedos/sign-in")
                 
         'click #btnSignUp': (e, t) ->
-                FlowRouter.go("/sign-up")
+                FlowRouter.go("/steedos/sign-up")

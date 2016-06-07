@@ -15,4 +15,4 @@ Template.space_switcher.events
 
 	"click #switchSpace": ->
 		self = this
-		FlowRouter.go("/space/" + self._id + "/inbox/")
+		FlowRouter.go("/steedos/")

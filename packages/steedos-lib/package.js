@@ -16,6 +16,7 @@ Package.onUse(function(api) {
 	api.use('check');
 	api.use('ddp-rate-limiter');
 	api.use('underscore');
+	api.use('underscorestring:underscore.string');
 	api.use('tracker');
 	api.use('session');
 	

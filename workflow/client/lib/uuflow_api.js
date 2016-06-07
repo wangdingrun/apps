@@ -116,7 +116,7 @@ UUflow_api.delete_draft = function(instanceId) {
         return;
       }
       
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Deleted successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -154,7 +154,7 @@ UUflow_api.post_submit = function(instance) {
         return;
       }
 
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Submitted successfully'));
     },
@@ -229,7 +229,7 @@ UUflow_api.post_engine = function(approve) {
         return;
       }
 
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Submitted successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -269,7 +269,7 @@ UUflow_api.post_terminate = function(instance) {
         return;
       }
 
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Canceled successfully'));
     },
@@ -311,7 +311,7 @@ UUflow_api.put_reassign = function(instance) {
       }
 
       Modal.hide('reassign_modal');
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
       toastr.success(TAPi18n.__('Reasigned successfully'));
     },
     error: function(xhr, msg, ex) {
@@ -352,7 +352,7 @@ UUflow_api.put_relocate = function(instance) {
       }
 
       Modal.hide('relocate_modal');
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 
       toastr.success(TAPi18n.__('Relocated successfully'));
     },

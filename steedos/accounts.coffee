@@ -36,13 +36,19 @@ AccountsTemplates.configure
 
 
 
-AccountsTemplates.configureRoute('changePwd');
-AccountsTemplates.configureRoute('forgotPwd');
-AccountsTemplates.configureRoute('resetPwd');
-AccountsTemplates.configureRoute('signIn');
-AccountsTemplates.configureRoute('signUp');
-AccountsTemplates.configureRoute('verifyEmail');
+#AccountsTemplates.configureRoute 'changePwd'
+AccountsTemplates.configureRoute 'forgotPwd',
+  path: '/steedos/forgot-password'
+AccountsTemplates.configureRoute 'resetPwd',
+  path: '/steedos/reset-password'
+AccountsTemplates.configureRoute 'signIn',
+  path: '/steedos/sign-in'
+AccountsTemplates.configureRoute 'signUp',
+  path: '/steedos/sign-up'
+AccountsTemplates.configureRoute 'verifyEmail',
+  path: '/steedos/verify-email'
 
-AccountsTemplates.texts.title.signIn = t("signIn Steedos")
-AccountsTemplates.texts.title.signUp = t("signUp Steedos")
-AccountsTemplates.texts.title.forgotPwd = t("forgotPwd Steedos")
+
+if Meteor.isServer
+  Accounts.emailTemplates.siteName = "Steedos";
+  Accounts.emailTemplates.from = "Steedos <support@steedos.com>";

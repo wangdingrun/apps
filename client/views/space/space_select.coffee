@@ -30,6 +30,6 @@ Template.space_select.events
             }, () -> 
               console.log(Session.get('spaceId'))
               console.log("success")
-              FlowRouter.go "/space/" + Session.get("spaceId")
+              FlowRouter.go "/workflow/space/" + Session.get("spaceId")
           )
     )

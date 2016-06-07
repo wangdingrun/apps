@@ -76,12 +76,12 @@ Template.instance_list.events
 
         if row.hasClass('selected')  
             row.removeClass('selected');
-            FlowRouter.go("/space/" + spaceId + "/" + box);
+            FlowRouter.go("/workflow/space/" + spaceId + "/" + box);
         
         else 
             dataTable.$('tr.selected').removeClass('selected');
             row.addClass('selected');
-            FlowRouter.go("/space/" + spaceId + "/" + box + "/" + rowData._id);
+            FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + rowData._id);
         
 
     

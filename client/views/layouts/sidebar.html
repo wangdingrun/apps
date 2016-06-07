@@ -23,10 +23,10 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "Steedos Workflow"}}</li>
             <li class="{{boxClass 'inbox'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/inbox/"><i class="ion ion-archive"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
+                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/inbox/"><i class="ion ion-archive"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
             </li>
             <li class="{{boxClass 'outbox'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/outbox/"><i class="ion ion-android-done-all"></i><span>{{_ "outbox"}}</span></a>
+                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/outbox/"><i class="ion ion-android-done-all"></i><span>{{_ "outbox"}}</span></a>
             </li>
             <li>
                 <a href="#">
@@ -35,18 +35,18 @@
                 </a>
                 <ul class="treeview-menu">
                   <li>
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/draft/"><i class="ion ion-compose"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
+                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/draft/"><i class="ion ion-compose"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
                   </li>
                   <li class="{{boxClass 'pending'}}">
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/pending/"><i class="ion ion-load-a"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
+                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/pending/"><i class="ion ion-load-a"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
                   </li>
                   <li class="{{boxClass 'completed'}}">
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/completed/"><i class="ion ion-android-checkbox-outline"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
+                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/completed/"><i class="ion ion-android-checkbox-outline"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
                   </li>
                 </ul>
             </li>
             <li class="{{boxClass 'monitor'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/monitor/"><i class="ion ion-eye"></i><span>{{_ "monitor"}}</span></a>
+                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/monitor/"><i class="ion ion-eye"></i><span>{{_ "monitor"}}</span></a>
             </li>
             <li>
               <a href="{{urlPrefix}}/admin/">
@@ -57,7 +57,7 @@
 
             <li class="header">{{_ "Steedos"}}</li>
             <li>
-              <a href="{{urlPrefix}}/springboard">
+              <a href="{{urlPrefix}}/steedos">
                 <i class="ion ion-android-apps"></i><span>{{_ "Apps"}}</span>
                 <!-- <i class="ion fa-angle-left pull-right"></i> -->
               </a>
@@ -66,7 +66,7 @@
                 <a href="/cn/help/" target="_help"><i class="ion ion-help-circled"></i><span>{{_ "Help"}}</span></a>
             </li>
             <li>
-                <a href="{{urlPrefix}}/logout"><i class="ion ion-power"></i><span>{{_ "Sign out"}}</span></a>
+                <a href="{{urlPrefix}}/steedos/logout"><i class="ion ion-power"></i><span>{{_ "Sign out"}}</span></a>
             </li>
           </ul>
         </div>

@@ -6,22 +6,22 @@ checkUserSigned = (context, redirect) ->
 FlowRouter.route '/workflow',
 	action: (params, queryParams)->
 		if Session.get("spaceId")
-			FlowRouter.go("/space/" + Session.get("spaceId") + "/inbox/")
+			FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/inbox/")
 		else
-			FlowRouter.go("/space/")
+			FlowRouter.go("/workflow/space/")
 
 
-FlowRouter.route '/space/:spaceId', 
+FlowRouter.route '/workflow/space/:spaceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if !Meteor.userId()
 			FlowRouter.go '/sign-in';
 		Session.set("spaceId", params.spaceId);
 		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
-		FlowRouter.go "/space/" + params.spaceId + "/inbox/"
+		FlowRouter.go "/workflow/space/" + params.spaceId + "/inbox/"
 
 
-FlowRouter.route '/space/:spaceId/:box/', 
+FlowRouter.route '/workflow/space/:spaceId/:box/', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if Session.get("spaceId") != params.spaceId 
@@ -36,7 +36,7 @@ FlowRouter.route '/space/:spaceId/:box/',
 		$(".workflow-main").removeClass("instance-show")
 
 
-FlowRouter.route '/space/:spaceId/:box/:instanceId', 
+FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 
