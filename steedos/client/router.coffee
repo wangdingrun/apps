@@ -1,3 +1,9 @@
+FlowRouter.notFound = 
+    action: ()->
+        BlazeLayout.render 'loginLayout',
+            main: "not-found"
+
+
 FlowRouter.route '/', 
     action: (params, queryParams)->
         if (!Meteor.userId())
