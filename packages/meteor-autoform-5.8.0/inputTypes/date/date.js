@@ -1,8 +1,12 @@
 AutoForm.addInputType("date", {
   template: "afInputDate",
   valueIn: function (val) {
+    if (typeof val === "string")
+      val = new Date(val)
+    
     //convert Date to string value
-    return AutoForm.valueConverters.dateToDateStringUTC(val);
+    //return AutoForm.valueConverters.dateToDateStringUTC(val);
+    return AutoForm.valueConverters.dateToDateString(val);
   },
   valueOut: function () {
     var val = this.val();
