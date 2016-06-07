@@ -42,19 +42,19 @@ Template.instance_traces.helpers({
 
     switch(approveJudge){
         case 'approved':
-            approveStatusIcon = 'glyphicon glyphicon-ok';
+            approveStatusIcon = 'ion ion-checkmark-round';
             break;
         case 'rejected':
-            approveStatusIcon = 'glyphicon glyphicon-remove';
+            approveStatusIcon = 'ion ion-close-round';
             break;
         case 'terminated':
             approveStatusIcon = '';
             break;
         case 'reassigned':
-            approveStatusIcon = 'glyphicon glyphicon-share-alt';
+            approveStatusIcon = 'ion ion-android-contact';
             break;
         case 'relocated':
-            approveStatusIcon = 'glyphicon glyphicon-share-alt';
+            approveStatusIcon = 'ion ion-arrow-shrink';
             break;
         default:
             approveStatusIcon = '';

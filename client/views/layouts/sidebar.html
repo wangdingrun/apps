@@ -8,14 +8,14 @@
             </div>
             <div class="pull-left info">
               <p>{{displayName}}</p>
-              <a href="#"><i class="fa fa-circle text-success"></i> {{_ "Online"}}</a>
+              <a href="#"><i class="ion-record text-success"></i> {{_ "Online"}}</a>
             </div>
           </div>
 <!--           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q" class="form-control" placeholder= "{{_ 'Search'}}...">
                 <span class="input-group-btn">
-                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="ion fa-search"></i>
                   </button>
                 </span>
             </div>
@@ -23,50 +23,50 @@
           <ul class="nav sidebar-menu">
             <li class="header">{{_ "Steedos Workflow"}}</li>
             <li class="{{boxClass 'inbox'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/inbox/"><i class="fa fa-inbox"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
+                <a href="{{urlPrefix}}/space/{{spaceId}}/inbox/"><i class="ion ion-archive"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
             </li>
             <li class="{{boxClass 'outbox'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/outbox/"><i class="fa fa-sign-out"></i><span>{{_ "outbox"}}</span></a>
+                <a href="{{urlPrefix}}/space/{{spaceId}}/outbox/"><i class="ion ion-android-done-all"></i><span>{{_ "outbox"}}</span></a>
             </li>
             <li>
                 <a href="#">
-                  <i class="fa fa-user"></i> <span>{{_ "MY APPLICANT"}}</span>
+                  <i class="ion ion-android-person"></i> <span>{{_ "MY APPLICANT"}}</span>
                   <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                   <li>
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/draft/"><i class="fa fa-edit"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
+                      <a href="{{urlPrefix}}/space/{{spaceId}}/draft/"><i class="ion ion-compose"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
                   </li>
                   <li class="{{boxClass 'pending'}}">
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/pending/"><i class="fa fa-spinner"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
+                      <a href="{{urlPrefix}}/space/{{spaceId}}/pending/"><i class="ion ion-load-a"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
                   </li>
                   <li class="{{boxClass 'completed'}}">
-                      <a href="{{urlPrefix}}/space/{{spaceId}}/completed/"><i class="fa fa-check"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
+                      <a href="{{urlPrefix}}/space/{{spaceId}}/completed/"><i class="ion ion-android-checkbox-outline"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
                   </li>
                 </ul>
             </li>
             <li class="{{boxClass 'monitor'}}">
-                <a href="{{urlPrefix}}/space/{{spaceId}}/monitor/"><i class="fa fa-clone"></i><span>{{_ "monitor"}}</span></a>
+                <a href="{{urlPrefix}}/space/{{spaceId}}/monitor/"><i class="ion ion-eye"></i><span>{{_ "monitor"}}</span></a>
             </li>
             <li>
               <a href="{{urlPrefix}}/admin/">
-                <i class="fa fa-gears"></i><span>{{_ "Settings"}}</span>
-                <!-- <i class="fa fa-angle-left pull-right"></i> -->
+                <i class="ion ion-gear-b"></i><span>{{_ "Settings"}}</span>
+                <!-- <i class="ion fa-angle-left pull-right"></i> -->
               </a>
             </li>
 
             <li class="header">{{_ "Steedos"}}</li>
             <li>
               <a href="{{urlPrefix}}/springboard">
-                <i class="fa fa-gears"></i><span>{{_ "Apps"}}</span>
-                <!-- <i class="fa fa-angle-left pull-right"></i> -->
+                <i class="ion ion-android-apps"></i><span>{{_ "Apps"}}</span>
+                <!-- <i class="ion fa-angle-left pull-right"></i> -->
               </a>
             </li>
             <li>
-                <a href="/cn/help/" target="_help"><i class="fa fa-question-circle"></i><span>{{_ "Help"}}</span></a>
+                <a href="/cn/help/" target="_help"><i class="ion ion-help-circled"></i><span>{{_ "Help"}}</span></a>
             </li>
             <li>
-                <a href="{{urlPrefix}}/logout"><i class="fa fa-sign-out"></i><span>{{_ "Sign out"}}</span></a>
+                <a href="{{urlPrefix}}/logout"><i class="ion ion-power"></i><span>{{_ "Sign out"}}</span></a>
             </li>
           </ul>
         </div>
