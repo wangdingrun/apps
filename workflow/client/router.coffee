@@ -34,9 +34,7 @@ FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 
-		if Session.get("spaceId") != params.spaceId 
-			Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
+		Steedos.setSpaceId(params.spaceId)
 		#Session.set("instanceId", null);
 
 		console.log "call get_instance_data"

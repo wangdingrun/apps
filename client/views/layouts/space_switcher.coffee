@@ -15,4 +15,5 @@ Template.space_switcher.events
 
 	"click #switchSpace": ->
 		self = this
-		FlowRouter.go("/steedos/")
+		Steedos.setSpaceId(this._id)
+		FlowRouter.go("/steedos/springboard")
