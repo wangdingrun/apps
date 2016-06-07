@@ -54,76 +54,18 @@
 
     "Home": "Home",
     "Profile": "Profile",
-    "APPROVAL": "Approval",
-    "MY APPLICANT": "My Applicant",
     "Settings": "Settings",
     "Help": "Help",
     "New": "New",
-    "undefined": "undefined",
 
-    "inbox": "Inbox",
-    "outbox": "Outbox",
-    "draft": "Draft",
-    "pending": "In Progress",
-    "completed": "Finished",
-    "monitor": "Monitor",
-    "FlowName": "FlowName",
     "Account": "Account",
     "Account Settings": "Account Settings",
     "Select Space": "Select Space",
     "Add space": "Add space",
 
-    "APPLICATIONS": "APPLICATIONS",
-    "Workflow": "Workflow",
-
     "bqq": "Business QQ",
     "dingtalk": "Dingtalk",
 
     "OK": "OK",
-    "Cancel": "Cancel",
-
-    "Attachment deleted successfully": "Attachment deleted successfully!",
-    "Attachment was added successfully": "Attachment was added successfully!",
-
-    "Saved successfully": "Saved successfully!",
-    "Added successfully": "Added successfully!",
-    "Deleted successfully": "Deleted successfully!",
-    "Submitted successfully": "Submitted successfully!",
-    "Canceled successfully": "Canceled successfully!",
-    "Reasigned successfully": "Reasigned successfully!",
-    "Relocated successfully": "Relocated successfully!",
-
-    "Attachments": "Attachments",
-    "Versions": "Versions",
-    "Current Version": "（Current Version）",
-    
-    "Instance State approved": " Approved",
-    "Instance State rejected": " Rejected",
-    "Instance State terminated": "Cancelled",
-    "Instance State finished": "Completed",
-    "Instance State pending": "In Progress",
-    "Instance State reassigned": "Reassigned",
-    "Instance State relocated": "Relocated",
-
-    "Instance Relocate Hint": "Enter your comments here.",
-    "Instance Relocate Title": "Relocate",
-    "Instance Relocate Reason": "Comments is required.",
-    "Instance Relocate NewInboxUsers": "Please select a user.",
-    "Instance Relocate Ok": "Relocated successfully.",
-    "Instance Relocate CurStep": "Current Step: ",
-
-    // inbox
-    "Inbox Suggestion NextSteps Label":"Next step: ",
-    "Inbox Suggestion NextSteps Handler Label":"Assignee: ",
-
-    "Workflow Designer": "Workflow Designer",
-    "User Management": "User Management",
-
-    "All flows": "All flows",
-    "Select a flow": "Select a flow",
-
-    "Flow upgraded": "The flow has been upgraded. Please make sure this request meet the requirements of the new version.",
-
-    "Are you sure?": "Are you sure?"
-
+    "Cancel": "Cancel"
 }

@@ -68,10 +68,14 @@ FlowRouter.route '/steedos/help',
     action: (params, queryParams)->
         locale = Steedos.getLocale()
         country = locale.substring(3)
-        window.open("http://www.steedos.com/" + country + "/help/")
+        window.open("http://www.steedos.com/" + country + "/help/", '_blank', 'EnableViewPortScale=yes')
 
 
 FlowRouter.route '/app/:app_id', 
     action: (params, queryParams)->
-        window.open("/" + params.app_id)
+        
+        BlazeLayout.render 'masterLayout',
+            main: "springboard"
+
+        window.open("/" + params.app_id, '_blank', 'EnableViewPortScale=yes')
         
