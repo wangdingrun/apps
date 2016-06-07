@@ -243,6 +243,8 @@ Dingtalk.syncCompany = (access_token, auth_corp_info, permanent_code) ->
     else
       console.log('用户不存在')
       doc = {}
+      doc._id = db.users._makeNewID()
+      doc.steedos_id = doc._id
       doc.name = u.name
       doc.locale = "zh-cn"
       doc.is_deleted = false
