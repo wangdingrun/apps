@@ -1,8 +1,15 @@
 FlowRouter.notFound = 
     action: ()->
-        BlazeLayout.render 'loginLayout',
-            main: "not-found"
+        if !Meteor.userId()
+            BlazeLayout.render 'loginLayout',
+                main: "not-found"
+        else
+            BlazeLayout.render 'masterLayout',
+                main: "not-found"
 
+FlowRouter.triggers.enter [()->
+    Session.set("router-path", FlowRouter.current().path)
+]
 
 FlowRouter.route '/', 
     action: (params, queryParams)->
@@ -57,3 +64,14 @@ FlowRouter.route '/steedos/space',
             main: "space_select"
 
 
+FlowRouter.route '/steedos/help', 
+    action: (params, queryParams)->
+        locale = Steedos.getLocale()
+        country = locale.substring(3)
+        window.open("http://www.steedos.com/" + country + "/help/")
+
+
+FlowRouter.route '/app/:app_id', 
+    action: (params, queryParams)->
+        window.open("/" + params.app_id)
+        

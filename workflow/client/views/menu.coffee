@@ -1,4 +1,4 @@
-Template.workflowMenu.helpers
+Template.workflow_menu.helpers
 
     boxName: ->
         if Session.get("box")

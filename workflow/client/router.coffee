@@ -5,28 +5,22 @@ checkUserSigned = (context, redirect) ->
 
 FlowRouter.route '/workflow',
 	action: (params, queryParams)->
-		if Session.get("spaceId")
-			FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/inbox/")
-		# else
-		# 	FlowRouter.go("/steedos/space/")
+		FlowRouter.go "/workflow/space/" + Steedos.getSpaceId()
 
 
 FlowRouter.route '/workflow/space/:spaceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		if !Meteor.userId()
-			FlowRouter.go '/sign-in';
-		Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
-		FlowRouter.go "/workflow/space/" + params.spaceId + "/inbox/"
+		Steedos.setSpaceId(params.spaceId)
+		BlazeLayout.render 'masterLayout',
+			main: "workflow_home"
 
 
 FlowRouter.route '/workflow/space/:spaceId/:box/', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		if Session.get("spaceId") != params.spaceId 
-			Session.set("spaceId", params.spaceId);
-		localStorage.setItem("spaceId:" + Meteor.userId(), params.spaceId);
+		Steedos.setSpaceId(params.spaceId)
+		
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
 		#Session.set("instanceId", null); 

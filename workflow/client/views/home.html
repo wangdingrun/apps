@@ -1,0 +1,20 @@
+<template name="workflow_home">
+
+    <div class="navigation-bar">
+
+          <button type="button" class="btn btn-default" data-toggle="offcanvas" >
+            <i class="ion ion-navicon-round"></i>
+          </button>
+
+          <span class="navigation-title dropdown">
+            {{_ "Steedos Workflow"}}
+          </span>
+          <div class="pull-right">
+            <button type="button" class="btn btn-success" name="create_ins_btn">
+            {{_ "New"}}
+            </button>
+
+          </div>
+    </div>
+    {{>workflow_menu}}
+</template>

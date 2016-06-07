@@ -17,7 +17,8 @@ Template.sidebar.helpers
 			return localStorage.getItem("spaceId:" + Meteor.userId())
 
 	menuClass: (urlPrefix)->
-		if FlowRouter.current().path.startsWith urlPrefix
+		path = Session.get("router-path")
+		if path?.startsWith urlPrefix
 			return "active";
 
 	inbox_count: ->
