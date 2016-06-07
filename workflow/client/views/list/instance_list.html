@@ -6,7 +6,12 @@
             <i class="ion ion-navicon-round"></i>
           </button>
 
-          <span class="navigation-title">{{boxName}}
+          <span class="navigation-title dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >{{boxName}} &nbsp;<i class="caret"></i>
+            </a>
+            <div class="dropdown-menu workflow-menu">
+              {{> workflowMenu}}
+            </div>
           </span>
           <div class="pull-right">
             <button type="button" class="btn btn-success" name="create_ins_btn">

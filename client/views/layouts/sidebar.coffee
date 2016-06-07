@@ -16,8 +16,8 @@ Template.sidebar.helpers
 		else
 			return localStorage.getItem("spaceId:" + Meteor.userId())
 
-	boxClass: (boxName)->
-		if Session.get("box") == boxName
+	menuClass: (urlPrefix)->
+		if FlowRouter.current().path.startsWith urlPrefix
 			return "active";
 
 	inbox_count: ->
@@ -43,6 +43,7 @@ Template.sidebar.helpers
 		if c && (c.finished_count > 0)
 			return c.finished_count;
 		return;
+
 
 # Template.sidebar.onRendered ->
 

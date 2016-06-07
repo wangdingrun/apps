@@ -1,0 +1,71 @@
+<template name="workflowMenu">
+
+    <div class="cell">
+
+        <div class="bd">
+            <div class="weui_cells_title">{{_ "My Approval"}}</div>
+            <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/inbox/">
+                    <div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "inbox"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                        <small class="label bg-red">{{inbox_count}}</small>
+                    </div>
+                </a>
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/outbox/">
+                    <div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "outbox"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </a>
+            </div>
+            <div class="weui_cells_title">{{_ "My Applications"}}</div>
+            <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/draft/">
+                    <div class="weui_cell_hd"><i class="ion ion-compose"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "draft"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                        <small class="">{{draft_count}}</small>
+                    </div>
+                </a>
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/pending/">
+                    <div class="weui_cell_hd"><i class="ion ion-load-a"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "pending"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                        <small class="">{{pending_count}}</small>
+                    </div>
+                </a>
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/completed/">
+                    <div class="weui_cell_hd"><i class="ion ion-android-checkbox-outline"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "completed"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                        <small class="">{{completed_count}}</small>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/monitor/">
+                    <div class="weui_cell_hd"><i class="ion ion-eye"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "monitor"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</template>

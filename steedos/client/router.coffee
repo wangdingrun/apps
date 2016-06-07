@@ -12,6 +12,14 @@ FlowRouter.route '/',
             FlowRouter.go "/steedos/springboard";
         
 
+FlowRouter.route '/steedos', 
+    action: (params, queryParams)->
+        if !Meteor.userId()
+            FlowRouter.go "/steedos/sign-in";
+            return true
+        else
+            FlowRouter.go "/steedos/springboard";
+
 
 FlowRouter.route '/steedos/logout', 
     action: (params, queryParams)->
@@ -38,11 +46,14 @@ FlowRouter.route '/steedos/springboard',
         BlazeLayout.render 'masterLayout',
             main: "springboard"
 
-FlowRouter.route '/steedos', 
+
+FlowRouter.route '/steedos/space', 
     action: (params, queryParams)->
         if !Meteor.userId()
-            FlowRouter.go "/steedos/sign-in";
+            FlowRouter.go "/sign-in";
             return true
-        else
-            FlowRouter.go "/steedos/springboard";
+
+        BlazeLayout.render 'loginLayout',
+            main: "space_select"
+
 

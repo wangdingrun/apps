@@ -21,45 +21,38 @@
             </div>
           </form> -->
           <ul class="nav sidebar-menu">
-            <li class="header">{{_ "Steedos Workflow"}}</li>
-            <li class="{{boxClass 'inbox'}}">
-                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/inbox/"><i class="ion ion-archive"></i><span>{{_ "inbox"}}</span><small class="label pull-right bg-red">{{inbox_count}}</small></a>
+            <li class="header">{{_ "Steedos"}}</li>
+            <li class="{{menuClass '/steedos/springboard'}}">
+              <a href="{{urlPrefix}}/steedos/springboard">
+                <i class="ion ion-ios-keypad"></i><span>{{_ "Apps"}}</span>
+              </a>
             </li>
-            <li class="{{boxClass 'outbox'}}">
-                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/outbox/"><i class="ion ion-android-done-all"></i><span>{{_ "outbox"}}</span></a>
-            </li>
-            <li>
-                <a href="#">
-                  <i class="ion ion-android-person"></i> <span>{{_ "MY APPLICANT"}}</span>
-                  <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li>
-                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/draft/"><i class="ion ion-compose"></i><span>{{_ "draft"}}</span><small class="label pull-right">{{draft_count}}</small></a>
-                  </li>
-                  <li class="{{boxClass 'pending'}}">
-                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/pending/"><i class="ion ion-load-a"></i><span>{{_ "pending"}}</span><small class="label pull-right">{{progress_count}}</small></a>
-                  </li>
-                  <li class="{{boxClass 'completed'}}">
-                      <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/completed/"><i class="ion ion-android-checkbox-outline"></i><span>{{_ "completed"}}</span><small class="label pull-right">{{finished_count}}</small></a>
-                  </li>
-                </ul>
-            </li>
-            <li class="{{boxClass 'monitor'}}">
-                <a href="{{urlPrefix}}/workflow/space/{{spaceId}}/monitor/"><i class="ion ion-eye"></i><span>{{_ "monitor"}}</span></a>
+            <li class="{{menuClass '/workflow'}}">
+              <a href="{{urlPrefix}}/workflow">
+                <i class="ion ion-ios-list-outline"></i><span>{{_ "Steedos Workflow"}}</span>
+                <i class="ion pull-right"><span class="label bg-red">{{inbox_count}}</span></i>
+              </a>
             </li>
             <li>
-              <a href="{{urlPrefix}}/admin/">
-                <i class="ion ion-gear-b"></i><span>{{_ "Settings"}}</span>
-                <!-- <i class="ion fa-angle-left pull-right"></i> -->
+              <a href="{{urlPrefix}}/chat">
+                <i class="ion ion-ios-chatboxes-outline"></i><span>{{_ "Steedos Chat"}}</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{urlPrefix}}/drive">
+                <i class="ion ion-ios-folder-outline"></i><span>{{_ "Steedos Drive"}}</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{urlPrefix}}/mail">
+                <i class="ion ion-ios-email-outline"></i><span>{{_ "Steedos Mail"}}</span>
               </a>
             </li>
 
-            <li class="header">{{_ "Steedos"}}</li>
-            <li>
-              <a href="{{urlPrefix}}/steedos">
-                <i class="ion ion-android-apps"></i><span>{{_ "Apps"}}</span>
-                <!-- <i class="ion fa-angle-left pull-right"></i> -->
+            <li class="header">{{_ "Settings"}}</li>
+            <li class="{{menuClass '/admin'}}">
+              <a href="{{urlPrefix}}/admin/">
+                <i class="ion ion-ios-gear-outline"></i><span>{{_ "Settings"}}</span>
               </a>
             </li>
             <li>

@@ -7,8 +7,8 @@ FlowRouter.route '/workflow',
 	action: (params, queryParams)->
 		if Session.get("spaceId")
 			FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/inbox/")
-		else
-			FlowRouter.go("/workflow/space/")
+		# else
+		# 	FlowRouter.go("/steedos/space/")
 
 
 FlowRouter.route '/workflow/space/:spaceId', 

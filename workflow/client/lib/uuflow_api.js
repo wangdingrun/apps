@@ -38,7 +38,7 @@ UUflow_api.post_draft = function(flowId) {
         return;
       }
 
-      FlowRouter.go("/space/" + Session.get("spaceId") + "/draft/" + responseText.ChangeSet.inserts.Instances[0].id);
+      FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/draft/" + responseText.ChangeSet.inserts.Instances[0].id);
 
       Modal.hide('flow_list_modal');
       toastr.success(TAPi18n.__('Added successfully'));
