@@ -407,11 +407,13 @@ SteedosTable.getTDValue = function(field, value){
                 break;
             case 'date':
                 if(value){
+                    value = new Date(value)
                     td_value = $.format.date(value,'yyyy-MM-dd');
                 }
                 break;
             case 'dateTime':
                 if(value){
+                    value = new Date(value)
                     td_value = $.format.date(value,'yyyy-MM-dd HH:mm');
                 }
                 break;
