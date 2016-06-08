@@ -407,13 +407,37 @@ SteedosTable.getTDValue = function(field, value){
                 break;
             case 'date':
                 if(value){
-                    value = new Date(value + " 00:00")
+                    if(value.length == 10){
+                        var t = value.split("-");
+                        year = t[0];
+                        month = t[1];
+                        date = t[2];
+                        value = new Date(year, month - 1, date);
+                    }else{
+                        value = new Date(value)
+                    }
                     td_value = $.format.date(value,'yyyy-MM-dd');
                 }
                 break;
             case 'dateTime':
                 if(value){
-                    value = new Date(value)
+                    if( value.length == 16){
+                        var t = value.split("T");
+                        var t0 = t[0].split("-");
+                        var t1 = t[1].split(":");
+
+                        year = t0[0];
+                        month = t0[1];
+                        date = t0[2];
+                        hours = t1[0];
+                        seconds = t1[1];
+
+                        value = new Date(year, month - 1 , date, hours, seconds);
+
+                    }else{
+
+                        value = new Date(value)
+                    }
                     td_value = $.format.date(value,'yyyy-MM-dd HH:mm');
                 }
                 break;

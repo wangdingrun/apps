@@ -1,8 +1,27 @@
 AutoForm.addInputType("bootstrap-datetimepicker", {
   template: "afBootstrapDateTimePicker",
   valueIn: function (val, atts) {
-    if (typeof val === "string")
-      val = new Date(val)
+    if (typeof val === "string"){
+
+      var year, month, date, hours, seconds;
+
+      if(val && val.length == 16){
+        var t = val.split("T");
+        var t0 = t[0].split("-");
+        var t1 = t[1].split(":");
+
+        year = t0[0];
+        month = t0[1];
+        date = t0[2];
+        hours = t1[0];
+        seconds = t1[1];
+
+        val = new Date(year, month - 1, date, hours, seconds);
+
+      }else{ 
+        val = new Date(val)
+      }
+    }
     // datetimepicker expects the date to represent local time,
     // so we need to adjust it if there's a timezoneId specified
     var timezoneId = atts.timezoneId;
