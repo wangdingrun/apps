@@ -6,6 +6,10 @@
     "completed": "已完成",
     "monitor": "监控箱",
     "FlowName": "名称",
+    "Search": "搜索",
+    "My Approval":"审核",
+    "My Applications":"我的申请单",
+    "Submit":"提交",
 
     "Attachment deleted successfully": "附件删除成功!",
     "Attachment was added successfully": "附件添加成功!",
