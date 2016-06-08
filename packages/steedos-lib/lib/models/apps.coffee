@@ -23,7 +23,6 @@ db.apps.core_apps =
         name: "Steedos Calendar"
         secret: "8762-fcb369b2e85"
         icon: "ion-ios-calendar-outline"
-        menu: true
     mail:
         url: "https://mail.steedos.com"
         name: "Steedos Mail"

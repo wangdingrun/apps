@@ -70,6 +70,7 @@ raix:push
 alanning:roles
 sach:flow-db-admin
 
+steedos:meteor-cookie-login
 steedos:ionicons
 steedos:cors
 steedos:ui
