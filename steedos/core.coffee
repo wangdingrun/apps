@@ -14,7 +14,7 @@ if Meteor.isClient
         if spaceId
             return spaceId
         else
-            return "none";
+            return undefined;
 
     Steedos.getLocale = ()->
         if Meteor.user()?.locale

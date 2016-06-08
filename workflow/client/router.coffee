@@ -4,6 +4,7 @@ checkUserSigned = (context, redirect) ->
 
 
 FlowRouter.route '/workflow',
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		FlowRouter.go "/workflow/space/" + Steedos.getSpaceId()
 
