@@ -1,6 +1,7 @@
 loginWithCookie = (onSuccess) ->
-    userId = Cookies.get("X-User-Id")
-    authToken = Cookies.get("X-Auth-Token")
+    cookie = new Cookies()
+    userId = cookie.get("X-User-Id")
+    authToken = cookie.get("X-Auth-Token")
     if userId and authToken
         if Meteor.userId() != userId
             Accounts.connection.setUserId(userId);
