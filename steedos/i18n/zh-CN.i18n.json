@@ -83,6 +83,10 @@
     "dingtalk": "钉钉",
 
     "OK": "确认",
-    "Cancel": "取消"
+    "Cancel": "取消",    
+
+    "primary_email_needed": "设置邮件地址",
+    "primary_email_needed_description": "请输入您的工作邮件地址，此邮件地址可以用来登录华炎云，也可以用来重置密码。",
+    "primary_email_updated": "邮件地址设置成功"
 
 }
