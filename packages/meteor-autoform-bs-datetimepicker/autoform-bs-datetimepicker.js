@@ -38,7 +38,13 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
   },
   valueConverters: {
     "string": function (val) {
-      return (val instanceof Date) ? val.toString() : val;
+      var options = this.data("options")
+
+      if(options && "format" in options && options.format){
+        return (val instanceof Date) ? moment.utc(val).format(options.format) : val
+      }else{
+        return (val instanceof Date) ? val.toString() : val;
+      }
     },
     "stringArray": function (val) {
       if (val instanceof Date) {
@@ -76,6 +82,7 @@ Template.afBootstrapDateTimePicker.helpers({
     var atts = _.clone(this.atts);
     // Add bootstrap class
     atts = AutoForm.Utility.addClass(atts, "form-control");
+    atts["data-options"] = JSON.stringify(atts.dateTimePickerOptions)
     delete atts.dateTimePickerOptions;
     return atts;
   }
