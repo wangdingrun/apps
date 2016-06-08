@@ -650,8 +650,11 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     var userId = Meteor.userId();
     var fileName = fileObj.name();
     console.log(fileName);
-    if (fileName == "image.jpg") {
-      fileName = "image-" + (new Date().toLocaleString()) + ".jpg"
+    if (!fileName)
+      fileName = Session.get('filename');
+
+    if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName)) {
+      fileName = "image-" + (new Date().toLocaleString()) + fileName.split('.').pop();
     }
     console.log(fileName);
     

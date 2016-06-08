@@ -13,7 +13,10 @@ Template.instance_view.events
             $(document.body).addClass("loading");
             $('.loading-text').text "正在上传..."
             FS.Utility.eachFile event, (file) ->
+                console.log "file_name"
+                console.log file.name
                 if file.name
+                    Session.set("filename", file.name)
                     $('.loading-text').text "正在上传..." + file.name
                             
                 newFile = new FS.File(file);
