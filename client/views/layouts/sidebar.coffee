@@ -19,9 +19,9 @@ Template.sidebar.helpers
 		else
 			return localStorage.getItem("spaceId:" + Meteor.userId())
 
-	menuClass: (urlPrefix)->
+	menuClass: (app_id)->
 		path = Session.get("router-path")
-		if path?.startsWith "/" + urlPrefix or path?.startsWith "/app/" + urlPrefix
+		if path?.startsWith "/" + app_id or path?.startsWith "/app/" + app_id
 			return "active";
 
 	badge: (app_id)->

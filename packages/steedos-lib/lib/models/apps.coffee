@@ -20,14 +20,14 @@ db.apps.core_apps =
     #     name: "Steedos Calendar"
     #     secret: "8762-fcb369b2e85"
     #     icon: "ion-ios-list-outline"
-    mail:
-        url: "https://mail.steedos.com"
-        name: "Steedos Mail"
-        icon: "ion-ios-email-outline"
-    designer:
-        url: "/designer"
-        name: "Flow Designer"
-        icon: "ion-ios-shuffle"
+    # mail:
+    #     url: "https://mail.steedos.com"
+    #     name: "Steedos Mail"
+    #     icon: "ion-ios-email-outline"
+    # designer:
+    #     url: "/designer"
+    #     name: "Flow Designer"
+    #     icon: "ion-ios-shuffle"
     admin:
         url: "/admin"
         name: "Steedos Admin"
