@@ -2,7 +2,7 @@
 meteor build --server https://cn.steedos.com/workflow --directory /srv/workflow
 cd /srv/workflow/bundle/programs/server
 npm install
-cd npm/npm_bcrypt/
+cd npm/npm-bcrypt/
 npm install bcrypt
 
 cd /srv/workflow/

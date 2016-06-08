@@ -1,6 +1,6 @@
 Package.describe({
     name: 'steedos:meteor-cookie-login',
-    version: '0.0.2',
+    version: '0.0.3',
     summary: 'Login to meteor apps with cookies',
     git: ''
 });

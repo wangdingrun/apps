@@ -135,7 +135,7 @@ steedos:connect-dingtalk@0.0.1
 steedos:cors@0.0.1
 steedos:ionicons@0.1.7
 steedos:lib@0.0.1
-steedos:meteor-cookie-login@0.0.2
+steedos:meteor-cookie-login@0.0.3
 steedos:ui@0.0.1
 steedos:workflow@0.0.1
 tap:i18n@1.7.0
