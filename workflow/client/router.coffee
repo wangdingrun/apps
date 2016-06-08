@@ -1,6 +1,6 @@
 checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
-		redirect('/sign-in');
+		redirect('/steedos/sign-in');
 
 
 FlowRouter.route '/workflow',

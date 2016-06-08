@@ -11,7 +11,7 @@ Template.adminLayout.onCreated ->
 Template.adminLayout.onRendered ->
 
         if !Meteor.userId()
-                Router.go "/sign-in"
+                Router.go "/steedos/sign-in"
 
         self = this;
         self.minHeight.set($(window).height());

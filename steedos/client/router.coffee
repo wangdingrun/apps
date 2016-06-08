@@ -57,7 +57,7 @@ FlowRouter.route '/steedos/springboard',
 FlowRouter.route '/steedos/space', 
     action: (params, queryParams)->
         if !Meteor.userId()
-            FlowRouter.go "/sign-in";
+            FlowRouter.go "/steedos/sign-in";
             return true
 
         BlazeLayout.render 'loginLayout',
