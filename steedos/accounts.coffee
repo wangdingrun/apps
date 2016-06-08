@@ -36,7 +36,8 @@ AccountsTemplates.configure
 
 
 
-#AccountsTemplates.configureRoute 'changePwd'
+AccountsTemplates.configureRoute 'changePwd',
+  path: '/steedos/change-password'
 AccountsTemplates.configureRoute 'forgotPwd',
   path: '/steedos/forgot-password'
 AccountsTemplates.configureRoute 'resetPwd',

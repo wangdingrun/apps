@@ -79,8 +79,11 @@ FlowRouter.route '/app/:app_id',
 
         if params.app_id.startsWith("http")
             url = params.app_id
+        else if params.app_id == "designer"
+            url = Meteor.absoluteUrl("designer/current/" + Steedos.getLocale() + "/");
         else
             url = Meteor.absoluteUrl(params.app_id) + "/";
+
 
         window.open(url, '_blank', 'EnableViewPortScale=yes')
         

@@ -15,7 +15,7 @@
                     </div>
                 </a>
                 <a class="weui_cell" href="{{urlPrefix}}/workflow/space/{{spaceId}}/outbox/">
-                    <div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+                    <div class="weui_cell_hd"><i class="ion ion-android-done-all"></i></div>
                     <div class="weui_cell_bd weui_cell_primary">
                         &nbsp;{{_ "outbox"}}
                     </div>
@@ -65,6 +65,20 @@
                     </div>
                 </a>
             </div>
+
+            {{#if isMobile}}
+            {{else}}
+            <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="{{urlPrefix}}/app/designer">
+                    <div class="weui_cell_hd"><i class="ion ion-shuffle"></i></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        &nbsp;{{_ "Workflow Designer"}}
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </a>
+            </div>
+            {{/if}}
         </div>
     </div>
 

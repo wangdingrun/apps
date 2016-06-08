@@ -9,3 +9,6 @@ Template.registerHelper 'spaceId', ->
         return Session.get("spaceId")
     else
         return "none";
+
+Template.registerHelper 'locale', ->
+    return Steedos.getLocale()
