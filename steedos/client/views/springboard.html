@@ -16,62 +16,17 @@
 
     <div class="bd">
         <div class="weui_grids">
-            <a href="{{urlPrefix}}/workflow" class="weui_grid">
+            {{#each apps}}
+            <a href="{{urlPrefix}}/app/{{_id}}" class="weui_grid">
                 <div class="weui_grid_icon">
-                    <i class="icon ion-ios-list-outline"></i>
+                    <i class="ion {{icon}}"></i>
                 </div>
                 <p class="weui_grid_label">
-                    {{_ "Steedos Workflow"}}
+                    {{_ name}}
                 </p>
             </a>
-            <a href="/app/chat" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon ion-ios-chatboxes-outline"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Steedos Chat"}}
-                </p>
-            </a>
-            <a href="/app/drive" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon ion-ios-folder-outline"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Steedos Drive"}}
-                </p>
-            </a>
-            <a href="/app/mail" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon ion-ios-email-outline"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Steedos Mail"}}
-                </p>
-            </a>
-            <a href="{{urlPrefix}}/admin" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon ion-ios-gear-outline"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Settings"}}
-                </p>
-            </a>
-            <a href="{{urlPrefix}}/app/designer" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="icon ion-ios-shuffle"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Flow Designer"}}
-                </p>
-            </a>
-           <!--  <a href="{{absoluteUrl}}cn/help" class="weui_grid">
-                <div class="weui_grid_icon">
-                    <i class="fa fa-question-circle"></i>
-                </div>
-                <p class="weui_grid_label">
-                    {{_ "Help"}}
-                </p>
-            </a> -->
+            {{/each}}
+            
         </div>
     </div>
 </div>

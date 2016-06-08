@@ -1,5 +1,8 @@
 Template.sidebar.helpers
 
+	apps: ()->
+		return db.apps.core_apps_array;
+
 	displayName: ->
 
 		if Meteor.user()
@@ -18,35 +21,13 @@ Template.sidebar.helpers
 
 	menuClass: (urlPrefix)->
 		path = Session.get("router-path")
-		if path?.startsWith urlPrefix
+		if path?.startsWith "/" + urlPrefix or path?.startsWith "/app/" + urlPrefix
 			return "active";
 
-	inbox_count: ->
-		c = db.box_counts.findOne(Session.get("spaceId"));
-		if c && (c.inbox_count > 0)
-			return c.inbox_count;
-		return;
+	badge: (app_id)->
+		if app_id == "workflow"
+			c = db.box_counts.findOne(Steedos.getSpaceId());
+			if c
+				return c.inbox_count;
 
-	draft_count: ->
-		c = db.box_counts.findOne(Session.get("spaceId"));
-		if c && (c.draft_count > 0)
-			return c.draft_count;
-		return;
-
-	progress_count: ->
-		c = db.box_counts.findOne(Session.get("spaceId"));
-		if c && (c.progress_count > 0)
-			return c.progress_count;
-		return;
-
-	finished_count: ->
-		c = db.box_counts.findOne(Session.get("spaceId"));
-		if c && (c.finished_count > 0)
-			return c.finished_count;
-		return;
-
-
-# Template.sidebar.onRendered ->
-
-#     if !Steedos.isMobile()
-#         $(".sidebar").perfectScrollbar();
+	

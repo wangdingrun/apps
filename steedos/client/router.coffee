@@ -77,13 +77,15 @@ FlowRouter.route '/app/:app_id',
         BlazeLayout.render 'masterLayout',
             main: "springboard"
 
-        if params.app_id.startsWith("http")
-            url = params.app_id
-        else if params.app_id == "designer"
-            url = Meteor.absoluteUrl("designer/current/" + Steedos.getLocale() + "/");
-        else
-            url = Meteor.absoluteUrl(params.app_id) + "/";
+        app = db.apps.core_apps[params.app_id]
+        if app.internal
+            FlowRouter.go(app.url)
+            return
 
+        if app._id == "designer"
+            url = Meteor.absoluteUrl("applications/designer/current/" + Steedos.getLocale() + "/");
+        else
+            url = Meteor.absoluteUrl(app._id) + "/";
 
         window.open(url, '_blank', 'EnableViewPortScale=yes')
         
