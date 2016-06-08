@@ -31,7 +31,7 @@ AccountsTemplates.configure
   # termsUrl: 'terms-of-use',
 
   preSignUpHook: (password, options) ->
-    options.profile.locale = Steedos.defaultUserLanguage();
+    options.profile.locale = Steedos.getLocale();
 
 
 

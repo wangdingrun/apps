@@ -1,7 +1,6 @@
 loginWithCookie = (onSuccess) ->
-    cookie = new Cookies()
-    userId = cookie["X-User-Id"]
-    authToken = cookie["X-Auth-Token"]
+    userId = getCookie("X-User-Id")
+    authToken = getCookie("X-Auth-Token")
     if userId and authToken
         if Meteor.userId() != userId
             Accounts.connection.setUserId(userId);
@@ -11,6 +10,14 @@ loginWithCookie = (onSuccess) ->
                     Accounts.makeClientLoggedOut();
                 else if onSuccess
                     onSuccess();
+
+getCookie = (name)->
+    pattern = RegExp(name + "=.[^;]*")
+    matched = document.cookie.match(pattern)
+    if(matched)
+        cookie = matched[0].split('=')
+        return cookie[1]
+    return false
 
 
 Meteor.startup ->
