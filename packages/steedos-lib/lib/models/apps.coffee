@@ -13,20 +13,20 @@ db.apps.core_apps =
         icon: "ion-ios-chatboxes-outline"
         menu: true
     drive: 
-        url: "/drive"
+        url: "https://drive.steedos.com"
         name: "Steedos Drive"
         secret: "8762-fcb369b2e85"
         icon: "ion-ios-folder-outline"
         menu: true
-    # calendar: 
-    #     url: "/calendar"
-    #     name: "Steedos Calendar"
-    #     secret: "8762-fcb369b2e85"
-    #     icon: "ion-ios-list-outline"
-    # mail:
-    #     url: "https://mail.steedos.com"
-    #     name: "Steedos Mail"
-    #     icon: "ion-ios-email-outline"
+    calendar: 
+        url: "https://drive.steedos.com/index.php/apps/calendar/"
+        name: "Steedos Calendar"
+        secret: "8762-fcb369b2e85"
+        icon: "ion-ios-list-outline"
+    mail:
+        url: "https://mail.steedos.com"
+        name: "Steedos Mail"
+        icon: "ion-ios-email-outline"
     designer:
         url: "/designer"
         name: "Flow Designer"

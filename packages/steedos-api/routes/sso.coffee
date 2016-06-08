@@ -1,7 +1,11 @@
 crypto = Npm.require('crypto')
 Cookies = Npm.require("cookies")
 
-JsonRoutes.add "get", "/api/sso/drive", (req, res, next) ->
+JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
+
+  app = db.apps.core_apps[req.params.app_id]
+  if !app
+    return;
 
   cookies = new Cookies( req, res );
 
@@ -22,7 +26,10 @@ JsonRoutes.add "get", "/api/sso/drive", (req, res, next) ->
       "services.resume.loginTokens.hashedToken": hashedToken
     if user
       steedos_id = user.steedos_id
-      iv = "8762-fcb369b2e85"
+      if app.secret
+        iv = app.secret
+      else
+        iv = "-8762-fcb369b2e8"
       now = parseInt(new Date().getTime()/1000).toString()
       key32 = ""
       len = steedos_id.length
@@ -45,7 +52,7 @@ JsonRoutes.add "get", "/api/sso/drive", (req, res, next) ->
 
       console.log steedos_token
 
-      returnurl = "https://drive.steedos.com/?redirect_url=/index.php/apps/contacts/&X-STEEDOS-WEB-ID=" + steedos_id + "&X-STEEDOS-AUTHTOKEN=" + steedos_token
+      returnurl = app.url + "?X-STEEDOS-WEB-ID=" + steedos_id + "&X-STEEDOS-AUTHTOKEN=" + steedos_token
 
       JsonRoutes.sendResult res,
         headers: 
