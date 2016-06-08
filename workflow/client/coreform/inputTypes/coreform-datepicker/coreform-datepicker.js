@@ -1,8 +1,17 @@
 AutoForm.addInputType("coreform-datepicker", {
   template: "afBootstrapDateTimePicker",
   valueIn: function (val, atts) {
-    if (typeof val === "string")
-      val = new Date(val + " 00:00")
+    if (typeof val === "string"){
+      if(val && val.length == 10){
+        var t = val.split("-");
+        year = t[0];
+        month = t[1];
+        date = t[2];
+        val = new Date(year, month - 1, date);
+      }else{
+        val = new Date(val)
+      }
+    }
     // // datetimepicker expects the date to represent local time,
     // // so we need to adjust it if there's a timezoneId specified
     // var timezoneId = atts.timezoneId;
