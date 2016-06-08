@@ -1,19 +1,3 @@
-# call validate when login success
-# Setup.loginWithCookie = (onSuccess) ->
-# 	userId = Cookies.get("X-User-Id")
-# 	authToken = Cookies.get("X-Auth-Token")
-# 	console.log "cookie login for " + userId
-# 	if userId and authToken
-# 		if Meteor.userId() != userId
-# 			Accounts.connection.setUserId(userId);
-# 			Accounts.loginWithToken authToken,  (err) ->
-# 				if (err) 
-# 					Meteor._debug("Error logging in with token: " + err);
-# 					Accounts.makeClientLoggedOut();
-# 				else if onSuccess
-# 					onSuccess();
-
-
 Setup.validate = ()->
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
@@ -29,8 +13,8 @@ Setup.validate = ()->
 		contentType: "application/json",
 		dataType: 'json',
 		data: JSON.stringify(requestData),
-		xhrFields: 
-			withCredentials: true
+		# xhrFields: 
+		# 	withCredentials: true
 		crossDomain: true
 	.done ( data ) ->
 		if data.webservices
@@ -43,15 +27,13 @@ Setup.logout = () ->
 			type: "POST",
 			url: Meteor.absoluteUrl("api/setup/logout"),
 			dataType: 'json',
-			xhrFields: 
-			   withCredentials: true
+			# xhrFields: 
+			#    withCredentials: true
 			crossDomain: true,
 		.done ( data ) ->
 			console.log(data)
 
 
 Meteor.startup ->
-	# if (!Accounts._storedUserId())
-	# 	Setup.loginWithCookie()
 	Accounts.onLogin ()->
 		Setup.validate();
