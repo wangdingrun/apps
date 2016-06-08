@@ -10,9 +10,6 @@ Template.masterLayout.onCreated ->
 
 Template.masterLayout.onRendered ->
 
-	if !Meteor.userId()
-		FlowRouter.go "/steedos/sign-in"
-
 	self = this;
 	self.minHeight.set($(window).height());
 
