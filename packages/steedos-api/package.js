@@ -48,6 +48,7 @@ Package.onUse(function(api) {
 	api.addFiles('routes/s3.coffee', 'server');
 	api.addFiles('routes/push.coffee', 'server');
 	api.addFiles('routes/avatar.coffee', 'server');
+	api.addFiles('routes/sso.coffee', 'server');
 
 });
 
