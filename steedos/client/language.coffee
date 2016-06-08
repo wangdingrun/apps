@@ -1,7 +1,5 @@
 Meteor.startup ->
 
-	Meteor.subscribe("userData")
-
 	Tracker.autorun (c) ->
 		user = Meteor.user()
 		locale = Steedos.getLocale();

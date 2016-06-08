@@ -77,5 +77,10 @@ FlowRouter.route '/app/:app_id',
         BlazeLayout.render 'masterLayout',
             main: "springboard"
 
-        window.open("/" + params.app_id, '_blank', 'EnableViewPortScale=yes')
+        if params.app_id.startsWith("http")
+            url = params.app_id
+        else
+            url = Meteor.absoluteUrl(params.app_id) + "/";
+
+        window.open(url, '_blank', 'EnableViewPortScale=yes')
         
