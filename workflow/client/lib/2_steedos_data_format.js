@@ -108,7 +108,7 @@ var s_autoform = function (schema, field){
         if (Steedos.isMobile())
           autoform.type = 'date';
         else {
-          autoform.type = 'bootstrap-datetimepicker';
+          autoform.type = 'coreform-datepicker';
           autoform.dateTimePickerOptions = {
             showClear: true,
             format: "YYYY-MM-DD"
