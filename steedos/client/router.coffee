@@ -84,7 +84,7 @@ FlowRouter.route '/app/:app_id',
         else
             url = Meteor.absoluteUrl("api/setup/sso/" + app._id);
 
-        window.open(url, '_blank', 'EnableViewPortScale=yes')
-
+        Steedos.openWindow(url);
+        
         FlowRouter.go "/steedos/springboard"
         

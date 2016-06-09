@@ -51,6 +51,15 @@ Template.instance_attachment.events({
     "click [name='ins_attach_version']": function (event, template) {
         Session.set("attach_id", event.target.id);
         Modal.show('ins_attach_version_modal');
+    },
+    "click .ins_attach_href": function (event, template) {
+        // 在手机上弹出窗口显示附件
+        if (Steedos.isMobile()){
+            debugger
+            Steedos.openWindow(event.target.getAttribute("href"))
+            event.stopPropagation()
+            return false;
+        }
     }
 })
 
@@ -164,6 +173,14 @@ Template.ins_attach_version_modal.events({
                 }
             })
         })
+    },
+    "click .ins_attach_href": function (event, template) {
+        // 在手机上弹出窗口显示附件
+        if (Steedos.isMobile()){
+            Steedos.openWindow(event.target.getAttribute("href"))
+            event.stopPropagation()
+            return false;
+        }
     }
 })
 

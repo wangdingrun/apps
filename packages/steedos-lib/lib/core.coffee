@@ -13,6 +13,11 @@ if Meteor.isClient
 	Steedos.isMobile = ()->
 		return $(window).width() < 767
 
+	Steedos.openWindow = (url, target)->
+		if !target 
+			target = "_blank"
+		options = 'EnableViewPortScale=yes,location=no,,toolbarposition=top,transitionstyle=fliphorizontal,closebuttoncaption=  x  '
+		window.open(url, target, options);
 
 
 # This will add underscore.string methods to Underscore.js
@@ -21,12 +26,12 @@ if Meteor.isClient
 # defined by Underscore.js.
 
 mixin = (obj) ->
-    _.each _.functions(obj), (name) ->
-        if not _[name] and not _.prototype[name]?
-            func = _[name] = obj[name]
-            _.prototype[name] = ->
-                args = [this._wrapped]
-                push.apply(args, arguments)
-                return result.call(this, func.apply(_, args))
+	_.each _.functions(obj), (name) ->
+		if not _[name] and not _.prototype[name]?
+			func = _[name] = obj[name]
+			_.prototype[name] = ->
+				args = [this._wrapped]
+				push.apply(args, arguments)
+				return result.call(this, func.apply(_, args))
 
 mixin(_s.exports())

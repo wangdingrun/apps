@@ -31,7 +31,7 @@
 <template name="instance_attachment" >
     <tr>
         <td class="ins-attach-view">
-            <a href="{{getUrl current}}" target="_parent">{{filename}}</a>
+            <a href="{{getUrl current}}" class="ins_attach_href" target="_parent">{{filename}}</a>
             <a style="cursor: pointer;margin-left: 10px;" name="ins_attach_version" id="{{_id}}" >{{_ "Versions"}}</a>
             {{#if can_delete current.approve historys}}
                 {{> _file_DeleteButton file_id=current._rev}}
@@ -75,7 +75,7 @@
                             
                             <tr>
                                 <td class="ins-attach-version-view">
-                                    <a href="{{getUrl current}}" target="_parent">{{filename}} {{_ "Current Version"}}</a>
+                                    <a href="{{getUrl current}}" class="ins_attach_href" target="_parent">{{filename}} {{_ "Current Version"}}</a>
                                     <br/>
                                     <label style="margin-bottom:0px;">{{attach_version_info current}}</label>
                                     {{#if current_can_delete current.approve historys}}
@@ -87,7 +87,7 @@
                             {{#each historys}}
                                 <tr>
                                     <td class="ins-attach-version-view">
-                                        <a href="{{getUrl this}}" target="_parent">{{filename}}</a>
+                                        <a href="{{getUrl this}}" class="ins_attach_href" target="_parent">{{filename}}</a>
                                         <br/>
                                         <label style="margin-bottom:0px;">{{attach_version_info this}}</label>
                                     </td>

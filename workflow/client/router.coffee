@@ -36,7 +36,7 @@ FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId',
 	action: (params, queryParams)->
 
 		Steedos.setSpaceId(params.spaceId)
-		#Session.set("instanceId", null);
+		Session.set("instanceId", null);
 
 		console.log "call get_instance_data"
 
