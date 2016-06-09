@@ -57,7 +57,7 @@ JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 			res.end()
 			return
 
-	res.writeHead 304
+	res.writeHead 403
 	res.end()
 	return
 
