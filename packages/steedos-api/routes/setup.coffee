@@ -16,17 +16,16 @@ Setup.setAuthCookies = (req, res, userId, authToken) ->
 			domain: Steedos.uri.domain(),
 			maxAge: 90*60*60*24*1000,
 			httpOnly: false
-
+			overwrite: true
 		cookies.set "X-Auth-Token", authToken, 
 			domain: Steedos.uri.domain(),
 			maxAge: 90*60*60*24*1000,
 			httpOnly: false
+			overwrite: true
 
 
 
 JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
-
-	cookies = new Cookies( req, res );
 
 	# first check request body
 	if req.body
@@ -99,6 +98,7 @@ JsonRoutes.add "post", "/api/setup/login", (req, res, next) ->
 	if !user
 		res.statusCode = 401;
 		res.end();
+		return
 
 	if (!bcryptCompare(bcryptPassword, user.services.password.bcrypt)) 
 		res.statusCode = 401;

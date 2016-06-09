@@ -50,13 +50,12 @@ JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 
 			steedos_token = cipheredMsg.toString('base64')
 
-			console.log steedos_token
-
 			returnurl = app.url + "?X-STEEDOS-WEB-ID=" + steedos_id + "&X-STEEDOS-AUTHTOKEN=" + steedos_token
 
 			res.setHeader "Location", returnurl
 			res.writeHead 302
 			res.end()
+			return
 
 	res.writeHead 304
 	res.end()
