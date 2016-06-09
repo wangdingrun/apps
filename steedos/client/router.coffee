@@ -74,9 +74,6 @@ FlowRouter.route '/steedos/help',
 FlowRouter.route '/app/:app_id', 
     action: (params, queryParams)->
         
-        BlazeLayout.render 'masterLayout',
-            main: "springboard"
-
         app = db.apps.core_apps[params.app_id]
         if app.internal
             FlowRouter.go(app.url)
@@ -88,4 +85,6 @@ FlowRouter.route '/app/:app_id',
             url = Meteor.absoluteUrl("api/setup/sso/" + app._id);
 
         window.open(url, '_blank', 'EnableViewPortScale=yes')
+
+        FlowRouter.go "/steedos/springboard"
         
