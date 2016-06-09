@@ -55,7 +55,6 @@ Template.instance_attachment.events({
     "click .ins_attach_href": function (event, template) {
         // 在手机上弹出窗口显示附件
         if (Steedos.isMobile()){
-            debugger
             Steedos.openWindow(event.target.getAttribute("href"))
             event.stopPropagation()
             return false;
