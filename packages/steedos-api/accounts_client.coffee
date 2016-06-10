@@ -34,6 +34,5 @@ Setup.logout = () ->
 			console.log(data)
 
 
-Meteor.startup ->
-	Accounts.onLogin ()->
-		Setup.validate();
+Accounts.onLogin ()->
+	Setup.validate();

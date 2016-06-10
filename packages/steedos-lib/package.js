@@ -19,6 +19,7 @@ Package.onUse(function(api) {
 	api.use('underscorestring:underscore.string');
 	api.use('tracker');
 	api.use('session');
+	api.use('accounts-base');
 	
   	api.use('simple:json-routes');
 	api.use('nimble:restivus');
@@ -47,7 +48,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/settings.coffee', ['client', 'server']);
 	api.addFiles('lib/tapi18n.coffee');
-	api.addFiles('lib/utc_offset.coffee');
+	api.addFiles('lib/methods/utc_offset.coffee');
+	api.addFiles('lib/methods/last_logon.coffee');
 
 	api.addFiles('lib/models/users.coffee');
 	api.addFiles('lib/models/spaces.coffee');
