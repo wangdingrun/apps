@@ -1,7 +1,13 @@
 {
     "Steedos": "Steedos",
     "Apps": "Apps",
-    "Steedos Workflow": "Steedos Workflow",
+    "Steedos Workflow": "Workflow",
+    "Steedos Chat": "Chat",
+    "Steedos Drive": "Drive",
+    "Steedos Mail": "Mail",
+    "Steedos Calendar": "Calendar",
+    "Steedos Contacts": "Contacts",
+    "Steedos Admin": "Admin",
     
     "Forgot Password": "Forgot Password",
     "Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
