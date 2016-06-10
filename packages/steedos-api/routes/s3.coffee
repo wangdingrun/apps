@@ -150,13 +150,13 @@ Meteor.methods
           console.error("file not found: " + old_path)
           
 
-    count = db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}}).count();
+    count = db.instances.find({"attachments.current": {$exists: true}}, {sort: {modified: -1}}).count();
     console.log("all instances: " + count)
     
     b = new Date()
 
     i = min
-    db.instances.find({"attachments.current": {$ne: null}}, {sort: {modified: -1}, skip: min, limit: max-min}).forEach (ins) ->
+    db.instances.find({"attachments.current": {$exists: true}}, {sort: {modified: -1}, skip: min, limit: max-min}).forEach (ins) ->
       i = i + 1
       console.log(i + ":" + ins.name)
       attachs = ins.attachments
