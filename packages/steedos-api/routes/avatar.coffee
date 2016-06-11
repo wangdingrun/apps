@@ -16,8 +16,8 @@ Meteor.startup ->
 			res.end()
 			return
 
-		if user.avatarURL
-			res.setHeader "Location", user.avatarURL
+		if user.avatarUrl
+			res.setHeader "Location", user.avatarUrl
 			res.writeHead 302
 			res.end()
 			return

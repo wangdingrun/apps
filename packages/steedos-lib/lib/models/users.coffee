@@ -105,6 +105,22 @@ if Meteor.isServer
 		if userId
 			doc.created_by = userId;
 
+		if doc.services?.google
+			if doc.services.google.email && !doc.emails
+				doc.emails = [{
+					address: doc.services.google.email,
+					verified: true
+				}]
+			if doc.services.google.picture
+				doc.avatarUrl = doc.services.google.picture
+
+		if doc.services?.facebook
+			if doc.services.facebook.email && !doc.emails
+				doc.emails = [{
+					address: doc.services.facebook.email,
+					verified: true
+				}]
+
 		if (doc.emails && !doc.steedos_id)
 			if doc.emails.length>0
 				doc.steedos_id = doc.emails[0].address
@@ -115,9 +131,9 @@ if Meteor.isServer
 		if (doc.profile?.locale && !doc.locale)
 			doc.locale = doc.profile.locale
 
-		if !doc.steedos_id
-			doc._id = db.users._makeNewID()
-			doc.steedos_id = doc._id 
+		# if !doc.steedos_id
+		# 	doc._id = db.users._makeNewID()
+		# 	doc.steedos_id = doc._id 
 
 		if !doc.name
 			doc.name = doc.steedos_id.split('@')[0]
