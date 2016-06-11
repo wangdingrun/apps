@@ -74,7 +74,7 @@ FlowRouter.route '/steedos/help',
 FlowRouter.route '/app/:app_id', 
     action: (params, queryParams)->
         
-        app = db.apps.core_apps[params.app_id]
+        app = db.apps.findOne(params.app_id)
         if app.internal
             FlowRouter.go(app.url)
             return
