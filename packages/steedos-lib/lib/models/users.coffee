@@ -125,6 +125,14 @@ if Meteor.isServer
 		# if !doc.username
 		# 	doc.username = doc.steedos_id.replace("@","_").replace(".","_")
 
+		# for steedos chat
+		if !doc.type
+			doc.type = "user"
+		if !doc.active
+			doc.active = true
+		if !doc.roles
+			doc.roles = ["user"]
+
 		_.each doc.emails, (obj)->
 			db.users.checkEmailValid(obj.address);
 		
