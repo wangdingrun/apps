@@ -38,7 +38,7 @@ db.apps.core_apps =
         internal: true
         menu: true
 
-db.apps.core_apps_array = []
-_.each db.apps.core_apps, (v, k)->
-    v._id = k
-    db.apps.core_apps_array.push(v)
+# db.apps.core_apps_array = []
+# _.each db.apps.core_apps, (v, k)->
+#     v._id = k
+#     db.apps.core_apps_array.push(v)

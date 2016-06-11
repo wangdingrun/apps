@@ -48,8 +48,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/settings.coffee', ['client', 'server']);
 	api.addFiles('lib/tapi18n.coffee');
-	api.addFiles('lib/methods/utc_offset.coffee');
-	api.addFiles('lib/methods/last_logon.coffee');
 
 	api.addFiles('lib/models/users.coffee');
 	api.addFiles('lib/models/spaces.coffee');
@@ -57,6 +55,12 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/organizations.coffee');
 	api.addFiles('lib/models/users_changelogs.coffee');
 	api.addFiles('lib/models/apps.coffee');
+
+	api.addFiles('lib/methods/apps_init.coffee');
+	api.addFiles('lib/methods/utc_offset.coffee');
+	api.addFiles('lib/methods/last_logon.coffee');
+
+	api.addFiles('lib/publications/apps.coffee');
 
 	api.addFiles('lib/api/core.coffee', ['server']);
 	api.addFiles('lib/api/users.coffee', ['server']);

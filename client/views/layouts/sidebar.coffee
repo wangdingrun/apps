@@ -1,7 +1,7 @@
 Template.sidebar.helpers
 
 	apps: ()->
-		return db.apps.core_apps_array;
+		return db.apps.find();
 
 	displayName: ->
 

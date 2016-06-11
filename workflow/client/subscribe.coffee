@@ -26,6 +26,7 @@ Meteor.startup ->
 
 
 		if Session.get("spaceId")
+			Steedos.subs.apps = Meteor.subscribe("apps", Session.get("spaceId"))
 			Steedos.subs.space_users = Meteor.subscribe("space_users", Session.get("spaceId"))
 			Steedos.subs.organizations = Meteor.subscribe("organizations", Session.get("spaceId"))
 			Steedos.subs.flow_roles = Meteor.subscribe("flow_roles", Session.get("spaceId"))

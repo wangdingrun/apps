@@ -48,21 +48,24 @@ if Meteor.isServer
         clientId: "dingoa7enhp5nfiip75vmk",
         secret: "NAlKUjGGWrffcAss9nMSd68DTUggYhg559HQT7kpACDcyu7g1PpUdBcXAOlBWZtX",
         scope: "snsapi_login"
+      google:
+        clientId: "355450467200.apps.googleusercontent.com",
+        secret: "QBlUTmUjrJVWBr0lwVVrF2S3"
 
 
-    _.each Steedos.settings.oauth, (v, k)->
+    # _.each Steedos.settings.oauth, (v, k)->
 
-      o = ServiceConfiguration.configurations.findOne
-            service: k
+    #   o = ServiceConfiguration.configurations.findOne
+    #         service: k
 
-      if o
-        ServiceConfiguration.configurations.update o._id, $set: 
-          clientId: v.clientId,
-          scope: v.scope,
-          secret: v.secret
-      else
-        ServiceConfiguration.configurations.insert
-          service: k,
-          clientId: v.clientId,
-          scope: v.scope,
-          secret: v.secret
+    #   if o
+    #     ServiceConfiguration.configurations.update o._id, $set: 
+    #       clientId: v.clientId,
+    #       scope: v.scope,
+    #       secret: v.secret
+    #   else
+    #     ServiceConfiguration.configurations.insert
+    #       service: k,
+    #       clientId: v.clientId,
+    #       scope: v.scope,
+    #       secret: v.secret
