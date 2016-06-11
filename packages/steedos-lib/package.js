@@ -59,6 +59,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/methods/apps_init.coffee');
 	api.addFiles('lib/methods/utc_offset.coffee');
 	api.addFiles('lib/methods/last_logon.coffee');
+	api.addFiles('lib/methods/user_add_email.coffee');
 
 	api.addFiles('lib/publications/apps.coffee');
 
