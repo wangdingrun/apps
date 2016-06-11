@@ -4,6 +4,9 @@ Template.registerHelper 'urlPrefix', ->
 Template.registerHelper 'isMobile', ->
     return $(window).width()<767
 
+Template.registerHelper 'userId', ->
+    return Meteor.userId()
+
 Template.registerHelper 'spaceId', ->
     if Session.get("spaceId")
         return Session.get("spaceId")

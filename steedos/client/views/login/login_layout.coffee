@@ -1,10 +1,5 @@
 Template.loginLayout.helpers
                 
-        isLoggedout: ->
-                if Meteor.userId()
-                        return false;
-                else
-                        return true;
 
 Template.loginLayout.onCreated ->
         self = this;

@@ -12,11 +12,11 @@
                             </a>
 
                             <div class="pull-right header-buttons" >
-                                {{#if isLoggedout}}
+                                {{#if userId}}
+                                    <button type="button" id="btnLogout" class="btn btn-default">{{_ 'Sign out'}}</button>
+                                {{else}}
                                     <button type="button" id="btnSignIn" class="btn btn-primary" >{{_ 'Log in'}}</button>&nbsp;
                                     <button type="button" id="btnSignUp" class="btn btn-default">{{_ 'Sign up'}}</button>
-                                {{else}}
-                                    <button type="button" id="btnLogout" class="btn btn-default">{{_ 'Sign out'}}</button>
                                 {{/if}}
                               
                             </div>
