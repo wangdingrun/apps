@@ -73,6 +73,9 @@ FlowRouter.route '/steedos/help',
 
 FlowRouter.route '/app/:app_id', 
     action: (params, queryParams)->
+        if !Meteor.userId()
+            FlowRouter.go "/steedos/sign-in";
+            return true
         
         app = db.apps.findOne(params.app_id)
         if app.internal
