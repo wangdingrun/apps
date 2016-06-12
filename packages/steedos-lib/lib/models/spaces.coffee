@@ -226,6 +226,7 @@ if Meteor.isServer
                 organization: root_org._id,
                 user: userObj._id,
                 user_accepted: user_accepted
+            root_org.updateUsers()
         
     db.spaces.createTemplateOrganizations = (space_id)->
         space = db.spaces.findOne(space_id)
