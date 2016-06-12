@@ -76,6 +76,7 @@ db.spaces._simpleSchema = new SimpleSchema
             omit: true
     is_deleted:
         type: Boolean
+        optional: true,
 
     # "services.bqq.expires_in":
     #     type: Number,
