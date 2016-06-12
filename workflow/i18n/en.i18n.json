@@ -15,12 +15,20 @@
 
     "instance_approve": "Approve",
     "instance_reject": "Reject",
-    "instance_submit": "Submit",
     "instance_next_step": "Next Step",
     "instance_next_step_users": "Next Step User(s)",
     "instance_initiator": "Initiator",
     "instance_approval_history": "Approval History",
     "instance_in_progress": "In Progress",
+
+    "instance_submit": "Submit",
+    "instance_save": "Save",
+    "instance_delete": "Delete",
+    "instance_attachment": "Attachment",
+    "instance_cancel": "Cancel Request",
+    "instance_reassign": "Reassign",
+    "instance_relocate": "Relocate",
+    "instance_print": "Print",
 
     "Attachment deleted successfully": "Attachment deleted successfully!",
     "Attachment was added successfully": "Attachment was added successfully!",

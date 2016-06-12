@@ -14,12 +14,20 @@
 
     "instance_approve": "核准",
     "instance_reject": "驳回",
-    "instance_submit": "提交",
     "instance_next_step": "下一步骤",
     "instance_next_step_users": "下一步处理人",
     "instance_initiator": "提交人",
     "instance_approval_history": "签核历程",
     "instance_in_progress": "处理中",
+
+    "instance_submit": "提交",
+    "instance_save": "保存",
+    "instance_delete": "删除",
+    "instance_attachment": "附件",
+    "instance_cancel": "取消申请",
+    "instance_reassign": "转签核",
+    "instance_relocate": "重定位",
+    "instance_print": "打印",
 
     "Attachment deleted successfully": "附件删除成功!",
     "Attachment was added successfully": "附件添加成功!",

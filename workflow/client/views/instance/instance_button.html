@@ -1,15 +1,15 @@
 <template name="instance_button">
     <div class="navigation-bar btn-group">
 
-        <button type="button" class="btn btn-success" id="instance_submit" style={{enabled_submit}}>提交</button>
-        <button type="button" class="btn btn-default" id="instance_update" title="保存" style={{enabled_save}}><i class="fa fa-save"></i></button>
-        <button type="button" class="btn btn-default" id="instance_remove" title="删除" style={{enabled_delete}}><i class="ion ion-close-circled"></i></button>
-        <button type="button" class="btn btn-default" id="instance_to_print" title="打印" style={{enabled_print}}><i class="ion ion-printer"></i></button>
-        <button type="button" class="btn btn-default ins-upload" id="instance_add_attachment" title="附件" style={{enabled_add_attachment}}><i class="ion ion-android-attach"></i><input type="file" name="file" class="ins-file-input"></button>
+        <button type="button" class="btn btn-success" id="instance_submit" style={{enabled_submit}}>{{_ "instance_submit"}}</button>
+        <button type="button" class="btn btn-default" id="instance_update" title="{{_ 'instance_save'}}" style={{enabled_save}}><i class="fa fa-save"></i></button>
+        <button type="button" class="btn btn-default" id="instance_remove" title="{{_ 'instance_delete'}}" style={{enabled_delete}}><i class="ion ion-close-circled"></i></button>
+        <button type="button" class="btn btn-default" id="instance_to_print" title="{{_ 'instance_print'}}" style={{enabled_print}}><i class="ion ion-printer"></i></button>
+        <button type="button" class="btn btn-default ins-upload" id="instance_add_attachment" title="{{_ 'instance_attachment'}}" style={{enabled_add_attachment}}><i class="ion ion-android-attach"></i><input type="file" name="file" class="ins-file-input"></button>
 
-        <button type="button" class="btn btn-default" id="instance_force_end" title="取消申请" style={{enabled_terminate}}><i class="ion ion-arrow-return-left"></i></button>
-        <button type="button" class="btn btn-default" id="instance_reassign" title="转签核" style={{enabled_reassign}}><i class="ion ion-android-contact"></i></button>
-        <button type="button" class="btn btn-default" id="instance_relocate" title="重定位" style={{enabled_relocate}}><i class="ion ion-arrow-shrink"></i></button>
+        <button type="button" class="btn btn-default" id="instance_force_end" title="{{_ 'instance_cancel'}}" style={{enabled_terminate}}><i class="ion ion-arrow-return-left"></i></button>
+        <button type="button" class="btn btn-default" id="instance_reassign" title="{{_ 'instance_reassign'}}" style={{enabled_reassign}}><i class="ion ion-android-contact"></i></button>
+        <button type="button" class="btn btn-default" id="instance_relocate" title="{{_ 'instance_relocate'}}" style={{enabled_relocate}}><i class="ion ion-arrow-shrink"></i></button>
         <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
 
         <div class="pull-right">
