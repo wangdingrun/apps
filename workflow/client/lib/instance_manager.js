@@ -654,7 +654,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
       fileName = Session.get('filename');
 
     if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName)) {
-      fileName = "image-" + (new Date().toLocaleString()) + "." + fileName.split('.').pop();
+      fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
     }
     console.log(fileName);
     
