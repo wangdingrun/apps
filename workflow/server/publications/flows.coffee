@@ -8,7 +8,6 @@
 
     # 第一次订阅时初始化工作区
     if db.flows.find({space: spaceId}).count() == 0
-        db.spaces.createTemplateOrganizations(spaceId)
         db.spaces.createTemplateFormAndFlow(spaceId)
 
     console.log '[publish] flows for space ' + spaceId

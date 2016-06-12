@@ -6,7 +6,7 @@ if Meteor.isServer
 		user = db.users.findOne(doc.owner)
 
 		# 改为订阅时初始化
-		# db.spaces.createTemplateOrganizations(space_id)
+		db.spaces.createTemplateOrganizations(space_id)
 		# db.spaces.createTemplateFormAndFlow(space_id)
 
 
@@ -31,17 +31,8 @@ if Meteor.isServer
 		if !org_id
 			return false
 
-		# 创建 spaces 时会自动创建 space_user
-		# # 创建spaceuser
-		# spaceUser = {}
-		# spaceUser.user = user._id
-		# spaceUser.space = space_id
-		# spaceUser.organization = org_id
-		# spaceUser.name = user.name
-		# spaceUser.email = user.email
-		# spaceUser.mobile = user.mobile
-		# spaceUser.user_accepted = true
-		# db.space_users.insert(spaceUser)
+		# 初始化 space owner 的 orgnization
+		db.space_users.update({_id: user._id}, {$set: {organization: org_id}})
 
 		# 新建5个部门
 		if user.locale == "zh-cn"
