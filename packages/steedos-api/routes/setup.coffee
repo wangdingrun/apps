@@ -26,6 +26,7 @@ Setup.setAuthCookies = (req, res, userId, authToken) ->
 
 
 JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
+	cookies = new Cookies( req, res );
 
 	# first check request body
 	if req.body
