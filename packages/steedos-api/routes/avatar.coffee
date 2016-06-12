@@ -6,7 +6,7 @@ Meteor.startup ->
 
 		user = db.users.findOne(this.params.userId);
 		if !user
-			res.writeHead 403
+			res.writeHead 401
 			res.end()
 			return
 
