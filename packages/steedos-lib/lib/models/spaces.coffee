@@ -118,28 +118,6 @@ db.spaces.helpers
             adminNames.push(admin.name)
         return adminNames.toString();
 
-    join_space: (userId, user_accepted) ->
-        spaceUserObj = db.space_users.direct.findOne({user: userId, space: this._id})
-        userObj = db.users.direct.findOne(userId);
-        if (!userObj)
-            return;
-        if (spaceUserObj)
-            db.space_users.direct.update spaceUserObj._id, 
-                $set:
-                    name: userObj.name,
-                    email: userObj.email,
-                    space: this._id,
-                    user: userObj._id,
-                    user_accepted: user_accepted
-        else 
-            db.space_users.direct.insert
-                name: userObj.name,
-                email: userObj.email,
-                space: this._id,
-                user: userObj._id,
-                user_accepted: user_accepted
-        
-
 # if Meteor.isClient
 
 #     db.spaces.find().observeChanges
@@ -176,11 +154,9 @@ if Meteor.isServer
 
 
     db.spaces.after.insert (userId, doc) ->
-        console.log("db.spaces.after.insert")
-        if (doc.admins)
-            space = db.spaces.findOne(doc._id)
-            _.each doc.admins, (admin) ->
-                space.join_space(admin, true)
+        db.spaces.createTemplateOrganizations(doc._id)
+        _.each doc.admins, (admin) ->
+            db.spaces.space_add_user(doc._id, admin, true)
             
 
     db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -211,20 +187,9 @@ if Meteor.isServer
         self = this
         modifier.$set = modifier.$set || {};
 
-        # if (modifier.$set.admins)
-        #     _.each modifier.$set.admins, (admin) ->
-        #         self.transform().join_space(admin, true)
-
     db.spaces.before.remove (userId, doc) ->
         throw new Meteor.Error(400, "暂不支持删除工作区操作");
 
-        # only space owner can remove space
-        # if doc.owner != userId
-        #     throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
-
-        # db.space_users.direct.remove({space: doc._id});
-        # db.organizations.direct.remove({space: doc._id});
-        
 
     Meteor.methods
         setSpaceId: (spaceId) ->
@@ -233,4 +198,115 @@ if Meteor.isServer
         getSpaceId: ()->
             return this.connection["spaceId"]
 
-    
+
+    db.spaces.space_add_user = (spaceId, userId, user_accepted) ->
+        spaceUserObj = db.space_users.direct.findOne({user: userId, space: spaceId})
+        userObj = db.users.direct.findOne(userId);
+        if (!userObj)
+            return;
+        if (spaceUserObj)
+            db.space_users.direct.update spaceUserObj._id, 
+                $set:
+                    name: userObj.name,
+                    email: userObj.email,
+                    space: spaceId,
+                    user: userObj._id,
+                    user_accepted: user_accepted
+        else 
+            root_org = db.organizations.findOne({space: spaceId, is_company:true})
+            db.space_users.direct.insert
+                name: userObj.name,
+                email: userObj.email,
+                space: spaceId,
+                organization: root_org._id,
+                user: userObj._id,
+                user_accepted: user_accepted
+        
+    db.spaces.createTemplateOrganizations = (space_id)->
+        space = db.spaces.findOne(space_id)
+        if !space
+            return false;
+        user = db.users.findOne(space.owner)
+        if !user
+            reurn false
+
+        if db.organizations.find({space: space_id}).count()>0
+            return;
+
+        # 新建organization
+        org = {}
+        org.space = space_id
+        org.name = space.name
+        org.fullname = space.name
+        org.is_company = true
+        org_id = db.organizations.insert(org)
+        if !org_id
+            return false
+
+        # 初始化 space owner 的 orgnization
+        # db.space_users.direct.update({space: space_id, user: space.owner}, {$set: {organization: org_id}})
+
+        # 新建5个部门
+        if user.locale == "zh-cn"
+            procurement_name = "采购部"
+            sales_name = "销售部"
+            finance_name = "财务部"
+            administrative_name = "行政部"
+            human_resources_name = "人事部"
+        else
+            procurement_name = "Procurement Department"
+            sales_name = "Sales Department"
+            finance_name = "Finance Department"
+            administrative_name = "Administrative Department"
+            human_resources_name = "Human Resources Department"
+
+        # 采购部
+        procurement = {}
+        procurement.space = space_id
+        procurement.name = procurement_name
+        procurement.fullname = org.name + '/' + procurement.name
+        procurement.parents = [org_id]
+        procurement.parent = org_id
+        procurement.is_company = false
+        db.organizations.insert(procurement)
+
+        # 销售部
+        sales = {}
+        sales.space = space_id
+        sales.name = sales_name
+        sales.fullname = org.name + '/' + sales.name
+        sales.parents = [org_id]
+        sales.parent = org_id
+        sales.is_company = false
+        db.organizations.insert(sales)
+        
+        # 财务部
+        finance = {}
+        finance.space = space_id
+        finance.name = finance_name
+        finance.fullname = org.name + '/' + finance.name
+        finance.parent = org_id
+        finance.is_company = false
+        db.organizations.insert(finance)
+
+        # 行政部
+        administrative = {}
+        administrative.space = space_id
+        administrative.name = administrative_name
+        administrative.fullname = org.name + '/' + administrative.name
+        administrative.parent = org_id
+        administrative.is_company = false
+        db.organizations.insert(administrative)
+
+        # 人事部
+        human_resources = {}
+        human_resources.space = space_id
+        human_resources.name = human_resources_name
+        human_resources.fullname = org.name + '/' + human_resources.name
+        human_resources.parent = org_id
+        human_resources.is_company = false
+        db.organizations.insert(human_resources)
+
+        return true
+
+        

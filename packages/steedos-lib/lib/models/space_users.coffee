@@ -23,7 +23,6 @@ db.space_users._simpleSchema = new SimpleSchema
 
 	organization: 
 		type: String,
-		optional: true,
 		autoform: 
 			type: "selectorg"
 
