@@ -32,7 +32,7 @@ if Meteor.isServer
 			return false
 
 		# 初始化 space owner 的 orgnization
-		db.space_users.update({_id: user._id}, {$set: {organization: org_id}})
+		db.space_users.update({space: space_id, user: space.owner}, {$set: {organization: org_id}})
 
 		# 新建5个部门
 		if user.locale == "zh-cn"
