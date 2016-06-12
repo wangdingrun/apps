@@ -2,7 +2,7 @@
 
 <div class="box instance-traces">
     <div class="box-header with-border"> 
-        <h3 class="box-title">签核历程</h3>
+        <h3 class="box-title">{{_ "instance_approval_history"}}</h3>
 <!--         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -25,7 +25,7 @@
                             <td class="status {{this.judge}}"><span class='{{getApproveStatusIcon this.judge}}'></span>&nbsp;&nbsp;{{getApproveStatusText this.judge}}</td>
                             {{else}}
                             <td class="finish-date"></td>
-                            <td class="status {{this.judge}}">处理中</td>
+                            <td class="status {{this.judge}}">{{_ "instance_in_progress"}}</td>
                             {{/if}}
 
 

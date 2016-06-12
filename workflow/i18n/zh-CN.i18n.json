@@ -11,6 +11,16 @@
     "My Applications":"我的申请单",
     "Submit":"提交",
 
+
+    "instance_approve": "核准",
+    "instance_reject": "驳回",
+    "instance_submit": "提交",
+    "instance_next_step": "下一步骤",
+    "instance_next_step_users": "下一步处理人",
+    "instance_initiator": "提交人",
+    "instance_approval_history": "签核历程",
+    "instance_in_progress": "处理中",
+
     "Attachment deleted successfully": "附件删除成功!",
     "Attachment was added successfully": "附件添加成功!",
 
