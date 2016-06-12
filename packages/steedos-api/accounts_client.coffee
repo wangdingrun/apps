@@ -13,8 +13,8 @@ Setup.validate = ()->
 		contentType: "application/json",
 		dataType: 'json',
 		data: JSON.stringify(requestData),
-		# xhrFields: 
-		# 	withCredentials: true
+		xhrFields: 
+			withCredentials: true
 		crossDomain: true
 	.done ( data ) ->
 		if data.webservices
@@ -27,8 +27,8 @@ Setup.logout = () ->
 			type: "POST",
 			url: Meteor.absoluteUrl("api/setup/logout"),
 			dataType: 'json',
-			# xhrFields: 
-			#    withCredentials: true
+			xhrFields: 
+			   withCredentials: true
 			crossDomain: true,
 		.done ( data ) ->
 			console.log(data)
