@@ -44,12 +44,12 @@ Template.instance_suggestion.helpers
 
         next_step_id = Session.get("next_step_id");
 
-        # $("#nextStepUsers_div").show();
+        $("#nextStepUsers_div").show();
 
-        # if next_step_id
-        #     nextStep = WorkflowManager.getInstanceStep(next_step_id)
-        #     if nextStep && nextStep.step_type == 'end'
-        #         $("#nextStepUsers_div").hide();
+        if next_step_id
+            nextStep = WorkflowManager.getInstanceStep(next_step_id)
+            if nextStep && nextStep.step_type == 'end'
+                $("#nextStepUsers_div").hide();
 
 
         form_values = Session.get("form_values")
