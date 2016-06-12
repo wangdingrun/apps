@@ -6,6 +6,8 @@ Meteor.startup ->
 
 		if locale == "zh-cn"
 			TAPi18n.setLanguage("zh-CN")
+			moment.locale("zh-cn")
 		else 
 			TAPi18n.setLanguage("en")
+			moment.locale("en")
 
