@@ -74,6 +74,9 @@ db.spaces._simpleSchema = new SimpleSchema
         blackbox: true
         autoform:
             omit: true
+    is_deleted:
+        type: Boolean
+
     # "services.bqq.expires_in":
     #     type: Number,
     #     optional: true
@@ -145,6 +148,7 @@ if Meteor.isServer
         doc.created = new Date()
         doc.modified_by = userId
         doc.modified = new Date()
+        doc.is_deleted = false;
         
         if !userId
             throw new Meteor.Error(400, t("spaces_error.login_required"));
