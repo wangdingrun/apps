@@ -46,10 +46,9 @@ AutoForm.addInputType("coreform-datepicker", {
   },
   valueConverters: {
     "string": function (val) {
-      var options = this.data("options")
-
-      if(options && "format" in options && options.format){
-        return (val instanceof Date) ? moment.utc(val).format(options.format) : val
+      var format = this.data("format")
+      if(format){
+        return (val instanceof Date) ? $.format.date(val,format) : val
       }else{
         return (val instanceof Date) ? val.toString() : val;
       }

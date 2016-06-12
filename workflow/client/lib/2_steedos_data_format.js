@@ -109,6 +109,7 @@ var s_autoform = function (schema, field){
           autoform.type = 'date';
         else {
           autoform.type = 'coreform-datepicker';
+          autoform.outFormat = 'yyyy-MM-dd';
           autoform.dateTimePickerOptions = {
             showClear: true,
             format: "YYYY-MM-DD"
