@@ -63,7 +63,7 @@ SteedosTable.getValidValue = function(field){
 }
 
 
-SteedosTable.handleUserOrg = function(field, values){
+SteedosTable.handleData = function(field, values){
 
     if(!values || !(values instanceof Array)){
         return values;
@@ -83,6 +83,24 @@ SteedosTable.handleUserOrg = function(field, values){
                     if(value && typeof(value) == 'object'){
                         v[f.code] = v[f.code].id;
                     }
+                }
+            }else if(f.type == 'dateTime'){
+                var value = v[f.code]
+                if(value){
+                    if( value.length == 16){
+                        var t = value.split("T");
+                        var t0 = t[0].split("-");
+                        var t1 = t[1].split(":");
+
+                        year = t0[0];
+                        month = t0[1];
+                        date = t0[2];
+                        hours = t1[0];
+                        seconds = t1[1];
+                        value = new Date(year, month - 1 , date, hours, seconds);
+                        v[f.code] = value;
+                    }
+
                 }
             }
         });
@@ -511,7 +529,7 @@ Template.afTable.rendered = function(){
     var field = this.data.name;
 
     var keys =  SteedosTable.getKeys(field);
-    var validValue = SteedosTable.handleUserOrg(field, this.data.value);
+    var validValue = SteedosTable.handleData(field, this.data.value);
     SteedosTable.setTableValue(field, validValue);
     $("#"+field+"Thead").html(SteedosTable.getThead(field, this.data.atts.editable));
 
