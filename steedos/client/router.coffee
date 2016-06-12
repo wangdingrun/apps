@@ -78,6 +78,9 @@ FlowRouter.route '/app/:app_id',
             return true
         
         app = db.apps.findOne(params.app_id)
+        if !app
+            FlowRouter.go("/steedos/springboard")
+
         if app.internal
             FlowRouter.go(app.url)
             return
