@@ -50,7 +50,7 @@
 	"db_space_users_name": "Name",
 	"db_space_users_email": "Email",
 	"db_space_users_organization": "Organization",
-	"db_space_users_user_accepted": "User Accepted",
+	"db_space_users_user_accepted": "Is Valid",
 	"db_space_users_manager": "Manager",
 	"db_space_users_organization_name()": "Organization",
 

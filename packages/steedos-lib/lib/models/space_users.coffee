@@ -10,7 +10,6 @@ db.space_users._simpleSchema = new SimpleSchema
 	name: 
 		type: String,
 		max: 50,
-		optional: true,
 	email:
 		type: String,
 		regEx: SimpleSchema.RegEx.Email,
@@ -34,6 +33,9 @@ db.space_users._simpleSchema = new SimpleSchema
 	user_accepted: 
 		type: Boolean,
 		optional: true,
+		autoform: 
+			defaultValue: true
+			
 	created:
 		type: Date,
 		optional: true
