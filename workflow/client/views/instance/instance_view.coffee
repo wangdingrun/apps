@@ -8,6 +8,9 @@ Template.instance_view.helpers
     space_users: ->
         return db.space_users.find();
 
+    unequals: (a,b) ->
+        return !(a == b)
+
 Template.instance_view.events
     'change .ins-file-input': (event, template)->
             $(document.body).addClass("loading");
