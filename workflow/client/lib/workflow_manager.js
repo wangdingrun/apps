@@ -142,7 +142,7 @@ WorkflowManager.getInstanceFormVersion = function (){
             form_fields.push(field);
             if (field.fields){
               field.fields.forEach(function(f){
-                f['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
+                f['permission'] = field_permission[f.code] == 'editable' ? 'editable' : 'readonly';
                 form_fields.push(f);
               });
             }
