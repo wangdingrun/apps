@@ -63,6 +63,11 @@ db.users._simpleSchema = new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
+	is_deleted:
+		type: Boolean
+		optional: true,
+		autoform:
+			omit: true
 
 if Meteor.isClient
 	db.users._simpleSchema.i18n("db_users")
@@ -102,6 +107,7 @@ if Meteor.isServer
 	db.users.before.insert (userId, doc) ->
 
 		doc.created = new Date();
+		doc.is_deleted = false;
 		if userId
 			doc.created_by = userId;
 
