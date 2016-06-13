@@ -344,14 +344,19 @@ $(function(){
 					if($options.showUser){
 						$options.data.orgs.forEach(function(org){
 							if(org){
-								if(org.parent == orgId){
+								if(org.parent == orgId || (orgId == '' && !('parent' in org))){
 									org.users = getUsers(org.id);
 									orgChildren.push(org);
 								}
 							}
 						});
 					}else{
-						orgChildren = $options.data.orgs.filterProperty('parent', orgId);
+            if(orgId == ''){
+              orgChildren = $options.data.orgs.filterProperty('is_company', true);
+            }else{
+              orgChildren = $options.data.orgs.filterProperty('parent', orgId);
+            }
+						
 					}
 				}
 				return orgChildren;
