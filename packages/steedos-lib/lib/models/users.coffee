@@ -155,11 +155,11 @@ if Meteor.isServer
 
 	db.users.after.insert (userId, doc) ->
 		console.log("db.users.after.insert")
-		
-		db.spaces.insert
-			name: doc.name + " " + trl("db_space")
-			owner: doc._id
-			admins: [doc._id]
+		if !(doc.spaces?.length>0)
+			db.spaces.insert
+				name: doc.name + " " + trl("db_space")
+				owner: doc._id
+				admins: [doc._id]
 
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->

@@ -14,7 +14,6 @@ db.space_users._simpleSchema = new SimpleSchema
 	email:
 		type: String,
 		regEx: SimpleSchema.RegEx.Email,
-		optional: true,
 	user:
 		type: String,
 		optional: true,
@@ -90,15 +89,22 @@ if (Meteor.isServer)
 		if userId and space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 			
+		creator = db.users.findOne(userId)
+
 		if (!doc.user) && (doc.email)
 			userObj = db.users.findOne({"emails.address": doc.email});
 			if (userObj)
 				doc.user = userObj._id
 				doc.name = userObj.name
 			else
-				user = {email: doc.email}
-				doc.user = Accounts.createUser user
-				doc.name = doc.email.split('@')[0]
+				user = {}
+				if !doc.name
+					doc.name = doc.email.split('@')[0]
+				doc.user = db.users.insert
+					emails: [{address: doc.email, verified: false}]
+					name: doc.name
+					locale: creator.locale
+					spaces: [space._id]
 
 		if !doc.user
 			throw new Meteor.Error(400, t("space_users_error.user_required"));
