@@ -74,6 +74,7 @@ Template.flow_list_modal.events({
         data: data
       });
       $('#tree').on('nodeSelected', function(event, data) {
+        Modal.hide('flow_list_modal');
         InstanceManager.newIns(data.flow_id);
       });
     }
