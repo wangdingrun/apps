@@ -145,7 +145,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId){
                     }
                     break;
                 case 'applicantSuperior': //申请人上级
-                    nextStepUsers = WorkflowManager.getUsers(applicant.managers);
+                    nextStepUsers = WorkflowManager.getUsers(applicant.manager);
                     break;
                 case 'applicant': //申请人
                     nextStepUsers.push(applicant);
