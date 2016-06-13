@@ -32,6 +32,7 @@ Template.instance_suggestion.helpers
         Session.get("next_user_multiple")
 
     next_step_options: ->
+        ins_applicant = Session.get("ins_applicant");
         form_values = Session.get("form_values")
         return InstanceManager.getNextStepOptions();
 
@@ -40,7 +41,10 @@ Template.instance_suggestion.helpers
     #    return InstanceManager.getNextUserOptions();
 
     next_user_context: ->
+        
         console.log("next_user_context run ...");
+        
+        ins_applicant = Session.get("ins_applicant");
 
         next_step_id = Session.get("next_step_id");
 

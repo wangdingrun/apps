@@ -126,6 +126,9 @@ Template.instanceform.events
 
         InstanceManager.runFormula(code);
 
+        if code == 'ins_applicant'
+            Session.set("ins_applicant", InstanceManager.getApplicantUserId());
+
         # form_version = WorkflowManager.getInstanceFormVersion();
         # formula_fields = []
         # if form_version
