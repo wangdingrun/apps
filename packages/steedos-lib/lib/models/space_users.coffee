@@ -35,7 +35,7 @@ db.space_users._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform: 
 			defaultValue: true
-			
+
 	created:
 		type: Date,
 		optional: true
@@ -163,6 +163,11 @@ if (Meteor.isServer)
 		console.log("db.space_users.after.update");
 		self = this
 		modifier.$set = modifier.$set || {};
+
+		if modifier.$set.name
+			db.users.direct.update {_id: doc.user},
+				$set:
+					name: doc.name
 
 		if modifier.$set.organization
 			organizationObj = db.organizations.findOne(modifier.$set.organization)
