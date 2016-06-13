@@ -361,7 +361,7 @@ WorkflowManager.getUser = function (userId){
 WorkflowManager.getUsers = function (userIds){
 
   if("string" == typeof(userIds)){
-    return [WorkflowManager.getUser(orgId)]
+    return [WorkflowManager.getUser(userIds)]
   }
 
   var users = new Array();
