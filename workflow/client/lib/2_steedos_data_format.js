@@ -270,6 +270,9 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
                                     editable: field.permission == 'editable' ? true : false
                                   }
                                 };
+      if(ApproveManager.isReadOnly()){
+        fieldSchema[field.code].autoform.editable = false
+      }
 
       fieldSchema[field.code + ".$"] = {type:Object,label: label}
 
