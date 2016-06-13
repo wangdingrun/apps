@@ -79,5 +79,7 @@
 
     "primary_email_needed": "Setup your primary email",
     "primary_email_needed_description": "Please enter your primary email address here. You can use this email address to signin steedos, or reset your password.",
-    "primary_email_updated": "Primary email updated."
+    "primary_email_updated": "Primary email updated.",
+
+    "steedos_previous_version": "Click to access previous version of Steedos"
 }

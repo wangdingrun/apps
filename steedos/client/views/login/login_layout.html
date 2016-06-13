@@ -25,6 +25,12 @@
 
             <div class="content-wrapper" style="min-height: {{minHeight}}">
                     {{> Template.dynamic template=main}}
+                    {{#if isMobile}}
+                    {{else}}
+                        <div style="text-align: center;">
+                            <a href="#" id="previousVersion">{{_ "steedos_previous_version"}}</a>
+                        </div>
+                    {{/if}}
             </div>
         </div>
 

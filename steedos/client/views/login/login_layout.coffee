@@ -25,3 +25,6 @@ Template.loginLayout.events
                 
         'click #btnSignUp': (e, t) ->
                 FlowRouter.go("/steedos/sign-up")
+
+        'click #previousVersion': (e,t)->
+                Steedos.openWindow(Meteor.absoluteUrl("system/steedos/"))
