@@ -156,6 +156,13 @@ Template.instance_suggestion.events
 
 Template.instance_suggestion.onRendered ->
     console.log("instance_suggestion.onRendered...")
+
+    currentStep = InstanceManager.getCurrentStep();
+    # 当前步骤为会签时，不显示下一步步骤、处理人
+    if currentStep && currentStep.step_type == 'counterSign'
+        $(".instance-suggestion #instance_next").hide();
+    
+
     next_step_id = Session.get("next_step_id");
 
     $("#nextStepUsers_div").show();
