@@ -15,3 +15,10 @@ Template.registerHelper 'spaceId', ->
 
 Template.registerHelper 'locale', ->
     return Steedos.getLocale()
+
+Template.registerHelper 'country', ->
+    locale = Steedos.getLocale()
+    if locale == "zh-cn"
+        return "cn"
+    else
+        return "us"
