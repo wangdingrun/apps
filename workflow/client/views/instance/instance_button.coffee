@@ -2,10 +2,10 @@ Template.instance_button.helpers
     enabled_submit: ->
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         flow = db.flows.findOne(ins.flow);
         if !flow
-            return;
+            return "display: none;";
 
         if (Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox"
             return "";
@@ -15,10 +15,10 @@ Template.instance_button.helpers
     enabled_save: ->
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         flow = db.flows.findOne(ins.flow);
         if !flow
-            return;
+            return "display: none;";
 
         if (Session.get("box")=="draft"&&flow.state=="enabled") || Session.get("box")=="inbox"
             return "";
@@ -29,10 +29,10 @@ Template.instance_button.helpers
         # TODO 流程管理员
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         space = db.spaces.findOne(ins.space);
         if !space
-            return;
+            return "display: none;";
 
         if Session.get("box")=="draft" || (Session.get("box")=="monitor" && space.admins.contains(Meteor.userId()))
             return "";
@@ -53,7 +53,7 @@ Template.instance_button.helpers
     enabled_terminate: ->
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         if (Session.get("box")=="pending" || Session.get("box")=="inbox") && ins.state=="pending" && ins.applicant==Meteor.userId()
             return "";
         else
@@ -63,10 +63,10 @@ Template.instance_button.helpers
         # TODO 流程管理员
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         space = db.spaces.findOne(ins.space);
         if !space
-            return;
+            return "display: none;";
 
         if Session.get("box")=="monitor" && ins.state=="pending" && space.admins.contains(Meteor.userId())
             return "";
@@ -77,10 +77,10 @@ Template.instance_button.helpers
         # TODO 流程管理员
         ins = WorkflowManager.getInstance();
         if !ins
-            return;
+            return "display: none;";
         space = db.spaces.findOne(ins.space);
         if !space
-            return;
+            return "display: none;";
 
         if Session.get("box")=="monitor" && ins.state=="pending" && space.admins.contains(Meteor.userId())
             return "";
