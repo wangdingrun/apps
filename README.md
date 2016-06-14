@@ -1,9 +1,6 @@
-# Steedos Workflow
+# Steedos Apps
 
-## Developer Prepare
-
-* export MONGO_URL=mongodb://192.168.0.23/steedos
-* meteor
+Steedos Apps is a cloud-based productivity suite that helps you and your team connect and get work done from anywhere on any device.
 
 
 ## Developer Reference
