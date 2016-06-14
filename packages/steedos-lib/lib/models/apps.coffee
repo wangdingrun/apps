@@ -17,6 +17,10 @@ db.apps._simpleSchema = new SimpleSchema
 	icon:
 		type: String
 		max: 200
+	secret:
+		type: String
+		max: 200
+		optional: true,
 	internal:
 		type: Boolean
 		optional: true,
