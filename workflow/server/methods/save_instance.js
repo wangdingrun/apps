@@ -99,7 +99,7 @@ Meteor.methods({
         traces.forEach(function(t){
             if (t._id == trace_id) {
                 t.approves.forEach(function(a){
-                    if (a._id = approve_id) {
+                    if (a._id == approve_id) {
                         a.is_read = true;
                         a.read_date = new Date();
                         a.values = values;
