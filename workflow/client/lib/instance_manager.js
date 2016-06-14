@@ -73,11 +73,11 @@ InstanceManager.getNextStepOptions = function(){
 
       }else{
 
-        if(Session.get("judge") == 'rejected'){
+        if(!next_step_id && Session.get("judge") == 'rejected'){
           start_option = next_step_options.findPropertyByPK("type","start");
           next_step_id = start_option.id
-        }else{
-          next_step_options.unshift({id:'',selected:'',text: TAPi18n.__("Select placeholder"), disabled:'disabled'});
+        }else if( Session.get("judge") != 'rejected' ){
+          next_step_options.unshift({id:'',selected:true,text: TAPi18n.__("Select placeholder"), disabled:'disabled'});
         }
 
       }

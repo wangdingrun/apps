@@ -143,6 +143,7 @@ Template.instance_suggestion.events
         if ApproveManager.isReadOnly()
             return ;
         judge = $("[name='judge']").filter(':checked').val();
+        Session.set("next_step_id",null);
         Session.set("judge", judge);
 
     'change .nextSteps': (event) ->
