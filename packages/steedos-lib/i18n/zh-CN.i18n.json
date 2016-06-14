@@ -24,6 +24,11 @@
 	"db_apps_description": "描述",
 	"db_apps_url": "链接",
 	"db_apps_iconURL": "图标链接",
+	"db_apps_icon": "图标",
+	"db_apps_mobile": "在移动应用中显示",
+	"db_apps_desktop": "在桌面应用中显示",
+	"db_apps_menu": "在左侧菜单显示",
+	"db_apps_sort_no": "排序号",
 	
 	"db_space": "工作区",
 	"db_spaces": "工作区",

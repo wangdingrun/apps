@@ -93,6 +93,8 @@
     "primary_email_needed_description": "请输入您的工作邮件地址，此邮件地址可以用来登录华炎云，也可以用来重置密码。",
     "primary_email_updated": "邮件地址绑定成功",
 
-    "steedos_previous_version": "点击访问旧版华炎云"
+    "steedos_previous_version": "点击访问旧版华炎云",
+    "steedos_only_paid": "只有付费工作区才能执行此操作.",
+    "steedos_customize_apps": "自定义应用列表"
 
 }

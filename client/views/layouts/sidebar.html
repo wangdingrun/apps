@@ -28,7 +28,6 @@
               </a>
             </li>
             {{#each apps}}
-              {{#if menu}}
                 <li class="{{menuClass _id}}">
                   <a href="{{urlPrefix}}/app/{{_id}}/">
                     <i class="ion {{icon}}"></i><span>{{_ name}}</span>
@@ -39,7 +38,6 @@
                     </i>
                   </a>
                 </li>
-              {{/if}}
             {{/each}}
 
             <li class="header">{{_ "Account"}}</li>

@@ -3,9 +3,18 @@ Cookies = Npm.require("cookies")
 
 JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 
-	app = db.apps.core_apps[req.params.app_id]
-	if !app
-		return;
+	app = db.apps.findOne(req.params.app_id)
+	if app
+		secret = app.secret
+		redirectUrl = app.url
+	else
+		secret = "-8762-fcb369b2e8"
+		redirectUrl = req.params.redirectUrl
+
+	if !redirectUrl
+		res.writeHead 401
+		res.end()
+		return
 
 	cookies = new Cookies( req, res );
 
@@ -50,7 +59,7 @@ JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 
 			steedos_token = cipheredMsg.toString('base64')
 
-			returnurl = app.url + "?X-STEEDOS-WEB-ID=" + steedos_id + "&X-STEEDOS-AUTHTOKEN=" + steedos_token
+			returnurl = redirectUrl + "?X-STEEDOS-WEB-ID=" + steedos_id + "&X-STEEDOS-AUTHTOKEN=" + steedos_token
 
 			res.setHeader "Location", returnurl
 			res.writeHead 302

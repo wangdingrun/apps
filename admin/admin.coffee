@@ -1,9 +1,20 @@
 @Users = db.users
+@apps = db.apps
 @spaces = db.spaces
 @space_users = db.space_users
 @organizations = db.organizations
 @flow_roles = db.flow_roles
 @flow_positions = db.flow_positions
+
+db.apps.adminConfig = 
+	icon: "globe"
+	color: "blue"
+	label: ->
+		return t("db_apps")
+	tableColumns: [
+		{name: "name"},
+	]
+	selector: {space: "-1"}
 
 db.spaces.adminConfig = 
 	icon: "globe"
@@ -90,6 +101,7 @@ db.flow_positions.adminConfig =
 		space_users: db.space_users.adminConfig
 		flow_roles: db.flow_roles.adminConfig
 		flow_positions: db.flow_positions.adminConfig
+		apps: db.apps.adminConfig
 
 # set first user as admin
 # if Meteor.isServer
@@ -107,6 +119,8 @@ if Meteor.isClient
 				AdminTables["spaces"].selector = {owner: Meteor.userId()}
 
 			if Session.get("spaceId")
+				if AdminTables["apps"]
+					AdminTables["apps"].selector = {space: Session.get("spaceId")}
 				if AdminTables["space_users"]
 					AdminTables["space_users"].selector = {space: Session.get("spaceId")}
 				if AdminTables["organizations"]

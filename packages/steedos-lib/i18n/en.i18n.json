@@ -24,6 +24,11 @@
 	"db_apps_description": "Description",
 	"db_apps_url": "URL",
 	"db_apps_iconURL": "IconURL",
+	"db_apps_icon": "Icon",
+	"db_apps_mobile": "Show on mobile apps",
+	"db_apps_desktop": "Show on desktop",
+	"db_apps_menu": "Show on left menu",
+	"db_apps_sort_no": "Sort No.",
 
 	"db_space": "Space",
 	"db_spaces": "Spaces",
