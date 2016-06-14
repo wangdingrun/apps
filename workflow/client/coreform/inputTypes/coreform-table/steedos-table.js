@@ -459,6 +459,14 @@ SteedosTable.getTDValue = function(field, value){
                     td_value = $.format.date(value,'yyyy-MM-dd HH:mm');
                 }
                 break;
+            case 'number':
+                if(value){
+                    if(typeof(value) == 'string'){
+                        value = parseFloat(value)
+                    }
+                    td_value = value.toFixed(field.digits);
+                }
+                break;
             default:
                 td_value = value ? value : '';
                 break;
