@@ -56,7 +56,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
                 traces.forEach(function(trace){
                     if(trace.is_finished == true){
                         var finished_step = WorkflowManager.getInstanceStep(trace.step);
-                        if(finished_step.step_type != 'condition')
+                        if(finished_step.step_type != 'condition' && currentStep.id != finished_step.id)
                             nextSteps.push(finished_step);
                     }
                 });
