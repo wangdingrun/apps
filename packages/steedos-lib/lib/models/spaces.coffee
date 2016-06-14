@@ -12,7 +12,7 @@ db.spaces._simpleSchema = new SimpleSchema
         autoform:
             type: "selectuser"
             defaultValue: ->
-                return Meteor.userId
+                return Meteor.userId()
 
     admins: 
         type: [String],
