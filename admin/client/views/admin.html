@@ -10,12 +10,15 @@
 				</div>
 				<div class="navigation-bar">
 
-					<button type="button" class="btn btn-default" data-toggle="offcanvas">
-						<i class="fa fa-bars"></i>
-					</button>
+		          {{#if isMobile}}
 		            <a href="/steedos/springboard" class="btn btn-default" title='{{_ "Steedos"}}'>
-		                <i class="ion ion-android-cloud-outline"></i><span></span>
+		              <i class="ion ion-android-cloud-outline"></i><span></span>
 		            </a>
+		          {{else}}
+		            <button type="button" class="btn btn-default" data-toggle="offcanvas" >
+		              <i class="ion ion-navicon-round"></i>
+		            </button>
+		          {{/if}}
 
 					<span class="navigation-title">
 							{{_ "Settings"}}
