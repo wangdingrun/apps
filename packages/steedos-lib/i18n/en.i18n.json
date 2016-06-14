@@ -29,6 +29,7 @@
 	"db_apps_desktop": "Show on desktop",
 	"db_apps_menu": "Show on left menu",
 	"db_apps_sort_no": "Sort No.",
+	"db_apps_secret": "App Secret",
 
 	"db_space": "Space",
 	"db_spaces": "Spaces",

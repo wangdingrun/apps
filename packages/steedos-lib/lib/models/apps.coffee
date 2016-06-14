@@ -54,7 +54,7 @@ db.apps.core_apps =
 		desktop: true
 		sort_no: 10
 	chat:
-		url: "/chat"
+		url: "/chat/channel/general"
 		name: "Steedos Chat"
 		icon: "ion-ios-chatboxes-outline"
 		menu: true

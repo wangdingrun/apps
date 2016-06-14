@@ -2,9 +2,9 @@ Template.sidebar.helpers
 
 	apps: ()->
 		if Steedos.isMobile()
-			return db.apps.find({mobile: true, menu:true});
+			return db.apps.find({mobile: true, menu:true}, {sort: {sort_no:1}});
 		else
-			return db.apps.find({desktop: true, menu:true});
+			return db.apps.find({desktop: true, menu:true}, {sort: {sort_no:1}});
 
 	displayName: ->
 

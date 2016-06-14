@@ -29,6 +29,7 @@
 	"db_apps_desktop": "在桌面应用中显示",
 	"db_apps_menu": "在左侧菜单显示",
 	"db_apps_sort_no": "排序号",
+	"db_apps_secret": "App 密钥",
 	
 	"db_space": "工作区",
 	"db_spaces": "工作区",
