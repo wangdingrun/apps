@@ -76,6 +76,12 @@ Template.instance_suggestion.helpers
         
 
         if next_user && next_user.length > 0
+
+            #先清空下一步处理人
+            next_user[0].value = ''
+            next_user[0].dataset.values = ''
+
+
             if !Session.get("next_step_users_showOrg")
                 next_user[0].dataset.userOptions = users.getProperty("id")
                 next_user[0].dataset.showOrg = false;

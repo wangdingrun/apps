@@ -49,32 +49,48 @@ InstanceManager.getNextStepOptions = function(){
 
   var next_step_options = []
   if (nextSteps && nextSteps.length > 0){
-      var next_step_id = null;
-      var next_step_type = null
+      var next_step_id = Session.get("next_step_id");
+      var next_step_type = null;
       nextSteps.forEach(function(step){
         var option = {
               id: step.id,
               text: step.name,
               type: step.step_type
           }
-          if (current_next_steps && current_next_steps.length > 0){
+          if (!next_step_id && current_next_steps && current_next_steps.length > 0){
               if (current_next_steps[0].step == step.id){
-                  option.selected = true
                   next_step_id = step.id
-                  next_step_type = step.step_type
               }
           }
           next_step_options.push(option)
       });
           
       // 默认选中第一个
-      if (!next_step_id && next_step_options.length>0){
+      if (next_step_options.length == 1){
+          
           next_step_options[0].selected = true
           next_step_id = next_step_options[0].id
-          next_step_type = next_step_options[0].type
+
+      }else{
+
+        if(Session.get("judge") == 'rejected'){
+         start_option = next_step_options.findPropertyByPK("type","start");
+         start_option.selected = true;
+        }else{
+          next_step_options.unshift({id:'',selected:'',text: TAPi18n.__("Select placeholder"), disabled:'disabled'});
+        }
+
       }
 
       Session.set("next_step_id", next_step_id);
+
+      next_step_options.forEach(function(option){
+        if(option.id == next_step_id){
+          option.selected = true
+          next_step_type = option.type
+        }
+      });
+
       //触发select重新加载
       Session.set("next_step_multiple", false)
       if (next_step_id){
@@ -122,7 +138,7 @@ InstanceManager.getNextUserOptions = function(){
                   name: user.name
               }
               if (current_next_steps && current_next_steps.length > 0){
-                  if (_.contains(current_next_steps[0].users, user.id)){
+                  if (current_next_steps[0].step ==  next_step_id && _.contains(current_next_steps[0].users, user.id)){
                       option.selected = true
                       next_user_ids.push(user.id)
                   }
