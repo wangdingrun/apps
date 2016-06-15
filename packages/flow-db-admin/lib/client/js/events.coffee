@@ -25,5 +25,11 @@ Template.adminDeleteWidget.events
 	'click #confirm-delete': () ->
 		collection = FlowRouter.getParam 'collectionName'
 		_id = FlowRouter.getParam '_id'
-		Meteor.call 'adminRemoveDoc', collection, _id, (e,r)->
+		Meteor.call 'adminRemoveDoc', collection, _id, (error,r)->
+			if error
+				if error.reason
+					toastr.error error.reason
+				else 
+					toastr.error error
+
 			FlowRouter.go  '/admin/view/' + collection

@@ -28,6 +28,12 @@ AutoForm.hooks
 			AdminDashboard.alertSuccess 'Successfully created'
 			FlowRouter.go "/admin/view/#{collection}"
 
+		onError: (formType, error) ->
+			if error.reason
+				toastr.error error.reason
+			else 
+				toastr.error error
+
 	admin_update:
 		onSubmit: (insertDoc, updateDoc, currentDoc)->
 			hook = @
@@ -40,6 +46,12 @@ AutoForm.hooks
 			return false
 		onSuccess: (formType, collection)->
 			AdminDashboard.alertSuccess 'Successfully updated'
+
+		onError: (formType, error) ->
+			if error.reason
+				toastr.error error.reason
+			else 
+				toastr.error error
 
 	adminNewUser:
 		onSuccess: (formType, result)->
