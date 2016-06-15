@@ -23,6 +23,7 @@ Template.instance_view.events
                     $('.loading-text').text "正在上传..." + file.name
                             
                 newFile = new FS.File(file);
+                newFile.type(cfs.getContentType(file.name))
                 currentApprove = InstanceManager.getCurrentApprove();
                 newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id};
                 cfs.instances.insert newFile, (err,fileObj) -> 

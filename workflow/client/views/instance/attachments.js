@@ -158,6 +158,7 @@ Template.ins_attach_version_modal.events({
         
         FS.Utility.eachFile(event, function(file){
             newFile = new FS.File(file);
+            newFile.type(cfs.getContentType(file.name))
             currentApprove = InstanceManager.getCurrentApprove();
             newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id, attach_id: Session.get("attach_id")};
             cfs.instances.insert(newFile, function(err, fileObj){
