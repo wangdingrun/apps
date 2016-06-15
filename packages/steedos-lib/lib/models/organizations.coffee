@@ -265,6 +265,10 @@ if (Meteor.isServer)
 		if (doc.children && doc.children.length>0)
 			throw new Meteor.Error(400, t("organizations_error.organization_has_children"));
 
+		if (doc.is_company)
+			throw new Meteor.Error(400, t("organizations_error.can_not_remove_root_organization"));
+
+
 	db.organizations.after.remove (userId, doc) ->
 		if (doc.parent)
 			parent = db.organizations.findOne(doc.parent)
