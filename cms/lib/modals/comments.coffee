@@ -1,7 +1,7 @@
-db.blog_comments = new Meteor.Collection('blog_comments')
+db.cms_comments = new Meteor.Collection('cms_comments')
 
-db.blog_comments._simpleSchema = new SimpleSchema
-	blog: 
+db.cms_comments._simpleSchema = new SimpleSchema
+	site: 
 		type: Number,	
 	parent: 
 		type: String,
@@ -101,7 +101,7 @@ db.blog_comments._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.blog_comments._simpleSchema.i18n("db_blog_comments")
+	db.cms_comments._simpleSchema.i18n("db_cms_comments")
 
-db.blog_comments.attachSchema(db.blog_comments._simpleSchema)
+db.cms_comments.attachSchema(db.cms_comments._simpleSchema)
 

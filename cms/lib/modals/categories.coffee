@@ -1,7 +1,7 @@
-db.blog_categories = new Mongo.Collection("blog_categories");
+db.cms_categories = new Mongo.Collection("cms_categories");
 
-db.blog_categories._simpleSchema = new SimpleSchema
-	blog: 
+db.cms_categories._simpleSchema = new SimpleSchema
+	site: 
 		type: Number,
 	name: 
 		type: String,
@@ -24,7 +24,7 @@ db.blog_categories._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform: 
 			options:  () ->
-				categories = db.blog_categories.find().map (category) ->
+				categories = db.cms_categories.find().map (category) ->
 					return {
 						value: category._id,
 						label: category.name
@@ -33,9 +33,9 @@ db.blog_categories._simpleSchema = new SimpleSchema
 
 	
 if Meteor.isClient
-	db.blog_categories._simpleSchema.i18n("db_blog_categories")
+	db.cms_categories._simpleSchema.i18n("db_cms_categories")
 
-db.blog_categories.attachSchema(db.blog_categories._simpleSchema)
+db.cms_categories.attachSchema(db.cms_categories._simpleSchema)
 
 
 	 

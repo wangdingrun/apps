@@ -1,7 +1,7 @@
-db.blog_posts = new Meteor.Collection('blog_posts')
+db.cms_posts = new Meteor.Collection('cms_posts')
 
-db.blog_posts._simpleSchema = new SimpleSchema
-	blog: 
+db.cms_posts._simpleSchema = new SimpleSchema
+	site: 
 		type: Number,
 	url: 
 		type: String,
@@ -121,7 +121,7 @@ db.blog_posts._simpleSchema = new SimpleSchema
 		autoform: 
 			type: "bootstrap-datetimepicker"
 
-db.blog_posts.config = 
+db.cms_posts.config = 
 	STATUS_PENDING: 1                                                                                      // 34
 	STATUS_APPROVED: 2                                                                                     // 35
 	STATUS_REJECTED: 3                                                                                     // 36
@@ -129,7 +129,7 @@ db.blog_posts.config =
 	STATUS_DELETED: 5 
 
 if Meteor.isClient
-	db.blog_posts._simpleSchema.i18n("db_blog_posts")
+	db.cms_posts._simpleSchema.i18n("db_cms_posts")
 
-db.blog_posts.attachSchema(db.blog_posts._simpleSchema)
+db.cms_posts.attachSchema(db.cms_posts._simpleSchema)
 

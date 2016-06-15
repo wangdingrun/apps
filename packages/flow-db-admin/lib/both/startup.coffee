@@ -74,7 +74,7 @@ adminTablePubName = (collection) ->
 	"admin_tabular_#{collection}"
 
 adminCreateTables = (collections) ->
-	_.each AdminConfig?.collections, (collection, name) ->
+	_.each collections, (collection, name) ->
 		_.defaults collection, {
 			showEditColumn: true
 			showDelColumn: true
@@ -133,3 +133,10 @@ adminPublishTables = (collections) ->
 Meteor.startup ->
 	adminCreateTables AdminConfig?.collections
 	adminPublishTables AdminConfig?.collections if Meteor.isServer
+
+
+	AdminConfig?.collections_add = (collections) ->
+		adminCreateTables collections
+		adminPublishTables collections if Meteor.isServer
+		_.each collections, (collection, name) ->
+			AdminConfig.collections[name] = collection
