@@ -68,28 +68,6 @@ db.spaces._simpleSchema = new SimpleSchema
 		autoform:
 			omit: true
 
-	# "services.bqq.expires_in":
-	#     type: Number,
-	#     optional: true
-	# "services.bqq.company_id":
-	#     type: String,
-	#     optional: true
-	# "services.bqq.company_token":
-	#     type: String,
-	#     optional: true
-	# "services.bqq.refresh_token":
-	#     type: String,
-	#     optional: true
-	# "services.bqq.user_list_timestamp":
-	#     type: Number,
-	#     optional: true
-	# "services.bqq.dept_list_timestamp":
-	#     type: Number,
-	#     optional: true
-	# "services.bqq.modified":
-	#     type: Number,
-	#     optional: true
-
 
 if Meteor.isClient
 	db.spaces._simpleSchema.i18n("db_spaces")
@@ -112,22 +90,6 @@ db.spaces.helpers
 			adminNames.push(admin.name)
 		return adminNames.toString();
 
-# if Meteor.isClient
-
-#     db.spaces.find().observeChanges
-#         added: (_id, fields) ->
-#             if !Session.get("spaceId")
-#                 Meteor.call "setSpaceId", _id, ->
-#                     Session.set("spaceId", _id)
-				
-#         removed: (_id)->
-#             if Session.get("spaceId") == _id
-#                 spaceId = null
-#                 nextSpace = db.spaces.findOne()
-#                 if nextSpace
-#                     spaceId  = nextSpace._id
-#                 Meteor.call "setSpaceId", spaceId, ->
-#                     Session.set("spaceId", spaceId)
 
 if Meteor.isServer
 	
@@ -263,7 +225,6 @@ if Meteor.isServer
 		procurement.fullname = org.name + '/' + procurement.name
 		procurement.parents = [org_id]
 		procurement.parent = org_id
-		procurement.is_company = false
 		db.organizations.insert(procurement)
 
 		# 销售部
@@ -273,7 +234,6 @@ if Meteor.isServer
 		sales.fullname = org.name + '/' + sales.name
 		sales.parents = [org_id]
 		sales.parent = org_id
-		sales.is_company = false
 		db.organizations.insert(sales)
 		
 		# 财务部
@@ -282,7 +242,6 @@ if Meteor.isServer
 		finance.name = finance_name
 		finance.fullname = org.name + '/' + finance.name
 		finance.parent = org_id
-		finance.is_company = false
 		db.organizations.insert(finance)
 
 		# 行政部
@@ -291,7 +250,6 @@ if Meteor.isServer
 		administrative.name = administrative_name
 		administrative.fullname = org.name + '/' + administrative.name
 		administrative.parent = org_id
-		administrative.is_company = false
 		db.organizations.insert(administrative)
 
 		# 人事部
@@ -300,7 +258,6 @@ if Meteor.isServer
 		human_resources.name = human_resources_name
 		human_resources.fullname = org.name + '/' + human_resources.name
 		human_resources.parent = org_id
-		human_resources.is_company = false
 		db.organizations.insert(human_resources)
 
 		return true
