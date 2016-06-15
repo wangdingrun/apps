@@ -106,9 +106,9 @@ FlowRouter.route '/app/:app_id',
 			return
 
 		if app.url?.startsWith("/designer")
-			url = Meteor.absoluteUrl("applications/designer/current/" + Steedos.getLocale() + "/");
+			url = Meteor.absoluteUrl("applications/designer/current/" + Steedos.getLocale() + "/"+ "?spaceId=" + Steedos.getSpaceId());
 		else
-			url = Meteor.absoluteUrl("api/setup/sso/" + app._id);
+			url = Meteor.absoluteUrl("api/setup/sso/" + app._id + "?spaceId=" + Steedos.getSpaceId());
 
 		Steedos.openWindow(url);
 		
