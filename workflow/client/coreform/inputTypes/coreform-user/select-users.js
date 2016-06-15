@@ -34,6 +34,34 @@ AutoForm.addInputType("selectuser",{
     }
 });
 
+Template.afSelectUser.helpers({
+    val: function(value){
+        if(value){
+            var val = '';
+            if(value instanceof Array){ //this.data.atts.multiple && (value instanceof Array)
+                if(value.length > 0 && typeof(value[0]) == 'object'){
+                    val = value ? value.getProperty("name").toString() : ''
+                    this.atts["data-values"] = value ? value.getProperty("id").toString() : '';
+                }else{
+                    val = value.toString();
+                }
+            }else{
+                if(value && typeof(value) == 'object'){
+                    val = value ? value.name : '';
+                    this.atts["data-values"] = value ? value.id : '';
+                }else{
+                    val = value;
+                }
+            }
+
+            if(this.dataset && "values" in this.dataset){
+                this.atts["data-values"] = this.dataset.values;
+            }
+
+            return val;
+        }
+    }
+});
 
 
 Template.afSelectUser.events({
@@ -111,23 +139,23 @@ Template.afSelectUser.confirm = function(name){
 
 }
 
-Template.afSelectUser.rendered = function(){
-    var value = this.data.value;
-    var name = this.data.name;
-    var dataset = this.data.dataset;
-    if(value instanceof Array){  //(value instanceof Array) && (this.data.atts && this.data.atts.multiple)
-        $("input[name='"+name+"']").val(value ? value.getProperty("name").toString() : '');
-        $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
-    }else{
-        $("input[name='"+name+"']").val(value ? value.name : '');
-        $("input[name='"+name+"']")[0].dataset.values = value ? value.id : ''; 
-    }
+// Template.afSelectUser.rendered = function(){
+//     var value = this.data.value;
+//     var name = this.data.name;
+//     var dataset = this.data.dataset;
+//     if(value instanceof Array){  //(value instanceof Array) && (this.data.atts && this.data.atts.multiple)
+//         $("input[name='"+name+"']").val(value ? value.getProperty("name").toString() : '');
+//         $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
+//     }else{
+//         $("input[name='"+name+"']").val(value ? value.name : '');
+//         $("input[name='"+name+"']")[0].dataset.values = value ? value.id : ''; 
+//     }
 
-    if(dataset){
-        for(var dk in dataset){
-            $("input[name='"+name+"']")[0].dataset[dk] = dataset[dk]
-        }
-    }
+//     if(dataset){
+//         for(var dk in dataset){
+//             $("input[name='"+name+"']")[0].dataset[dk] = dataset[dk]
+//         }
+//     }
     
-}
+// }
 
