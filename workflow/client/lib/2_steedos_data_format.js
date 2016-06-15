@@ -80,7 +80,7 @@ var s_autoform = function (schema, field){
         schema.type = String;
         autoform.readonly = (permission == 'readonly');
         if(field.is_textarea){
-          autoform.type = 'textarea';
+          autoform.type = 'coreform-textarea';
           autoform.rows = field.rows;
         }else{
           autoform.type = 'text';
