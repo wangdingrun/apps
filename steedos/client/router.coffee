@@ -64,6 +64,16 @@ FlowRouter.route '/steedos/space',
 			main: "space_select"
 
 
+FlowRouter.route '/steedos/space/info', 
+	action: (params, queryParams)->
+		if !Meteor.userId()
+			FlowRouter.go "/steedos/sign-in";
+			return true
+
+		BlazeLayout.render 'adminLayout',
+			main: "space_info"
+
+
 FlowRouter.route '/steedos/help', 
 	action: (params, queryParams)->
 		locale = Steedos.getLocale()

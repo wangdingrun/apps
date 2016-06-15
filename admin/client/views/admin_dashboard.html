@@ -51,14 +51,15 @@
 			<div class="bd">
 				<div class="weui_cells_title">{{spaceName}}</div>
 				<div class="weui_cells weui_cells_access">
-					<a class="weui_cell" href="/app/designer">
-						<div class="weui_cell_hd"><i class="ion ion-shuffle"></i></div>
+					{{#if isSpaceOwner}}
+					<a class="weui_cell" href="{{urlPrefix}}/steedos/space/info">
 						<div class="weui_cell_bd weui_cell_primary">
-							&nbsp;{{_ "Workflow Designer"}}
+							<i class="ion ion-android-globe"></i>&nbsp;{{_ "db_spaces"}}
 						</div>
 						<div class="weui_cell_ft">
 						</div>
 					</a>
+					{{/if}}
 					<a class="weui_cell" href="{{urlPrefix}}/admin/view/organizations">
 						<div class="weui_cell_bd weui_cell_primary">
 							<i class="fa fa-sitemap"></i>&nbsp;{{_ "db_organizations"}}
@@ -86,6 +87,14 @@
 						<div class="weui_cell_hd"><i class="ion ion-android-happy"></i></div>
 						<div class="weui_cell_bd weui_cell_primary">
 							&nbsp;{{_ "db_flow_positions"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+					<a class="weui_cell" href="/app/designer">
+						<div class="weui_cell_hd"><i class="ion ion-shuffle"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+							&nbsp;{{_ "Workflow Designer"}}
 						</div>
 						<div class="weui_cell_ft">
 						</div>

@@ -13,3 +13,9 @@ Template.AdminDashboard.helpers
                         s = db.spaces.findOne(Session.get('spaceId'))
                         if s
                                 return s.admins.includes(Meteor.userId())
+
+        isSpaceOwner: ->
+                if Session.get('spaceId')
+                        s = db.spaces.findOne(Session.get('spaceId'))
+                        if s
+                                return s.owner == Meteor.userId()

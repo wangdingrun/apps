@@ -1,0 +1,20 @@
+<template name="space_info">
+
+    <section class="content-header">
+      <h1>
+        {{_ "db_spaces"}}
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+            <li><a href="{{urlPrefix}}/"><i class="ion ion-home"></i> {{_ "Steedos"}}</a></li>
+        <li><a href="{{urlPrefix}}/admin">{{_ "Settings"}}</a></li>
+        <li class="active">{{_ "db_spaces"}}</li>
+      </ol>
+    </section> 
+    <section class="content">
+
+        {{> quickForm collection="db.spaces" doc=space id="updateSpace" schema=schema type="update" fields="name,owner,admins"}}
+
+    </section>
+
+</template>
