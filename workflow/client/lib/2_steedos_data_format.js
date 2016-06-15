@@ -99,7 +99,7 @@ var s_autoform = function (schema, field){
     case 'number' :
         schema.type = Number;
         autoform.readonly = (permission == 'readonly');
-        autoform.type = 'number';
+        autoform.type = 'coreform-number';
         autoform.step = number_step(field.digits); //控制有效位数
         break;
     case 'date' :

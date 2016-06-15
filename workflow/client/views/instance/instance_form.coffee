@@ -120,6 +120,29 @@ Template.instanceform.events
         
         code = event.target.name;
 
+        type = event.target.type;
+
+        if type == 'number'
+            v = event.target.value;
+            try
+                if !v
+                    v = 0.00;
+                    
+                if typeof(v) == 'string'
+                    v = parseFloat(v)
+
+                step = event.target.step
+                
+                if step
+                    v = v.toFixed(step.length - 2)
+                else
+                    v = v.toFixed(0)
+
+                event.target.value = v;
+            catch error
+                console.log(v + error)
+
+
         console.log("instanceform form-control change, code is " + code);
 
         InstanceManager.checkFormFieldValue(event.target);
