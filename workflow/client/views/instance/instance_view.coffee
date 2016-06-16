@@ -47,3 +47,5 @@ Template.instance_view.events
                             $('.loading-text').text ""
                             InstanceManager.addAttach(fileObj, false);
                             fileObj.removeListener("uploaded");
+            $(".ins-file-input").val('')
+
