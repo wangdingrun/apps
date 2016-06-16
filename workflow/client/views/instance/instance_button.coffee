@@ -116,6 +116,7 @@ Template.instance_button.events
         InstanceManager.checkFormValue();
         if($(".has-error").length == 0)
             InstanceManager.submitIns();
+            Session.set("instance_change", false);
 
     'click #instance_force_end': (event)->
         swal {
