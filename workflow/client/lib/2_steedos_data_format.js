@@ -78,7 +78,7 @@ var s_autoform = function (schema, field){
   switch(type){
     case 'input' :
         schema.type = String;
-        autoform.readonly = (permission == 'readonly');
+        autoform.disabled = (permission == 'readonly');
         if(field.is_textarea){
           autoform.type = 'coreform-textarea';
           autoform.rows = field.rows;
@@ -88,17 +88,17 @@ var s_autoform = function (schema, field){
         break;
     case 'section' : //div
         schema.type = String;
-        autoform.readonly = true;
+        autoform.disabled = true;
         autoform.type = 'section';
         break;
     case 'geolocation' : //地理位置
         schema.type = String;
-        autoform.readonly = (permission == 'readonly');
+        autoform.disabled = (permission == 'readonly');
         autoform.type = 'text';
         break;
     case 'number' :
         schema.type = Number;
-        autoform.readonly = (permission == 'readonly');
+        autoform.disabled = (permission == 'readonly');
         autoform.type = 'coreform-number';
         autoform.step = number_step(field.digits); //控制有效位数
         break;
