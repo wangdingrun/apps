@@ -18,12 +18,20 @@ Template.instance_view.events
             FS.Utility.eachFile event, (file) ->
                 console.log "file_name"
                 console.log file.name
-                if file.name
-                    Session.set("filename", file.name)
-                    $('.loading-text').text "正在上传..." + file.name
-                            
+                if !file.name
+                    return
+
+                fileName = file.name
+
+                if ["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())
+                    fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
+
+                Session.set("filename", fileName)
+                $('.loading-text').text "正在上传..." + fileName
+  
                 newFile = new FS.File(file);
-                newFile.type(cfs.getContentType(file.name))
+                newFile.name(fileName)
+                newFile.type(cfs.getContentType(fileName))
                 currentApprove = InstanceManager.getCurrentApprove();
                 newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id};
                 cfs.instances.insert newFile, (err,fileObj) -> 

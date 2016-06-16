@@ -684,9 +684,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     if (!fileName)
       fileName = Session.get('filename');
 
-    if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName)) {
-      fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
-    }
+    
     console.log(fileName);
     
     var attachs = instance.attachments || [];
