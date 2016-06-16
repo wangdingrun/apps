@@ -17,3 +17,6 @@ Template.space_switcher.events
 		self = this
 		Steedos.setSpaceId(this._id)
 		FlowRouter.go("/steedos/springboard")
+
+Template.space_switcher.onRendered ->
+	$(".dropdown .dropdown-menu").css("max-height", ($(window).height()-120) + "px");
