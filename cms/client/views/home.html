@@ -1,0 +1,45 @@
+<template name="cms_home">
+
+	<div class="navigation-bar">
+
+		<a href="/steedos/springboard" class="btn btn-default" title='{{_ "Steedos"}}'>
+			<i class="ion ion-android-cloud-outline"></i><span></span>
+		</a>
+
+		<span class="navigation-title dropdown">
+			{{_ "Steedos CMS"}}
+		</span>
+		<div class="pull-right">
+			
+
+		</div>
+	</div>
+	<div class="content">
+		
+	  <div class="cell">
+
+		  <div class="bd">
+			  <div class="weui_cells_title">{{_ "cms_admin"}}</div>
+			  <div class="weui_cells weui_cells_access">
+					<a class="weui_cell" href="{{urlPrefix}}/admin/view/cms_sites">
+						<div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+						  &nbsp;{{_ "cms_sites"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+					<a class="weui_cell" href="{{urlPrefix}}/admin/view/cms_posts">
+						<div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+						  &nbsp;{{_ "cms_posts"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+			  </div>
+		  </div>
+	  </div>
+
+	</div>
+</template>
