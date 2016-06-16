@@ -78,13 +78,13 @@ db.spaces.attachSchema(db.spaces._simpleSchema)
 db.spaces.helpers
 
 	owner_name: ->
-		owner = db.users.findOne({_id: this.owner});
+		owner = db.space_users.findOne({user: this.owner});
 		return owner && owner.name;
 	
 	admins_name: ->
 		if (!this.admins)
 			return ""
-		admins = db.users.find({_id: {$in: this.admins}}, {fields: {name:1}});
+		admins = db.space_users.find({user: {$in: this.admins}}, {fields: {name:1}});
 		adminNames = []
 		admins.forEach (admin) ->
 			adminNames.push(admin.name)

@@ -164,10 +164,10 @@ if (Meteor.isServer)
 		self = this
 		modifier.$set = modifier.$set || {};
 
-		if modifier.$set.name
-			db.users.direct.update {_id: doc.user},
-				$set:
-					name: doc.name
+		# if modifier.$set.name
+		# 	db.users.direct.update {_id: doc.user},
+		# 		$set:
+		# 			name: doc.name
 
 		if modifier.$set.organization
 			organizationObj = db.organizations.findOne(modifier.$set.organization)
