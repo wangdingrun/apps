@@ -38,11 +38,11 @@ SteedosTable.removeTableItem = function(field, item_index){
 }
 
 SteedosTable.setTableValue = function(field,value){
-    $("#" + field + "Table").val({val:value});
+    $("table[name='"+ field +"Table']").val({val:value});
 }
 
 SteedosTable.getTableValue = function(field){
-    return $("#" + field + "Table").val().val;
+    return $("table[name='"+ field +"Table']").val().val;
 }
 
 SteedosTable.getValidValue = function(field){
@@ -158,12 +158,13 @@ SteedosTable.getItemModalValue = function(field, item_index){
 SteedosTable.addItem = function(field, index){
     var keys = SteedosTable.getKeys(field);
     var item_value = SteedosTable.getItemModalValue(field, index);
-    $("#"+field+"Tbody").append(SteedosTable.getTr(keys, item_value, index, field, true));
+    $("tbody[name='"+ field +"Tbody']").append(SteedosTable.getTr(keys, item_value, index, field, true))
 
 }
 
 SteedosTable.updateItem = function(field, index){
-    var item = $("#" + field + "_item_" + index);
+
+    var item = $("tr[name='" + field + "_item_" + index +"']");
 
     var item_value = SteedosTable.getItemModalValue(field, index);
 
@@ -211,7 +212,7 @@ SteedosTable.updateItem = function(field, index){
 
 SteedosTable.removeItem = function(field, index){
     
-    $("#" + field + "_item_" + index).hide();
+    $("tr[name='" + field + "_item_" + index +"']").hide();
 
     SteedosTable.removeTableItem(field, index);
 
@@ -309,7 +310,7 @@ SteedosTable.getTbody = function(keys, field, values, editable){
 }
 
 SteedosTable.getTr = function(keys, item_value, index, field, editable){
-    var tr = "<tr id='"+field+"_item_"+index+"' data-index='" + index + "'"
+    var tr = "<tr id='"+field+"_item_"+index+"' name='"+field+"_item_"+index+"' data-index='" + index + "'"
 
     if(editable){
         tr = tr + "' class='item edit'"
@@ -539,8 +540,9 @@ Template.afTable.rendered = function(){
     var keys =  SteedosTable.getKeys(field);
     var validValue = SteedosTable.handleData(field, this.data.value);
     SteedosTable.setTableValue(field, validValue);
-    $("#"+field+"Thead").html(SteedosTable.getThead(field, this.data.atts.editable));
-
-    $("#"+field+"Tbody").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable));  
+    
+    $("thead[name='"+ field +"Thead']").html(SteedosTable.getThead(field, this.data.atts.editable));
+    
+    $("tbody[name='"+ field +"Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable));  
 };
 
