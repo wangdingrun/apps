@@ -173,6 +173,8 @@ Template.ins_attach_version_modal.events({
                 }
             })
         })
+
+        $(".ins-file-version-input").val('')
     },
     "click .ins_attach_href": function (event, template) {
         // 在手机上弹出窗口显示附件
