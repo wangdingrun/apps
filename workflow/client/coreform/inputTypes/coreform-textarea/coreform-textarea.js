@@ -61,7 +61,6 @@ function linesToArray(text) {
 
 Template.cfTextarea.helpers({
   showReadonlyView: function(atts){
-    debugger;
     if("readonly" in atts || "disabled" in atts){
       return true;
     }else{
