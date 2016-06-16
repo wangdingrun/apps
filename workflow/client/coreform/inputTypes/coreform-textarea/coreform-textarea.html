@@ -1,6 +1,6 @@
 <template name="cfTextarea">
   {{#if showReadonlyView this.atts}}
-    <div {{attsPlusFormControlClass}} value='{{this.value}}' style='height:100%'>{{{readonlyValue this.value}}}</div>
+    <pre {{attsPlusFormControlClass}} value='{{this.value}}' style='height:100%'>{{this.value}}</pre>
   {{else}}
     <textarea {{attsPlusFormControlClass}}>{{this.value}}</textarea>
   {{/if}}
