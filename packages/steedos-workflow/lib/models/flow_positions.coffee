@@ -34,7 +34,7 @@ db.flow_positions._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.flow_positions._simpleSchema.i18n("db_flow_positions")
+	db.flow_positions._simpleSchema.i18n("flow_positions")
 
 db.flow_positions.attachSchema(db.flow_positions._simpleSchema)
 

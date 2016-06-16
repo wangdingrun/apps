@@ -31,7 +31,7 @@ db.cms_sites._simpleSchema = new SimpleSchema
 		optional: true
 
 if Meteor.isClient
-	db.cms_sites._simpleSchema.i18n("db_cms_sites")
+	db.cms_sites._simpleSchema.i18n("cms_sites")
 
 db.cms_sites.attachSchema(db.cms_sites._simpleSchema)
 

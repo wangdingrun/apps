@@ -33,7 +33,7 @@ db.cms_categories._simpleSchema = new SimpleSchema
 
 	
 if Meteor.isClient
-	db.cms_categories._simpleSchema.i18n("db_cms_categories")
+	db.cms_categories._simpleSchema.i18n("cms_categories")
 
 db.cms_categories.attachSchema(db.cms_categories._simpleSchema)
 

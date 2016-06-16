@@ -58,7 +58,7 @@ db.space_users._simpleSchema = new SimpleSchema
 			omit: true
 
 if Meteor.isClient
-	db.space_users._simpleSchema.i18n("db_space_users")
+	db.space_users._simpleSchema.i18n("space_users")
 
 db.space_users.attachSchema(db.space_users._simpleSchema);
 

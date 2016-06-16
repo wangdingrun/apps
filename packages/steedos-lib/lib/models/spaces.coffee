@@ -70,7 +70,7 @@ db.spaces._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.spaces._simpleSchema.i18n("db_spaces")
+	db.spaces._simpleSchema.i18n("spaces")
 
 db.spaces.attachSchema(db.spaces._simpleSchema)
 

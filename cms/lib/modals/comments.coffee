@@ -101,7 +101,7 @@ db.cms_comments._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.cms_comments._simpleSchema.i18n("db_cms_comments")
+	db.cms_comments._simpleSchema.i18n("cms_comments")
 
 db.cms_comments.attachSchema(db.cms_comments._simpleSchema)
 

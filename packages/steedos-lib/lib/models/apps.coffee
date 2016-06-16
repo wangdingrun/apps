@@ -39,7 +39,7 @@ db.apps._simpleSchema = new SimpleSchema
 		optional: true,
 
 if Meteor.isClient
-	db.apps._simpleSchema.i18n("db_apps")
+	db.apps._simpleSchema.i18n("apps")
 
 db.apps.attachSchema db.apps._simpleSchema;
 

@@ -15,7 +15,7 @@ db.flow_roles._simpleSchema = new SimpleSchema
 
 
 if Meteor.isClient
-	db.flow_roles._simpleSchema.i18n("db_flow_roles")
+	db.flow_roles._simpleSchema.i18n("flow_roles")
 
 db.flow_roles.attachSchema(db.flow_roles._simpleSchema)
 

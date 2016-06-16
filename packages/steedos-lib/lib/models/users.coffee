@@ -70,7 +70,7 @@ db.users._simpleSchema = new SimpleSchema
 			omit: true
 
 if Meteor.isClient
-	db.users._simpleSchema.i18n("db_users")
+	db.users._simpleSchema.i18n("users")
 
 db.users.helpers
 	spaces: ->
@@ -163,7 +163,7 @@ if Meteor.isServer
 		console.log("db.users.after.insert")
 		if !(doc.spaces?.length>0)
 			db.spaces.insert
-				name: doc.name + " " + trl("db_space")
+				name: doc.name + " " + trl("space")
 				owner: doc._id
 				admins: [doc._id]
 

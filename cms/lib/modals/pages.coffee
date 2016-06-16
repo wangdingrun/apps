@@ -17,7 +17,7 @@ db.cms_pages._simpleSchema = new SimpleSchema
 		optional: true
 
 if Meteor.isClient
-	db.cms_pages._simpleSchema.i18n("db_cms_pages")
+	db.cms_pages._simpleSchema.i18n("cms_pages")
 
 db.cms_pages.attachSchema(db.cms_pages._simpleSchema)
 

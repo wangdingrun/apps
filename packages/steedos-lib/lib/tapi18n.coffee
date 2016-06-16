@@ -95,7 +95,7 @@ if Meteor.isClient
 				_.each table.options.columns, (column) ->
 					if (!column.data || column.data == "_id")
 						return
-					column.title = t("db_" + table.collection._name + "_" + column.data);
+					column.title = t("" + table.collection._name + "_" + column.data);
 				table.options.language = datatables_i18n[lang]
 				
 		

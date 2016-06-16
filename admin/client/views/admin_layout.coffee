@@ -21,6 +21,6 @@ Template.adminLayout.helpers
                 return Template.instance().minHeight.get() + 'px'
         admin_collection_title: ->
                 if Session.get('admin_collection_name')
-                        return t("db_" + Session.get('admin_collection_name'))
+                        return t("" + Session.get('admin_collection_name'))
 
         

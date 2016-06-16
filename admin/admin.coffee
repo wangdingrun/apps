@@ -10,7 +10,7 @@ db.apps.adminConfig =
 	icon: "globe"
 	color: "blue"
 	label: ->
-		return t("db_apps")
+		return t("apps")
 	tableColumns: [
 		{name: "name"},
 	]
@@ -20,7 +20,7 @@ db.spaces.adminConfig =
 	icon: "globe"
 	color: "blue"
 	label: ->
-		return t("db_spaces")
+		return t("spaces")
 	tableColumns: [
 		{name: "name"},
 		{name: "owner_name()"},
@@ -34,7 +34,7 @@ db.organizations.adminConfig =
 	icon: "sitemap"
 	color: "green"
 	label: ->
-		return t("db_organizations")
+		return t("organizations")
 	tableColumns: [
 		{name: "fullname"},
 		{name: "users_count()"},
@@ -49,7 +49,7 @@ db.space_users.adminConfig =
 	icon: "users"
 	color: "green"
 	label: ->
-		return t("db_space_users")
+		return t("space_users")
 	tableColumns: [
 		{name: "name"},
 		{name: "organization_name()"},
@@ -65,7 +65,7 @@ db.flow_roles.adminConfig =
 	icon: "users"
 	color: "green"
 	label: ->
-		return t("db_flow_roles")
+		return t("flow_roles")
 	tableColumns: [
 		{name: "name"},
 	]
@@ -77,7 +77,7 @@ db.flow_positions.adminConfig =
 	icon: "users"
 	color: "green"
 	label: ->
-		return t("db_flow_positions")
+		return t("flow_positions")
 	tableColumns: [
 		{name: "role_name()"},
 		{name: "org_name()"},

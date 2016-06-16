@@ -76,7 +76,7 @@ db.organizations._simpleSchema = new SimpleSchema
       optional: true
 
 if Meteor.isClient
-	db.organizations._simpleSchema.i18n("db_organizations")
+	db.organizations._simpleSchema.i18n("organizations")
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 

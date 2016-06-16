@@ -181,7 +181,7 @@ db.cms_posts.config =
 	STATUS_DELETED: 5 
 
 if Meteor.isClient
-	db.cms_posts._simpleSchema.i18n("db_cms_posts")
+	db.cms_posts._simpleSchema.i18n("cms_posts")
 
 db.cms_posts.attachSchema(db.cms_posts._simpleSchema)
 
