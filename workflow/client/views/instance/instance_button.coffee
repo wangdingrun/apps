@@ -98,6 +98,7 @@ Template.instance_button.events
 
     'click #instance_update': (event)->
         InstanceManager.saveIns();
+        Session.set("instance_change", false);
 
     'click #instance_remove': (event)->
         swal {   

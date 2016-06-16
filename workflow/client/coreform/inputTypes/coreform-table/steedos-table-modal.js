@@ -65,7 +65,7 @@ Template.steedosTableModal.events({
             if(!SteedosTable.checkItem(field, item_index)){
                 return ;
             }
-
+            Session.set("instance_change", true);
             SteedosTable.updateItem(field, item_index);
         }
         Modal.hide();

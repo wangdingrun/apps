@@ -162,6 +162,7 @@ Template.instanceform.events
 
     # 子表删除行时，执行主表公式计算
     'click .steedosTable-remove-item': (event, template)->
+        Session.set("instance_change", true);
         console.log("instanceform form-control change");
         code = event.target.name;
 

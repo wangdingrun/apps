@@ -12,6 +12,9 @@ Template.instance_view.helpers
         return !(a == b)
 
 Template.instance_view.events
+    'click .instance .form-control,.instance .suggestion-control,.instance .checkbox input,.instance .af-radio-group input,.instance .af-checkbox-group input': (event, template) ->
+        console.log("click " + event.target.name);
+        Session.set("instance_change", true);
     'change .ins-file-input': (event, template)->
             $(document.body).addClass("loading");
             $('.loading-text').text "正在上传..."

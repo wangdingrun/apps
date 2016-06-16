@@ -34,6 +34,9 @@ FlowRouter.route '/workflow/space/:spaceId/:box/',
 FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
+		
+		if Session.get("instance_change") && !ApproveManager.isReadOnly()
+			InstanceManager.saveIns();
 
 		Steedos.setSpaceId(params.spaceId)
 		Session.set("instanceId", null);
@@ -54,6 +57,7 @@ FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId',
 			Session.set("next_user_multiple", null);
 			Session.set("instanceId", params.instanceId);
 			Session.set("box", params.box);
+			Session.set("instance_change", false);
 
 
 			$(document.body).removeClass "loading";
