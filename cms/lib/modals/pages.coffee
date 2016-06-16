@@ -2,7 +2,17 @@ db.cms_pages = new Meteor.Collection('cms_pages')
 
 db.cms_pages._simpleSchema = new SimpleSchema
 	site: 
-		type: Number,
+		type: String,
+		autoform: 
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_sites.find({}, {name:1, sort: {name:1}})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	title: 
 		type: String,
 	slug:
@@ -16,8 +26,32 @@ db.cms_pages._simpleSchema = new SimpleSchema
 		type: Number,
 		optional: true
 
+	created: 
+		type: Date,
+		optional: true
+	created_by:
+		type: String,
+		optional: true
+	modified:
+		type: Date,
+		optional: true
+	modified_by:
+		type: String,
+		optional: true
+
+		
 if Meteor.isClient
 	db.cms_pages._simpleSchema.i18n("cms_pages")
 
 db.cms_pages.attachSchema(db.cms_pages._simpleSchema)
+
+
+db.cms_pages.adminConfig = 
+	icon: "globe"
+	color: "blue"
+	tableColumns: [
+		{name: "title"},
+		{modified: "modified"},
+	]
+	selector: {owner: -1}
 

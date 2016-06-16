@@ -2,15 +2,12 @@ db.cms_posts = new Meteor.Collection('cms_posts')
 
 db.cms_posts._simpleSchema = new SimpleSchema
 	site: 
-		type: Number,
+		type: String,
 		autoform: 
 			type: "select",
 			options: ->
 				options = []
-				selector = 
-					owner: Meteor.userId()
-
-				objs = db.cms_sites.find(selector, {name:1, sort: {name:1}})
+				objs = db.cms_sites.find({}, {name:1, sort: {name:1}})
 				objs.forEach (obj) ->
 					options.push
 						label: obj.name,

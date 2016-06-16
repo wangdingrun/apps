@@ -2,7 +2,17 @@ db.cms_categories = new Mongo.Collection("cms_categories");
 
 db.cms_categories._simpleSchema = new SimpleSchema
 	site: 
-		type: Number,
+		type: String,
+		autoform: 
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_sites.find({}, {name:1, sort: {name:1}})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	name: 
 		type: String,
 	description: 
@@ -31,11 +41,33 @@ db.cms_categories._simpleSchema = new SimpleSchema
 					}
 				return categories;
 
+	created: 
+		type: Date,
+		optional: true
+	created_by:
+		type: String,
+		optional: true
+	modified:
+		type: Date,
+		optional: true
+	modified_by:
+		type: String,
+		optional: true
 	
 if Meteor.isClient
 	db.cms_categories._simpleSchema.i18n("cms_categories")
 
 db.cms_categories.attachSchema(db.cms_categories._simpleSchema)
+
+
+db.cms_categories.adminConfig = 
+	icon: "globe"
+	color: "blue"
+	tableColumns: [
+		{name: "name"},
+		{modified: "modified"},
+	]
+	selector: {owner: -1}
 
 
 	 

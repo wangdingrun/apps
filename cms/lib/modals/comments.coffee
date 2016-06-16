@@ -2,7 +2,7 @@ db.cms_comments = new Meteor.Collection('cms_comments')
 
 db.cms_comments._simpleSchema = new SimpleSchema
 	site: 
-		type: Number,	
+		type: String,	
 	parent: 
 		type: String,
 		max: 500,
