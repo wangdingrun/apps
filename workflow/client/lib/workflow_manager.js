@@ -609,8 +609,34 @@ WorkflowManager.getSpaceFlows = function(spaceId){
 };
 
 
+var canAdd = function (fl, curSpaceUser, organization) {
+    var perms = fl.perms;
+    var hasAddRight = false;
+    if (perms) {
+      if (perms.users_can_add && perms.users_can_add.includes(Meteor.userId())) {
+        hasAddRight = true;
+      } else if (perms.orgs_can_add && perms.orgs_can_add.length > 0) {
+        if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_add.includes(curSpaceUser.organization)) {
+          hasAddRight = true;
+        } else {
+          for (var p = perms.orgs_can_add.length - 1; p >= 0; p--) {
+            if (organization && organization.parents && organization.parents.includes(perms.orgs_can_add[p])) {
+              hasAddRight = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+    return hasAddRight;
+  }
+
 WorkflowManager.getFlowListData = function(){
   //{categories:[],uncategories:[]}
+
+  var curUserId = Meteor.userId();
+  var curSpaceUser = db.space_users.findOne({'user': curUserId});
+  var organization = db.organizations.findOne(curSpaceUser.organization);
 
   var re = {};
 
@@ -627,7 +653,12 @@ WorkflowManager.getFlowListData = function(){
     forms.forEach(function(f){
       var flows = WorkflowManager.getFormFlows(f._id);
       flows.sortByName();
-      f.flows = flows;
+      f.flows = new Array();
+      flows.forEach(function(fl){
+        if(canAdd(fl, curSpaceUser, organization)){
+          f.flows.push(fl);
+        }
+      });
     });
 
     c.forms = forms;
@@ -640,7 +671,12 @@ WorkflowManager.getFlowListData = function(){
   unCategorieForms.forEach(function(f){
     var flows = WorkflowManager.getFormFlows(f._id);
     flows.sortByName();
-    f.flows= flows;
+    f.flows = new Array();
+    flows.forEach(function(fl){
+      if(canAdd(fl, curSpaceUser, organization)){
+        f.flows.push(fl);
+      }
+    });
   });
 
   re.categories = categories;
