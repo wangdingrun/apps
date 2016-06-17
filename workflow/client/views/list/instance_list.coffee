@@ -99,7 +99,8 @@ Template.instance_list.events
 
     'click [name="create_ins_btn"]': (event) ->
         Session.set('flow_list_modal_type', 'create')
-        Modal.show('flow_list_modal')
+        #Modal.show('flow_list_modal')
+        Modal.show("flow_list_box_modal")
 
     'click [name="show_flows_btn"]': (event) ->
         Session.set('flow_list_modal_type', 'show')
