@@ -526,6 +526,7 @@ Template.afTable.events({
     'click .steedos-table .steedosTable-item-remove': function(event, template){
         var field = template.data.name;
         var item_index = event.currentTarget.dataset.index;
+        Session.set("instance_change", true);
         SteedosTable.removeItem(field, item_index);
     }
 });

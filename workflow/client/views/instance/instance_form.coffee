@@ -161,12 +161,12 @@ Template.instanceform.events
         #InstanceManager.updateNextStepTagOptions();
 
     # 子表删除行时，执行主表公式计算
-    'click .steedosTable-remove-item': (event, template)->
-        Session.set("instance_change", true);
-        console.log("instanceform form-control change");
-        code = event.target.name;
+    # 'click .steedosTable-remove-item': (event, template)->
+    #     Session.set("instance_change", true);
+    #     console.log("instanceform form-control change");
+    #     code = event.target.name;
 
-        InstanceManager.runFormula(code);
+    #     InstanceManager.runFormula(code);
 
         # form_version = WorkflowManager.getInstanceFormVersion();
         # formula_fields = []
