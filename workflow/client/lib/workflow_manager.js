@@ -552,6 +552,50 @@ WorkflowManager.getSpaceCategories = function(spaceId){
   return re;
 };
 
+
+WorkflowManager.getCategoriesForms = function(categorieId){
+  var re = new Array();
+
+  var forms = db.forms.find({
+                              category: categorieId,
+                              state: "enabled"
+                            });
+  forms.forEach(function(f){
+    re.push(f)
+  });
+
+  return re;
+};
+
+WorkflowManager.getUnCategoriesForms = function(){
+  var re = new Array();
+
+  var forms = db.forms.find({
+                              category: {
+                                          $in: [null, ""]
+                                        },
+                              state: "enabled"
+                            });
+  forms.forEach(function(f){
+    re.push(f)
+  });
+
+  return re;
+};
+
+WorkflowManager.getFormFlows = function(formId){
+  var re = new Array();
+  var flows = db.flows.find({
+                            form: formId,
+                            state: "enabled"
+                          })
+  flows.forEach(function(f){
+    re.push(f)
+  });
+
+  return re;
+};
+
 WorkflowManager.getSpaceFlows = function(spaceId){
   var re = new Array();
 
@@ -563,6 +607,50 @@ WorkflowManager.getSpaceFlows = function(spaceId){
 
   return re;
 };
+
+
+WorkflowManager.getFlowListData = function(){
+  //{categories:[],uncategories:[]}
+
+  var re = {};
+
+  re.categories = new Array();
+
+  var categories = WorkflowManager.getSpaceCategories();
+
+  categories.sortByName();
+
+  categories.forEach(function(c){
+    var forms = WorkflowManager.getCategoriesForms(c._id);
+    forms.sortByName();
+
+    forms.forEach(function(f){
+      var flows = WorkflowManager.getFormFlows(f._id);
+      flows.sortByName();
+      f.flows = flows;
+    });
+
+    c.forms = forms;
+  });
+
+  var unCategorieForms = WorkflowManager.getUnCategoriesForms();
+
+  unCategorieForms.sortByName();
+  
+  unCategorieForms.forEach(function(f){
+    var flows = WorkflowManager.getFormFlows(f._id);
+    flows.sortByName();
+    f.flows= flows;
+  });
+
+  re.categories = categories;
+  re.categories.push({name : '',_id:'', forms : unCategorieForms});
+
+  return re;
+};
+
+
+
 
 WorkflowManager.getSpaceForms = function(spaceId){
   var re = new Array();
