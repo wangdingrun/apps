@@ -5,7 +5,7 @@ Template.loginLayout.onCreated ->
         self = this;
 
         $(window).resize ->
-                $(".content-wrapper").css("min-height", ($(window).height()-50) + "px");
+                $(".login.content-wrapper").css("min-height", ($(window).height()-50) + "px");
 
 
 Template.loginLayout.onRendered ->
