@@ -6,17 +6,17 @@
         <div class="wrapper">
             <header class="main-header">
                 <nav class="navbar navbar-static-top">
-                            <a href="{{urlPrefix}}/" class="navbar-brand">
+                            <a href="#{}" class="navbar-brand" id="logo">
                                 <img src="{{absoluteUrl}}/favicons/android-chrome-72x72.png" width="30" height="30">
-                                <b>&nbsp;{{_ "Steedos Workflow"}}</b>
+                                <!-- <b>&nbsp;{{_ "Steedos"}}</b> -->
                             </a>
 
                             <div class="pull-right header-buttons" >
                                 {{#if userId}}
-                                    <button type="button" id="btnLogout" class="btn btn-default">{{_ 'Sign out'}}</button>
+                                    <!-- <button type="button" id="btnLogout" class="btn btn-default">{{_ 'Sign out'}}</button> -->
                                 {{else}}
-                                    <button type="button" id="btnSignIn" class="btn btn-primary" >{{_ 'Log in'}}</button>&nbsp;
-                                    <button type="button" id="btnSignUp" class="btn btn-default">{{_ 'Sign up'}}</button>
+                                    <button type="button" id="quickGuide" class="btn btn-primary" >{{_ 'steedos_quick_guide'}}</button>&nbsp;
+                                    <button type="button" id="btnHelp" class="btn btn-default">{{_ 'steedos_help'}}</button>
                                 {{/if}}
                               
                             </div>
@@ -32,6 +32,16 @@
                         </div>
                     {{/if}}
             </div>
+<!-- 
+
+            <footer class="main-footer">
+                <div class="container">
+                  <div class="pull-right hidden-xs">
+                    <b>Version</b> 2.3.2
+                  </div>
+                  <strong><a href="#" id="aboutUs">{{_ "steedos_about_us"}}</a></strong>
+                </div>
+            </footer> -->
         </div>
 
     </div>

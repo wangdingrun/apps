@@ -83,5 +83,9 @@
 
     "steedos_previous_version": "Click to access previous version of Steedos",
     "steedos_only_paid": "Only paid spaces can do this operation.",
-    "steedos_customize_apps": "Customize Apps List"
+    "steedos_customize_apps": "Customize Apps List",
+
+    "steedos_about_us": "About Us",
+    "steedos_quick_guide": "Quick Guide",
+    "steedos_help": "Help"
 }

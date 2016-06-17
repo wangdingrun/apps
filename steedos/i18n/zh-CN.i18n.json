@@ -95,6 +95,10 @@
 
     "steedos_previous_version": "点击访问旧版华炎云",
     "steedos_only_paid": "只有付费工作区才能执行此操作.",
-    "steedos_customize_apps": "自定义应用列表"
+    "steedos_customize_apps": "自定义应用列表",
+
+    "steedos_about_us": "关于华炎云",
+    "steedos_quick_guide": "快速向导",
+    "steedos_help": "帮助"
 
 }

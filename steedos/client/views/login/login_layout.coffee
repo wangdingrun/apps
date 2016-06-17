@@ -5,7 +5,7 @@ Template.loginLayout.onCreated ->
         self = this;
 
         $(window).resize ->
-                $(".content-wrapper").css("min-height", ($(window).height()) + "px");
+                $(".content-wrapper").css("min-height", ($(window).height()-50) + "px");
 
 
 Template.loginLayout.onRendered ->
@@ -28,3 +28,19 @@ Template.loginLayout.events
 
         'click #previousVersion': (e,t)->
                 Steedos.openWindow(Meteor.absoluteUrl("system/steedos/"))
+
+        'click #logo': (e, t) ->
+                Steedos.openWindow("https://www.steedos.com")
+
+        'click #quickGuide': (e, t) ->
+                if Steedos.getLocale() == "zh-cn"
+                        Steedos.openWindow("http://oss.steedos.com/videos/cn/quick_guide.mp4")
+                else
+                        Steedos.openWindow("http://oss.steedos.com/videos/us/quick_guide.mp4")
+
+
+        'click #btnHelp': (e, t) ->
+                if Steedos.getLocale() == "zh-cn"
+                        Steedos.openWindow("https://www.steedos.com/cn/help/")
+                else
+                        Steedos.openWindow("https://www.steedos.com/us/help/")
