@@ -1,27 +1,25 @@
 <template name="afTable">
     <div class="panel panel-default steedos-table">
-        <div class="panel-heading">
-          <label class='control-label'>{{afFieldLabelText name=this.atts.name}}</label>
-         {{#if atts.editable}}
-            <div class="pull-right">
-                <span class="panel-controls">
-                    <!-- Button trigger modal -->
-                    <span class="steedosTable-item-add" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}">
-                      <i class='fa fa-plus' aria-hidden='true'></i>
-                    </span>
-                </span>
-            </div>
-          {{/if}}
-        </div>
-        {{#if afFieldIsInvalid name=this.atts.name}}
-        <div class="panel-body has-error" >
-          <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
-        </div>
-        {{/if}}
-
         <div class="panel-body" style="padding:0px;overflow-x:auto;">
-
-          <table class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;' name="{{this.name}}Table" id="{{this.name}}Table" data-schema-key="{{this.name}}">
+          <div class="panel-heading" >
+            <label class='control-label'>{{afFieldLabelText name=this.atts.name}}</label>
+           {{#if atts.editable}}
+              <div class="pull-right">
+                  <span class="panel-controls">
+                      <!-- Button trigger modal -->
+                      <span class="steedosTable-item-add" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}">
+                        <i class='fa fa-plus' aria-hidden='true'></i>
+                      </span>
+                  </span>
+              </div>
+            {{/if}}
+          </div>
+          {{#if afFieldIsInvalid name=this.atts.name}}
+          <div class="panel-body has-error" >
+            <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
+          </div>
+          {{/if}}
+          <table type='table' class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;'     {{this.atts}} id="{{this.name}}Table" data-schema-key="{{this.name}}">
               <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
               </thead>

@@ -38,11 +38,11 @@ SteedosTable.removeTableItem = function(field, item_index){
 }
 
 SteedosTable.setTableValue = function(field,value){
-    $("table[name='"+ field +"Table']").val({val:value});
+    $("table[name='"+ field +"']").val({val:value});
 }
 
 SteedosTable.getTableValue = function(field){
-    return $("table[name='"+ field +"Table']").val().val;
+    return $("table[name='"+ field +"']").val().val;
 }
 
 SteedosTable.getValidValue = function(field){

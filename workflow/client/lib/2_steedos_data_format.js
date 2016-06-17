@@ -232,7 +232,7 @@ WorkflowManager_format.getTableItemSchema = function(field){
   var fieldSchema = {};
   if(field.type == 'table'){
     var label = (field.name !=null && field.name.length > 0) ? field.name : field.code ;
-    fieldSchema[field.code] = {type: Object, optional: true, label: label};
+    fieldSchema[field.code] = {type: Object, optional: (field.permission == "readonly") || (!field.is_required), label: label};
 
     field.sfields.forEach(function(sfield){
       label = (sfield.name !=null && sfield.name.length > 0) ? sfield.name : sfield.code ;
@@ -258,7 +258,7 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm){
       
       fieldSchema[field.code] = {
                                   type : Array,
-                                  optional : true,
+                                  optional : (field.permission == "readonly") || (!field.is_required),
                                   minCount : 0,
                                   maxCount : 200,
                                   //initialCount: 0,

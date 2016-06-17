@@ -281,7 +281,10 @@ InstanceManager.checkFormFieldValue = function(field){
     var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
     var parent_group = $("#" + field.id).parent();
     var message = '';
-    if(field.parentNode.dataset.required == "true" || ((field.type == "checkbox" || field.type == "radio") && field.parentNode.parentNode.parentNode.dataset.required == "true")){
+
+    var jquery_f = $("[name='"+field.dataset.schemaKey+"']");
+
+    if( jquery_f.attr("type") != 'table' && field.parentNode.dataset.required == "true" || ((field.type == "checkbox" || field.type == "radio") && field.parentNode.parentNode.parentNode.dataset.required == "true")){
       var  fileValue = "";
       if(field.type == "checkbox" || field.type == "radio"){
         fileValue = $("[name='" + field.name + "']:checked").val();
@@ -296,6 +299,14 @@ InstanceManager.checkFormFieldValue = function(field){
             titleName = fo.name ? fo.name:fo.code;
           }
           message = showMessage(parent_group, "字段‘" + titleName + '’为必填');
+      }
+    }
+
+    if(jquery_f.attr("type") == 'table' && field.parentNode.parentNode.parentNode.dataset.required == "true"){
+      var table_value = AutoForm.getFieldValue(field.dataset.schemaKey,"instanceform");
+      parent_group = jquery_f.parent().parent().parent();
+      if(!table_value || table_value.length < 1){
+        message = showMessage(parent_group, "字段‘" + field.dataset.schemaKey + '’为必填');
       }
     }
 
