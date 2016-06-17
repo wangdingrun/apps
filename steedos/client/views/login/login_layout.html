@@ -8,7 +8,7 @@
                 <nav class="navbar navbar-static-top">
                             <a href="#{}" class="navbar-brand" id="logo">
                                 <img src="{{absoluteUrl}}/favicons/android-chrome-72x72.png" width="30" height="30">
-                                <!-- <b>&nbsp;{{_ "Steedos"}}</b> -->
+                                <span class=" hidden-xs"><b>&nbsp;{{_ "Steedos"}}</b></span>
                             </a>
 
                             <div class="pull-right header-buttons" >
@@ -25,12 +25,10 @@
 
             <div class="content-wrapper" style="min-height: {{minHeight}}">
                     {{> Template.dynamic template=main}}
-                    {{#if isMobile}}
-                    {{else}}
-                        <div style="text-align: center;">
-                            <a href="#" id="previousVersion">{{_ "steedos_previous_version"}}</a>
-                        </div>
-                    {{/if}}
+                   
+                    <div style="text-align: center;" class="hidden-xs">
+                        <a href="#" id="previousVersion">{{_ "steedos_previous_version"}}</a>
+                    </div>
             </div>
 <!-- 
 
