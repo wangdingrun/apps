@@ -28,7 +28,8 @@ Template.sidebar.helpers
 			return "active";
 
 	badge: (app_id)->
-		if app_id == "workflow"
+		app = db.apps.findOne(app_id)
+		if app && app.url.startsWith("/workflow")
 			c = db.box_counts.findOne(Steedos.getSpaceId());
 			if c
 				return c.inbox_count;
