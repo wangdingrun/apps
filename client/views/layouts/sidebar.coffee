@@ -26,12 +26,3 @@ Template.sidebar.helpers
 		path = Session.get("router-path")
 		if path?.startsWith "/" + app_id or path?.startsWith "/app/" + app_id
 			return "active";
-
-	badge: (app_id)->
-		app = db.apps.findOne(app_id)
-		if app && app.url.startsWith("/workflow")
-			c = db.box_counts.findOne(Steedos.getSpaceId());
-			if c and c.inbox_count > 0
-				return c.inbox_count;
-
-	
