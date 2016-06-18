@@ -2,6 +2,8 @@
 
 Steedos Apps is a cloud-based productivity suite that helps you and your team connect and get work done from anywhere on any device.
 
+- https://us.steedos.com/ 
+
 ## Springboard
 !["Springboard"](.meteor/screen/springboard.png)
 
