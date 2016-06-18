@@ -35,4 +35,5 @@ Template.registerHelper 'badge', (app_id)->
 		count = 0;
 		_.each subscriptions, (s)->
 			count = count + s.unread
-		return count
+		if count >0
+			return count
