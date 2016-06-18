@@ -12,11 +12,6 @@ Template.workflow_main.helpers
 
 Template.workflow_main.onCreated ->
 
-	$(window).resize ->
-		if $(window).width()<1000
-			$("body").addClass("sidebar-collapse")
-		else
-			$("body").removeClass("sidebar-collapse")
 		# if Steedos.isMobile()
 		# 	$(".instance-wrapper").css("left", "0px")
 		# 	windowWidth = $(window).width() - 1
@@ -35,6 +30,3 @@ Template.workflow_main.onCreated ->
 
 
 Template.workflow_main.onRendered ->
-
-	$(window).resize();
-
