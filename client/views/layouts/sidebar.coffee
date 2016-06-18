@@ -31,7 +31,7 @@ Template.sidebar.helpers
 		app = db.apps.findOne(app_id)
 		if app && app.url.startsWith("/workflow")
 			c = db.box_counts.findOne(Steedos.getSpaceId());
-			if c
+			if c and c.inbox_count > 0
 				return c.inbox_count;
 
 	
