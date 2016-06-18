@@ -1,8 +1,8 @@
 <template name="afTable">
     <div class="panel panel-default steedos-table">
-        <div class="panel-body" style="padding:0px;overflow-x:auto;">
+        <div class="panel-body" style="padding:0px;">
           <div class="panel-heading" >
-            <label class='control-label'>{{afFieldLabelText name=this.atts.name}}</label>
+            <label class='control-label'>{{afFieldLabelText name=this.atts.name}}4</label>
            {{#if atts.editable}}
               <div class="pull-right">
                   <span class="panel-controls">
@@ -14,19 +14,17 @@
               </div>
             {{/if}}
           </div>
-          {{#if afFieldIsInvalid name=this.atts.name}}
-          <div class="panel-body has-error" >
-            <span class="help-block">{{{afFieldMessage name=this.atts.name}}}</span>
-          </div>
-          {{/if}}
-          <table type='table' class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;'     {{this.atts}} id="{{this.name}}Table" data-schema-key="{{this.name}}">
-              <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
+          
+          <div style="padding:0px;overflow-x:auto;">
+              <table type='table' class="table table-bordered table-condensed autoform-table" style='margin-bottom:0px;'     {{this.atts}} id="{{this.name}}Table" data-schema-key="{{this.name}}">
+                  <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
 
-              </thead>
-              <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
-                
-              </tbody>
-          </table>
+                  </thead>
+                  <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
+                    
+                  </tbody>
+              </table>
+          </div>
         </div>
       </div>
 </template>
