@@ -7,16 +7,14 @@ Template.flow_list_box.helpers
             return false;
         return true;
 
-    getGridWidth : ->
-        if Steedos.isMobile()
-            return "50%"
+    equals: (a, b)->
+        return a==b;
 
-        return "33.33333333%";
 
 
 Template.flow_list_box.events
 
-    'click .flow_list_box .weui_grid': (event) ->
+    'click .flow_list_box .weui_cell': (event) ->
         flow = event.currentTarget.dataset.flow;
 
         console.log("newIns flow is " + flow)

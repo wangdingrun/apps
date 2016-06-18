@@ -680,7 +680,7 @@ WorkflowManager.getFlowListData = function(){
   });
 
   re.categories = categories;
-  re.categories.push({name : '',_id:'', forms : unCategorieForms});
+  re.categories.push({name : '未分组',_id:'', forms : unCategorieForms});
 
   return re;
 };

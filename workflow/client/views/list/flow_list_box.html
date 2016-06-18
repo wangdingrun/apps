@@ -1,39 +1,30 @@
 <template name="flow_list_box">
-    <section class='flow_list_box'>
-        {{#each flow_list_data.categories}}
-            {{#if empty this}}
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">{{name}}</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
+    <div class='box box-solid flow_list_box'>
+        <div class='box-group' id='flow_accordion'>
+            {{#each flow_list_data.categories}}
+                {{#if empty this}}
+                    <div class='panel box box-success'>
+                        <a data-toggle='collapse' data-parent='#flow_accordion' href='#categories_{{_id}}'>
+                            <div class='box-header with-border'>
+                                <h4 class='box-title'>
+                                    {{name}}
+                                </h4>
                             </div>
-                            <div class="box-body" style="overflow-x:auto;">
-                                <div class="weui_grids">
-                                    {{#each forms}}
-                                        {{#each flows}}
-                                            <a class="weui_grid" data-flow='{{_id}}' style='width:{{getGridWidth}}'>
-                                                <div class="weui_grid_icon">
-                                                    <i class="ion ion-ios-copy-outline"></i>
-                                                    <span class="label label-danger"></span>
-                                                </div>
-                                                <p class="weui_grid_label">
-                                                    {{name}}
-                                                </p>
-                                            </a>
-                                        {{/each}}
+                        </a>
+                        <div class='panel-collapse collapse' id="categories_{{_id}}">
+                            <div class='weui_cells_weui_cells_access'>
+                                {{#each forms}}
+                                    {{#each flows}}
+                                        <a class='weui_cell' data-flow='{{_id}}'>
+                                            <i class='ion ion-shuffle'></i>&nbsp;{{name}}
+                                        </a>
                                     {{/each}}
-                                    
-                                </div>
+                                {{/each}}
                             </div>
                         </div>
                     </div>
-                </div>
-            {{/if}}
-        {{/each}}
-    </section>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
 </template>
