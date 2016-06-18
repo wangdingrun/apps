@@ -680,7 +680,8 @@ WorkflowManager.getFlowListData = function(){
   });
 
   re.categories = categories;
-  re.categories.push({name : TAPi18n.__('Workflow_not_category'),_id:'', forms : unCategorieForms});
+  if (unCategorieForms.length>0)
+    re.categories.push({name : TAPi18n.__('workflow_no_category'),_id:'', forms : unCategorieForms});
 
   return re;
 };
