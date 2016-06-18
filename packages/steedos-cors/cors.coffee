@@ -31,6 +31,7 @@ WebApp.rawConnectHandlers.use (req, res, next) ->
 	#if /^\/(api|_timesync|sockjs|tap-i18n)(\/|$)/.test req.url
 	if req.headers.origin
 		res.setHeader("Access-Control-Allow-Credentials", "true");
+		res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 		res.setHeader("Access-Control-Allow-Origin", req.headers.origin)
 	else
 		res.setHeader("Access-Control-Allow-Origin", "*")
