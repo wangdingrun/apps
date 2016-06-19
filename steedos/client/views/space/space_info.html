@@ -14,9 +14,11 @@
     </div>
     
     <section class="content">
-
-        {{> quickForm collection="db.spaces" doc=space id="updateSpace" schema=schema type="update" fields="name,owner,admins"}}
-
+      <div class="box box-default">
+        <div class="box-body">
+          {{> quickForm collection="db.spaces" doc=space id="updateSpace" schema=schema type="update" fields="name,owner,admins"}}
+        </div>
+      </div>
     </section>
 
 </template>
