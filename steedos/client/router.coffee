@@ -40,8 +40,15 @@ FlowRouter.route '/steedos/logout',
 FlowRouter.route '/steedos/profile', 
 	action: (params, queryParams)->
 		if Meteor.userId()
-			BlazeLayout.render 'adminLayout',
+			BlazeLayout.render 'masterLayout',
 				main: "profile"
+
+
+FlowRouter.route '/steedos/admin', 
+	action: (params, queryParams)->
+		if Meteor.userId()
+			BlazeLayout.render 'masterLayout',
+				main: "admin_home"
 
 
 FlowRouter.route '/steedos/springboard', 
@@ -70,7 +77,7 @@ FlowRouter.route '/steedos/space/info',
 			FlowRouter.go "/steedos/sign-in";
 			return true
 
-		BlazeLayout.render 'adminLayout',
+		BlazeLayout.render 'masterLayout',
 			main: "space_info"
 
 

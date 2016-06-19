@@ -28,6 +28,7 @@ Package.onUse(function(api) {
         api.addFiles('lib/steedos.coffee', 'client');
         api.addFiles('lib/fireGlobalEvent.coffee', 'client');
         api.addFiles('lib/helpers.coffee', 'client');
+        api.addFiles('lib/navigation_controller.coffee', 'client');
 
         api.addFiles('utils/_lesshat.import.less', 'client');
         api.addFiles('utils/_keyframes.import.less', 'client');
