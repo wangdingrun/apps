@@ -24,3 +24,6 @@ Template.adminLayout.helpers
                         return t("" + Session.get('admin_collection_name'))
 
         
+Template.adminLayout.events
+        "click #navigation-back": (e, t) ->
+                NavigationController.back(); 

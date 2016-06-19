@@ -24,3 +24,6 @@ Template.masterLayout.helpers
 	minHeight: ->
 		return Template.instance().minHeight.get() + 'px'
 	
+Template.masterLayout.events
+	"click #navigation-back": (e, t) ->
+		NavigationController.back(); 
