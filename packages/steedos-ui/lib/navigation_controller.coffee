@@ -9,5 +9,6 @@
             FlowRouter.go(routeName)
         else
             FlowRouter.go "/"
-
+    reset: ()->
+        this.routes = []
 

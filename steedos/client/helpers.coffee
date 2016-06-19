@@ -13,6 +13,9 @@ Template.registerHelper 'spaceId', ->
 	else
 		return "none";
 
+Template.registerHelper 'isCloudAdmin', ->
+	return Meteor.user()?.is_cloudadmin
+
 Template.registerHelper 'locale', ->
 	return Steedos.getLocale()
 

@@ -15,7 +15,7 @@
 		            </a>
 
 					<span class="navigation-title">
-							{{admin_collection_title}}
+							<a href="{{urlPrefix}}/admin/view/{{$.Session.get 'admin_collection_name'}}/">{{admin_collection_title}}</a>
 					</span>
 					<div class="pull-right">
 					{{#if $.Session.get 'admin_collection_name'}}

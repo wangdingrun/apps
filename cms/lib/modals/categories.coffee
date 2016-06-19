@@ -29,17 +29,17 @@ db.cms_categories._simpleSchema = new SimpleSchema
 	image:
 		type: String,
 		optional: true,
-	parentId: 
-		type: String,
-		optional: true,
-		autoform: 
-			options:  () ->
-				categories = db.cms_categories.find().map (category) ->
-					return {
-						value: category._id,
-						label: category.name
-					}
-				return categories;
+	# parentId: 
+	# 	type: String,
+	# 	optional: true,
+	# 	autoform: 
+	# 		options:  () ->
+	# 			categories = db.cms_categories.find().map (category) ->
+	# 				return {
+	# 					value: category._id,
+	# 					label: category.name
+	# 				}
+	# 			return categories;
 
 	created: 
 		type: Date,

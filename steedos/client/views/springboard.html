@@ -27,6 +27,18 @@
                 </p>
             </a>
             {{/each}}
+
+            {{#if isCloudAdmin}}
+            <a href="/cms" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="ion ion-ios-paper-outline"></i>
+                    <span class="label label-danger"></span>
+                </div>
+                <p class="weui_grid_label">
+                    CMS
+                </p>
+            </a>
+            {{/if}}
             
         </div>
     </div>
