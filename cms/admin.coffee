@@ -16,6 +16,7 @@ if Meteor.isClient
         Tracker.autorun ->
             if Meteor.userId()
                 AdminTables["cms_sites"]?.selector = {owner: Meteor.userId()}
-                AdminTables["cms_categories"]?.selector = {owner: Meteor.userId()}
-                AdminTables["cms_posts"]?.selector = {owner: Meteor.userId()}
-                AdminTables["cms_pages"]?.selector = {owner: Meteor.userId()}
+            if Session.get("siteId")
+                AdminTables["cms_categories"]?.selector = {site: Session.get("siteId")}
+                AdminTables["cms_posts"]?.selector = {site: Session.get("siteId")}
+                AdminTables["cms_pages"]?.selector = {site: Session.get("siteId")}

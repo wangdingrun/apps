@@ -65,7 +65,7 @@ db.cms_categories.adminConfig =
 	color: "blue"
 	tableColumns: [
 		{name: "name"},
-		{modified: "modified"},
+		{name: "modified"},
 	]
 	selector: {owner: -1}
 

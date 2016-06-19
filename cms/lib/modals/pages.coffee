@@ -51,7 +51,7 @@ db.cms_pages.adminConfig =
 	color: "blue"
 	tableColumns: [
 		{name: "title"},
-		{modified: "modified"},
+		{name: "modified"},
 	]
 	selector: {owner: -1}
 

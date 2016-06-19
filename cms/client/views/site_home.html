@@ -1,0 +1,82 @@
+<template name="cms_site_home">
+
+	<div class="navigation-bar">
+
+		<a href="#" id="navigation-back" class="btn btn-default" title='{{_ "Steedos"}}'>
+			<i class="ion ion-chevron-left"></i><span></span>
+		</a>
+
+		<span class="navigation-title dropdown">
+			{{cms_site.name}}
+		</span>
+		<div class="pull-right">
+			
+
+		</div>
+	</div>
+	<div class="content">
+		{{#each cms_posts}}
+		<div class="box box-widget">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="/avatar/{{author}}" alt="User Image">
+                <span class="username"><!-- <a class="navigation" href="#" data-router="/cms/site/{{site}}/post/{{_id}}">{{title}}</a> -->{{title}}
+                </span>
+                <span class="description">{{author_name}} - {{posted}}</span>
+              </div>
+              <div class="box-tools">
+                <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                  <i class="fa fa-circle-o"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+              </div>
+            </div>
+            <div class="box-body">
+              <!-- <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"> -->
+
+              <p>{{body}}</p>
+              <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+              <span class="pull-right text-muted">127 likes - 3 comments</span> -->
+            </div>
+        </div>
+		{{/each}}
+
+
+	  <div class="cell">
+
+		  <div class="bd">
+
+			    <div class="weui_cells_title">{{_ "cms_admin"}}</div>
+			    <div class="weui_cells weui_cells_access">
+					<a class="weui_cell navigation" href="#" data-router="/admin/view/cms_posts">
+						<div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+						  &nbsp;{{_ "cms_posts"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+					<a class="weui_cell navigation" href="#" data-router="/admin/view/cms_pages">
+						<div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+						  &nbsp;{{_ "cms_pages"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+					<a class="weui_cell navigation" href="#" data-router="/admin/view/cms_categories">
+						<div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
+						<div class="weui_cell_bd weui_cell_primary">
+						  &nbsp;{{_ "cms_categories"}}
+						</div>
+						<div class="weui_cell_ft">
+						</div>
+					</a>
+			    </div>
+		  </div>
+	  </div>
+
+	</div>
+</template>

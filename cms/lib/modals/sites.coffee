@@ -40,7 +40,7 @@ db.cms_sites.adminConfig =
 	color: "blue"
 	tableColumns: [
 		{name: "name"},
-		{modified: "modified"},
+		{name: "modified"},
 	]
 	selector: {owner: -1}
 

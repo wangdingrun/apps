@@ -1,0 +1,45 @@
+<template name="cms_post_home">
+
+	<div class="navigation-bar">
+
+		<a href="#" id="navigation-back" class="btn btn-default" title='{{_ "Steedos"}}'>
+			<i class="ion ion-chevron-left"></i><span></span>
+		</a>
+
+		<span class="navigation-title dropdown">
+			{{cms_post.name}}
+		</span>
+		<div class="pull-right">
+			
+
+		</div>
+	</div>
+	<div class="content">
+        {{#each cms_posts}}
+		<div class="box box-widget">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="/avatar/{{author}}" alt="User Image">
+                <span class="username">{{title}}</span>
+                <span class="description">{{author_name}} - {{posted}}</span>
+              </div>
+              <div class="box-tools">
+                <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                  <i class="fa fa-circle-o"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+              </div>
+            </div>
+            <div class="box-body">
+              <!-- <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"> -->
+
+              <p>{{body}}</p>
+              <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+              <span class="pull-right text-muted">127 likes - 3 comments</span> -->
+            </div>
+        </div>
+        {{/each}}
+	</div>
+</template>

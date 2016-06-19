@@ -145,17 +145,17 @@ db.cms_posts._simpleSchema = new SimpleSchema
 			omit: true
 
 	# The post author's name
-	# author_name: 
-	# 	type: String,
-	# 	optional: true
-	# 	autoform: 
-	# 		omit: true
-	# # The post author's `_id`. 
-	# author: 
-	# 	type: String,
-	# 	optional: true,
-	# 	autoform: 
-	# 		omit: true
+	author_name: 
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+	# The post author's `_id`. 
+	author: 
+		type: String,
+		optional: true,
+		autoform: 
+			omit: true
 
 	created: 
 		type: Date,
@@ -188,9 +188,9 @@ db.cms_posts.adminConfig =
 	icon: "globe"
 	color: "blue"
 	tableColumns: [
-		{title: "title"},
-		{slug: "slug"},
-		{modified: "modified"},
+		{name: "title"},
+		{name: "slug"},
+		{name: "modified"},
 	]
 	selector: {owner: -1}
 
@@ -207,6 +207,15 @@ if Meteor.isServer
 		
 		if !userId
 			throw new Meteor.Error(400, t("cms_posts_error.login_required"));
+		
+		if !doc.author
+			doc.author = userId
+		if !doc.author_name
+			user = db.users.findOne(userId)
+			doc.author_name = user.name
+
+		if !doc.posted
+			doc.posted = new Date()
 
 		# 暂时默认为已核准
 		doc.status = db.cms_posts.config.STATUS_APPROVED
