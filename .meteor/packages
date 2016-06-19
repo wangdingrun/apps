@@ -80,3 +80,5 @@ steedos:lib
 steedos:workflow
 steedos:api
 peppelg:bootstrap-3-modal
+
+q42:autoform-markdown
