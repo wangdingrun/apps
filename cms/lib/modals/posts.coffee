@@ -227,9 +227,5 @@ if Meteor.isServer
 	db.cms_posts.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 
-		# only site owner can modify site
-		if doc.owner != userId
-			throw new Meteor.Error(400, t("cms_posts_error.site_owner_only"));
-
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
