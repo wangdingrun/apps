@@ -90,6 +90,17 @@ db.spaces.helpers
 			adminNames.push(admin.name)
 		return adminNames.toString();
 
+	calculateFullname: ->
+		fullname = this.name;
+		if (!this.parent)
+			return fullname;
+		parentId = this.parent;
+		while (parentId)
+			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
+			fullname = parentOrg.name + "/" + fullname;
+			parentId = parentOrg.parent
+		return fullname
+
 
 if Meteor.isServer
 	
@@ -142,7 +153,15 @@ if Meteor.isServer
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
 		self = this
-		modifier.$set = modifier.$set || {};
+		modifier.$set = modifier.$set || {}
+		# 工作区修改后，该工作区的根部门的name也要修改，根部门和子部门的fullname也要修改
+		if modifier.$set.name
+			db.organizations.direct.update({space: doc._id,is_company: true},{$set:{name: doc.name,fullname: doc.name}})
+			# 子部门的fullname修改
+			org = db.organizations.findOne({space:doc._id,is_company: true})
+			children = db.organizations.find({parents: org._id})
+			children.forEach (child) ->
+				db.organizations.direct.update(child._id, {$set: {fullname: child.calculateFullname()}})
 
 	db.spaces.before.remove (userId, doc) ->
 		throw new Meteor.Error(400, "暂不支持删除工作区操作");
