@@ -17,30 +17,15 @@
     <div class="bd">
         <div class="weui_grids">
             {{#each apps}}
-                {{#if equals this.name 'Flow Designer'}}
-                    {{#if spaceId}}
-                    <a href="{{urlPrefix}}/app/{{_id}}?spaceId={{spaceId}}" class="weui_grid">
-                        <div class="weui_grid_icon">
-                            <i class="ion {{icon}}"></i>
-                            <span class="label label-danger">{{badge _id}}</span>
-                        </div>
-                        <p class="weui_grid_label">
-                            {{_ name}}
-                        </p>
-                    </a>
-                    {{/if}}
-                {{else}}
-                    <a href="{{urlPrefix}}/app/{{_id}}" class="weui_grid">
-                        <div class="weui_grid_icon">
-                            <i class="ion {{icon}}"></i>
-                            <span class="label label-danger">{{badge _id}}</span>
-                        </div>
-                        <p class="weui_grid_label">
-                            {{_ name}}
-                        </p>
-                    </a>
-                {{/if}}
-                
+            <a href="{{urlPrefix}}/app/{{_id}}" class="weui_grid">
+                <div class="weui_grid_icon">
+                    <i class="ion {{icon}}"></i>
+                    <span class="label label-danger">{{badge _id}}</span>
+                </div>
+                <p class="weui_grid_label">
+                    {{_ name}}
+                </p>
+            </a>
             {{/each}}
 
             {{#if isCloudAdmin}}
