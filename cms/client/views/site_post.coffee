@@ -1,4 +1,4 @@
-Template.cms_post_home.helpers
+Template.cms_site_post.helpers
     cms_site: ()->
         siteId = Session.get("siteId")
         if siteId
@@ -10,9 +10,4 @@ Template.cms_post_home.helpers
         postId = FlowRouter.current().params.postId
         return db.cms_posts.find({_id: postId})
 
-Template.cms_post_home.events
-    "click .navigation": (e, t)->
-        a = $(e.target).closest('a');
-        router = a[0]?.dataset["router"]
-        if router
-            NavigationController.go router
+Template.cms_site_post.events

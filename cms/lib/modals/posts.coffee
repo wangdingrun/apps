@@ -4,10 +4,15 @@ db.cms_posts._simpleSchema = new SimpleSchema
 	site: 
 		type: String,
 		autoform: 
+			defaultValue: ->
+				return Session.get("siteId");
+	category: 
+		type: String,
+		autoform: 
 			type: "select",
 			options: ->
 				options = []
-				objs = db.cms_sites.find({}, {name:1, sort: {name:1}})
+				objs = db.cms_categories.find({}, {})
 				objs.forEach (obj) ->
 					options.push
 						label: obj.name,
@@ -26,10 +31,32 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		max: 500,
 		autoform: 
 			order: 20
+	summary: 
+		type: String,
+		optional: false,
+		autoform: 
+			order: 25
 	slug: 
 		type: String,
 		optional: true
-	
+		autoform:
+			omit: true
+	image:
+		type: String
+		optional: true
+		autoform:
+			type: 'fileUpload'
+			collection: 'cms_images'
+			accept: 'image/*'
+			triggers: 
+				onBeforeInsert: (fileObj) ->
+					if !fileObj.metadata
+						fileObj.metadata = {}
+					fileObj.metadata.site = Session.get("siteId")
+					return fileObj
+
+			label: ()->
+				return t("cms_posts_choose_image")
 	posted: 
 		type: Date,
 		optional: true,
@@ -39,9 +66,8 @@ db.cms_posts._simpleSchema = new SimpleSchema
 	body: 
 		type: String,
 		optional: true,
-		max: 3000,
 		autoform: 
-			rows: 5,
+			rows: 10,
 			order: 30
  
 	htmlBody: 
@@ -181,7 +207,6 @@ if Meteor.isClient
 	db.cms_posts._simpleSchema.i18n("cms_posts")
 
 db.cms_posts.attachSchema(db.cms_posts._simpleSchema)
-
 
 
 db.cms_posts.adminConfig = 

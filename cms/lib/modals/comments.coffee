@@ -1,23 +1,15 @@
 db.cms_comments = new Meteor.Collection('cms_comments')
 
 db.cms_comments._simpleSchema = new SimpleSchema
-	site: 
-		type: String,	
-	parent: 
+	
+	# The post's `_id`
+	post: 
 		type: String,
-		max: 500,
 		optional: true,
+		max: 500,
 		autoform: 
 			omit: true
- 
-	# The `_id` of the top-level parent comment, if there is one
-	top: 
-		type: String,
-		max: 500,
-		optional: true,
-		autoform: 
-			omit: true
-
+	
 	created: 
 		type: Date,
 		optional: true
@@ -85,14 +77,6 @@ db.cms_comments._simpleSchema = new SimpleSchema
 	inactive: 
 		type: Boolean,
 		optional: true
-	
-	# The post's `_id`
-	post: 
-		type: String,
-		optional: true,
-		max: 500,
-		autoform: 
-			omit: true
 	
 	# Whether the comment is deleted. Delete comments' content doesn't appear on the site. 
 	is_deleted: 

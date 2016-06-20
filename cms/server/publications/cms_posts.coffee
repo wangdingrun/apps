@@ -1,11 +1,12 @@
-  Meteor.publish 'cms_posts', (site_id)->
+  Meteor.publish 'cms_posts', (siteId)->
   
     unless this.userId
       return this.ready()
     
-    unless site_id
-      return this.ready()
+    console.log '[publish] cms_posts for site ' + siteId
 
-    console.log '[publish] cms_posts for site ' + site_id
+    selector = {}
+    if siteId
+        selector.site = siteId
 
-    return db.cms_posts.find({site: site_id}, {sort: {created: -1}})
+    return db.cms_posts.find(selector, {sort: {created: -1}})

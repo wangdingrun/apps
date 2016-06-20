@@ -1,27 +1,12 @@
-<template name="cms_post_home">
+<template name="cms_post_list_item">
 
-	<div class="navigation-bar">
-
-		<a href="#" id="navigation-back" class="btn btn-default" title='{{_ "Steedos"}}'>
-			<i class="ion ion-chevron-left"></i><span></span>
-		</a>
-
-		<span class="navigation-title dropdown">
-			{{cms_post.name}}
-		</span>
-		<div class="pull-right">
-			
-
-		</div>
-	</div>
-	<div class="content">
-        {{#each cms_posts}}
-		<div class="box box-widget">
+        <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
                 <img class="img-circle" src="/avatar/{{author}}" alt="User Image">
-                <span class="username">{{title}}</span>
-                <span class="description">{{author_name}} - {{posted}}</span>
+                <span class="username"><a class="navigation" href="#" data-router="/cms/site/{{site}}/post/{{_id}}">{{title}}</a>
+                </span>
+                <span class="description">{{author_name}} - {{from_now posted}}</span>
               </div>
               <div class="box-tools">
                 <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
@@ -32,14 +17,22 @@
               </div>
             </div>
             <div class="box-body">
-              <!-- <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"> -->
+              {{#if image}}
+              <img class="img-responsive pad" src="/api/files/cms_images/{{image}}" alt="Photo">
+              {{/if}}  
 
-              {{{renderMarkdown body}}}
+              {{{body_preview}}}
+              
               <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
               <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
               <span class="pull-right text-muted">127 likes - 3 comments</span> -->
             </div>
+            <div class="box-footer">
+              {{_ "cms_posts_read_all"}}
+              <div class="pull-right">
+                <i class="ion ion-chevron-right"></i>
+              </div>
+            </div>
         </div>
-        {{/each}}
-	</div>
+        
 </template>

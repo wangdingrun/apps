@@ -8,8 +8,3 @@ Template.cms_site_home.helpers
         return db.cms_posts.find({site:siteId})
 
 Template.cms_site_home.events
-    "click .navigation": (e, t)->
-        a = $(e.target).closest('a');
-        router = a[0]?.dataset["router"]
-        if router
-            NavigationController.go router
