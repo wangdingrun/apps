@@ -693,7 +693,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
 
     var curTime = new Date();
     var userId = Meteor.userId();
-    var fileName = fileObj.name();
+    var fileName = fileObj.name;
     console.log(fileName);
     if (!fileName)
       fileName = Session.get('filename');
@@ -703,7 +703,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
     
     var attachs = instance.attachments || [];
     var hasRepeatedFile = false;
-    var attach_id = fileObj.metadata.attach_id;
+    var attach_id = Session.get("attach_id");
     attachs.forEach(function(a){
       if (a.filename == fileName || (isAddVersion==true && a._id == attach_id)) {
         hasRepeatedFile = true;
@@ -715,7 +715,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         a.current = {
           "_id": Meteor.uuid(),
           "_rev": fileObj._id,
-          "length": fileObj.size(),
+          "length": fileObj.size,
           "approve": InstanceManager.getMyApprove().id,
           "created": curTime,
           "created_by": userId,
@@ -730,7 +730,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
       var attach = {
         "_id": Meteor.uuid(),
         "filename": fileName,
-        "contentType": fileObj.type(),
+        "contentType": fileObj.type,
         "modified": curTime,
         "modified_by": userId,
         "created": curTime,
@@ -738,7 +738,7 @@ InstanceManager.addAttach = function (fileObj, isAddVersion) {
         "current": {
           "_id": Meteor.uuid(),
           "_rev": fileObj._id,
-          "length": fileObj.size(),
+          "length": fileObj.size,
           "approve": InstanceManager.getMyApprove().id,
           "created": curTime,
           "created_by": userId,

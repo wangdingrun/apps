@@ -100,9 +100,6 @@ Template.ins_attach_version_modal.helpers({
         }
     },
 
-    isUploading: function () {
-        return Session.get("progress_version_file_id");
-    },
 
     attach_version_info: function (attachVersion) {
         var owner_name = attachVersion.created_by_name;
@@ -155,24 +152,62 @@ Template.ins_attach_version_modal.helpers({
 Template.ins_attach_version_modal.events({
 
     'change .ins-file-version-input': function (event, template) {
+        $(document.body).addClass("loading");
+        $('.loading-text').text("正在上传...");
         
-        FS.Utility.eachFile(event, function(file){
-            newFile = new FS.File(file);
-            newFile.type(cfs.getContentType(file.name))
-            currentApprove = InstanceManager.getCurrentApprove();
-            newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id, attach_id: Session.get("attach_id")};
-            cfs.instances.insert(newFile, function(err, fileObj){
-                if (err) {
-                    toastr.error(err);
-                } else {
-                    Session.set("progress_version_file_id", fileObj._id);
-                    fileObj.on("uploaded", function(){
-                        InstanceManager.addAttach(fileObj, true);
-                        fileObj.removeListener("uploaded");
-                    })
-                }
-            })
-        })
+        var fd, file, fileName, files, i;
+
+        files = event.target.files;
+
+        i = 0;
+
+        while (i < files.length) {
+          file = files[i];
+          if (!file.name) {
+            continue;
+          }
+          fileName = file.name;
+          if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())) {
+            fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
+          }
+          Session.set("filename", fileName);
+          $('.loading-text').text("正在上传..." + fileName);
+          fd = new FormData;
+          fd.append('Content-Type', cfs.getContentType(fileName));
+          fd.append("file", file);
+          $.ajax({
+            url: Steedos.settings.webservices.s3.url,
+            type: 'POST',
+            async: true,
+            data: fd,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(responseText, status) {
+              var fileObj;
+              $(document.body).removeClass('loading');
+              $('.loading-text').text("");
+              if (responseText.errors) {
+                responseText.errors.forEach(function(e) {
+                  toastr.error(e.errorMessage);
+                });
+                return;
+              }
+              fileObj = {};
+              fileObj._id = responseText.version_id;
+              fileObj.name = Session.get('filename');
+              fileObj.type = cfs.getContentType(Session.get('filename'));
+              fileObj.size = responseText.size;
+              InstanceManager.addAttach(fileObj, true);
+            },
+            error: function(xhr, msg, ex) {
+              $(document.body).removeClass('loading');
+              $('.loading-text').text("");
+              toastr.error(msg);
+            }
+          });
+          i++;
+        }
 
         $(".ins-file-version-input").val('')
     },

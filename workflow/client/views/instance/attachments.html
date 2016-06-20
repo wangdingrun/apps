@@ -65,13 +65,6 @@
                     </div>
                     <table style="width:100%;max-width:100%;background-color: #f5f5f5;">
                         <tbody>
-                            {{#if isUploading}}
-                                {{#with FS.GetFile "instances" isUploading}}
-                                    {{#unless this.isUploaded}}
-                                        {{> FS.UploadProgressBar bootstrap=true class='progress-bar-success progress-bar-striped active' showPercent=true }}
-                                    {{/unless}}
-                                {{/with}}
-                            {{/if}}
                             
                             <tr>
                                 <td class="ins-attach-version-view">

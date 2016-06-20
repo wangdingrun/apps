@@ -16,36 +16,57 @@ Template.instance_view.events
         console.log("click " + event.target.name);
         Session.set("instance_change", true);
     'change .ins-file-input': (event, template)->
-            $(document.body).addClass("loading");
+            $(document.body).addClass("loading")
             $('.loading-text').text "正在上传..."
-            FS.Utility.eachFile event, (file) ->
-                console.log "file_name"
-                console.log file.name
+
+            files = event.target.files
+            i = 0 
+            while i < files.length
+                file = files[i]
                 if !file.name
-                    return
+                    continue
 
                 fileName = file.name
-
                 if ["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())
-                    fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
-
+                    fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop()
+                
                 Session.set("filename", fileName)
                 $('.loading-text').text "正在上传..." + fileName
-  
-                newFile = new FS.File(file);
-                newFile.name(fileName)
-                newFile.type(cfs.getContentType(fileName))
-                currentApprove = InstanceManager.getCurrentApprove();
-                newFile.metadata = {owner:Meteor.userId(), space:Session.get("spaceId"), instance:Session.get("instanceId"), approve: currentApprove.id};
-                cfs.instances.insert newFile, (err,fileObj) -> 
-                    if err
-                        toastr.error(err);
-                    else
-                        #$('.loading-text').text fileObj.uploadProgress() + "%"
-                        fileObj.on "uploaded", ()->
-                            $(document.body).removeClass("loading");
-                            $('.loading-text').text ""
-                            InstanceManager.addAttach(fileObj, false);
-                            fileObj.removeListener("uploaded");
+
+                fd = new FormData
+                fd.append('Content-Type', cfs.getContentType(fileName))
+                fd.append("file", file)
+
+                $.ajax
+                  url: Steedos.settings.webservices.s3.url
+                  type: 'POST'
+                  async: true
+                  data: fd
+                  dataType: 'json'
+                  processData: false
+                  contentType: false
+                  success: (responseText, status) ->
+                    $(document.body).removeClass 'loading'
+                    $('.loading-text').text ""
+                    if responseText.errors
+                        responseText.errors.forEach (e) ->
+                            toastr.error e.errorMessage
+                            return
+                        return
+                    fileObj = {}
+                    fileObj._id = responseText.version_id
+                    fileObj.name = Session.get('filename')
+                    fileObj.type = cfs.getContentType(Session.get('filename'))
+                    fileObj.size = responseText.size
+                    InstanceManager.addAttach(fileObj, false)
+                    return
+                  error: (xhr, msg, ex) ->
+                    $(document.body).removeClass 'loading'
+                    $('.loading-text').text ""
+                    toastr.error msg
+                    return
+
+                i++
+
             $(".ins-file-input").val('')
 
