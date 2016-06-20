@@ -623,6 +623,9 @@ InstanceManager.submitIns = function() {
       UUflow_api.post_submit(instance);
     } else if (state=="pending") {
       var myApprove = InstanceManager.getMyApprove();
+      if(instance.attachments && myApprove) {
+          myApprove.attachments = instance.attachments;
+      }
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
       UUflow_api.post_engine(myApprove);
     }
