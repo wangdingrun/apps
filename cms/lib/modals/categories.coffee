@@ -34,6 +34,12 @@ db.cms_categories._simpleSchema = new SimpleSchema
 	# 				}
 	# 			return categories;
 
+	# show post list on homepage
+	featured: 
+		type: Boolean,
+		optional: true,
+		defaultValue: false,
+
 	created: 
 		type: Date,
 		optional: true

@@ -1,3 +1,6 @@
+Template.registerHelper 'absoluteUrl', ->
+	return Meteor.absoluteUrl()
+
 Template.registerHelper 'urlPrefix', ->
 	return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 
@@ -26,6 +29,8 @@ Template.registerHelper 'country', ->
 	else
 		return "us"
 
+Template.registerHelper 'fromNow', (posted)->
+	return moment(posted).fromNow()
 
 Template.registerHelper 'badge', (app_id)->
 	app = db.apps.findOne(app_id)

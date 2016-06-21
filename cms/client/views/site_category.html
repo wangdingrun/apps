@@ -1,9 +1,14 @@
 <template name="cms_site_category">
 
-    <div class="content">
-		{{#each cms_posts}}
-		  {{> cms_post_list_item}}
-		{{/each}}
+	<div class="content">
+
+        <div class="row">
+	        <div class="col-md-12">
+				{{#with cms_category}}
+		        	{{> site_category_posts}}
+				{{/with}}
+			</div>
+		</div>
 
 	</div>
 

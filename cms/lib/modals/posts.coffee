@@ -139,12 +139,11 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform:
 			omit: true
-	sticky: 
+
+	featured: 
 		type: Boolean,
 		optional: true,
 		defaultValue: false,
-		autoform: 
-			leftLabel: "Sticky"
 		
 	# Whether the post is inactive. Inactive posts see their score recalculated less often
 	inactive: 

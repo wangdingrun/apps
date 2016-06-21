@@ -4,9 +4,11 @@
     {{# AdminLTE skin="red"}}
       <header class="main-header">
         <nav class="navbar navbar-static-top">
-          <div class="container">
             <div class="navbar-header">
               <a href="/cms/site/{{cms_site._id}}" class="navbar-brand"><b>{{cms_site.name}}</b></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+              </button>
             </div>
 
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
@@ -17,18 +19,15 @@
               </ul>
             </div>
             <div class="navbar-custom-menu">
-              <ul class="nav navbar-nav">
+              <!-- <ul class="nav navbar-nav">
                 <li class=""><a href="/cms/site/{{cms_site._id}}/admin">{{_ "cms_admin"}}</a></li>
-              </ul>
+              </ul> -->
             </div>
-          </div>
         </nav>
       </header>
 
-    	<div class="content-wrapper">
-        <div class="container">
+    	<div class="content-wrapper" style="min-height: 800px;">
         	{{> Template.dynamic template=main}}
-        </div>
       </div>
     {{/ AdminLTE}}
 
