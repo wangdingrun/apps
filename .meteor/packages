@@ -83,3 +83,6 @@ peppelg:bootstrap-3-modal
 
 q42:autoform-markdown
 yogiben:autoform-file
+
+snowping:json-routes
+meteorhacks:ssr
