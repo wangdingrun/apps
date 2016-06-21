@@ -1,5 +1,19 @@
 <template name="cms_site_home">
 
+    <div class="navigation-bar">
+
+        <a href="#" id="navigation-back" class="btn btn-default" title='{{_ "Steedos"}}'>
+            <i class="ion ion-chevron-left"></i><span></span>
+        </a>
+
+        <span class="navigation-title dropdown">
+            {{cms_site.name}}
+        </span>
+        <div class="pull-right">
+            <a class="btn btn-default navigation" href="#" data-router="/cms/site/{{cms_site._id}}/admin"><i class="ion ion-settings"></i></a>
+        </div>
+    </div>
+
     <div class="content">
 
         <div class="row">

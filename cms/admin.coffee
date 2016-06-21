@@ -1,10 +1,12 @@
 Meteor.startup ->
 
+    @cms_themes = db.cms_themes
     @cms_sites = db.cms_sites
     @cms_posts = db.cms_posts
     @cms_pages = db.cms_pages
     @cms_categories = db.cms_categories
     AdminConfig?.collections_add
+        cms_themes: db.cms_themes.adminConfig
         cms_sites: db.cms_sites.adminConfig
         cms_posts: db.cms_posts.adminConfig
         cms_pages: db.cms_pages.adminConfig

@@ -1,6 +1,10 @@
 Template.cms_home.helpers
     cms_sites: ()->
         return db.cms_sites.find()
+    cms_categories: ()->
+        siteId = Session.get("siteId")
+        if siteId
+            return db.cms_categories.find({site: siteId})
     cms_posts: ()->
         return db.cms_posts.find()
 

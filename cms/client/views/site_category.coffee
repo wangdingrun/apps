@@ -13,3 +13,8 @@ Template.cms_site_category.helpers
         return db.cms_posts.find({category:categoryId})
 
 Template.cms_site_category.events
+    "click .navigation": (e, t)->
+        a = $(e.target).closest('a');
+        router = a[0]?.dataset["router"]
+        if router
+            NavigationController.go router

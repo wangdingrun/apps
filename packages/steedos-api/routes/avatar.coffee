@@ -1,6 +1,6 @@
 Meteor.startup ->
 	
-	WebApp.connectHandlers.use '/avatar/', (req, res, next) ->
+	JsonRoutes.add 'get', '/avatar/', (req, res, next) ->
 		this.params =
 			userId: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
 

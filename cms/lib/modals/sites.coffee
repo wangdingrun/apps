@@ -1,9 +1,20 @@
 db.cms_sites = new Meteor.Collection('cms_sites')
 
 db.cms_sites._simpleSchema = new SimpleSchema
+	theme: 
+		type: String,
+		autoform: 
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_themes.find()
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	name: 
 		type: String,
-		max: 200
 	owner: 
 		type: String,
 		autoform:
