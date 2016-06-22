@@ -161,7 +161,7 @@ if Meteor.isServer
 
 	db.users.after.insert (userId, doc) ->
 		console.log("db.users.after.insert")
-		if !(doc.spaces?.length>0)
+		if !(doc.spaces_invited?.length>0)
 			db.spaces.insert
 				name: doc.name + " " + trl("space")
 				owner: doc._id

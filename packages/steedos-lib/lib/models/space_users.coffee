@@ -106,7 +106,7 @@ if (Meteor.isServer)
 					emails: [{address: doc.email, verified: false}]
 					name: doc.name
 					locale: creator.locale
-					spaces: [space._id]
+					spaces_invited: [space._id]
 
 		if !doc.user
 			throw new Meteor.Error(400, t("space_users_error.user_required"));
