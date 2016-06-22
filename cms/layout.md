@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>{{Title}}</title>
+	<title>{{Title}}{{#if Post}} - {{Post.title}}{{/if}}{{#if Tag}} - {{Tag}}{{/if}}</title>
 	<meta name="description" content="{{site.metaDescription}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script type="text/javascript" src="http://oss.steedos.com/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -88,7 +88,7 @@
 		<header class="main-header">
 			<nav class="navbar navbar-static-top">
 				<div class="navbar-header">
-				  <a href="/site/{{Site._id}}" class="navbar-brand"><b>{{Site.name}}</b></a>
+				  <a href="/site/{{SiteId}}/" class="navbar-brand"><b>{{Site.name}}</b></a>
 				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 					<i class="fa fa-bars"></i>
 				  </button>
@@ -97,8 +97,8 @@
 				<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 				  <ul class="nav navbar-nav">
 					
-					{{#each Categories}}
-						<li class="true"><a href="/site/{{site}}/category/{{_id}}">{{name}}</a></li>
+					{{#each Site.menu_tags}}
+						<li class="{{#if equals this Tag}}active{{/if}}"><a href="/site/{{SiteId}}/t/{{this}}">{{this}}</a></li>
 					{{/each}}
 					
 				  </ul>
@@ -114,31 +114,33 @@
 				
 				{{#if IndexPage}}
 					<div class="row">
-					{{#each Categories}}
+					{{#each Site.homepage_tags}}
 
-						<div class="box">
-							<div class="box-header with-border">
-							  <h3 class="box-title">{{name}}</h3>
-							</div>
-							<div class="box-body no-padding weixin">
-
-								<div class="article_list">
-					
-									{{#each Posts _id}}
-									<a class="list_item js_post" href="/site/{{site}}/post/{{_id}}">
-										<div class="cover">
-											<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
-										</div>
-										<div class="cont">
-											<h2 class="title js_title">{{title}}</h2>
-											<p class="desc">{{summary}}</p>
-											<!-- <p>{{fromNow posted}}</p> -->
-										</div>
-									</a>
-									{{/each}}
-									
+            			<div class="col-md-6">
+							<div class="box">
+								<div class="box-header with-border">
+								  <h3 class="box-title">{{this}}</h3>
 								</div>
+								<div class="box-body no-padding weixin">
 
+									<div class="article_list">
+						
+										{{#each Posts this}}
+										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
+											<div class="cover">
+												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+											</div>
+											<div class="cont">
+												<h2 class="title js_title">{{title}}</h2>
+												<p class="desc">{{summary}}</p>
+												<!-- <p>{{fromNow posted}}</p> -->
+											</div>
+										</a>
+										{{/each}}
+										
+									</div>
+
+								</div>
 							</div>
 						</div>
 					{{/each}} 
@@ -146,32 +148,34 @@
 				{{/if}}
 
 
-				{{#if CategoryPage}}
+				{{#if TagPage}}
 					<div class="row">
 
-						<div class="box">
-							<div class="box-header with-border">
-							  <h3 class="box-title">{{Category.name}}</h3>
-							</div>
-							<div class="box-body no-padding weixin">
-
-								<div class="article_list">
-					
-									{{#each Posts Category._id}}
-									<a class="list_item js_post" href="/site/{{site}}/post/{{_id}}">
-										<div class="cover">
-											<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
-										</div>
-										<div class="cont">
-											<h2 class="title js_title">{{title}}</h2>
-											<p class="desc">{{summary}}</p>
-											<!-- <p>{{fromNow posted}}</p> -->
-										</div>
-									</a>
-									{{/each}}
-									
+            			<div class="col-md-12">
+							<div class="box">
+								<div class="box-header with-border">
+								  <h3 class="box-title">{{Tag}}</h3>
 								</div>
+								<div class="box-body no-padding weixin">
 
+									<div class="article_list">
+						
+										{{#each Posts Tag}}
+										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
+											<div class="cover">
+												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+											</div>
+											<div class="cont">
+												<h2 class="title js_title">{{title}}</h2>
+												<p class="desc">{{summary}}</p>
+												<!-- <p>{{fromNow posted}}</p> -->
+											</div>
+										</a>
+										{{/each}}
+										
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -182,15 +186,17 @@
 				{{#if PostPage}}
 					<div class="row">
 
-						<div class="box">
-							<div class="box-header with-border">
-							  <h3 class="box-title">{{Post.title}}</h3>
-							  <p>{{posted}}</p>
-							</div>
-							<div class="box-body no-padding weixin">
-								<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
-								<p>{{Markdown Post.body}}</p>
+            			<div class="col-md-12">
+							<div class="box">
+								<div class="box-header with-border">
+								  <h3 class="box-title">{{Post.title}}</h3>
+								  <p>{{posted}}</p>
+								</div>
+								<div class="box-body no-padding weixin">
+									<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+									<p>{{Markdown Post.body}}</p>
 
+								</div>
 							</div>
 						</div>
 					</div>

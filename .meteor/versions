@@ -3,6 +3,7 @@ accounts-facebook@1.0.6
 accounts-google@1.0.6
 accounts-oauth@1.1.8
 accounts-password@1.1.4
+ajduke:bootstrap-tagsinput@0.7.1
 alanning:roles@1.2.15
 aldeed:autoform@5.8.0
 aldeed:autoform-bs-datetimepicker@1.0.6
@@ -159,4 +160,5 @@ useraccounts:flow-routing@1.14.2
 webapp@1.2.3
 webapp-hashing@1.0.5
 yogiben:autoform-file@0.4.2
+yogiben:autoform-tags@0.2.0
 zimme:active-route@2.3.2

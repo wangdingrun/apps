@@ -4,8 +4,15 @@ db.cms_categories._simpleSchema = new SimpleSchema
 	site: 
 		type: String,
 		autoform: 
-			defaultValue: ->
-				return Session.get("siteId");
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_sites.find()
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	name: 
 		type: String,
 	description: 
@@ -13,12 +20,17 @@ db.cms_categories._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform: 
 			rows: 3
+	tags:
+		type: [String],
+		optional: true,
+		autoform: 
+			type: 'tags'
 	order: 
 		type: Number,
 		optional: true,
-	slug: 
-		type: String,
-		optional: true,
+	# slug: 
+	# 	type: String,
+	# 	optional: true,
 	image:
 		type: String,
 		optional: true,

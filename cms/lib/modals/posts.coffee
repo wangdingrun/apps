@@ -4,20 +4,27 @@ db.cms_posts._simpleSchema = new SimpleSchema
 	site: 
 		type: String,
 		autoform: 
-			defaultValue: ->
-				return Session.get("siteId");
-	category: 
-		type: String,
-		autoform: 
 			type: "select",
 			options: ->
 				options = []
-				objs = db.cms_categories.find({}, {})
+				objs = db.cms_sites.find()
 				objs.forEach (obj) ->
 					options.push
 						label: obj.name,
 						value: obj._id
 				return options
+	# category: 
+	# 	type: String,
+	# 	autoform: 
+	# 		type: "select",
+	# 		options: ->
+	# 			options = []
+	# 			objs = db.cms_categories.find({}, {})
+	# 			objs.forEach (obj) ->
+	# 				options.push
+	# 					label: obj.name,
+	# 					value: obj._id
+	# 			return options
 	# url: 
 	# 	type: String,
 	# 	optional: true,
@@ -36,11 +43,11 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		optional: false,
 		autoform: 
 			order: 25
-	slug: 
-		type: String,
-		optional: true
-		autoform:
-			omit: true
+	# slug: 
+	# 	type: String,
+	# 	optional: true
+	# 	autoform:
+	# 		omit: true
 	image:
 		type: String
 		optional: true
@@ -76,6 +83,12 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		autoform:
 			omit: true
 		
+	tags:
+		type: [String],
+		optional: true,
+		autoform: 
+			type: 'tags'
+
 	viewCount: 
 		type: Number,
 		optional: true

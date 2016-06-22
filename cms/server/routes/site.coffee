@@ -1,49 +1,66 @@
 Template.registerHelper 'Title', ->
-	return this.params.siteId
+	siteId = Template.instance().data.params.siteId
+	site = db.cms_sites.findOne({_id: siteId}, {fields: {name: 1}})
 
-Template.registerHelper 'Category', ->
-	if this.params.categoryId
-		return db.cms_categories.findOne({_id: this.params.categoryId})
+	return site?.name
 
-Template.registerHelper 'Categories', ->
-	if this.params?.siteId
-		return categories = db.cms_categories.find({site: this.params.siteId})
-
-Template.registerHelper 'Posts', (categoryId)->
-	if categoryId
-		return db.cms_posts.find({category: categoryId})
-	else if this.params?.siteId
-		return db.cms_posts.find({site: this.params.siteId})
+Template.registerHelper 'Posts', (tag, limit, skip)->
+	if !limit 
+		limit = 5
+	if !skip
+		skip = 0
+	siteId = Template.instance().data.params.siteId
+	if siteId and tag
+		return db.cms_posts.find({site: siteId, tags: tag}, {sort: {posted: -1}, limit: limit, skip: skip})
+	else if siteId
+		return db.cms_posts.find({site: siteId}, {sort: {posted: -1}, limit: limit, skip: skip})
 
 Template.registerHelper 'Post', ->
-	if this.params.postId
-		return db.cms_posts.findOne({_id: this.params.postId})
+	postId = Template.instance().data.params.postId
+	if postId
+		return db.cms_posts.findOne({_id: postId})
+
+Template.registerHelper 'SiteId', ->
+	siteId = Template.instance().data.params.siteId
+	return siteId
 
 Template.registerHelper 'Site', ->
-	return db.cms_sites.findOne({_id: this.params.siteId})
+	siteId = Template.instance().data.params.siteId
+	if siteId
+		return db.cms_sites.findOne({_id: siteId})
 
 Template.registerHelper 'IndexPage', ->
-	if !this.params
+	data = Template.instance().data
+	if !data.params
 		return false;
-	else if this.params.categoryId
+	else if data.params.tag
 		return false
-	else if this.params.postId
+	else if data.params.postId
 		return false
 	else 
 		return true
 
-Template.registerHelper 'CategoryPage', ->
-	if this.params.categoryId
+Template.registerHelper 'TagPage', ->
+	tag = Template.instance().data.params.tag
+	if tag
 		return true
 	return false
 
+Template.registerHelper 'Tag', ->
+	tag = Template.instance().data.params.tag
+	return tag
+
 Template.registerHelper 'PostPage', ->
-	if this.params.postId
+	postId = Template.instance().data.params.postId
+	if postId
 		return true
 	return false
 
 Template.registerHelper 'Markdown', (text)->
 	return Spacebars.SafeString(Markdown(text))
+
+Template.registerHelper 'equals', (a, b)->
+	return a == b
 
 renderSite = (req, res, next) ->
 	site = db.cms_sites.findOne({_id: req.params.siteId})
@@ -57,8 +74,15 @@ renderSite = (req, res, next) ->
 
 	res.end(html);
 
+# JsonRoutes.add "get", "/site/:siteId", (req, res, next)->
+# 	res.statusCode = 302;
+# 	res.setHeader "Location", "./s/home"
+# 	res.end();
+
 JsonRoutes.add "get", "/site/:siteId", renderSite  
 
-JsonRoutes.add "get", "/site/:siteId/category/:categoryId", renderSite  
+JsonRoutes.add "get", "/site/:siteId/c/:categoryId", renderSite  
 
-JsonRoutes.add "get", "/site/:siteId/post/:postId", renderSite  
+JsonRoutes.add "get", "/site/:siteId/p/:postId", renderSite  
+
+JsonRoutes.add "get", "/site/:siteId/t/:tag", renderSite  

@@ -15,6 +15,17 @@ db.cms_sites._simpleSchema = new SimpleSchema
 				return options
 	name: 
 		type: String,
+
+	homepage_tags:
+		type: [String],
+		optional: true,
+		autoform: 
+			type: 'tags'
+	menu_tags:
+		type: [String],
+		optional: true,
+		autoform: 
+			type: 'tags'
 	owner: 
 		type: String,
 		autoform:

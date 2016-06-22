@@ -4,8 +4,15 @@ db.cms_pages._simpleSchema = new SimpleSchema
 	site: 
 		type: String,
 		autoform: 
-			defaultValue: ->
-				return Session.get("siteId");
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_sites.find()
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	title: 
 		type: String,
 	slug:
