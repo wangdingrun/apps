@@ -19,6 +19,15 @@ Template.registerHelper 'Post', ->
 	if postId
 		return db.cms_posts.findOne({_id: postId})
 
+
+Template.registerHelper 'Attachments', ()->
+	postId = Template.instance().data.params.postId
+	if postId
+		post = db.cms_posts.findOne({_id: postId})
+		if post and post.attachments
+			return db.cms_files.find({_id: {$in: post.attachments}}).fetch()
+
+
 Template.registerHelper 'SiteId', ->
 	siteId = Template.instance().data.params.siteId
 	return siteId
@@ -67,7 +76,7 @@ renderSite = (req, res, next) ->
 	templateName = 'site_theme_' + site.theme
 	layout = site.layout
 	if !layout
-		layout = Assets.getText('site/layout.html')
+		layout = Assets.getText('cms/themes/default.html')
 	SSR.compileTemplate('site_theme_' + site.theme, layout);
 
 	html = SSR.render templateName, 

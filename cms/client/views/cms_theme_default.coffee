@@ -12,6 +12,14 @@ Template.cms_theme_default.helpers
 		postId = Session.get("postId")
 		if postId
 			return db.cms_posts.findOne({_id: postId})
+
+	Attachments: ()->
+		postId = Session.get("postId")
+		if postId
+			post = db.cms_posts.findOne({_id: postId})
+			if post and post.attachments
+				return db.cms_files.find({_id: {$in: post.attachments}}).fetch()
+
 	SiteId: ->
 		siteId = Session.get("siteId")
 		return siteId

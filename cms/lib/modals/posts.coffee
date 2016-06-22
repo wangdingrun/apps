@@ -53,17 +53,14 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		optional: true
 		autoform:
 			type: 'fileUpload'
-			collection: 'cms_images'
+			collection: 'cms_files'
 			accept: 'image/*'
-			triggers: 
-				onBeforeInsert: (fileObj) ->
-					if !fileObj.metadata
-						fileObj.metadata = {}
-					fileObj.metadata.site = Session.get("siteId")
-					return fileObj
-
-			label: ()->
-				return t("cms_posts_choose_image")
+			# triggers: 
+			# 	onBeforeInsert: (fileObj) ->
+			# 		if !fileObj.metadata
+			# 			fileObj.metadata = {}
+			# 		fileObj.metadata.site = Session.get("siteId")
+			# 		return fileObj
 	posted: 
 		type: Date,
 		optional: true,
@@ -77,18 +74,31 @@ db.cms_posts._simpleSchema = new SimpleSchema
 			rows: 10,
 			order: 30
  
-	htmlBody: 
-		type: String,
-		optional: true
-		autoform:
-			omit: true
+	# htmlBody: 
+	# 	type: String,
+	# 	optional: true
+	# 	autoform:
+	# 		omit: true
 		
 	tags:
 		type: [String],
 		optional: true,
 		autoform: 
 			type: 'tags'
-
+	attachments:
+		type: [String]
+		optional: true
+	"attachments.$":
+		autoform:
+			type: 'fileUpload'
+			collection: 'cms_files'
+			accept: 'image/*'
+			# triggers: 
+			# 	onBeforeInsert: (fileObj) ->
+			# 		if !fileObj.metadata
+			# 			fileObj.metadata = {}
+			# 		fileObj.metadata.site = Session.get("siteId")
+			# 		return fileObj
 	viewCount: 
 		type: Number,
 		optional: true
@@ -266,3 +276,9 @@ if Meteor.isServer
 
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
+
+
+	db.cms_posts.after.update (userId, doc, fieldNames, modifier, options) ->
+		self = this
+		modifier.$set = modifier.$set || {}
+		

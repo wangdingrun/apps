@@ -4,4 +4,4 @@ Meteor.startup ->
             Meteor.subscribe "cms_sites"
             Meteor.subscribe "cms_posts"
             Meteor.subscribe "cms_tags"         
-            Meteor.subscribe "cms_images"    
+            Meteor.subscribe "cms_files"    

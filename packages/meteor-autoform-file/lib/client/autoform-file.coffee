@@ -43,16 +43,14 @@ Template.afFileUpload.onCreated ->
     collection = getCollection(self.data)
     if Meteor.userId
       file.owner = Meteor.userId()
-    if typeof (if (ref = self.data.atts?.triggers) != null then ref.onBeforeInsert else undefined) == 'function'
-      file = self.data.atts.triggers.onBeforeInsert(file) or file
+    file = self.data.atts.triggers?.onBeforeInsert?(file) or file
     file = new (FS.File)(file)
     file.uploadedFrom = Meteor.userId()
     maxChunk = 2097152
     FS.config.uploadChunkSize = if file.original.size < 10 * maxChunk then file.original.size / 10 else maxChunk
     collection.insert file, (err, fileObj) ->
       ref1 = undefined
-      if typeof (if (ref1 = self.data.atts?.triggers) != null then ref1.onAfterInsert else undefined) == 'function'
-        self.data.atts.triggers.onAfterInsert err, fileObj
+      self.data.atts.triggers?.onAfterInsert?(err, fileObj) 
       fileObj.update $set: "metadata.owner": Meteor.userId()
       if err
         return console.log(err)

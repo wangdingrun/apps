@@ -52,7 +52,7 @@
 										<a class="list_item js_post" href="/cms/site/{{SiteId}}/t/{{Tag}}/p/{{_id}}">
 											{{#if image}}
 											<div class="cover">
-												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+												<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
 											</div>
 											{{/if}}
 											<div class="cont">
@@ -78,9 +78,14 @@
 									</div>
 									<div class="box-body">
 										{{#if Post.image}}
-										<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+										<img class="img js_img" src="/api/files/cms_files/{{Post.image}}" alt="">
 										{{/if}}
 										<p>{{Markdown Post.body}}</p>
+										<ul>
+										{{#each Attachments}}
+											<li><a href="/api/files/cms_files/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
+										{{/each}}
+										</ul>
 									</div>
 								</div>
 							</div>
@@ -106,7 +111,7 @@
 											<a class="list_item js_post" href="/cms/site/{{SiteId}}/p/{{_id}}">
 												{{#if image}}
 												<div class="cover">
-													<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+													<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
 												</div>
 												{{/if}}
 												<div class="cont">
@@ -133,10 +138,14 @@
 										</div>
 										<div class="box-body">
 											{{#if Post.image}}
-											<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+											<img class="img js_img" src="/api/files/cms_files/{{Post.image}}" alt="">
 											{{/if}}
 											<p>{{Markdown Post.body}}</p>
-
+											<ul>
+											{{#each Attachments}}
+												<li><a href="/api/files/cms_files/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
+											{{/each}}
+											</ul>
 										</div>
 									</div>
 								</div>
@@ -162,7 +171,7 @@
 											<a class="list_item js_post" href="/cms/p/{{_id}}">
 												{{#if image}}
 												<div class="cover">
-													<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+													<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
 												</div>
 												{{/if}}
 												<div class="cont">
@@ -189,10 +198,14 @@
 										</div>
 										<div class="box-body">
 											{{#if Post.image}}
-											<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+											<img class="img js_img" src="/api/files/cms_files/{{Post.image}}" alt="">
 											{{/if}}
 											<p>{{Markdown Post.body}}</p>
-
+											<ul>
+											{{#each Attachments}}
+												<li><a href="/api/files/cms_files/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
+											{{/each}}
+											</ul>
 										</div>
 									</div>
 								</div>

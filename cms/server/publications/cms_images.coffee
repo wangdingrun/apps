@@ -1,5 +1,5 @@
-Meteor.publish 'cms_images', ->
+Meteor.publish 'cms_files', ->
     unless this.userId
         return this.ready()
 
-    db.cms_images.find({"metadata.owner": this.userId})
+    db.cms_files.find({"metadata.owner": this.userId})

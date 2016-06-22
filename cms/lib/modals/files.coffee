@@ -1,8 +1,8 @@
-db.cms_images = new FS.Collection("cms_images",
-  stores: [new FS.Store.FileSystem("cms_images")]
+db.cms_files = new FS.Collection("cms_files",
+  stores: [new FS.Store.FileSystem("cms_files")]
 )
 
-db.cms_images.allow
+db.cms_files.allow
   insert: (userId, doc) ->
     true
   update: (userId, doc) ->

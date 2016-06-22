@@ -128,7 +128,7 @@
 										{{#each Posts this 5}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
-												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+												<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
 											</div>
 											<div class="cont">
 												<h2 class="title js_title">{{title}}</h2>
@@ -163,7 +163,7 @@
 										{{#each Posts Tag 20}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
-												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+												<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
 											</div>
 											<div class="cont">
 												<h2 class="title js_title">{{title}}</h2>
@@ -193,8 +193,13 @@
 								  <p>{{posted}}</p>
 								</div>
 								<div class="box-body no-padding weixin">
-									<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+									<img class="img js_img" src="/api/files/cms_files/{{Post.image}}" alt="">
 									<p>{{Markdown Post.body}}</p>
+									<ul>
+									{{#each Attachments}}
+										<li><a href="/api/files/cms_files/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
+									{{/each}}
+									</ul>
 
 								</div>
 							</div>
