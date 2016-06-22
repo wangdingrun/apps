@@ -125,7 +125,7 @@
 
 									<div class="article_list">
 						
-										{{#each Posts this}}
+										{{#each Posts this 5}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
 												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
@@ -160,7 +160,7 @@
 
 									<div class="article_list">
 						
-										{{#each Posts Tag}}
+										{{#each Posts Tag 20}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
 												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">

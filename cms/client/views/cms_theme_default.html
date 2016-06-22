@@ -1,195 +1,210 @@
 <template name="cms_theme_default">
 
-    <div class="navigation-bar">
+	<div class="navigation-bar">
 
-        {{#if Tag}}
-            <a href="/cms/site/{{SiteId}}" class="btn btn-default" title='{{Site.name}}'>
-                <i class="ion ion-chevron-left"></i><span></span>
-            </a>
-        {{else}}
-            {{#if Site}}
-                <a href="/cms" class="btn btn-default" title='{{_ "Steedos CMS"}}'>
-                    <i class="ion ion-chevron-left"></i><span></span>
-                </a>
-            {{else}}
-                <a href="/" class="btn btn-default" title='{{_ "Steedos"}}'>
-                    <i class="ion ion-chevron-left"></i><span></span>
-                </a>
-            {{/if}}
-        {{/if}}
+		{{#if Tag}}
+			<a href="/cms/site/{{SiteId}}" class="btn btn-default" title='{{Site.name}}'>
+				<i class="ion ion-chevron-left"></i><span></span>
+			</a>
+		{{else}}
+			{{#if SiteId}}
+				<a href="/cms" class="btn btn-default" title='{{_ "Steedos CMS"}}'>
+					<i class="ion ion-chevron-left"></i><span></span>
+				</a>
+			{{else}}
+				<a href="/" class="btn btn-default" title='{{_ "Steedos"}}'>
+					<i class="ion ion-chevron-left"></i><span></span>
+				</a>
+			{{/if}}
+		{{/if}}
 
-        <span class="navigation-title dropdown">
-            {{#if Site}}
-                {{Site.name}}
-            {{else}}
-                {{_ "Steedos CMS"}}
-            {{/if}}
-        </span>
-        <div class="pull-right">
-            <a class="btn btn-default" href="/cms/site/admin"><i class="ion ion-settings"></i></a>
-        </div>
-    </div>
+		<span class="navigation-title dropdown">
+			{{#if SiteId}}
+				{{Site.name}}
+			{{else}}
+				{{_ "Steedos CMS"}}
+			{{/if}}
+		</span>
+		<div class="pull-right">
+			{{#if SiteId}}
+				<a class="btn btn-default" href="/site/{{SiteId}}" target="_blank"><i class="ion ion-ios-world-outline"></i></a>
+			{{else}}
+				<a class="btn btn-default" href="/cms/admin"><i class="ion ion-ios-gear-outline"></i></a>
+			{{/if}}
+		</div>
+	</div>
 
-    <div class="content">
+	<div class="content cms default">
 
-                {{#if Tag}}
-                    <div class="row">
+				{{#if Tag}}
+					<div class="row">
 
-                        <div class="col-md-6">
-                            <div class="box">
-                                <div class="box-header with-border">
-                                  <h3 class="box-title">{{Tag}}</h3>
-                                </div>
-                                <div class="box-body no-padding weixin">
+						<div class="col-md-6">
+							<div class="box">
+								<div class="box-header with-border">
+								  <h3 class="box-title">{{Tag}}</h3>
+								</div>
+								<div class="box-body no-padding weixin">
 
-                                    <div class="article_list">
-                        
-                                        {{#each Posts SiteId Tag 20}}
-                                        <a class="list_item js_post" href="/cms/site/{{SiteId}}/t/{{Tag}}/p/{{_id}}">
-                                            <div class="cover">
-                                                <img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
-                                            </div>
-                                            <div class="cont">
-                                                <h2 class="title js_title">{{title}}</h2>
-                                                <p class="desc">{{summary}}</p>
-                                                <!-- <p>{{fromNow posted}}</p> -->
-                                            </div>
-                                        </a>
-                                        {{/each}}
-                                        
-                                    </div>
+									<div class="article_list">
+						
+										{{#each Posts SiteId Tag 20}}
+										<a class="list_item js_post" href="/cms/site/{{SiteId}}/t/{{Tag}}/p/{{_id}}">
+											{{#if image}}
+											<div class="cover">
+												<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+											</div>
+											{{/if}}
+											<div class="cont">
+												<h2 class="title js_title">{{title}}</h2>
+												<p class="desc">{{summary}}</p>
+												<!-- <p>{{fromNow posted}}</p> -->
+											</div>
+										</a>
+										{{/each}}
+										
+									</div>
 
-                                </div>
-                            </div>
-                        </div>
-                        
-                        {{#if Post}}
-                            <div class="col-md-6">
-                                <div class="box">
-                                    <div class="box-header with-border">
-                                      <h3 class="box-title">{{Post.title}}</h3>
-                                      <p>{{posted}}</p>
-                                    </div>
-                                    <div class="box-body">
-                                        <img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
-                                        <p>{{Markdown Post.body}}</p>
+								</div>
+							</div>
+						</div>
+						
+						{{#if Post}}
+							<div class="col-md-6">
+								<div class="box">
+									<div class="box-header with-border">
+									  <h3 class="box-title">{{Post.title}}</h3>
+									  <p>{{posted}}</p>
+									</div>
+									<div class="box-body">
+										{{#if Post.image}}
+										<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+										{{/if}}
+										<p>{{Markdown Post.body}}</p>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+					</div>
 
-                                    </div>
-                                </div>
-                            </div>
-                        {{/if}}
-                    </div>
+				{{else}}
 
-                {{else}}
+					{{#if Site}}
+						<div class="row">
 
-                    {{#if Site}}
-                        <div class="row">
+							<div class="col-md-6">
+								{{#each Site.homepage_tags}}
+								<div class="box">
+									<div class="box-header with-border">
+									  <h3 class="box-title"><a href="/cms/site/{{SiteId}}/t/{{this}}">{{this}}</a></h3>
+									</div>
+									<div class="box-body no-padding weixin">
 
-                            <div class="col-md-6">
-                                {{#each Site.homepage_tags}}
-                                <div class="box">
-                                    <div class="box-header with-border">
-                                      <h3 class="box-title"><a href="/cms/site/{{SiteId}}/t/{{this}}">{{this}}</a></h3>
-                                    </div>
-                                    <div class="box-body no-padding weixin">
+										<div class="article_list">
+							
+											{{#each Posts SiteId this 5}}
+											<a class="list_item js_post" href="/cms/site/{{SiteId}}/p/{{_id}}">
+												{{#if image}}
+												<div class="cover">
+													<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+												</div>
+												{{/if}}
+												<div class="cont">
+													<h2 class="title js_title">{{title}}</h2>
+													<p class="desc">{{summary}}</p>
+													<!-- <p>{{fromNow posted}}</p> -->
+												</div>
+											</a>
+											{{/each}}
+											
+										</div>
 
-                                        <div class="article_list">
-                            
-                                            {{#each Posts SiteId this 5}}
-                                            <a class="list_item js_post" href="/cms/site/{{SiteId}}/p/{{_id}}">
-                                                <div class="cover">
-                                                    <img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
-                                                </div>
-                                                <div class="cont">
-                                                    <h2 class="title js_title">{{title}}</h2>
-                                                    <p class="desc">{{summary}}</p>
-                                                    <!-- <p>{{fromNow posted}}</p> -->
-                                                </div>
-                                            </a>
-                                            {{/each}}
-                                            
-                                        </div>
+									</div>
+								</div>
+								{{/each}} 
+							</div>
 
-                                    </div>
-                                </div>
-                                {{/each}} 
-                            </div>
+							{{#if Post}}
+								<div class="col-md-6">
+									<div class="box">
+										<div class="box-header with-border">
+										  <h3 class="box-title">{{Post.title}}</h3>
+										  <p>{{posted}}</p>
+										</div>
+										<div class="box-body">
+											{{#if Post.image}}
+											<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+											{{/if}}
+											<p>{{Markdown Post.body}}</p>
 
-                            {{#if Post}}
-                                <div class="col-md-6">
-                                    <div class="box">
-                                        <div class="box-header with-border">
-                                          <h3 class="box-title">{{Post.title}}</h3>
-                                          <p>{{posted}}</p>
-                                        </div>
-                                        <div class="box-body">
-                                            <img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
-                                            <p>{{Markdown Post.body}}</p>
+										</div>
+									</div>
+								</div>
+							{{/if}}
 
-                                        </div>
-                                    </div>
-                                </div>
-                            {{/if}}
+						</div>
 
-                        </div>
+					{{else}}
+						
+						<div class="row">
 
-                    {{else}}
-                        
-                        <div class="row">
+							<div class="col-md-6">
+								{{#each Sites}}
+								<div class="box">
+									<div class="box-header with-border">
+									  <h3 class="box-title"><a href="/cms/site/{{_id}}">{{name}}</a></h3>
+									</div>
+									<div class="box-body no-padding weixin">
 
-                            <div class="col-md-6">
-                                {{#each Sites}}
-                                <div class="box">
-                                    <div class="box-header with-border">
-                                      <h3 class="box-title"><a href="/cms/site/{{_id}}">{{name}}</a></h3>
-                                    </div>
-                                    <div class="box-body no-padding weixin">
+										<div class="article_list">
+							
+											{{#each Posts _id "" 5}}
+											<a class="list_item js_post" href="/cms/p/{{_id}}">
+												{{#if image}}
+												<div class="cover">
+													<img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
+												</div>
+												{{/if}}
+												<div class="cont">
+													<h2 class="title js_title">{{title}}</h2>
+													<p class="desc">{{summary}}</p>
+													<!-- <p>{{fromNow posted}}</p> -->
+												</div>
+											</a>
+											{{/each}}
+											
+										</div>
 
-                                        <div class="article_list">
-                            
-                                            {{#each Posts _id "" 5}}
-                                            <a class="list_item js_post" href="/cms/p/{{_id}}">
-                                                <div class="cover">
-                                                    <img class="img js_img" src="/api/files/cms_images/{{image}}" alt="">
-                                                </div>
-                                                <div class="cont">
-                                                    <h2 class="title js_title">{{title}}</h2>
-                                                    <p class="desc">{{summary}}</p>
-                                                    <!-- <p>{{fromNow posted}}</p> -->
-                                                </div>
-                                            </a>
-                                            {{/each}}
-                                            
-                                        </div>
+									</div>
+								</div>
+								{{/each}}
+							</div>
+							
+							{{#if Post}}
+								<div class="col-md-6">
+									<div class="box">
+										<div class="box-header with-border">
+										  <h3 class="box-title">{{Post.title}}</h3>
+										  <p>{{posted}}</p>
+										</div>
+										<div class="box-body">
+											{{#if Post.image}}
+											<img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
+											{{/if}}
+											<p>{{Markdown Post.body}}</p>
 
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </div>
-                            
-                            {{#if Post}}
-                                <div class="col-md-6">
-                                    <div class="box">
-                                        <div class="box-header with-border">
-                                          <h3 class="box-title">{{Post.title}}</h3>
-                                          <p>{{posted}}</p>
-                                        </div>
-                                        <div class="box-body">
-                                            <img class="img js_img" src="/api/files/cms_images/{{Post.image}}" alt="">
-                                            <p>{{Markdown Post.body}}</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            {{/if}}
-                        </div>
-                    {{/if}}
-
-
-                {{/if}}
-
+										</div>
+									</div>
+								</div>
+							{{/if}}
+						</div>
+					{{/if}}
 
 
-    </div>
+				{{/if}}
+
+
+
+	</div>
 
 </template>

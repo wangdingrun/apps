@@ -1,20 +1,26 @@
 db.cms_sites = new Meteor.Collection('cms_sites')
 
 db.cms_sites._simpleSchema = new SimpleSchema
-	theme: 
-		type: String,
-		autoform: 
-			type: "select",
-			options: ->
-				options = []
-				objs = db.cms_themes.find()
-				objs.forEach (obj) ->
-					options.push
-						label: obj.name,
-						value: obj._id
-				return options
+	# theme: 
+	# 	type: String,
+	# 	autoform: 
+	# 		type: "select",
+	# 		options: ->
+	# 			options = []
+	# 			objs = db.cms_themes.find()
+	# 			objs.forEach (obj) ->
+	# 				options.push
+	# 					label: obj.name,
+	# 					value: obj._id
+	# 			return options
 	name: 
 		type: String,
+		optional: true,
+	description: 
+		type: String,
+		optional: true,
+		autoform: 
+			rows: 3
 
 	homepage_tags:
 		type: [String],
@@ -39,6 +45,12 @@ db.cms_sites._simpleSchema = new SimpleSchema
 			multiple: true
 			defaultValue: ->
 				return [Meteor.userId()]
+
+	layout: 
+		type: String,
+		optional: true,
+		autoform: 
+			rows: 10
 	created:
 		type: Date,
 		optional: true

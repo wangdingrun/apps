@@ -7,8 +7,7 @@ Template.registerHelper 'Title', ->
 Template.registerHelper 'Posts', (tag, limit, skip)->
 	if !limit 
 		limit = 5
-	if !skip
-		skip = 0
+	skip = 0
 	siteId = Template.instance().data.params.siteId
 	if siteId and tag
 		return db.cms_posts.find({site: siteId, tags: tag}, {sort: {posted: -1}, limit: limit, skip: skip})
@@ -64,10 +63,12 @@ Template.registerHelper 'equals', (a, b)->
 
 renderSite = (req, res, next) ->
 	site = db.cms_sites.findOne({_id: req.params.siteId})
-	theme = db.cms_themes.findOne({_id: site.theme})
 	
 	templateName = 'site_theme_' + site.theme
-	SSR.compileTemplate('site_theme_' + site.theme, theme.html);
+	layout = site.layout
+	if !layout
+		layout = Assets.getText('site/layout.html')
+	SSR.compileTemplate('site_theme_' + site.theme, layout);
 
 	html = SSR.render templateName, 
 		params: req.params
