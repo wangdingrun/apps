@@ -7,17 +7,7 @@
 		</button>
 
 		<span class="navigation-title dropdown">
-				
-			{{#if Organization}}
-				<i class="ion ion-person-stalker"></i><span>&nbsp;&nbsp;{{Organization.name}}</span>
-			{{else}}
-				{{#if Tag}}
-					<i class="ion ion-pricetag"></i><span>&nbsp;&nbsp;{{Tag}}</span>
-				{{else}}
-					<span>&nbsp;&nbsp;{{Site.name}}</span>
-				{{/if}}
-			{{/if}}
-
+			<span>{{Site.name}}</span>
 		</span>
 		<div class="pull-right">
 			<a class="btn btn-default" href="/cms/{{SiteId}}/admin"><i class="ion ion-ios-gear-outline"></i></a>
@@ -55,7 +45,7 @@
 							<img class="img-responsive pad" src="/api/files/sites/{{image}}" alt="Photo">
 						{{/if}}  
 
-						{{{body}}}
+						{{{Markdown body}}}
 						
 						<ul>
 							{{#each Attachments}}

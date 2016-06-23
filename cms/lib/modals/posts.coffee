@@ -13,18 +13,19 @@ db.cms_posts._simpleSchema = new SimpleSchema
 			type: "hidden",
 			defaultValue: ->
 				return Session.get("siteId");
-	# category: 
-	# 	type: String,
-	# 	autoform: 
-	# 		type: "select",
-	# 		options: ->
-	# 			options = []
-	# 			objs = db.cms_categories.find({}, {})
-	# 			objs.forEach (obj) ->
-	# 				options.push
-	# 					label: obj.name,
-	# 					value: obj._id
-	# 			return options
+	category: 
+		type: String,
+		optional: false,
+		autoform: 
+			type: "select",
+			options: ->
+				options = []
+				objs = db.cms_categories.find({}, {})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj._id
+				return options
 	# url: 
 	# 	type: String,
 	# 	optional: true,
@@ -79,6 +80,7 @@ db.cms_posts._simpleSchema = new SimpleSchema
 
 	organization: 
 		type: String,
+		optional: true,
 		autoform: 
 			type: "selectorg"
 

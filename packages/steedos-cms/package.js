@@ -19,7 +19,7 @@ Package.onUse(function(api) {
     api.use('underscorestring:underscore.string');
     api.use('tracker');
     api.use('session');
-    api.use('templating');
+    api.use('blaze');
     
     api.use('simple:json-routes');
     api.use('nimble:restivus');
@@ -42,6 +42,7 @@ Package.onUse(function(api) {
     
     api.addFiles('lib/core.coffee');
     api.addFiles('lib/routes/site.coffee', 'server');
+    api.addAssets('themes/default.html', 'server');
 
     // EXPORT
     api.export('CMS');

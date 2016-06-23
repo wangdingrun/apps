@@ -4,42 +4,29 @@
 
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title"><a href="/cms/{{SiteId}}/o/{{space_organization._id}}">{{space_organization.name}}</a></h3>
-
+                <a href="/cms/{{SiteId}}/"><h3 class="box-title">{{_ "cms_home"}}</h3></a>
               <div class="box-tools">
-                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button> -->
               </div>
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <!-- <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
-                  <span class="label label-primary pull-right">12</span></a></li> -->
-                {{#each organizations space_organization._id}}
-                  <li><a href="/cms/{{SiteId}}/o/{{_id}}"><i class="ion ion-person-stalker"></i> {{name}}</a></li>
-                  {{#each organizations _id}}
-                    <li><a href="/cms/{{SiteId}}/o/{{_id}}"> &nbsp;&nbsp;&nbsp;&nbsp;<i class="ion ion-person-stalker"></i>{{name}}</a></li>
+                {{#if SubCategoriesCount CategoryId}}
+                  {{#if CategoryId}}
+                    <li class="{{CategoryActive CategoryId}}"><a href="/cms/{{SiteId}}/c/{{CategoryId}}"><i class="ion ion-ios-folder-outline"></i> {{Category.name}}<!-- <span class="label label-primary pull-right">12</span> --></a></li>
+                  {{/if}}
+                  {{#each SubCategories CategoryId}}
+                    <li class="{{CategoryActive _id}}"><a href="/cms/{{SiteId}}/c/{{_id}}">{{#if CategoryId}}&nbsp;&nbsp;&nbsp;&nbsp;{{/if}}<i class="ion ion-ios-folder-outline"></i> {{name}}<!-- <span class="label label-primary pull-right">12</span> --></a></li>
                   {{/each}}
-                {{/each}}
-                
+                {{else}}
+                  {{#if ParentCategory}}
+                    <li class="{{CategoryActive ParentCategory._id}}"><a href="/cms/{{SiteId}}/c/{{ParentCategory._id}}"><i class="ion ion-ios-folder-outline"></i> {{ParentCategory.name}}<!-- <span class="label label-primary pull-right">12</span> --></a></li>
+                  {{/if}}
+                  {{#each SubCategories Category.parent}}
+                    <li class="{{CategoryActive _id}}"><a href="/cms/{{SiteId}}/c/{{_id}}">{{#if ParentCategory}}&nbsp;&nbsp;&nbsp;&nbsp;{{/if}}<i class="ion ion-ios-folder-outline"></i> {{name}}<!-- <span class="label label-primary pull-right">12</span> --></a></li>
+                  {{/each}}
+                {{/if}}
               </ul>
             </div>
           </div>
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">{{_ "cms_tags"}}</h3>
 
-              <div class="box-tools">
-                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button> -->
-              </div>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                {{#each Tags}}
-                  <li><a href="/cms/{{SiteId}}/t/{{name}}"><i class="fa fa-circle-o text-light-blue"></i> {{name}}</a></li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
 </template>

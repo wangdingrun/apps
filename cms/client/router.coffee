@@ -15,40 +15,41 @@ FlowRouter.route '/cms/:siteId/admin',
 FlowRouter.route '/cms/:siteId',
 	action: (params, queryParams)->
 		Session.set("siteId", params.siteId)
+		Session.set("siteCategory", null)
+		Session.set("siteTag", null)
 		BlazeLayout.render 'masterLayout',
 			main: "cms_site_home"
 
 FlowRouter.route '/cms/:siteId/p/:postId',
 	action: (params, queryParams)->
-		if params.siteId != Session.get("siteId")
-			Session.set("siteId", params.siteId)
+		Session.set("siteId", params.siteId)
 		BlazeLayout.render 'masterLayout',
 			main: "cms_site_post"
 
-FlowRouter.route '/cms/:siteId/t/:tag',
+FlowRouter.route '/cms/:siteId/t/:siteTag',
 	action: (params, queryParams)->
-		if params.siteId != Session.get("siteId")
-			Session.set("siteId", params.siteId)
+		Session.set("siteId", params.siteId)
+		Session.set("siteTag", params.siteTag)
 		BlazeLayout.render 'masterLayout',
 			main: "cms_site_tagged"
 
-FlowRouter.route '/cms/:siteId/t/:tag/p/:postId',
+FlowRouter.route '/cms/:siteId/t/:siteTag/p/:postId',
 	action: (params, queryParams)->
-		if params.siteId != Session.get("siteId")
-			Session.set("siteId", params.siteId)
+		Session.set("siteId", params.siteId)
+		Session.set("siteTag", params.siteTag)
 		BlazeLayout.render 'masterLayout',
 			main: "cms_site_post"
 
-FlowRouter.route '/cms/:siteId/o/:organizationId',
+FlowRouter.route '/cms/:siteId/c/:siteCategory',
 	action: (params, queryParams)->
-		if params.siteId != Session.get("siteId")
-			Session.set("siteId", params.siteId)
+		Session.set("siteId", params.siteId)
+		Session.set("siteCategory", params.siteCategory)
 		BlazeLayout.render 'masterLayout',
-			main: "cms_site_organization"
+			main: "cms_site_category"
 			
-FlowRouter.route '/cms/:siteId/o/:organizationId/p/:postId',
+FlowRouter.route '/cms/:siteId/c/:siteCategory/p/:postId',
 	action: (params, queryParams)->
-		if params.siteId != Session.get("siteId")
-			Session.set("siteId", params.siteId)
+		Session.set("siteId", params.siteId)
+		Session.set("siteCategory", params.siteCategory)
 		BlazeLayout.render 'masterLayout',
 			main: "cms_site_post"

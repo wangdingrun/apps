@@ -15,42 +15,51 @@ db.cms_categories._simpleSchema = new SimpleSchema
 				return Session.get("siteId");
 	name: 
 		type: String,
+
 	description: 
 		type: String,
 		optional: true,
 		autoform: 
 			rows: 3
-	tags:
-		type: [String],
-		optional: true,
-		autoform: 
-			type: 'tags'
-	order: 
-		type: Number,
-		optional: true,
+	# tags:
+	# 	type: [String],
+	# 	optional: true,
+	# 	autoform: 
+	# 		type: 'tags'
 	# slug: 
 	# 	type: String,
 	# 	optional: true,
-	image:
-		type: String,
-		optional: true,
-	# parentId: 
+	# image:
 	# 	type: String,
 	# 	optional: true,
-	# 	autoform: 
-	# 		options:  () ->
-	# 			categories = db.cms_categories.find().map (category) ->
-	# 				return {
-	# 					value: category._id,
-	# 					label: category.name
-	# 				}
-	# 			return categories;
 
-	# show post list on homepage
+	parent: 
+		type: String,
+		optional: true,
+		autoform: 
+			options:  () ->
+				categories = db.cms_categories.find().map (category) ->
+					return {
+						value: category._id,
+						label: category.name
+					}
+				return categories;
+
+	order: 
+		type: Number,
+		optional: true,
+
+	# show post list on website homepage
 	featured: 
 		type: Boolean,
 		optional: true,
-		defaultValue: false,
+		defaultValue: true,
+
+	# show post list on website top menu
+	menu: 
+		type: Boolean,
+		optional: true,
+		defaultValue: true,
 
 	created: 
 		type: Date,
@@ -70,9 +79,8 @@ if Meteor.isClient
 
 db.cms_categories.attachSchema(db.cms_categories._simpleSchema)
 
-
 db.cms_categories.adminConfig = 
-	icon: "globe"
+	icon: "ion ion-ios-albums-outline"
 	color: "blue"
 	tableColumns: [
 		{name: "name"},

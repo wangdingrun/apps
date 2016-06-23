@@ -232,3 +232,13 @@ if (Meteor.isServer)
 
 		return db.space_users.find(selector)
 	
+
+
+	Meteor.publish 'my_space_users', ()->
+		unless this.userId
+			return this.ready()
+
+		console.log '[publish] my_space_users '
+
+		return db.space_users.find({user: this.userId})
+	
