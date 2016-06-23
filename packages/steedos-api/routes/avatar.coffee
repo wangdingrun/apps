@@ -1,10 +1,10 @@
 Meteor.startup ->
 	
-	JsonRoutes.add 'get', '/avatar/', (req, res, next) ->
-		this.params =
-			userId: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
+	JsonRoutes.add 'get', '/avatar/:userId', (req, res, next) ->
+		# this.params =
+		# 	userId: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
 
-		user = db.users.findOne(this.params.userId);
+		user = db.users.findOne(req.params.userId);
 		if !user
 			res.writeHead 401
 			res.end()
