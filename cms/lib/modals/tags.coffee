@@ -1,19 +1,22 @@
 db.cms_tags = new Mongo.Collection("cms_tags");
 
 db.cms_tags._simpleSchema = new SimpleSchema
+    space: 
+        type: String,
+        autoform: 
+            type: "hidden",
+            defaultValue: ->
+                return Session.get("spaceId");
     site: 
         type: String,
         autoform: 
-            type: "select",
-            options: ->
-                options = []
-                objs = db.cms_sites.find()
-                objs.forEach (obj) ->
-                    options.push
-                        label: obj.name,
-                        value: obj._id
-                return options
+            type: "hidden",
+            defaultValue: ->
+                return Session.get("siteId");
     name: 
+        type: String,
+        
+    color: 
         type: String,
 
     sub_tags:
@@ -21,9 +24,6 @@ db.cms_tags._simpleSchema = new SimpleSchema
         optional: true,
         autoform: 
             type: 'tags'
-    image:
-        type: String,
-        optional: true,
 
     created: 
         type: Date,
@@ -49,7 +49,7 @@ db.cms_tags.adminConfig =
     color: "blue"
     tableColumns: [
         {name: "name"},
-        {name: "subTags"},
+        {name: "sub_tags"},
         {name: "modified"},
     ]
     selector: {owner: -1}

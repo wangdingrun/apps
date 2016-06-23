@@ -1,18 +1,18 @@
 db.cms_posts = new Meteor.Collection('cms_posts')
 
 db.cms_posts._simpleSchema = new SimpleSchema
+	space: 
+		type: String,
+		autoform: 
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("spaceId");
 	site: 
 		type: String,
 		autoform: 
-			type: "select",
-			options: ->
-				options = []
-				objs = db.cms_sites.find()
-				objs.forEach (obj) ->
-					options.push
-						label: obj.name,
-						value: obj._id
-				return options
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("siteId");
 	# category: 
 	# 	type: String,
 	# 	autoform: 
@@ -32,41 +32,23 @@ db.cms_posts._simpleSchema = new SimpleSchema
 	# 	autoform: 
 	# 		#type: "bootstrap-url",
 	# 		order: 10
+
 	title: 
 		type: String,
 		optional: false,
 		max: 500,
 		autoform: 
 			order: 20
-	summary: 
-		type: String,
-		optional: false,
-		autoform: 
-			order: 25
+	# summary: 
+	# 	type: String,
+	# 	optional: true,
+	# 	autoform: 
+	# 		order: 25
 	# slug: 
 	# 	type: String,
 	# 	optional: true
 	# 	autoform:
 	# 		omit: true
-	image:
-		type: String
-		optional: true
-		autoform:
-			type: 'fileUpload'
-			collection: 'cms_files'
-			accept: 'image/*'
-			# triggers: 
-			# 	onBeforeInsert: (fileObj) ->
-			# 		if !fileObj.metadata
-			# 			fileObj.metadata = {}
-			# 		fileObj.metadata.site = Session.get("siteId")
-			# 		return fileObj
-	posted: 
-		type: Date,
-		optional: true,
-		autoform: 
-			type: "bootstrap-datetimepicker"
-			
 	body: 
 		type: String,
 		optional: true,
@@ -80,18 +62,13 @@ db.cms_posts._simpleSchema = new SimpleSchema
 	# 	autoform:
 	# 		omit: true
 		
-	tags:
-		type: [String],
-		optional: true,
-		autoform: 
-			type: 'tags'
 	attachments:
 		type: [String]
 		optional: true
 	"attachments.$":
 		autoform:
 			type: 'fileUpload'
-			collection: 'cms_files'
+			collection: 'sites'
 			accept: 'image/*'
 			# triggers: 
 			# 	onBeforeInsert: (fileObj) ->
@@ -99,6 +76,31 @@ db.cms_posts._simpleSchema = new SimpleSchema
 			# 			fileObj.metadata = {}
 			# 		fileObj.metadata.site = Session.get("siteId")
 			# 		return fileObj
+
+	organization: 
+		type: String,
+		autoform: 
+			type: "selectorg"
+
+	users: 
+		type: [String],
+		optional: true,
+		autoform:
+			type: "selectuser"
+			multiple: true
+			
+	tags:
+		type: [String],
+		optional: true,
+		autoform: 
+			type: 'tags'
+		
+	posted: 
+		type: Date,
+		optional: true,
+		autoform: 
+			type: "bootstrap-datetimepicker"
+			
 	viewCount: 
 		type: Number,
 		optional: true
@@ -236,7 +238,7 @@ db.cms_posts.adminConfig =
 	color: "blue"
 	tableColumns: [
 		{name: "title"},
-		{name: "slug"},
+		{name: "author_name"},
 		{name: "modified"},
 	]
 	selector: {owner: -1}

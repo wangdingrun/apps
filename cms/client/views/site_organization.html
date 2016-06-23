@@ -1,0 +1,35 @@
+<template name="cms_site_organization">
+
+	<div class="navigation-bar">
+
+		<button type="button" class="btn btn-default" data-toggle="offcanvas">
+			<i class="fa fa-bars"></i>
+		</button>
+
+		<span class="navigation-title dropdown">
+			{{Organization}}
+		</span>
+		<div class="pull-right">
+			<a class="btn btn-default" href="/cms/{{SiteId}}/admin"><i class="ion ion-ios-gear-outline"></i></a>
+			<a class="btn btn-default" href="/site/{{SiteId}}" target="_blank"><i class="ion ion-ios-world-outline"></i></a>
+		</div>
+	</div>
+
+	<div class="content cms home">
+
+		<div class="row">
+
+			<div class="col-md-3">
+				{{> cms_site_menu}}
+			</div>
+			<div class="col-md-9">
+				{{#each Posts SiteId Tag 20}}
+					{{> cms_post_list_item}}
+				{{/each}}
+			</div>
+
+		</div>
+
+	</div>
+
+</template>

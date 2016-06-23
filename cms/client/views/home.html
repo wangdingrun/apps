@@ -2,16 +2,16 @@
 
 	<div class="navigation-bar">
 
-		<a href="/steedos/springboard" class="btn btn-default" title='{{_ "Steedos"}}'>
-			<i class="ion ion-android-cloud-outline"></i><span></span>
-		</a>
+    <button type="button" class="btn btn-default" data-toggle="offcanvas">
+        <i class="fa fa-bars"></i>
+    </button>
 
 		<span class="navigation-title dropdown">
 			{{_ "Steedos CMS"}}
 		</span>
 		<div class="pull-right">
 			
-			<a class="btn btn-default navigation" href="#" data-router="/cms/admin"><i class="ion ion-settings"></i></a>
+			<a class="btn btn-default navigation" href="#" data-router="/cms/admin"><i class="ion ion-ios-gear-outline"></i></a>
 		</div>
 	</div>
 	<div class="content">
@@ -21,7 +21,7 @@
           <div class="bd">
                 <div class="weui_cells weui_cells_access">
                     {{#each cms_sites}}
-                        <a class="weui_cell navigation" href="#" data-router="/cms/site/{{_id}}">
+                        <a class="weui_cell navigation" href="/cms/{{_id}}">
                             <div class="weui_cell_hd"><i class="ion ion-archive"></i></div>
                             <div class="weui_cell_bd weui_cell_primary">
                               &nbsp;{{name}}

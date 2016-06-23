@@ -4,6 +4,6 @@
       return this.ready()
     
 
-    console.log '[publish] cms_themes for user ' + this.userId
+    console.log '[publish] cms_themes'
 
     return db.cms_themes.find({}, {fields: {name: 1}})

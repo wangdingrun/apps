@@ -79,6 +79,7 @@ steedos:connect-dingtalk
 steedos:lib
 steedos:workflow
 steedos:api
+steedos:cms
 peppelg:bootstrap-3-modal
 
 perak:markdown
@@ -86,5 +87,5 @@ q42:autoform-markdown
 yogiben:autoform-file
 yogiben:autoform-tags
 
-snowping:json-routes
-meteorhacks:ssr
+simple:json-routes
+

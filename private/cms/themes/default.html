@@ -116,7 +116,7 @@
 					<div class="row">
 					{{#each Site.homepage_tags}}
 
-            			<div class="col-md-6">
+            <div class="col-md-6">
 							<div class="box">
 								<div class="box-header with-border">
 								  <h3 class="box-title">{{this}}</h3>
@@ -128,7 +128,7 @@
 										{{#each Posts this 5}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
-												<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
+												<img class="img js_img" src="/api/files/sites/{{image}}" alt="">
 											</div>
 											<div class="cont">
 												<h2 class="title js_title">{{title}}</h2>
@@ -163,7 +163,7 @@
 										{{#each Posts Tag 20}}
 										<a class="list_item js_post" href="/site/{{SiteId}}/p/{{_id}}">
 											<div class="cover">
-												<img class="img js_img" src="/api/files/cms_files/{{image}}" alt="">
+												<img class="img js_img" src="/api/files/sites/{{image}}" alt="">
 											</div>
 											<div class="cont">
 												<h2 class="title js_title">{{title}}</h2>
@@ -193,11 +193,11 @@
 								  <p>{{posted}}</p>
 								</div>
 								<div class="box-body no-padding weixin">
-									<img class="img js_img" src="/api/files/cms_files/{{Post.image}}" alt="">
+									<img class="img js_img" src="/api/files/sites/{{Post.image}}" alt="">
 									<p>{{Markdown Post.body}}</p>
 									<ul>
 									{{#each Attachments}}
-										<li><a href="/api/files/cms_files/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
+										<li><a href="/api/files/sites/{{_id}}" alt="" target="_blank">{{original.name}}</a></li>
 									{{/each}}
 									</ul>
 

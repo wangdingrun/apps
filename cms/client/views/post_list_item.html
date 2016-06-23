@@ -4,7 +4,7 @@
             <div class="box-header with-border">
               <div class="user-block">
                 <img class="img-circle" src="/avatar/{{author}}" alt="User Image">
-                <span class="username"><a class="navigation" href="/cms/site/{{site}}/post/{{_id}}">{{title}}</a>
+                <span class="username">{{title}}
                 </span>
                 <span class="description">{{author_name}} - {{fromNow posted}}</span>
               </div>
@@ -18,20 +18,22 @@
             </div>
             <div class="box-body">
               {{#if image}}
-              <img class="img-responsive pad" src="/api/files/cms_files/{{image}}" alt="Photo">
+              <img class="img-responsive pad" src="/api/files/sites/{{image}}" alt="Photo">
               {{/if}}  
 
-              {{{body_preview}}}
+              {{{PostSummary}}}
               
               <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
               <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
               <span class="pull-right text-muted">127 likes - 3 comments</span> -->
             </div>
             <div class="box-footer">
-              {{_ "cms_posts_read_all"}}
-              <div class="pull-right">
-                <i class="ion ion-chevron-right"></i>
-              </div>
+              <a href="/cms/{{site}}/p/{{_id}}">
+                {{_ "cms_posts_read_all"}}
+                <div class="pull-right">
+                  <i class="ion ion-chevron-right"></i>
+                </div>
+              </a>
             </div>
         </div>
         

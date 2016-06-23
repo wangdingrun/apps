@@ -1,18 +1,18 @@
 db.cms_pages = new Meteor.Collection('cms_pages')
 
 db.cms_pages._simpleSchema = new SimpleSchema
+	space: 
+		type: String,
+		autoform: 
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("spaceId");
 	site: 
 		type: String,
 		autoform: 
-			type: "select",
-			options: ->
-				options = []
-				objs = db.cms_sites.find()
-				objs.forEach (obj) ->
-					options.push
-						label: obj.name,
-						value: obj._id
-				return options
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("siteId");
 	title: 
 		type: String,
 	slug:

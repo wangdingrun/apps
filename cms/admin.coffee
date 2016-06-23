@@ -16,8 +16,8 @@ Meteor.startup ->
 if Meteor.isClient
     Meteor.startup ->
         Tracker.autorun ->
-            if Meteor.userId()
-                AdminTables["cms_sites"]?.selector = {owner: Meteor.userId()}
+            if Meteor.userId() and Session.get("spaceId")
+                AdminTables["cms_sites"]?.selector = {owner: Meteor.userId(), space: Session.get("spaceId")}
             if Session.get("siteId")
                 AdminTables["cms_tags"]?.selector = {site: Session.get("siteId")}
                 AdminTables["cms_posts"]?.selector = {site: Session.get("siteId")}

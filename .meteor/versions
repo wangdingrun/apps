@@ -129,7 +129,6 @@ session@1.1.1
 sha@1.0.4
 simple:json-routes@2.1.0
 smoral:sweetalert@1.1.1
-snowping:json-routes@2.0.0
 softwarerero:accounts-t9n@1.3.3
 spacebars@1.0.7
 spacebars-compiler@1.0.7
@@ -137,6 +136,7 @@ srp@1.0.4
 standard-minifiers@1.0.2
 steedos:admin-lte@0.0.2
 steedos:api@0.0.1
+steedos:cms@0.0.1
 steedos:connect-bqq@0.0.1
 steedos:connect-dingtalk@0.0.1
 steedos:cors@0.0.1

@@ -18,7 +18,7 @@
 							<a href="{{urlPrefix}}/admin/view/{{$.Session.get 'admin_collection_name'}}/">{{admin_collection_title}}</a>
 					</span>
 					<div class="pull-right">
-					{{#if $.Session.get 'admin_collection_name'}}
+					{{#if $.Session.equals 'admin_collection_page' 'view'}}
 						<a href="{{urlPrefix}}/admin/new/{{$.Session.get 'admin_collection_name'}}/" class="btn btn-success" id="admin_create_btn">
 						{{_ "New"}}
 						</a>

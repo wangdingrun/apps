@@ -2,6 +2,18 @@ db.cms_comments = new Meteor.Collection('cms_comments')
 
 db.cms_comments._simpleSchema = new SimpleSchema
 	
+	space: 
+		type: String,
+		autoform: 
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("spaceId");
+	site: 
+		type: String,
+		autoform: 
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("siteId");
 	# The post's `_id`
 	post: 
 		type: String,

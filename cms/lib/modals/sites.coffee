@@ -1,6 +1,12 @@
 db.cms_sites = new Meteor.Collection('cms_sites')
 
 db.cms_sites._simpleSchema = new SimpleSchema
+	space: 
+		type: String,
+		autoform: 
+			type: "hidden",
+			defaultValue: ->
+				return Session.get("spaceId");
 	# theme: 
 	# 	type: String,
 	# 	autoform: 
@@ -38,13 +44,6 @@ db.cms_sites._simpleSchema = new SimpleSchema
 			type: "selectuser"
 			defaultValue: ->
 				return Meteor.userId()
-	admins: 
-		type: [String],
-		autoform:
-			type: "selectuser"
-			multiple: true
-			defaultValue: ->
-				return [Meteor.userId()]
 
 	layout: 
 		type: String,

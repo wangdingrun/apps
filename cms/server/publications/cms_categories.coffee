@@ -1,11 +1,11 @@
-  Meteor.publish 'cms_categories', (site_id)->
+  Meteor.publish 'cms_categories', (siteId)->
   
     unless this.userId
       return this.ready()
     
-    unless site_id
+    unless siteId
       return this.ready()
 
-    console.log '[publish] cms_categories for site ' + site_id
+    console.log '[publish] cms_categories for site ' + siteId
 
-    return db.cms_categories.find({site: site_id}, {sort: {order: 1}})
+    return db.cms_categories.find({site: siteId}, {sort: {order: 1}})

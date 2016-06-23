@@ -1,4 +1,5 @@
 Setup.validate = ()->
+
 	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
 
@@ -35,4 +36,5 @@ Setup.logout = () ->
 
 
 Accounts.onLogin ()->
-	Setup.validate();
+	Meteor.startup ->
+		Setup.validate();

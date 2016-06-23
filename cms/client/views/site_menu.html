@@ -1,0 +1,45 @@
+<template name="cms_site_menu">
+
+          <a href="/admin/new/cms_posts" class="btn btn-primary btn-block margin-bottom">{{_ "cms_new"}}</a>
+
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title"><a href="/cms/{{SiteId}}/o/{{space_organization._id}}">{{space_organization.name}}</a></h3>
+
+              <div class="box-tools">
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> -->
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <!-- <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
+                  <span class="label label-primary pull-right">12</span></a></li> -->
+                {{#each organizations space_organization._id}}
+                  <li><a href="/cms/{{SiteId}}/o/{{_id}}"><i class="ion ion-person-stalker"></i> {{name}}</a></li>
+                  {{#each organizations _id}}
+                    <li><a href="/cms/{{SiteId}}/o/{{_id}}"> &nbsp;&nbsp;&nbsp;&nbsp;<i class="ion ion-person-stalker"></i>{{name}}</a></li>
+                  {{/each}}
+                {{/each}}
+                
+              </ul>
+            </div>
+          </div>
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{_ "cms_tags"}}</h3>
+
+              <div class="box-tools">
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> -->
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                {{#each Tags}}
+                  <li><a href="/cms/{{SiteId}}/t/{{name}}"><i class="fa fa-circle-o text-light-blue"></i> {{name}}</a></li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+</template>
