@@ -38,7 +38,7 @@ Template.instance_view.events
                 fd.append("file", file)
 
                 $.ajax
-                  url: Steedos.settings.webservices.s3.url
+                  url: '/s3/'
                   type: 'POST'
                   async: true
                   data: fd

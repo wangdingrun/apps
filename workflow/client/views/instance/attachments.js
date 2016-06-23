@@ -176,7 +176,7 @@ Template.ins_attach_version_modal.events({
           fd.append('Content-Type', cfs.getContentType(fileName));
           fd.append("file", file);
           $.ajax({
-            url: Steedos.settings.webservices.s3.url,
+            url: '/s3/',
             type: 'POST',
             async: true,
             data: fd,
