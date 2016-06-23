@@ -55,8 +55,7 @@ Template.profile.events
 		file = event.target.files[0];
 		fileObj = db.avatars.insert file
 		# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-		Meteor.call "saveUserProfile", 
-			avatar: fileObj._id
+		Meteor.call "updateUserAvatar", fileObj._id
 		setTimeout(()->
 			imgURL = Meteor.absoluteUrl("avatar/" + Meteor.userId())
 			$(".avatar-preview").attr("src", imgURL + "?time=" + new Date());
