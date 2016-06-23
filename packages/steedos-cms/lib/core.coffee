@@ -16,12 +16,13 @@ if Meteor.isClient
             if cms_organization_id
                 return db.organizations.findOne(cms_organization_id)
 
-        OrganizationPosts: (siteId, organizationId, limit, skip)->
+        OrganizationPosts: (siteId, limit, skip)->
             if !limit 
                 limit = 5
             skip = 0
-            if siteId and organizationId
-                return db.cms_posts.find({site: siteId, organization: organizationId}, {sort: {posted: -1}, limit: limit, skip: skip})
+            cms_organization_id = Session.get("cms_organization_id")
+            if siteId and cms_organization_id
+                return db.cms_posts.find({site: siteId, organization: cms_organization_id}, {sort: {posted: -1}, limit: limit, skip: skip})
 
         Post: ()->
             postId = Session.get("postId")
