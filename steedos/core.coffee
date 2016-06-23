@@ -26,3 +26,20 @@ if Meteor.isClient
             else
                 locale = "en-us"
 
+   
+    Steedos.getBadge = (spaceId)->
+        badge = 0
+        if spaceId
+            space_user = db.space_users.findOne({space: spaceId}, {fields: {apps: 1}})
+            b = space_user.apps?.workflow?.badge
+            if b
+                badge = b
+        else
+            space_users = db.space_users.find({user: Meteor.userId()}, {fields: {apps: 1}})
+            space_users.forEach (su)->
+                b = su.apps?.workflow?.badge
+                if b
+                    badge += b
+        return badge
+
+

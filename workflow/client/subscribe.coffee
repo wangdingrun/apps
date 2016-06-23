@@ -36,6 +36,5 @@ Meteor.startup ->
 			Steedos.subs.categories = Meteor.subscribe("categories", Session.get("spaceId"))
 			Steedos.subs.forms = Meteor.subscribe("forms", Session.get("spaceId"))
 			Steedos.subs.flows = Meteor.subscribe("flows", Session.get("spaceId"))
-			Steedos.subs.box_counts = Meteor.subscribe("box_counts", Session.get("spaceId"))
 
 			Steedos.subs.cfs_instances = Meteor.subscribe("cfs_instances", Session.get("instanceId"))
