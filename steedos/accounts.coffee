@@ -9,7 +9,7 @@ AccountsTemplates.configure
   overrideLoginErrors: true,
   enablePasswordChange: true,
 
-  # sendVerificationEmail: true,
+  sendVerificationEmail: true,
   # enforceEmailVerification: true,
   # confirmPassword: true,
   # continuousValidation: false,
@@ -48,6 +48,8 @@ AccountsTemplates.configureRoute 'signUp',
   path: '/steedos/sign-up'
 AccountsTemplates.configureRoute 'verifyEmail',
   path: '/steedos/verify-email'
+AccountsTemplates.configureRoute 'enrollAccount',
+  path: '/steedos/enroll-account'
 
 
 if Meteor.isServer

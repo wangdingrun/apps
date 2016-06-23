@@ -167,6 +167,12 @@ if Meteor.isServer
 				owner: doc._id
 				admins: [doc._id]
 
+		try
+			# 发送让用户设置密码的邮件
+			Accounts.sendEnrollmentEmail(doc._id, doc.emails[0].address)
+		catch e
+			console.log "after insert user: sendEnrollmentEmail, id: " + doc._id + ", " + e
+
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		if modifier.$unset && modifier.$unset.steedos_id == ""
