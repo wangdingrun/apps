@@ -18,6 +18,8 @@ db.cms_posts._simpleSchema = new SimpleSchema
 		optional: false,
 		autoform: 
 			type: "select",
+			defaultValue: ->
+				return Session.get("siteCategoryId");
 			options: ->
 				options = []
 				objs = db.cms_categories.find({}, {})
@@ -78,11 +80,12 @@ db.cms_posts._simpleSchema = new SimpleSchema
 			# 		fileObj.metadata.site = Session.get("siteId")
 			# 		return fileObj
 
-	organization: 
-		type: String,
+	organizations: 
+		type: [String],
 		optional: true,
-		autoform: 
+		autoform:
 			type: "selectorg"
+			multiple: true
 
 	users: 
 		type: [String],

@@ -13,8 +13,8 @@ Template.siteLayout.helpers
         siteId = FlowRouter.current().params.siteId
         if siteId
             return db.cms_categories.find({site:siteId})
-    category_is_current: (siteCategory)->
-    	return siteCategory == Session.get("siteCategory")
+    category_is_current: (siteCategoryId)->
+    	return siteCategoryId == Session.get("siteCategoryId")
 
 Template.siteLayout.events
 	

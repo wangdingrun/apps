@@ -5,12 +5,12 @@ CMS.helpers =
 		skip = 0
 		siteId = Session.get("siteId")
 		tag = Session.get("siteTag")
-		siteCategory = Session.get("siteCategory")
+		siteCategoryId = Session.get("siteCategoryId")
 
 		if siteId and tag
 			return db.cms_posts.find({site: siteId, tags: tag}, {sort: {posted: -1}, limit: limit, skip: skip})
-		else if siteId and siteCategory
-			return db.cms_posts.find({site: siteId, category: siteCategory}, {sort: {posted: -1}, limit: limit, skip: skip})
+		else if siteId and siteCategoryId
+			return db.cms_posts.find({site: siteId, category: siteCategoryId}, {sort: {posted: -1}, limit: limit, skip: skip})
 		else if siteId
 			return db.cms_posts.find({site: siteId}, {sort: {posted: -1}, limit: limit, skip: skip})
 	
@@ -22,10 +22,10 @@ CMS.helpers =
 	PostURL: (postId)->
 		siteId = Session.get("siteId")
 		if siteId
-			siteCategory = Session.get("siteCategory")
+			siteCategoryId = Session.get("siteCategoryId")
 			tag = Session.get("siteTag")
-			if siteCategory
-				return "/cms/" + siteId + "/c/" +  siteCategory + "/p/" + postId
+			if siteCategoryId
+				return "/cms/" + siteId + "/c/" +  siteCategoryId + "/p/" + postId
 			else if tag
 				return "/cms/" + siteId + "/t/" +  tag + "/p/" + postId
 			else
@@ -43,21 +43,21 @@ CMS.helpers =
 				return cfs.sites.find({_id: {$in: post.attachments}}).fetch()
 
 	CategoryId: ()->
-		return Session.get("siteCategory")
+		return Session.get("siteCategoryId")
 
 	CategoryActive: (categoryId)->
-		if Session.get("siteCategory") == categoryId
+		if Session.get("siteCategoryId") == categoryId
 			return "active"
 
 	Category: ()->
-		siteCategory = Session.get("siteCategory")
-		if siteCategory
-			return db.cms_categories.findOne(siteCategory)
+		siteCategoryId = Session.get("siteCategoryId")
+		if siteCategoryId
+			return db.cms_categories.findOne(siteCategoryId)
 
 	ParentCategory: ()->
-		siteCategory = Session.get("siteCategory")
-		if siteCategory
-			c = db.cms_categories.findOne(siteCategory)
+		siteCategoryId = Session.get("siteCategoryId")
+		if siteCategoryId
+			c = db.cms_categories.findOne(siteCategoryId)
 			if c?.parent
 				return db.cms_categories.findOne(c.parent)
 
