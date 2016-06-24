@@ -14,6 +14,7 @@ class @Restivus
           if @request.headers['x-auth-token']
             token = Accounts._hashLoginToken @request.headers['x-auth-token']
           userId: @request.headers['x-user-id']
+          spaceId: @request.headers['x-space-id']
           token: token
       defaultHeaders:
         'Content-Type': 'application/json'
@@ -150,7 +151,10 @@ class @Restivus
     get: (collection) ->
       get:
         action: ->
-          entity = collection.findOne @urlParams.id
+          selector = {_id: @urlParams.id}
+          if this.spaceId
+            selector.space = this.spaceId
+          entity = collection.findOne selector
           if entity
             {status: 'success', data: entity}
           else
@@ -159,7 +163,10 @@ class @Restivus
     put: (collection) ->
       put:
         action: ->
-          entityIsUpdated = collection.update @urlParams.id, $set: @bodyParams
+          selector = {_id: @urlParams.id}
+          if this.spaceId
+            selector.space = this.spaceId
+          entityIsUpdated = collection.update selector, $set: @bodyParams
           if entityIsUpdated
             entity = collection.findOne @urlParams.id
             {status: 'success', data: entity}
@@ -169,7 +176,10 @@ class @Restivus
     delete: (collection) ->
       delete:
         action: ->
-          if collection.remove @urlParams.id
+          selector = {_id: @urlParams.id}
+          if this.spaceId
+            selector.space = this.spaceId
+          if collection.remove selector
             {status: 'success', data: message: 'Item removed'}
           else
             statusCode: 404
@@ -177,6 +187,8 @@ class @Restivus
     post: (collection) ->
       post:
         action: ->
+          if this.spaceId
+            @bodyParams.space = this.spaceId
           entityId = collection.insert @bodyParams
           entity = collection.findOne entityId
           if entity
@@ -188,7 +200,10 @@ class @Restivus
     getAll: (collection) ->
       get:
         action: ->
-          entities = collection.find().fetch()
+          selector = {}
+          if this.spaceId
+            selector.space = this.spaceId
+          entities = collection.find(selector).fetch()
           if entities
             {status: 'success', data: entities}
           else

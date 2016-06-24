@@ -132,6 +132,9 @@ class share.Route
             endpoint.authRequired = true
           else
             endpoint.authRequired = false
+
+        if @options?.spaceRequired
+          endpoint.spaceRequired = @options.spaceRequired
         return
     , this
     return
@@ -146,7 +149,11 @@ class share.Route
     # Call the endpoint if authentication doesn't fail
     if @_authAccepted endpointContext, endpoint
       if @_roleAccepted endpointContext, endpoint
-        endpoint.action.call endpointContext
+        if @_spaceAccepted endpointContext, endpoint
+          endpoint.action.call endpointContext
+        else
+          statusCode: 403
+          body: {status: 'error', message: 'Bad X-Space-Id, Only admins of paid space can call this api.'}
       else
         statusCode: 403
         body: {status: 'error', message: 'You do not have permission to do this.'}
@@ -195,6 +202,28 @@ class share.Route
       true
     else false
 
+  ###
+    Authenticate the user role if required
+
+    Must be called after _authAccepted().
+
+    @returns True if the authenticated user belongs to <i>any</i> of the acceptable roles on the
+             endpoint
+  ###
+  _spaceAccepted: (endpointContext, endpoint) ->
+    if endpoint.spaceRequired
+      auth = @api._config.auth.user.call(endpointContext)
+      if auth?.spaceId
+        space_users_count = db.space_users.find({user: auth.userId, space:auth.spaceId}).count()
+        if space_users_count
+          space = db.spaces.findOne(auth.spaceId)
+          # space must be paid, and user must be admins
+          if space?.is_paid and _.indexOf(space.admins, auth.userId)>=0
+            endpointContext.spaceId = auth.spaceId
+            return true
+      endpointContext.spaceId = "bad"
+      return false
+    return true
 
   ###
     Authenticate the user role if required

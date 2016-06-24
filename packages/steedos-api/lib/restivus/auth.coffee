@@ -64,7 +64,8 @@ getUserQuerySelector = (user) ->
   spaces = []
   _.each space_users, (su)->
     space = db.spaces.findOne(su.space)
-    if space
+    # space must be paid, and user must be admins
+    if space?.is_paid and _.indexOf(space.admins, su.user)>=0
       spaces.push
         _id: space._id
         name: space.name
