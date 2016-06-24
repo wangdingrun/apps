@@ -159,7 +159,7 @@ class @Restivus
     put: (collection) ->
       put:
         action: ->
-          entityIsUpdated = collection.update @urlParams.id, @bodyParams
+          entityIsUpdated = collection.update @urlParams.id, $set: @bodyParams
           if entityIsUpdated
             entity = collection.findOne @urlParams.id
             {status: 'success', data: entity}
@@ -279,6 +279,7 @@ class @Restivus
         try
           auth = Auth.loginWithPassword user, @bodyParams.password
         catch e
+          console.log e
           return {} =
             statusCode: e.error
             body: status: 'error', message: e.reason

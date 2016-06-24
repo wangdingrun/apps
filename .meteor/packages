@@ -52,7 +52,6 @@ cfs:standard-packages
 cfs:filesystem
 cfs:ui
 chrismbeckett:toastr
-nimble:restivus
 percolate:migrations
 aldeed:tabular
 aldeed:autoform

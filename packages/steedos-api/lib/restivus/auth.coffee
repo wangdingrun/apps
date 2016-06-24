@@ -60,4 +60,12 @@ getUserQuerySelector = (user) ->
   hashedToken = Accounts._hashLoginToken authToken.token
   Accounts._insertHashedLoginToken authenticatingUser._id, {hashedToken}
 
-  return {authToken: authToken.token, userId: authenticatingUser._id}
+  space_users = db.space_users.find({user: authenticatingUser._id}).fetch()
+  spaces = []
+  _.each space_users, (su)->
+    space = db.spaces.findOne(su.space)
+    if space
+      spaces.push
+        _id: space._id
+        name: space.name
+  return {authToken: authToken.token, userId: authenticatingUser._id, spaces: spaces}

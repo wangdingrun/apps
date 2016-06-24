@@ -28,28 +28,36 @@ Package.onUse(function(api) {
 	api.use('accounts-base');
 	api.use('sha');
 	api.use('npm-bcrypt');
+	api.use('webapp', 'server');
+	api.use('accounts-password@1.1.4');
 
-  	api.use('simple:json-routes');
 	api.use('cfs:standard-packages');
-	api.use('nimble:restivus');
 	api.use('raix:push');
+	api.use('simple:json-routes@2.1.0');
 
 	api.use('steedos:lib');
 	api.use('steedos:workflow');
 
-	api.use(['webapp'], 'server');
+
+	api.addFiles('lib/restivus/auth.coffee', 'server');
+	api.addFiles('lib/restivus/iron-router-error-to-response.js', 'server');
+	api.addFiles('lib/restivus/route.coffee', 'server');
+	api.addFiles('lib/restivus/restivus.coffee', 'server');
 
 	api.addFiles('lib/URI.js');
 
-	api.addFiles('core.coffee');
+	api.addFiles('core.coffee', 'server');
 
-	api.addFiles('accounts_client.coffee', 'client');
+	api.addFiles('steedos/space_users.coffee', 'server');
+	api.addFiles('steedos/organizations.coffee', 'server');
+
 	api.addFiles('routes/setup.coffee', 'server');
 	api.addFiles('routes/s3.coffee', 'server');
 	api.addFiles('routes/push.coffee', 'server');
 	api.addFiles('routes/avatar.coffee', 'server');
 	api.addFiles('routes/sso.coffee', 'server');
 
+	api.addFiles('accounts_client.coffee', 'client');
 });
 
 Package.onTest(function(api) {

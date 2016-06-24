@@ -1,11 +1,11 @@
-Steedos.api.addCollection db.users, 
-	excludedEndpoints: ["delete", "getAll"]
+API.addCollection db.space_users, 
+	excludedEndpoints: []
 	routeOptions:
 		authRequired: true
 	endpoints:
 		put:
 			action: () ->
-				collection = db.users
+				collection = db.space_users
 				try 
 					entityIsUpdated = collection.update @urlParams.id, $set: @bodyParams
 
