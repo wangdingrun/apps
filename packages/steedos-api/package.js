@@ -46,7 +46,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('lib/URI.js');
 
-	api.addFiles('core.coffee', 'server');
+	api.addFiles('core.coffee');
 
 	api.addFiles('steedos/space_users.coffee', 'server');
 	api.addFiles('steedos/organizations.coffee', 'server');

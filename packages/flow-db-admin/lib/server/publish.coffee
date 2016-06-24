@@ -8,16 +8,10 @@ Meteor.publishComposite 'adminCollectionDoc', (collection, id) ->
 	else
 		@ready()
 
-Meteor.publish 'adminUsers', ->
-	if Roles.userIsInRole @userId, ['admin']
-		Meteor.users.find()
-	else
-		@ready()
+Meteor.publish 'adminCollectionsCount', (spaceId)->
+	if (!spaceId)
+		return this.ready()
 
-Meteor.publish 'adminUser', ->
-	Meteor.users.find @userId
-
-Meteor.publish 'adminCollectionsCount', ->
 	handles = []
 	self = @
 
@@ -26,7 +20,7 @@ Meteor.publish 'adminCollectionsCount', ->
 		count = 0
 
 		ready = false
-		handles.push table.collection.find().observeChanges
+		handles.push table.collection.find({space: spaceId}).observeChanges
 			added: ->
 				count += 1
 				ready and self.changed 'adminCollectionsCount', id, {count: count}
