@@ -12,15 +12,15 @@ Npm.depends({
 });
 
 Package.onUse(function(api) { 
-	api.versionsFrom('1.0');
-
+    api.versionsFrom("1.2.1");
 
 	api.use('reactive-var');
 	api.use('reactive-dict');
 	api.use('coffeescript');
 	api.use('random');
-	api.use('ddp');
 	api.use('check');
+    api.use('ddp');
+    api.use('ddp-common');
 	api.use('ddp-rate-limiter');
 	api.use('underscore');
 	api.use('tracker');

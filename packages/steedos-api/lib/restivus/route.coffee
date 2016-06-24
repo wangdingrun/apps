@@ -150,7 +150,15 @@ class share.Route
     if @_authAccepted endpointContext, endpoint
       if @_roleAccepted endpointContext, endpoint
         if @_spaceAccepted endpointContext, endpoint
-          endpoint.action.call endpointContext
+          #endpoint.action.call endpointContext
+          invocation = new DDPCommon.MethodInvocation
+            isSimulation: true,
+            userId: endpointContext.userId,
+            connection: null,
+            randomSeed: DDPCommon.makeRpcSeed()
+       
+          return DDP._CurrentInvocation.withValue invocation, ->
+            return endpoint.action.call(endpointContext);
         else
           statusCode: 403
           body: {status: 'error', message: 'Bad X-Space-Id, Only admins of paid space can call this api.'}
