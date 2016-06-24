@@ -22,8 +22,20 @@ Template.adminLayout.helpers
         admin_collection_title: ->
                 if Session.get('admin_collection_name')
                         return t("" + Session.get('admin_collection_name'))
-
-        
+        enableAdd: ->
+                c = Session.get('admin_collection_name')
+                if c
+                        config = AdminConfig.collections[c]
+                        if config?.disableAdd    
+                                return false;
+                return true
+                
 Template.adminLayout.events
-        "click #navigation-back": (e, t) ->
-                NavigationController.back(); 
+        "click #admin-back": (e, t) ->
+                c = Session.get('admin_collection_name')
+                if c
+                        config = AdminConfig.collections[c]
+                        if config?.routerAdmin    
+                                FlowRouter.go(config.routerAdmin)
+                                return
+                FlowRouter.go "/"   

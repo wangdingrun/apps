@@ -3,29 +3,29 @@ var fadminRoutes = FlowRouter.group({
   name: "AdminController",
   prefix: '/admin',
   subscriptions: function() {
-    //this.register('fadminUsers', Meteor.subscribe('adminUsers'));
-    //this.register('fadminUser', Meteor.subscribe('adminUser'));
-    //this.register('fadminCollectionsCount', Meteor.subscribe('adminCollectionsCount'));
+	//this.register('fadminUsers', Meteor.subscribe('adminUsers'));
+	//this.register('fadminUser', Meteor.subscribe('adminUser'));
+	//this.register('fadminCollectionsCount', Meteor.subscribe('adminCollectionsCount'));
   },
  triggersEnter: [
-  	function(context) {
-  		// if(!Roles.userIsInRole (Meteor.userId(),['admin']))
-  		// {
-  		// 	Meteor.call('adminCheckAdmin');
-  		// 	//if (typeof AdminConfig.nonAdminRedirectRoute == 'string')
-  		// 	//	FlowRouter.go(AdminController.nonAdminRedirectRoute);
-  		// }
-  	},
-    function(context) {
-      Session.set('adminSuccess', null);
-      Session.set('adminError', null);
-      Session.set('admin_title', null);
-      Session.set('admin_subtitle', null);
-      Session.set('admin_collection_name', null);
-      Session.set('admin_collection_page', null);
-      Session.set('admin_id',null);
-      Session.set('admin_doc', null);
-    }
+	function(context) {
+		// if(!Roles.userIsInRole (Meteor.userId(),['admin']))
+		// {
+		// 	Meteor.call('adminCheckAdmin');
+		// 	//if (typeof AdminConfig.nonAdminRedirectRoute == 'string')
+		// 	//	FlowRouter.go(AdminController.nonAdminRedirectRoute);
+		// }
+	},
+	function(context) {
+	  Session.set('adminSuccess', null);
+	  Session.set('adminError', null);
+	  Session.set('admin_title', null);
+	  Session.set('admin_subtitle', null);
+	  Session.set('admin_collection_name', null);
+	  Session.set('admin_collection_page', null);
+	  Session.set('admin_id',null);
+	  Session.set('admin_doc', null);
+	}
   ]
 });
 
@@ -33,9 +33,9 @@ fadminRoutes.route('/',{
 	name: 'adminDashboard',
 	triggersEnter: [
 	 function(context){
-	 	Session.set('admin_title',"Dashboard");
-	 	Session.set('admin_collection_name',"");
-	 	Session.set('admin_collection_page',"");
+		Session.set('admin_title',"Dashboard");
+		Session.set('admin_collection_name',"");
+		Session.set('admin_collection_page',"");
 	 }
 	],
 	action: function ()
@@ -48,11 +48,12 @@ fadminRoutes.route('/',{
 fadminRoutes.route('/view/:collectionName',{
 	triggersEnter: [
 		function(context){
-		Session.set('admin_title', context.params.collectionName);
-		Session.set('admin_subtitle', 'View');
-		Session.set('admin_collection_page', 'view');
-		Session.set('admin_collection_name', context.params.collectionName);
-	}],
+			Session.set('admin_title', context.params.collectionName);
+			Session.set('admin_subtitle', 'View');
+			Session.set('admin_collection_page', 'view');
+			Session.set('admin_collection_name', context.params.collectionName);
+		}
+	],
 	triggersExit: [
 		function(context){
 			BlazeLayout.render(AdminConfig.layout,{main: 'AdminLoading'});

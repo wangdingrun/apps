@@ -10,7 +10,7 @@
 				</div>
 				<div class="navigation-bar">
 
-		            <a href="#" id="navigation-back" class="btn btn-default" title='{{_ "Steedos"}}'>
+		            <a href="#" id="admin-back" class="btn btn-default" title='{{_ "Steedos"}}'>
 		              <i class="ion ion-chevron-left"></i><span></span>
 		            </a>
 
@@ -18,10 +18,12 @@
 							<a href="{{urlPrefix}}/admin/view/{{$.Session.get 'admin_collection_name'}}/">{{admin_collection_title}}</a>
 					</span>
 					<div class="pull-right">
-					{{#if $.Session.equals 'admin_collection_page' 'view'}}
-						<a href="{{urlPrefix}}/admin/new/{{$.Session.get 'admin_collection_name'}}/" class="btn btn-success" id="admin_create_btn">
-						{{_ "New"}}
-						</a>
+					{{#if enableAdd}}
+						{{#if $.Session.equals 'admin_collection_page' 'view'}}
+							<a href="{{urlPrefix}}/admin/new/{{$.Session.get 'admin_collection_name'}}/" class="btn btn-success" id="admin_create_btn">
+							{{_ "New"}}
+							</a>
+						{{/if}}
 					{{/if}}
 					</div>
 				</div>

@@ -15,6 +15,7 @@ db.apps.adminConfig =
 		{name: "name"},
 	]
 	selector: {space: "-1"}
+	routerAdmin: "/steedos/admin"
 
 db.spaces.adminConfig = 
 	icon: "globe"
@@ -29,6 +30,7 @@ db.spaces.adminConfig =
 	extraFields: ["owner"]
 	newFormFields: "name"
 	selector: {_id: -1}
+	routerAdmin: "/steedos/admin"
 
 db.organizations.adminConfig =
 	icon: "sitemap"
@@ -44,6 +46,7 @@ db.organizations.adminConfig =
 	newFormFields: "space,name,parent"
 	editFormFields: "name,parent"
 	selector: {space: "-1"}
+	routerAdmin: "/steedos/admin"
 
 db.space_users.adminConfig = 
 	icon: "users"
@@ -60,6 +63,7 @@ db.space_users.adminConfig =
 	newFormFields: "space,email"
 	editFormFields: "space,name,manager,user_accepted"
 	selector: {space: "-1"}
+	routerAdmin: "/steedos/admin"
 
 db.flow_roles.adminConfig = 
 	icon: "users"
@@ -72,6 +76,7 @@ db.flow_roles.adminConfig =
 	extraFields: []
 	newFormFields: "space,name"
 	selector: {space: "-1"}
+	routerAdmin: "/steedos/admin"
 
 db.flow_positions.adminConfig = 
 	icon: "users"
@@ -86,6 +91,7 @@ db.flow_positions.adminConfig =
 	extraFields: ["role", "org", "users"]
 	newFormFields: "space,role,org,users"
 	selector: {space: "-1"}
+	routerAdmin: "/steedos/admin"
 
 @AdminConfig = 
 	name: "Steedos Admin"
