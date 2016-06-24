@@ -6,6 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
+  'aliyun-sdk':'1.9.2',
   busboy: "0.2.13",
   cookies: "0.6.1",
   mime: "1.3.4"
