@@ -1,3 +1,10 @@
+ALY = Npm.require('aliyun-sdk');
+ALYPUSH = new (ALY.PUSH)(
+  accessKeyId: 'W5zVsIhQtVPlh8vx'
+  secretAccessKey: 'M1HRVLDQl4deLoCf0cwOOABzb77Agv'
+  endpoint: 'http://cloudpush.aliyuncs.com'
+  apiVersion: '2015-08-27');
+
 JsonRoutes.add "post", "/api/push/message", (req, res, next) ->
     if req.body?.pushTopic and req.body.userIds and req.body.data
         message = 
@@ -34,3 +41,24 @@ Meteor.methods
             query: 
                 userId: userId
                 appName: "workflow"
+
+    aliPushSendMessage: (message) ->
+        console.log ALYPUSH
+
+        ALYPUSH.pushMessageToAndroid 
+            AppKey: '23390511'
+            Target: 'all'
+            TargetValue: 'all'
+            Message: message
+            , (err, res) ->
+                console.log err,res
+
+    aliPushSendNotice: (title, summary) ->
+        ALYPUSH.pushNoticeToAndroid
+            AppKey: '23390511'
+            Target: 'all'
+            TargetValue: 'all'
+            Title: title
+            Summary: summary
+            , (err, res) ->
+                console.log err,res

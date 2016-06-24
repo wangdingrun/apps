@@ -12,6 +12,7 @@ Npm.depends({
   mime: "1.3.4"
 });
 
+
 Package.onUse(function(api) { 
 	api.versionsFrom('1.0');
 
@@ -50,6 +51,7 @@ Package.onUse(function(api) {
 	api.addFiles('routes/push.coffee', 'server');
 	api.addFiles('routes/avatar.coffee', 'server');
 	api.addFiles('routes/sso.coffee', 'server');
+	api.addFiles('routes/aliyun_push.coffee', 'server');
 
 });
 
