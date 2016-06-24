@@ -40,7 +40,6 @@ db.organizations.adminConfig =
 	tableColumns: [
 		{name: "fullname"},
 		{name: "users_count()"},
-		{name: "space_name()"},
 	]
 	extraFields: ["space", "name", "users"]
 	newFormFields: "space,name,parent"
@@ -56,7 +55,6 @@ db.space_users.adminConfig =
 	tableColumns: [
 		{name: "name"},
 		{name: "organization_name()"},
-		{name: "space_name()"},
 		{name: "user_accepted"}
 	]
 	extraFields: ["space", "user", 'organization', "manager"]

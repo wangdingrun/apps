@@ -63,17 +63,17 @@ db.organizations._simpleSchema = new SimpleSchema
 		autoform: 
 			omit: true
 	created:
-        type: Date,
-        optional: true
-  created_by:
-      type: String,
-      optional: true
-  modified:
-      type: Date,
-      optional: true
-  modified_by:
-      type: String,
-      optional: true
+		type: Date,
+		optional: true
+	created_by:
+		type: String,
+		optional: true
+	modified:
+		type: Date,
+		optional: true
+	modified_by:
+		type: String,
+		optional: true
 
 if Meteor.isClient
 	db.organizations._simpleSchema.i18n("organizations")
@@ -193,7 +193,7 @@ if (Meteor.isServer)
 		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
 
-		if (modifier.$set.space)
+		if (modifier.$set.space and doc.space!=modifier.$set.space)
 			throw new Meteor.Error(400, t("organizations_error.space_readonly"));
 
 		if (modifier.$set.parents)
@@ -216,15 +216,15 @@ if (Meteor.isServer)
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
 				throw new Meteor.Error(400, t("organizations_error.parent_is_self"))
-		   	# 同一个 parent 不能有同名的 child
+			# 同一个 parent 不能有同名的 child
 			if parentOrg.children
 				nameOrg = db.organizations.find({_id: {$in: parentOrg.children}, name: modifier.$set.name}).count()
 				if (nameOrg > 0 ) && (modifier.$set.name != doc.name)
 					throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
-		else if (modifier.$set.name != doc.name)					
-			existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
-			if existed > 0
-				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
+		# else if (modifier.$set.name != doc.name)					
+		# 	existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
+		# 	if existed > 0
+		# 		throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
 		
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
