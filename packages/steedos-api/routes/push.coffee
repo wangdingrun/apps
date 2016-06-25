@@ -41,24 +41,3 @@ Meteor.methods
             query: 
                 userId: userId
                 appName: "workflow"
-
-    aliPushSendMessage: (message) ->
-        console.log ALYPUSH
-
-        ALYPUSH.pushMessageToAndroid 
-            AppKey: '23390511'
-            Target: 'all'
-            TargetValue: 'all'
-            Message: message
-            , (err, res) ->
-                console.log err,res
-
-    aliPushSendNotice: (title, summary) ->
-        ALYPUSH.pushNoticeToAndroid
-            AppKey: '23390511'
-            Target: 'all'
-            TargetValue: 'all'
-            Title: title
-            Summary: summary
-            , (err, res) ->
-                console.log err,res
