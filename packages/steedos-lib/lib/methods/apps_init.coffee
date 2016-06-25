@@ -21,7 +21,7 @@ if Meteor.isServer
 			sort: 200
 		chat:
 			_id: "chat"
-			url: "/chat/channel/general"
+			url: "/chat/channel/support"
 			name: "Steedos Chat"
 			icon: "ion-ios-chatboxes-outline"
 			menu: true
