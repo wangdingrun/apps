@@ -45,3 +45,31 @@ Template.registerHelper 'badge', (app_id)->
 			count = count + s.unread
 		if count >0
 			return count
+
+Template.registerHelpers
+
+	spaceName: ->
+		if Session.get("spaceId")
+			space = db.spaces.findOne(Session.get("spaceId"))
+			if space
+				return space.name
+
+	isSpaceAdmin: ->
+		if Session.get('spaceId')
+			s = db.spaces.findOne(Session.get('spaceId'))
+			if s
+				return s.admins.includes(Meteor.userId())
+
+	isSpaceOwner: ->
+		if Session.get('spaceId')
+			s = db.spaces.findOne(Session.get('spaceId'))
+			if s
+				return s.owner == Meteor.userId()
+
+	isPaid: (app)->
+		if !app
+			app = "workflow"
+		if Session.get('spaceId')
+			space = db.spaces.findOne(Session.get('spaceId'))
+			if space?.apps_paid?.length >0
+				return _.indexOf(space.apps_paid, app)>=0 
