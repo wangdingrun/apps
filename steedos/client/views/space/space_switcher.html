@@ -5,9 +5,9 @@
       <span>{{spaceName}}&nbsp;&nbsp;<i class="caret"></i>
       </span>
     </a>
-    <ul class="dropdown-menu dropdown-space">
+    <ul class="nav dropdown-menu dropdown-space">
       {{#each spaces}}
-        <li id="switchSpace"><i class="fa fa-globe"></i>&nbsp;{{name}}</li>
+        <li id="switchSpace"><a href="#"><i class="fa fa-globe"></i>&nbsp;{{name}}</a></li>
       {{/each}}
     </ul>
   </span>
