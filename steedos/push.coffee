@@ -11,5 +11,3 @@ if Meteor.isCordova
                                 sound: true
                                 alert: true
                         appName: "workflow"
-
-
