@@ -4,6 +4,14 @@
 
         .logo {
             font-weight: bold;
+            text-align: left;
+
+            .space-name {
+                overflow: hidden;
+                height: 50px;
+                width: 190px;
+                position: absolute;
+            }
 
             .dropdown-toggle {
                 height: 50px;
@@ -12,13 +20,10 @@
             }
 
             .dropdown-menu.dropdown-space {
-                max-height: 350px;
                 overflow-y:scroll;
                 overflow-x:hidden;
-                margin-left: -50px;
-                margin-top: 10px;
-                max-width:230px;
-                min-width:200px;
+                margin-top: 50px;
+                width:200px;
                 #switchSpace{
                     cursor: pointer;
                     color: black;
