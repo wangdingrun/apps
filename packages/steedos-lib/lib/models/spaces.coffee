@@ -41,6 +41,7 @@ db.spaces._simpleSchema = new SimpleSchema
 
 	apps_paid:
 		type: [String],
+		optional: true,
 		autoform:
 			omit: true
 

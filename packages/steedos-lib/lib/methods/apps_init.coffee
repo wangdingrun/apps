@@ -10,14 +10,6 @@ if Meteor.isServer
 			menu: true
 			mobile: true
 			sort: 100
-		chat:
-			_id: "chat"
-			url: "/chat/channel/general"
-			name: "Steedos Chat"
-			icon: "ion-ios-chatboxes-outline"
-			menu: true
-			mobile: true
-			sort: 200
 		cms: 
 			_id: "cms"
 			url: "/cms"
@@ -26,6 +18,14 @@ if Meteor.isServer
 			menu: true
 			mobile: true
 			internal: true
+			sort: 200
+		chat:
+			_id: "chat"
+			url: "/chat/channel/general"
+			name: "Steedos Chat"
+			icon: "ion-ios-chatboxes-outline"
+			menu: true
+			mobile: true
 			sort: 300
 		drive: 
 			_id: "drive"

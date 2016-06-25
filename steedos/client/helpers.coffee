@@ -48,6 +48,9 @@ Template.registerHelper 'badge', (app_id)->
 
 Template.registerHelpers
 
+	equals: (a, b)->
+		return a == b
+		
 	spaceName: ->
 		if Session.get("spaceId")
 			space = db.spaces.findOne(Session.get("spaceId"))
