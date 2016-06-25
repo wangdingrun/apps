@@ -22,7 +22,6 @@ Package.onUse(function(api) {
 	api.use('accounts-base');
 	
   	api.use('simple:json-routes');
-	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
 	api.use('aldeed:tabular');
@@ -56,7 +55,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/users_changelogs.coffee');
 	api.addFiles('lib/models/apps.coffee');
 
-	api.addFiles('lib/methods/apps_init.coffee');
+	api.addFiles('lib/methods/apps_init.coffee', 'server');
 	api.addFiles('lib/methods/utc_offset.coffee');
 	api.addFiles('lib/methods/last_logon.coffee');
 	api.addFiles('lib/methods/user_add_email.coffee');

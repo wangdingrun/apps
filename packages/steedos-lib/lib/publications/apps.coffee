@@ -3,13 +3,10 @@ if Meteor.isServer
         unless this.userId
             return this.ready()
         
-        unless spaceId
-            return this.ready()
-            
         console.log '[publish] apps ' + spaceId
 
-        appsCount = db.apps.find({space: spaceId}).count()
-        if appsCount > 0
-            return db.apps.find({space: spaceId});
-        else
-            return db.apps.find({space: {$exists: false}});
+        selector = {space: {$exists: false}}
+        if spaceId
+            selector = {$or: [{space: {$exists: false}}, {space: spaceId}]}
+        
+        return db.apps.find(selector, {sort: {sort: 1, space_sort: 1}});

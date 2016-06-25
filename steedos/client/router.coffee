@@ -97,8 +97,19 @@ FlowRouter.route '/steedos/customize_apps',
 			if !space?.is_paid
 				swal(t("steedos_customize_apps"), t("steedos_only_paid"), "error")
 			else
-				Meteor.call "space_apps_init", spaceId, ()->
-					FlowRouter.go("/admin/view/apps")
+				FlowRouter.go("/admin/view/apps")
+
+FlowRouter.route '/designer', 
+	action: (params, queryParams)->
+		if !Meteor.userId()
+			FlowRouter.go "/steedos/sign-in";
+			return true
+		
+		url = Meteor.absoluteUrl("applications/designer/current/" + Steedos.getLocale() + "/"+ "?spaceId=" + Steedos.getSpaceId());
+		
+		Steedos.openWindow(url);
+		
+		FlowRouter.go "/steedos/springboard"
 
 FlowRouter.route '/app/:app_id', 
 	action: (params, queryParams)->
@@ -114,10 +125,7 @@ FlowRouter.route '/app/:app_id',
 			FlowRouter.go(app.url)
 			return
 
-		if app.url?.startsWith("/applications/designer")
-			url = Meteor.absoluteUrl("applications/designer/current/" + Steedos.getLocale() + "/"+ "?spaceId=" + Steedos.getSpaceId());
-		else
-			url = Meteor.absoluteUrl("api/setup/sso/" + app._id + "?spaceId=" + Steedos.getSpaceId());
+		url = Meteor.absoluteUrl("api/setup/sso/" + app._id + "?spaceId=" + Steedos.getSpaceId());
 
 		Steedos.openWindow(url);
 		
