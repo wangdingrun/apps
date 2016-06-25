@@ -24,7 +24,7 @@ if Meteor.isClient
                 selector._id = {$in: space.apps_enabled}
         if Steedos.isMobile()
             selector.mobile = true
-        return db.apps.find(selector);
+        return db.apps.find(selector, {sort: {sort: 1, space_sort: 1}});
 
     Steedos.getLocale = ()->
         if Meteor.user()?.locale

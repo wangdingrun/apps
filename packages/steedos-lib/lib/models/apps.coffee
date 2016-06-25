@@ -17,6 +17,11 @@ db.apps._simpleSchema = new SimpleSchema
 	icon:
 		type: String
 		max: 200
+		autoform:
+			defaultValue: "ion-ios-keypad-outline"
+		optional: true,
+	space_sort:
+		type: Number
 	secret:
 		type: String
 		max: 200
@@ -32,12 +37,9 @@ db.apps._simpleSchema = new SimpleSchema
 	sort:
 		type: Number
 		optional: true,
+		defaultValue: 9000
 		autoform: 
 			omit: true
-			defaultValue: 9000
-	space_sort:
-		type: Number
-		optional: true,
 
 if Meteor.isClient
 	db.apps._simpleSchema.i18n("apps")

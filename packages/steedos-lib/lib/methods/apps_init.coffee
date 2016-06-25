@@ -14,7 +14,7 @@ if Meteor.isServer
 			_id: "cms"
 			url: "/cms"
 			name: "Steedos CMS"
-			icon: "ion-ios-browsers-outline"
+			icon: "ion-ios-compose-outline"
 			menu: true
 			mobile: true
 			internal: true
@@ -36,22 +36,22 @@ if Meteor.isServer
 			menu: true
 			mobile: true
 			sort: 400
-		calendar: 
-			_id: "calendar"
-			url: "/drive/index.php/apps/calendar/"
-			name: "Steedos Calendar"
-			secret: "8762-fcb369b2e85"
-			icon: "ion-ios-calendar-outline"
-			menu: true
-			mobile: true
-			sort: 500
-		mail:
-			_id: "mail"
-			url: "https://mail.steedos.com"
-			name: "Steedos Mail"
-			icon: "ion-ios-email-outline"
-			menu: true
-			sort: 600
+		# calendar: 
+		# 	_id: "calendar"
+		# 	url: "/drive/index.php/apps/calendar/"
+		# 	name: "Steedos Calendar"
+		# 	secret: "8762-fcb369b2e85"
+		# 	icon: "ion-ios-calendar-outline"
+		# 	menu: true
+		# 	mobile: true
+		# 	sort: 500
+		# mail:
+		# 	_id: "mail"
+		# 	url: "https://mail.steedos.com"
+		# 	name: "Steedos Mail"
+		# 	icon: "ion-ios-email-outline"
+		# 	menu: true
+		# 	sort: 600
 		# designer:
 		# 	_id: "designer"
 		# 	url: "/applications/designer"
@@ -69,7 +69,6 @@ if Meteor.isServer
 			mobile: true
 			sort: 10000
 
-	APPS_EXTRA = 
 
 	Meteor.methods
 		core_apps_init: ()->
