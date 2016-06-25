@@ -41,6 +41,7 @@
 	"spaces_owner_name()": "Owner",
 	"spaces_admins_name()": "Admins",
 	"Spaces_isPaid" :"Is Paid",
+	"spaces_apps_enabled": "Apps Enabled",
 
 	"organizations": "Organizations",
 	"organizations_fullname": "Fullname",

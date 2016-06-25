@@ -100,6 +100,16 @@
     "steedos_about_us": "关于华炎云",
     "steedos_quick_guide": "快速向导",
     "steedos_help": "帮助",
-    "steedos_home": "首页"
+    "steedos_home": "首页",
+
+    "Profile_saved_successfully": "个人信息保存成功",
+    "Old_and_new_password_required": "旧密码或新密码为空",
+    "Incorrect_Password": "旧密码不正确",
+    "Password_changed_successfully": "密码修改成功",
+    "Confirm_Password_Not_Match": "请确认两次输入的密码是否一致",
+    "saved_successfully": "保存成功",
+    "Language_changed_reloading": "语言已修改，重新载入中"
+
+
 
 }
