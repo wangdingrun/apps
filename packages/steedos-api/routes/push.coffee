@@ -1,10 +1,3 @@
-ALY = Npm.require('aliyun-sdk');
-ALYPUSH = new (ALY.PUSH)(
-  accessKeyId: 'W5zVsIhQtVPlh8vx'
-  secretAccessKey: 'M1HRVLDQl4deLoCf0cwOOABzb77Agv'
-  endpoint: 'http://cloudpush.aliyuncs.com'
-  apiVersion: '2015-08-27');
-
 JsonRoutes.add "post", "/api/push/message", (req, res, next) ->
     if req.body?.pushTopic and req.body.userIds and req.body.data
         message = 
