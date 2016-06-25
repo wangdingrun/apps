@@ -22,6 +22,7 @@ db.apps._simpleSchema = new SimpleSchema
 		optional: true,
 	space_sort:
 		type: Number
+		optional: true,
 	secret:
 		type: String
 		max: 200

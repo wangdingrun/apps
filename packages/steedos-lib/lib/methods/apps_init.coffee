@@ -27,31 +27,6 @@ if Meteor.isServer
 			menu: true
 			mobile: true
 			sort: 300
-		drive: 
-			_id: "drive"
-			url: "/drive"
-			name: "Steedos Drive"
-			secret: "8762-fcb369b2e85"
-			icon: "ion-ios-folder-outline"
-			menu: true
-			mobile: true
-			sort: 400
-		# calendar: 
-		# 	_id: "calendar"
-		# 	url: "/drive/index.php/apps/calendar/"
-		# 	name: "Steedos Calendar"
-		# 	secret: "8762-fcb369b2e85"
-		# 	icon: "ion-ios-calendar-outline"
-		# 	menu: true
-		# 	mobile: true
-		# 	sort: 500
-		# mail:
-		# 	_id: "mail"
-		# 	url: "https://mail.steedos.com"
-		# 	name: "Steedos Mail"
-		# 	icon: "ion-ios-email-outline"
-		# 	menu: true
-		# 	sort: 600
 		# designer:
 		# 	_id: "designer"
 		# 	url: "/applications/designer"
@@ -69,6 +44,33 @@ if Meteor.isServer
 			mobile: true
 			sort: 10000
 
+	APPS_EXTERNAL = 
+		drive: 
+			_id: "drive"
+			url: "/drive"
+			name: "Steedos Drive"
+			secret: "8762-fcb369b2e85"
+			icon: "ion-ios-folder-outline"
+			menu: true
+			mobile: true
+			sort: 400
+		calendar: 
+			_id: "calendar"
+			url: "/drive/index.php/apps/calendar/"
+			name: "Steedos Calendar"
+			secret: "8762-fcb369b2e85"
+			icon: "ion-ios-calendar-outline"
+			menu: true
+			mobile: true
+			sort: 500
+		mail:
+			_id: "mail"
+			url: "https://mail.steedos.com"
+			name: "Steedos Mail"
+			icon: "ion-ios-email-outline"
+			menu: true
+			sort: 600
+
 
 	Meteor.methods
 		core_apps_init: ()->
@@ -78,6 +80,12 @@ if Meteor.isServer
 				else
 					db.apps.insert(v)
 
+		external_apps_init: ()->
+			_.each APPS_EXTERNAL, (v, k)->
+				if db.apps.findOne(k)
+					db.apps.update({_id: k}, {$set: v})
+				else
+					db.apps.insert(v)
 
 	Meteor.startup ->
 		Meteor.call "core_apps_init"
