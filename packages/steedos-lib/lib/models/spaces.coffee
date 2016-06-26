@@ -25,6 +25,21 @@ db.spaces._simpleSchema = new SimpleSchema
 			type: "selectuser"
 			multiple: true
 
+	cover:
+		type: String,
+		optional: true,
+		autoform:
+			type: 'fileUpload'
+			collection: 'avatars'
+			accept: 'image/*'
+	avatar:
+		type: String,
+		optional: true,
+		autoform:
+			type: 'fileUpload'
+			collection: 'avatars'
+			accept: 'image/*'
+			
 	apps_enabled:
 		type: [String],
 		optional: true,

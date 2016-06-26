@@ -51,6 +51,9 @@ Template.registerHelpers
 	equals: (a, b)->
 		return a == b
 		
+	session: (v)->
+		return Session.get(v)
+		
 	spaceName: ->
 		if Session.get("spaceId")
 			space = db.spaces.findOne(Session.get("spaceId"))

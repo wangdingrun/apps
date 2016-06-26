@@ -14,7 +14,7 @@ if Meteor.isServer
 			_id: "cms"
 			url: "/cms"
 			name: "Steedos CMS"
-			icon: "ion-ios-compose-outline"
+			icon: "ion-ios-book-outline"
 			menu: true
 			mobile: true
 			internal: true
@@ -88,4 +88,5 @@ if Meteor.isServer
 					db.apps.insert(v)
 
 	Meteor.startup ->
-		Meteor.call "core_apps_init"
+		if db.apps.find().count() == 0
+			Meteor.call "core_apps_init"
