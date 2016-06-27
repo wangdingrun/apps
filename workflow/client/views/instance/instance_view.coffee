@@ -38,7 +38,7 @@ Template.instance_view.events
                 fd.append("file", file)
 
                 $.ajax
-                  url: '/s3/'
+                  url: Meteor.absoluteUrl('s3/')
                   type: 'POST'
                   async: true
                   data: fd

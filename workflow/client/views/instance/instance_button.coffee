@@ -35,7 +35,7 @@ Template.instance_button.helpers
         fl = db.flows.findOne({'_id': ins.flow});
         if !fl
             return "display: none;";
-        curSpaceUser = db.space_users.findOne({'user': curUserId});
+        curSpaceUser = db.space_users.findOne({'user': Meteor.userId()});
         if !curSpaceUser
             return "display: none;";
         organization = db.organizations.findOne(curSpaceUser.organization);

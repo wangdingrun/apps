@@ -176,7 +176,7 @@ Template.ins_attach_version_modal.events({
           fd.append('Content-Type', cfs.getContentType(fileName));
           fd.append("file", file);
           $.ajax({
-            url: '/s3/',
+            url: Meteor.absoluteUrl('s3/'),
             type: 'POST',
             async: true,
             data: fd,
