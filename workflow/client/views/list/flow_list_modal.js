@@ -11,28 +11,8 @@ Template.flow_list_modal.events({
     var curUserId = Meteor.userId();
     var curSpaceUser = db.space_users.findOne({'user': curUserId});
     var organization = db.organizations.findOne(curSpaceUser.organization);
-
-    var canAdd = function (fl, curSpaceUser, organization) {
-      var perms = fl.perms;
-      var hasAddRight = false;
-      if (perms) {
-        if (perms.users_can_add && perms.users_can_add.includes(curUserId)) {
-          hasAddRight = true;
-        } else if (perms.orgs_can_add && perms.orgs_can_add.length > 0) {
-          if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_add.includes(curSpaceUser.organization)) {
-            hasAddRight = true;
-          } else {
-            for (var p = perms.orgs_can_add.length - 1; p >= 0; p--) {
-              if (organization && organization.parents && organization.parents.includes(perms.orgs_can_add[p])) {
-                hasAddRight = true;
-                break;
-              }
-            }
-          }
-        }
-      }
-      return hasAddRight;
-    }
+    var space = db.spaces.findOne({'_id':Session.get('spaceId')});
+    var box = Session.get('box');
 
     categories.forEach(function(cat) {
       var o;
@@ -51,12 +31,17 @@ Template.flow_list_modal.events({
           form: f._id,
           state: "enabled"
         }).forEach(function(fl) {
-
-          if (Session.get('flow_list_modal_type') == "create") {
-            var hasAddRight = canAdd(fl, curSpaceUser, organization);
-            if (!hasAddRight)
+          if (box == 'monitor') {
+            if (!space.admins.includes(curSpaceUser.user)) {
+              if (!WorkflowManager.canAdmin(fl, curSpaceUser, organization) && !WorkflowManager.canMonitor(fl, curSpaceUser, organization)) {
+                return;
+              }
+            } 
+          } else {
+            if (!WorkflowManager.canAdd(fl, curSpaceUser, organization)) {
               return;
-          }
+            }
+          } 
 
           if (flow_id == fl._id) {
             o.nodes.push({
@@ -87,11 +72,16 @@ Template.flow_list_modal.events({
         state: "enabled"
       }).forEach(function(fl) {
 
-        if (Session.get('flow_list_modal_type') == "create") {
-          var hasAddRight = canAdd(fl, curSpaceUser, organization);
-
-          if (!hasAddRight)
+        if (box == 'monitor') {
+          if (!space.admins.includes(curSpaceUser.user)) {
+            if (!WorkflowManager.canAdmin(fl, curSpaceUser, organization) && !WorkflowManager.canMonitor(fl, curSpaceUser, organization)) {
+              return;
+            }
+          } 
+        } else {
+          if (!WorkflowManager.canAdd(fl, curSpaceUser, organization)) {
             return;
+          }
         }
 
         if (flow_id == fl._id) {
@@ -110,29 +100,18 @@ Template.flow_list_modal.events({
       });
     });
 
-    if (Session.get('flow_list_modal_type') == "create") {
-      $('#tree').treeview({
-        data: data
-      });
-      $('#tree').on('nodeSelected', function(event, data) {
-        Modal.hide('flow_list_modal');
-        InstanceManager.newIns(data.flow_id);
-      });
-    }
-    else if (Session.get('flow_list_modal_type') == "show") {
-      $('#tree').treeview({
-        data: [{text:TAPi18n.__('All flows'), nodes:data}]
-      });
-      $('#tree').on('nodeSelected', function(event, data) {
-        if (data.flow_id) {
-          Session.set("flowId", data.flow_id);  
-        }
-        else {
-          Session.set("flowId", undefined);
-        }
-        Modal.hide('flow_list_modal');
-      });
-    }
+    $('#tree').treeview({
+      data: [{text:TAPi18n.__('All flows'), nodes:data}]
+    });
+    $('#tree').on('nodeSelected', function(event, data) {
+      if (data.flow_id) {
+        Session.set("flowId", data.flow_id);  
+      }
+      else {
+        Session.set("flowId", undefined);
+      }
+      Modal.hide('flow_list_modal');
+    });
       
   },
 

@@ -26,15 +26,23 @@ Template.instance_button.helpers
             return "display: none;";
 
     enabled_delete: ->
-        # TODO 流程管理员
         ins = WorkflowManager.getInstance();
         if !ins
             return "display: none;";
         space = db.spaces.findOne(ins.space);
         if !space
             return "display: none;";
+        fl = db.flows.findOne({'_id': ins.flow});
+        if !fl
+            return "display: none;";
+        curSpaceUser = db.space_users.findOne({'user': curUserId});
+        if !curSpaceUser
+            return "display: none;";
+        organization = db.organizations.findOne(curSpaceUser.organization);
+        if !organization
+            return "display: none;";
 
-        if Session.get("box")=="draft" || (Session.get("box")=="monitor" && space.admins.contains(Meteor.userId()))
+        if Session.get("box")=="draft" || (Session.get("box")=="monitor" && space.admins.contains(Meteor.userId())) || (Session.get("box")=="monitor" && WorkflowManager.canAdmin(fl, curSpaceUser, organization))
             return "";
         else
             return "display: none;";

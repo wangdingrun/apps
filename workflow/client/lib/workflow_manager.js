@@ -609,27 +609,72 @@ WorkflowManager.getSpaceFlows = function(spaceId){
 };
 
 
-var canAdd = function (fl, curSpaceUser, organization) {
-    var perms = fl.perms;
-    var hasAddRight = false;
-    if (perms) {
-      if (perms.users_can_add && perms.users_can_add.includes(Meteor.userId())) {
+WorkflowManager.canAdd = function (fl, curSpaceUser, organization) {
+  var perms = fl.perms;
+  var hasAddRight = false;
+  if (perms) {
+    if (perms.users_can_add && perms.users_can_add.includes(Meteor.userId())) {
+      hasAddRight = true;
+    } else if (perms.orgs_can_add && perms.orgs_can_add.length > 0) {
+      if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_add.includes(curSpaceUser.organization)) {
         hasAddRight = true;
-      } else if (perms.orgs_can_add && perms.orgs_can_add.length > 0) {
-        if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_add.includes(curSpaceUser.organization)) {
-          hasAddRight = true;
-        } else {
-          for (var p = perms.orgs_can_add.length - 1; p >= 0; p--) {
-            if (organization && organization.parents && organization.parents.includes(perms.orgs_can_add[p])) {
-              hasAddRight = true;
-              break;
-            }
+      } else {
+        for (var p = perms.orgs_can_add.length - 1; p >= 0; p--) {
+          if (organization && organization.parents && organization.parents.includes(perms.orgs_can_add[p])) {
+            hasAddRight = true;
+            break;
           }
         }
       }
     }
-    return hasAddRight;
   }
+  return hasAddRight;
+};
+
+
+WorkflowManager.canAdmin = function (fl, curSpaceUser, organization) {
+  var perms = fl.perms;
+  var hasAdminRight = false;
+  if (perms) {
+    if (perms.users_can_admin && perms.users_can_admin.includes(curUserId)) {
+      hasAdminRight = true;
+    } else if (perms.orgs_can_admin && perms.orgs_can_admin.length > 0) {
+      if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_admin.includes(curSpaceUser.organization)) {
+        hasAdminRight = true;
+      } else {
+        for (var p = perms.orgs_can_admin.length - 1; p >= 0; p--) {
+          if (organization && organization.parents && organization.parents.includes(perms.orgs_can_admin[p])) {
+            hasAdminRight = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+  return hasAdminRight;
+};
+
+WorkflowManager.canMonitor = function (fl, curSpaceUser, organization) {
+  var perms = fl.perms;
+  var hasMonitorRight = false;
+  if (perms) {
+    if (perms.users_can_monitor && perms.users_can_monitor.includes(curUserId)) {
+      hasMonitorRight = true;
+    } else if (perms.orgs_can_monitor && perms.orgs_can_monitor.length > 0) {
+      if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_monitor.includes(curSpaceUser.organization)) {
+        hasMonitorRight = true;
+      } else {
+        for (var p = perms.orgs_can_monitor.length - 1; p >= 0; p--) {
+          if (organization && organization.parents && organization.parents.includes(perms.orgs_can_monitor[p])) {
+            hasMonitorRight = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+  return hasMonitorRight;
+};
 
 WorkflowManager.getFlowListData = function(){
   //{categories:[],uncategories:[]}
@@ -655,7 +700,7 @@ WorkflowManager.getFlowListData = function(){
       flows.sortByName();
       f.flows = new Array();
       flows.forEach(function(fl){
-        if(canAdd(fl, curSpaceUser, organization)){
+        if(WorkflowManager.canAdd(fl, curSpaceUser, organization)){
           f.flows.push(fl);
         }
       });
@@ -673,7 +718,7 @@ WorkflowManager.getFlowListData = function(){
     flows.sortByName();
     f.flows = new Array();
     flows.forEach(function(fl){
-      if(canAdd(fl, curSpaceUser, organization)){
+      if(WorkflowManager.canAdd(fl, curSpaceUser, organization)){
         f.flows.push(fl);
       }
     });
