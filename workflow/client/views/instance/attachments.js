@@ -152,62 +152,8 @@ Template.ins_attach_version_modal.helpers({
 Template.ins_attach_version_modal.events({
 
     'change .ins-file-version-input': function (event, template) {
-        $(document.body).addClass("loading");
-        $('.loading-text').text("正在上传...");
-        
-        var fd, file, fileName, files, i;
 
-        files = event.target.files;
-
-        i = 0;
-
-        while (i < files.length) {
-          file = files[i];
-          if (!file.name) {
-            continue;
-          }
-          fileName = file.name;
-          if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())) {
-            fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
-          }
-          Session.set("filename", fileName);
-          $('.loading-text').text("正在上传..." + fileName);
-          fd = new FormData;
-          fd.append('Content-Type', cfs.getContentType(fileName));
-          fd.append("file", file);
-          $.ajax({
-            url: Meteor.absoluteUrl('s3/'),
-            type: 'POST',
-            async: true,
-            data: fd,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(responseText, status) {
-              var fileObj;
-              $(document.body).removeClass('loading');
-              $('.loading-text').text("");
-              if (responseText.errors) {
-                responseText.errors.forEach(function(e) {
-                  toastr.error(e.errorMessage);
-                });
-                return;
-              }
-              fileObj = {};
-              fileObj._id = responseText.version_id;
-              fileObj.name = Session.get('filename');
-              fileObj.type = cfs.getContentType(Session.get('filename'));
-              fileObj.size = responseText.size;
-              InstanceManager.addAttach(fileObj, true);
-            },
-            error: function(xhr, msg, ex) {
-              $(document.body).removeClass('loading');
-              $('.loading-text').text("");
-              toastr.error(msg);
-            }
-          });
-          i++;
-        }
+        InstanceManager.uploadAttach(event.target.files, true);
 
         $(".ins-file-version-input").val('')
     },

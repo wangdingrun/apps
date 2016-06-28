@@ -841,5 +841,94 @@ InstanceManager.removeAttach = function () {
   }
 }
 
+// 上传附件
+InstanceManager.uploadAttach = function (files, isAddVersion) {
+  $(document.body).addClass("loading");
+  $('.loading-text').text("正在上传...");
+
+  // 专业版文件大小不能超过100M
+  var maximumFileSize = 100 * 1024 * 1024;
+  // 免费版大小不能超过1M
+  var freeMaximumFileSize = 1024 * 1024;
+
+  var limitSize, warnStr;
+
+  var is_paid = WorkflowManager.isPaidSpace(Session.get('spaceId'));
+
+  if (is_paid) {
+    limitSize = maximumFileSize;
+    warnStr = t("Attachment paid size");
+  }
+  else {
+    limitSize = freeMaximumFileSize;
+    warnStr = t("Attachment free size");
+  }
+
+  var fd, file, fileName, i;
+
+  i = 0;
+
+  while (i < files.length) {
+    file = files[i];
+
+    if (file.size > limitSize) {
+      swal({
+        title: warnStr,
+        type: "warning",
+        confirmButtonText: t('OK'),
+        closeOnConfirm: true
+      });
+      $(document.body).removeClass('loading');
+      $('.loading-text').text("");
+      return;
+    }
+
+    if (!file.name) {
+      continue;
+    }
+    fileName = file.name;
+    if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())) {
+      fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
+    }
+    Session.set("filename", fileName);
+    $('.loading-text').text("正在上传..." + fileName);
+    fd = new FormData;
+    fd.append('Content-Type', cfs.getContentType(fileName));
+    fd.append("file", file);
+    $.ajax({
+      url: Meteor.absoluteUrl('s3/'),
+      type: 'POST',
+      async: true,
+      data: fd,
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      success: function(responseText, status) {
+        var fileObj;
+        $(document.body).removeClass('loading');
+        $('.loading-text').text("");
+        if (responseText.errors) {
+          responseText.errors.forEach(function(e) {
+            toastr.error(e.errorMessage);
+          });
+          return;
+        }
+        fileObj = {};
+        fileObj._id = responseText.version_id;
+        fileObj.name = Session.get('filename');
+        fileObj.type = cfs.getContentType(Session.get('filename'));
+        fileObj.size = responseText.size;
+        InstanceManager.addAttach(fileObj, isAddVersion);
+      },
+      error: function(xhr, msg, ex) {
+        $(document.body).removeClass('loading');
+        $('.loading-text').text("");
+        toastr.error(msg);
+      }
+    });
+    i++;
+  }
+}
+
 
 

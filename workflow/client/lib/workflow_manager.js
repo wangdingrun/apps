@@ -745,3 +745,12 @@ WorkflowManager.getSpaceForms = function(spaceId){
 
   return re;
 };
+
+WorkflowManager.isPaidSpace = function (spaceId) {
+  var is_paid = false;
+  var s = db.spaces.findOne({'_id': spaceId});
+  if (s) {
+    is_paid = s.is_paid;
+  }
+  return is_paid;
+}

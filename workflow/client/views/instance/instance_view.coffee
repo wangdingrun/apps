@@ -16,57 +16,8 @@ Template.instance_view.events
         console.log("click " + event.target.name);
         Session.set("instance_change", true);
     'change .ins-file-input': (event, template)->
-            $(document.body).addClass("loading")
-            $('.loading-text').text "正在上传..."
 
-            files = event.target.files
-            i = 0 
-            while i < files.length
-                file = files[i]
-                if !file.name
-                    continue
-
-                fileName = file.name
-                if ["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(fileName.toLowerCase())
-                    fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop()
-                
-                Session.set("filename", fileName)
-                $('.loading-text').text "正在上传..." + fileName
-
-                fd = new FormData
-                fd.append('Content-Type', cfs.getContentType(fileName))
-                fd.append("file", file)
-
-                $.ajax
-                  url: Meteor.absoluteUrl('s3/')
-                  type: 'POST'
-                  async: true
-                  data: fd
-                  dataType: 'json'
-                  processData: false
-                  contentType: false
-                  success: (responseText, status) ->
-                    $(document.body).removeClass 'loading'
-                    $('.loading-text').text ""
-                    if responseText.errors
-                        responseText.errors.forEach (e) ->
-                            toastr.error e.errorMessage
-                            return
-                        return
-                    fileObj = {}
-                    fileObj._id = responseText.version_id
-                    fileObj.name = Session.get('filename')
-                    fileObj.type = cfs.getContentType(Session.get('filename'))
-                    fileObj.size = responseText.size
-                    InstanceManager.addAttach(fileObj, false)
-                    return
-                  error: (xhr, msg, ex) ->
-                    $(document.body).removeClass 'loading'
-                    $('.loading-text').text ""
-                    toastr.error msg
-                    return
-
-                i++
+            InstanceManager.uploadAttach(event.target.files, false)
 
             $(".ins-file-input").val('')
 
