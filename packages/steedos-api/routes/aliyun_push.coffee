@@ -6,10 +6,10 @@ console.log("loading Aliyun_push...")
 
 Aliyun_push.sendMessage = (userTokens, notification, callback) ->
     ALYPUSH = new (ALY.PUSH)(
-        accessKeyId: Meteor.settings.private.push.aliyun.accessKeyId
-        secretAccessKey: Meteor.settings.private.push.aliyun.secretAccessKey
-        endpoint: Meteor.settings.private.push.aliyun.endpoint
-        apiVersion: Meteor.settings.private.push.aliyun.apiVersion);
+        accessKeyId: Meteor.settings.push.aliyun.accessKeyId
+        secretAccessKey: Meteor.settings.push.aliyun.secretAccessKey
+        endpoint: Meteor.settings.push.aliyun.endpoint
+        apiVersion: Meteor.settings.push.aliyun.apiVersion);
 
     aliyunTokens = new Array
 
@@ -18,7 +18,7 @@ Aliyun_push.sendMessage = (userTokens, notification, callback) ->
         aliyunTokens.push arr[arr.length - 1]
 
     data = 
-        AppKey: Meteor.settings.private.push.aliyun.appKey
+        AppKey: Meteor.settings.push.aliyun.appKey
         Target: 'device'
         TargetValue: aliyunTokens.toString()
         Title: notification.title
@@ -30,13 +30,13 @@ Meteor.startup ->
     Push.Configure
         debug: true
         apn:
-                keyData: Meteor.settings.private.push.apn.keyData
-                certData: Meteor.settings.private.push.apn.certData
+                keyData: Meteor.settings.push?.apn?.keyData
+                certData: Meteor.settings.push?.apn?.certData
         gcm:
-                apiKey: Meteor.settings.private.push.gcm.apiKey
+                apiKey: Meteor.settings.push?.gcm?.apiKey
         baidu:
-                apiKey: Meteor.settings.private.push.baidu.apiKey
-                secret: Meteor.settings.private.push.baidu.secret
+                apiKey: Meteor.settings.push?.baidu?.apiKey
+                secret: Meteor.settings.push?.baidu?.secret
         keepNotifications: true
         sendInterval: 1000
         sendBatchSize: 10
