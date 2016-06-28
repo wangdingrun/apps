@@ -1,0 +1,131 @@
+ALY = Npm.require('aliyun-sdk');
+
+Aliyun_push = {};
+
+console.log("loading Aliyun_push...")
+
+Aliyun_push.sendMessage = (userTokens, notification, callback) ->
+    ALYPUSH = new (ALY.PUSH)(
+        accessKeyId: Meteor.settings.private.push.aliyun.accessKeyId
+        secretAccessKey: Meteor.settings.private.push.aliyun.secretAccessKey
+        endpoint: Meteor.settings.private.push.aliyun.endpoint
+        apiVersion: Meteor.settings.private.push.aliyun.apiVersion);
+
+    aliyunTokens = new Array
+
+    userTokens.forEach (userToken) ->
+        arr = userToken.split(':')
+        aliyunTokens.push arr[arr.length - 1]
+
+    data = 
+        AppKey: Meteor.settings.private.push.aliyun.appKey
+        Target: 'device'
+        TargetValue: aliyunTokens.toString()
+        Title: notification.title
+        Summary: notification.text
+
+    ALYPUSH.pushNoticeToAndroid data, callback
+
+Meteor.startup ->
+    Push.Configure
+        debug: true
+        apn:
+                keyData: Meteor.settings.private.push.apn.keyData
+                certData: Meteor.settings.private.push.apn.certData
+        gcm:
+                apiKey: Meteor.settings.private.push.gcm.apiKey
+        baidu:
+                apiKey: Meteor.settings.private.push.baidu.apiKey
+                secret: Meteor.settings.private.push.baidu.secret
+        keepNotifications: true
+        sendInterval: 1000
+        sendBatchSize: 10
+        production: true
+    
+    if Push and typeof Push.sendGCM == 'function'
+        
+        Push.old_sendGCM = Push.sendGCM;
+
+        Push.sendAliyun = (userTokens, notification) ->
+
+            console.log 'sendAliyun', userTokens, notification
+
+            if Match.test(notification.gcm, Object)
+                notification = _.extend({}, notification, notification.gcm)
+            # Make sure userTokens are an array of strings
+            if userTokens == '' + userTokens
+                userTokens = [ userTokens ]
+            # Check if any tokens in there to send
+            if !userTokens.length
+                if Push.debug
+                    console.log 'sendGCM no push tokens found'
+                return
+            if Push.debug
+                console.log 'sendAliyun', userTokens, notification
+
+            Fiber = Npm.require('fibers')
+      
+            userToken = if userTokens.length == 1 then userTokens[0] else null
+            Aliyun_push.sendMessage userTokens, notification, (err, result) ->
+                if err
+                    if Push.debug
+                        console.log 'ANDROID ERROR: result of sender: ' + result
+                else
+                    if result == null
+                        if Push.debug
+                            console.log 'ANDROID: Result of sender is null'
+                    return
+
+                    if Push.debug
+                        console.log 'ANDROID: Result of sender: ' + JSON.stringify(result)
+
+                    if result.canonical_ids == 1 and userToken
+                        Fiber((self) ->
+                            try
+                                self.callback self.oldToken, self.newToken
+                            catch err
+                        ).run
+                            oldToken: gcm: userToken
+                            newToken: gcm: "aliyun:" + result.results[0].registration_id
+                            callback: _replaceToken
+                    if result.failure != 0 and userToken
+                        Fiber((self) ->
+                            try
+                                self.callback self.token
+                            catch err
+                        ).run
+                            token: gcm: userToken
+                            callback: _removeToken
+
+
+
+        Push.sendGCM = (userTokens, notification) ->
+            console.log 'sendGCM from aliyun-> Push.sendGCM'
+            if Match.test(notification.gcm, Object)
+                notification = _.extend({}, notification, notification.gcm)
+            # Make sure userTokens are an array of strings
+            if userTokens == '' + userTokens
+                userTokens = [ userTokens ]
+            # Check if any tokens in there to send
+            if !userTokens.length
+                if Push.debug
+                    console.log 'sendGCM no push tokens found'
+                return
+            if Push.debug
+                console.log 'sendGCM', userTokens, notification
+
+            aliyunTokens = userTokens.filter((item) ->
+                                item.indexOf('aliyun:') > -1
+                            )
+
+            console.log 'aliyunTokens is ', aliyunTokens.toString()
+
+            gcmTokens = userTokens.filter((item) ->
+                                item.indexOf("aliyun:") < 0
+                            )
+
+            console.log 'gcmTokens is ' , gcmTokens.toString();
+
+            Push.sendAliyun(aliyunTokens, notification);
+
+            Push.old_sendGCM(gcmTokens, notification);

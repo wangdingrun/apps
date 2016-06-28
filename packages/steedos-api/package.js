@@ -6,10 +6,12 @@ Package.describe({
 });
 
 Npm.depends({
+  'aliyun-sdk':'1.9.2',
   busboy: "0.2.13",
   cookies: "0.6.1",
   mime: "1.3.4"
 });
+
 
 Package.onUse(function(api) { 
     api.versionsFrom("1.2.1");
@@ -56,6 +58,7 @@ Package.onUse(function(api) {
 	api.addFiles('routes/push.coffee', 'server');
 	api.addFiles('routes/avatar.coffee', 'server');
 	api.addFiles('routes/sso.coffee', 'server');
+	api.addFiles('routes/aliyun_push.coffee', 'server');
 
 	api.addFiles('accounts_client.coffee', 'client');
 });
