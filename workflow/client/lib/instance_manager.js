@@ -857,11 +857,11 @@ InstanceManager.uploadAttach = function (files, isAddVersion) {
 
   if (is_paid) {
     limitSize = maximumFileSize;
-    warnStr = t("Attachment paid size");
+    warnStr = t("workflow_attachment_paid_size_limit");
   }
   else {
     limitSize = freeMaximumFileSize;
-    warnStr = t("Attachment free size");
+    warnStr = t("workflow_attachment_free_size_limit");
   }
 
   var fd, file, fileName, i;

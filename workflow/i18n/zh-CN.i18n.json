@@ -44,8 +44,8 @@
     "Attachments": "附件",
     "Versions": "版本",
     "Current Version": "（最新版本）",
-    "Attachment free size": "免费版不能上传超过1M的附件，请升级至专业版可自由上传附件",
-    "Attachment paid size": "附件不得超过100M",
+    "workflow_attachment_free_size_limit": "免费版不能上传超过1M的附件，请升级至专业版可自由上传附件",
+    "workflow_attachment_paid_size_limit": "附件不得超过100M",
 
     "Instance State approved": " 已核准",
     "Instance State rejected": " 已驳回",

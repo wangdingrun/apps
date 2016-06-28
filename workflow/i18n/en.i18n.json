@@ -44,8 +44,8 @@
     "Attachments": "Attachments",
     "Versions": "Versions",
     "Current Version": "（Current Version）",
-    "Attachments free size limit": "Attachment larger than 1M is not accepted for free version. Please upgrade to increase the file size attachment limits.",
-    "Attachments paid size limit": "Failed to upload， because attachment size is over 100 MB.",
+    "workflow_attachment_free_size_limit": "Attachment larger than 1M is not accepted for free version. Please upgrade to increase the file size attachment limits.",
+    "workflow_attachment_paid_size_limit": "Failed to upload， because attachment size is over 100 MB.",
     
     "Instance State approved": " Approved",
     "Instance State rejected": " Rejected",
