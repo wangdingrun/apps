@@ -69,4 +69,4 @@ getUserQuerySelector = (user) ->
       spaces.push
         _id: space._id
         name: space.name
-  return {authToken: authToken.token, userId: authenticatingUser._id, spaces: spaces}
+  return {authToken: authToken.token, userId: authenticatingUser._id, adminSpaces: spaces}
