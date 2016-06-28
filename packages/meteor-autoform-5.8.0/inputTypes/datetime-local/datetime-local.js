@@ -1,8 +1,19 @@
 AutoForm.addInputType("datetime-local", {
   template: "afInputDateTimeLocal",
   valueIn: function (val, atts) {
-    if (typeof val === "string")
-      val = new Date(val)
+    if (typeof val === "string"){
+      if(val && val.length == 16){
+        var vs = val.split("T");
+        var d = vs[0].split("-");
+        var t = vs[1].split(":")
+        year = d[0];
+        month = d[1];
+        date = d[2];
+        val = new Date(year, month - 1, date, t[0],t[1]);
+      }else{
+        val = new Date(val)
+      } 
+    }
     //convert Date to string value
     return (val instanceof Date) ? AutoForm.valueConverters.dateToNormalizedLocalDateAndTimeString(val, atts.timezoneId) : val;
   },
