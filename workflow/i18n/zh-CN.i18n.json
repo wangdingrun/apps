@@ -62,6 +62,15 @@
     "Instance Relocate Ok": "重定位提交成功。",
     "Instance Relocate CurStep": "当前步骤: ",
 
+    "instance_select_next_step": "请选择下一步步骤",
+    "instance_next_step_user": "请选择下一步处理人",
+    "instance_reasons_reject": "驳回时必须填写意见",
+    "instance_field": "字段",
+    "instance_is_required": "为必填",
+    "instance_email_format_error": "邮件地址格式错误",
+
+    "attachments_uploading": "正在上传...",
+
     // inbox
     "Inbox Suggestion NextSteps Label":"下一步骤: ",
     "Inbox Suggestion NextSteps Handler Label":"处理人: ",

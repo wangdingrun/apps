@@ -37,10 +37,15 @@ Package.onUse(function(api) {
     ],
     both);
 
-  api.use('tap:i18n', ['client', 'server']);
-  api.use(['less@1.0.0 || 2.5.0','session','jquery','templating'],'client')
+  
+  api.use(['less@1.0.0 || 2.5.0','session','jquery','templating'],'client');
 
-  api.use(['email'],'server')
+  api.use(['email'],'server');
+
+  // tapi18n
+  api.use(['tap:i18n'],both);
+  tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
+  api.add_files(tapi18nFiles,both);
 
   api.add_files([
     'lib/both/AdminDashboard.coffee',
@@ -72,6 +77,7 @@ Package.onUse(function(api) {
 
   //api.addAssets(['lib/client/css/admin-custom.css'],'client');
   api.export('AdminDashboard',both)
+  api.export('TAPi18n');
 
 });
 
