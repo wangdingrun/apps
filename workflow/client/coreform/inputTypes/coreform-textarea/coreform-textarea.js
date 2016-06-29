@@ -70,6 +70,8 @@ Template.cfTextarea.helpers({
   readonlyValue: function(value){
     if(!value)
       return value;
-    return _.clone(value).replace(new RegExp(/(\n)/g),'</br>');
+    value = value.replace(/\ /g,'&nbsp;')
+    //return _.clone(value).replace(new RegExp(/(\n)/g),'</br>');
+    return Spacebars.SafeString(Markdown(value))
   }
 });
