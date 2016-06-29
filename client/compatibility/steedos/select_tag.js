@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><ui id="valueLabel" class="valueLabel "></ui><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div class="row"><div class="col-md-8"><ui id="valueLabel_ui" class="valueLabel"><div id="valueLabel"></div></ui></div><div class="col-md-4"><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div</div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
@@ -98,7 +98,7 @@ $(function(){
 
         $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
 
-        $("#valueLabel").hide();
+        $("#valueLabel_ui").hide();
 
         if($options.showUser){
           $("#selectTagModalTitle").html("选择人员");
@@ -149,6 +149,7 @@ $(function(){
           var html = '';
           selectTag.valuesObject().forEach(function(v){
             html = html + '\r\n<li data-value='+v.id+'>' + v.name + '</li>'
+            //html = html + '\r\n<span><li data-value='+v.id+'>' + v.name + '</li><li class="remove"><i class="fa fa-times" aria-hidden="true"></i></li></span>'
           });
           $("#valueLabel").html(html);
 
@@ -166,9 +167,9 @@ $(function(){
             }
           })
 
-          $("#valueLabel").show();
+          $("#valueLabel_ui").show();
         }else{
-          $("#valueLabel").hide();
+          $("#valueLabel_ui").hide();
         }
       }
 
