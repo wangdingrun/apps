@@ -13,8 +13,6 @@ db.space_users._simpleSchema = new SimpleSchema
 	email:
 		type: String,
 		regEx: SimpleSchema.RegEx.Email,
-		autoform: 
-			readonly: true
 	user:
 		type: String,
 		optional: true,
