@@ -2,6 +2,7 @@ AutoForm.addInputType("datetime-local", {
   template: "afInputDateTimeLocal",
   valueIn: function (val, atts) {
     if (typeof val === "string"){
+      //兼容旧版审批王日期-时间数据
       if(val && val.length == 16){
         var vs = val.split("T");
         var d = vs[0].split("-");
