@@ -568,6 +568,9 @@ InstanceManager.saveIns = function() {
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+      if(instance.attachments && myApprove) {
+          myApprove.attachments = instance.attachments;
+      }
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
         WorkflowManager.instanceModified.set(false)
         if (result == true)
