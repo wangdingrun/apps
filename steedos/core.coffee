@@ -16,6 +16,23 @@ if Meteor.isClient
         else
             return undefined;
 
+    Steedos.setAppId = (appId)->
+        if appId != Session.get("appId")
+            Session.set("appId", appId)     
+            localStorage.setItem("appId:" + Meteor.userId(), appId);
+
+    Steedos.getAppId = ()->
+
+        appId = Session.get("appId")
+        if appId
+            return appId
+
+        appId = localStorage.getItem("appId:" + Meteor.userId())
+        if appId
+            return appId
+        else
+            return undefined;
+
     Steedos.getSpaceApps = ()->
         selector = {}
         if Steedos.getSpaceId()

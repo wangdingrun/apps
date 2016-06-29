@@ -73,7 +73,7 @@ Meteor.startup ->
 						Meteor._reload.reload()
 					, 1000
 				else
-					FlowRouter.go("/steedos/springboard")
+					FlowRouter.go("/")
 
 			onError: (formType, error) ->
 				if error.reason

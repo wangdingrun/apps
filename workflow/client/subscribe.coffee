@@ -7,26 +7,11 @@ Steedos.subsReady = () ->
 			subsReady = false;
 	return subsReady
 
-Session.set("space_loaded", false)
-Session.set("startup_loaded", false)
 Meteor.startup ->
 
 	Tracker.autorun (c)->
-		if Meteor.userId()
-			Steedos.subs.my_spaces = Meteor.subscribe "my_spaces", Meteor.userId(), ()->
-				Session.set("space_loaded", true)
-				spaceId = Steedos.getSpaceId()
-				space = db.spaces.findOne(spaceId)
-				if space
-					Steedos.setSpaceId(space._id)
-				else
-					space = db.spaces.findOne()
-					if space
-						Steedos.setSpaceId(space._id)
-
-
-		Steedos.subs.apps = Meteor.subscribe("apps", Session.get("spaceId"))
 		if Session.get("spaceId")
+			Steedos.subs.apps = Meteor.subscribe("apps", Session.get("spaceId"))
 			Steedos.subs.space_users = Meteor.subscribe("space_users", Session.get("spaceId"))
 			Steedos.subs.organizations = Meteor.subscribe("organizations", Session.get("spaceId"))
 			Steedos.subs.flow_roles = Meteor.subscribe("flow_roles", Session.get("spaceId"))

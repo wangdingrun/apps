@@ -1,3 +1,4 @@
+
 FlowRouter.notFound = 
 	action: ()->
 		if !Meteor.userId()
@@ -16,16 +17,20 @@ FlowRouter.route '/',
 		if (!Meteor.userId())
 			FlowRouter.go "/steedos/sign-in";
 		else 
-			FlowRouter.go "/steedos/springboard";
+			appId = Steedos.getAppId()
+			if !appId
+				FlowRouter.go("/steedos/springboard")
+			else
+				FlowRouter.go("/app/" + appId);
 		
 
-FlowRouter.route '/steedos', 
-	action: (params, queryParams)->
-		if !Meteor.userId()
-			FlowRouter.go "/steedos/sign-in";
-			return true
-		else
-			FlowRouter.go "/steedos/springboard";
+# FlowRouter.route '/steedos', 
+# 	action: (params, queryParams)->
+# 		if !Meteor.userId()
+# 			FlowRouter.go "/steedos/sign-in";
+# 			return true
+# 		else
+# 			FlowRouter.go "/steedos/springboard";
 
 
 FlowRouter.route '/steedos/logout', 
@@ -56,6 +61,8 @@ FlowRouter.route '/steedos/springboard',
 		if !Meteor.userId()
 			FlowRouter.go "/steedos/sign-in";
 			return true
+
+		Steedos.setAppId(null);
 
 		NavigationController.reset();
 		
@@ -109,9 +116,13 @@ FlowRouter.route '/designer',
 		
 		Steedos.openWindow(url);
 		
-		FlowRouter.go "/steedos/springboard"
+		#FlowRouter.go "/steedos/springboard"
 
 FlowRouter.route '/app/:app_id', 
+
+    # subscriptions: (params, queryParams) ->
+    #     this.register('apps', Meteor.subscribe('apps'));
+ 
 	action: (params, queryParams)->
 		if !Meteor.userId()
 			FlowRouter.go "/steedos/sign-in";
@@ -120,6 +131,9 @@ FlowRouter.route '/app/:app_id',
 		app = db.apps.findOne(params.app_id)
 		if !app
 			FlowRouter.go("/steedos/springboard")
+			return
+
+		Steedos.setAppId(params.app_id);
 
 		if app.internal
 			FlowRouter.go(app.url)
@@ -129,4 +143,4 @@ FlowRouter.route '/app/:app_id',
 
 		Steedos.openWindow(url);
 		
-		FlowRouter.go "/steedos/springboard"
+		#FlowRouter.go "/steedos/springboard"
