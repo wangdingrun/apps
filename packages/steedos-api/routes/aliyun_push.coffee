@@ -2,8 +2,6 @@ ALY = Npm.require('aliyun-sdk');
 
 Aliyun_push = {};
 
-console.log("loading Aliyun_push...")
-
 Aliyun_push.sendMessage = (userTokens, notification, callback) ->
     ALYPUSH = new (ALY.PUSH)(
         accessKeyId: Meteor.settings.push.aliyun.accessKeyId
@@ -34,21 +32,18 @@ Meteor.startup ->
                 certData: Meteor.settings.push?.apn?.certData
         gcm:
                 apiKey: Meteor.settings.push?.gcm?.apiKey
-        baidu:
-                apiKey: Meteor.settings.push?.baidu?.apiKey
-                secret: Meteor.settings.push?.baidu?.secret
         keepNotifications: true
         sendInterval: 1000
         sendBatchSize: 10
         production: true
     
-    if Push and typeof Push.sendGCM == 'function'
+    if Meteor.settings.push?.aliyun and Push and typeof Push.sendGCM == 'function'
         
         Push.old_sendGCM = Push.sendGCM;
 
         Push.sendAliyun = (userTokens, notification) ->
-
-            console.log 'sendAliyun', userTokens, notification
+            if Push.debug
+                console.log 'sendAliyun', userTokens, notification
 
             if Match.test(notification.gcm, Object)
                 notification = _.extend({}, notification, notification.gcm)
@@ -57,8 +52,7 @@ Meteor.startup ->
                 userTokens = [ userTokens ]
             # Check if any tokens in there to send
             if !userTokens.length
-                if Push.debug
-                    console.log 'sendGCM no push tokens found'
+                console.log 'sendGCM no push tokens found'
                 return
             if Push.debug
                 console.log 'sendAliyun', userTokens, notification
@@ -68,12 +62,10 @@ Meteor.startup ->
             userToken = if userTokens.length == 1 then userTokens[0] else null
             Aliyun_push.sendMessage userTokens, notification, (err, result) ->
                 if err
-                    if Push.debug
-                        console.log 'ANDROID ERROR: result of sender: ' + result
+                    console.log 'ANDROID ERROR: result of sender: ' + result
                 else
                     if result == null
-                        if Push.debug
-                            console.log 'ANDROID: Result of sender is null'
+                        console.log 'ANDROID: Result of sender is null'
                     return
 
                     if Push.debug
@@ -100,7 +92,8 @@ Meteor.startup ->
 
 
         Push.sendGCM = (userTokens, notification) ->
-            console.log 'sendGCM from aliyun-> Push.sendGCM'
+            if Push.debug
+                console.log 'sendGCM from aliyun-> Push.sendGCM'
             if Match.test(notification.gcm, Object)
                 notification = _.extend({}, notification, notification.gcm)
             # Make sure userTokens are an array of strings
@@ -108,8 +101,7 @@ Meteor.startup ->
                 userTokens = [ userTokens ]
             # Check if any tokens in there to send
             if !userTokens.length
-                if Push.debug
-                    console.log 'sendGCM no push tokens found'
+                console.log 'sendGCM no push tokens found'
                 return
             if Push.debug
                 console.log 'sendGCM', userTokens, notification
@@ -117,14 +109,14 @@ Meteor.startup ->
             aliyunTokens = userTokens.filter((item) ->
                                 item.indexOf('aliyun:') > -1
                             )
-
-            console.log 'aliyunTokens is ', aliyunTokens.toString()
+            if Push.debug
+                console.log 'aliyunTokens is ', aliyunTokens.toString()
 
             gcmTokens = userTokens.filter((item) ->
                                 item.indexOf("aliyun:") < 0
                             )
-
-            console.log 'gcmTokens is ' , gcmTokens.toString();
+            if Push.debug
+                console.log 'gcmTokens is ' , gcmTokens.toString();
 
             Push.sendAliyun(aliyunTokens, notification);
 
