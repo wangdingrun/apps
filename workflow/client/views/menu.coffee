@@ -5,7 +5,7 @@ Template.workflow_menu.helpers
             return t(Session.get("box"))
 
     inbox_count: ->
-        badge = Steedos.getBadge(Session.get("spaceId"))
+        badge = Steedos.getBadge("workflow", Session.get("spaceId"))
         if badge
             return badge
         return

@@ -1,52 +1,4 @@
-Template.registerHelper 'absoluteUrl', ->
-	return Meteor.absoluteUrl()
-
-Template.registerHelper 'urlPrefix', ->
-	return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
-
-Template.registerHelper 'isMobile', ->
-	return $(window).width()<767
-
-Template.registerHelper 'userId', ->
-	return Meteor.userId()
-
-Template.registerHelper 'spaceId', ->
-	if Steedos.getSpaceId()
-		return Steedos.getSpaceId()
-	else
-		return "none";
-
-Template.registerHelper 'isCloudAdmin', ->
-	return Meteor.user()?.is_cloudadmin
-
-Template.registerHelper 'locale', ->
-	return Steedos.getLocale()
-
-Template.registerHelper 'country', ->
-	locale = Steedos.getLocale()
-	if locale == "zh-cn"
-		return "cn"
-	else
-		return "us"
-
-Template.registerHelper 'fromNow', (posted)->
-	return moment(posted).fromNow()
-
-Template.registerHelper 'badge', (app_id)->
-	app = db.apps.findOne(app_id)
-	if app && app.url.startsWith("/workflow")
-		c = Steedos.getBadge(Steedos.getSpaceId())
-		if c > 0
-			return c
-	if app && app.url.startsWith("/chat")
-		subscriptions = db.rocketchat_subscription.find().fetch()
-		count = 0;
-		_.each subscriptions, (s)->
-			count = count + s.unread
-		if count >0
-			return count
-
-Template.registerHelpers
+TemplateHelpers = 
 
 	equals: (a, b)->
 		return a == b
@@ -54,6 +6,127 @@ Template.registerHelpers
 	session: (v)->
 		return Session.get(v)
 		
+	absoluteUrl: ->
+		return Meteor.absoluteUrl()
+
+	urlPrefix: ->
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+
+	isMobile: ->
+		return $(window).width()<767
+
+	userId: ->
+		return Meteor.userId()
+
+	setSpaceId: (spaceId)->
+		if !spaceId
+			Session.set("spaceId", null)    
+			localStorage.removeItem("spaceId:" + Meteor.userId())
+		else if spaceId != Session.get("spaceId")
+			Session.set("spaceId", spaceId)     
+			localStorage.setItem("spaceId:" + Meteor.userId(), spaceId);
+
+	getSpaceId: ()->
+
+		spaceId = Session.get("spaceId")
+		if spaceId
+			return spaceId
+
+		spaceId = localStorage.getItem("spaceId:" + Meteor.userId())
+		if spaceId
+			return spaceId
+		else
+			return undefined;
+			
+	isSpaceAdmin: ->
+		if Session.get('spaceId')
+			s = db.spaces.findOne(Session.get('spaceId'))
+			if s
+				return s.admins.includes(Meteor.userId())
+
+	isSpaceOwner: ->
+		if Session.get('spaceId')
+			s = db.spaces.findOne(Session.get('spaceId'))
+			if s
+				return s.owner == Meteor.userId()
+
+
+	setAppId: (appId)->
+		if appId != Session.get("appId")
+			Session.set("appId", appId)     
+			localStorage.setItem("appId:" + Meteor.userId(), appId);
+
+	getAppId: ()->
+
+		appId = Session.get("appId")
+		if appId
+			return appId
+
+		appId = localStorage.getItem("appId:" + Meteor.userId())
+		if appId
+			return appId
+		else
+			return undefined;
+
+	getSpaceApps: ()->
+		selector = {}
+		if Steedos.getSpaceId()
+			space = db.spaces.findOne(Steedos.getSpaceId())
+			if space?.apps_enabled?.length>0
+				selector._id = {$in: space.apps_enabled}
+		if Steedos.isMobile()
+			selector.mobile = true
+		return db.apps.find(selector, {sort: {sort: 1, space_sort: 1}});
+
+	getLocale: ()->
+		if Meteor.user()?.locale
+			locale = Meteor.user().locale
+		else
+			l = window.navigator.userLanguage || window.navigator.language || 'en'
+			if l.indexOf("zh") >=0
+				locale = "zh-cn"
+			else
+				locale = "en-us"
+
+	getBadge: (appId, spaceId)->
+		console.log "getBadge: "+ appId + ", " + spaceId
+		if !appId
+			return;
+		badge = 0
+		if appId == "chat"
+			subscriptions = db.rocketchat_subscription.find().fetch()
+			_.each subscriptions, (s)->
+				badge = badge + s.unread
+		else 
+			if spaceId
+				space_user = db.space_users.findOne({user: Meteor.userId(), space: spaceId}, {fields: {apps: 1}})
+				b = space_user?.apps?[appId]?.badge 
+				if b
+					badge = b 
+			else
+				space_users = db.space_users.find({user: Meteor.userId()}, {fields: {apps: 1}})
+				space_users.forEach (su)->
+					b = su.apps?[appId]?.badge
+					if b
+						badge += b
+		if badge 
+			return badge
+
+
+	locale: ->
+		return Steedos.getLocale()
+
+	country: ->
+		locale = Steedos.getLocale()
+		if locale == "zh-cn"
+			return "cn"
+		else
+			return "us"
+
+	fromNow: (posted)->
+		return moment(posted).fromNow()
+
+
 	spaceId: ()->
 		return Steedos.getSpaceId();
 
@@ -76,6 +149,9 @@ Template.registerHelpers
 			if s
 				return s.owner == Meteor.userId()
 
+	isCloudAdmin: ->
+		return Meteor.user()?.is_cloudadmin
+
 	isPaid: (app)->
 		if !app
 			app = "workflow"
@@ -83,3 +159,9 @@ Template.registerHelpers
 			space = db.spaces.findOne(Session.get('spaceId'))
 			if space?.apps_paid?.length >0
 				return _.indexOf(space.apps_paid, app)>=0 
+
+
+_.extend Steedos, TemplateHelpers
+
+Template.registerHelpers TemplateHelpers
+
