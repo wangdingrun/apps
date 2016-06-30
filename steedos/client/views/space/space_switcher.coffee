@@ -13,7 +13,7 @@ Template.space_switcher.helpers
 
 Template.space_switcher.events
 
-	"click #switchSpace": ->
+	"click .switchSpace": ->
 		self = this
 		Steedos.setSpaceId(this._id)
 		FlowRouter.go "/"
