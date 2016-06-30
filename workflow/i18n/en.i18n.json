@@ -30,6 +30,8 @@
     "instance_relocate": "Relocate",
     "instance_print": "Print",
 
+    "workflow_table_confirm":"OK",
+
     "Attachment deleted successfully": "Attachment deleted successfully!",
     "Attachment was added successfully": "Attachment was added successfully!",
 

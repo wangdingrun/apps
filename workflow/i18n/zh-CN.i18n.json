@@ -29,6 +29,8 @@
     "instance_relocate": "重定位",
     "instance_print": "打印",
 
+    "workflow_table_confirm":"确认",
+
     "Attachment deleted successfully": "附件删除成功!",
     "Attachment was added successfully": "附件添加成功!",
 
