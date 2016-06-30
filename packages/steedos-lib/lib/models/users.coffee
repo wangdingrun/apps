@@ -36,7 +36,7 @@ db.users._simpleSchema = new SimpleSchema
 		autoform: 
 			type: "select",
 			options: [{
-				label: "Chinese",
+				label: "简体中文",
 				value: "zh-cn"
 			},
 			{

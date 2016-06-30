@@ -67,9 +67,9 @@ Template.afFileUpload.onRendered ->
     self.value.set false
 Template.afFileUpload.helpers
   label: ->
-    @atts.label or 'Choose file'
+    @atts.label or 'meteor_autoform_choose_file'
   removeLabel: ->
-    @atts.removeLabel or 'Remove'
+    @atts.removeLabel or 'meteor_autoform_remove'
   value: ->
     doc = undefined
     doc = getDocument(this)
@@ -96,7 +96,7 @@ Template.afFileUpload.helpers
     (if (ref = @atts) != null then ref.selectFileBtnTemplate else undefined) or 'afFileSelectFileBtnTemplate'
   selectFileBtnData: ->
     {
-      label: @atts.label or 'Choose file'
+      label: @atts.label or 'meteor_autoform_choose_file'
       accepts: @atts.accepts
     }
   uploadProgressTemplate: ->

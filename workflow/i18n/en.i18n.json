@@ -71,6 +71,8 @@
     "instance_is_required": "is required",
     "instance_email_format_error": "Format error of the email address",
 
+    "instance_attachments_uploading": "Uploading...",
+
     // inbox
     "Inbox Suggestion NextSteps Label":"Next step: ",
     "Inbox Suggestion NextSteps Handler Label":"Assignee: ",

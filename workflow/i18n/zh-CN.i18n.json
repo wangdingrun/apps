@@ -71,7 +71,7 @@
     "instance_is_required": "为必填",
     "instance_email_format_error": "邮件地址格式错误",
 
-    "attachments_uploading": "正在上传...",
+    "instance_attachments_uploading": "正在上传...",
 
     // inbox
     "Inbox Suggestion NextSteps Label":"下一步骤: ",

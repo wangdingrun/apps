@@ -22,6 +22,11 @@ Package.onUse(function(api) {
     'mpowaga:jquery-fileupload@9.11.2'
   ]);
 
+  // i18n
+  api.use('tap:i18n', ['client', 'server']);
+  tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
+  api.addFiles(tapi18nFiles, ['client', 'server']);
+
   api.addFiles('lib/client/autoform-file.html', 'client');
   api.addFiles('lib/client/autoform-file.less', 'client');
   api.addFiles('lib/client/autoform-file.coffee', 'client');
