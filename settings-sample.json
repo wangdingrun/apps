@@ -47,8 +47,21 @@
       }
     }
   },
-  "fakes3_root": "/mnt/fakes3/10",
-  "template_space_en_us" : "526785fb3349041651000a75",
-  "template_space_zh_cn" : "526621803349041651000a1a"
+  "push" : {
+    "aliyun" : {
+        "appKey" : "xxxxxxx",
+        "accessKeyId" : "xxxxxxx",
+        "secretAccessKey" : "xxxxxxx",
+        "endpoint" : "http://cloudpush.aliyuncs.com",
+        "apiVersion" : "2015-08-27"
+      },
+    "apn" : {
+        "keyData" : "xxxxxxx",
+        "certData" : "xxxxxxx"
+    },
+    "gcm" : {
+      "apiKey" : "xxxxxxx"
+    }
 
+  }
 }
