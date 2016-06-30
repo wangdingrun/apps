@@ -88,3 +88,4 @@ yogiben:autoform-tags
 
 simple:json-routes
 #meteorhacks:fast-render
+meteorhacks:subs-manager

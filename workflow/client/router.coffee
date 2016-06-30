@@ -17,17 +17,17 @@ workflowSpaceRoutes = FlowRouter.group
 	prefix: '/workflow/space/:spaceId',
 	name: 'workflowSpace',
 	triggersEnter: [ checkUserSigned ],
-	subscriptions: (params, queryParams) ->
-		if params.spaceId
-			this.register 'apps', Meteor.subscribe("apps", params.spaceId)
-			this.register 'space_users', Meteor.subscribe("space_users", params.spaceId)
-			this.register 'organizations', Meteor.subscribe("organizations", params.spaceId)
-			this.register 'flow_roles', Meteor.subscribe("flow_roles", params.spaceId)
-			this.register 'flow_positions', Meteor.subscribe("flow_positions", params.spaceId)
+	# subscriptions: (params, queryParams) ->
+	# 	if params.spaceId
+	# 		this.register 'apps', Meteor.subscribe("apps", params.spaceId)
+	# 		this.register 'space_users', Meteor.subscribe("space_users", params.spaceId)
+	# 		this.register 'organizations', Meteor.subscribe("organizations", params.spaceId)
+	# 		this.register 'flow_roles', Meteor.subscribe("flow_roles", params.spaceId)
+	# 		this.register 'flow_positions', Meteor.subscribe("flow_positions", params.spaceId)
 			
-			this.register 'categories', Meteor.subscribe("categories", params.spaceId)
-			this.register 'forms', Meteor.subscribe("forms", params.spaceId)
-			this.register 'flows', Meteor.subscribe("flows", params.spaceId)
+	# 		this.register 'categories', Meteor.subscribe("categories", params.spaceId)
+	# 		this.register 'forms', Meteor.subscribe("forms", params.spaceId)
+	# 		this.register 'flows', Meteor.subscribe("flows", params.spaceId)
 
 
 workflowSpaceRoutes.route '/', 
@@ -43,7 +43,7 @@ workflowSpaceRoutes.route '/:box/',
 		
 		Session.set("box", params.box);
 		Session.set("flowId", undefined);
-		#Session.set("instanceId", null); 
+		Session.set("instanceId", null); 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
 		
@@ -63,8 +63,6 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_main"
-			
-		$(document.body).addClass "loading";
 
 		WorkflowManager.callInstanceDataMethod params.instanceId, ()->
 			console.log "response get_instance_data" 
@@ -77,11 +75,3 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 			Session.set("box", params.box);
 			Session.set("instance_change", false);
 
-
-			$(document.body).removeClass "loading";
-			$(".workflow-main").addClass("instance-show")
-
-
-	triggersExit: [
-		()->
-	]
