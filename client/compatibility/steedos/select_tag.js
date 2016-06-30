@@ -70,7 +70,7 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">'+TAPi18n.__("select_tag_select_user")+'</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div class="row"><div class="col-md-8"><ui id="valueLabel_ui" class="valueLabel"><div id="valueLabel"></div></ui></div><div class="col-md-4"><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">'+TAPi18n.__("select_tag_cancel")+'</button><button type="button" class="btn btn-primary selectTagOK" title="'+TAPi18n.__("select_tag_confirm")+'">'+TAPi18n.__("select_tag_confirm")+'</button>  </div></div</div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">'+TAPi18n.__("select_tag_select_user")+'</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div class="row"><div class="col-md-8"><ui id="valueLabel_ui" class="valueLabel"><div id="valueLabel"></div></ui></div><div class="col-md-4"><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default selectTagCancel" data-dismiss="modal">'+TAPi18n.__("select_tag_cancel")+'</button><button type="button" class="btn btn-primary selectTagOK" title="'+TAPi18n.__("select_tag_confirm")+'">'+TAPi18n.__("select_tag_confirm")+'</button>  </div></div</div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
@@ -105,6 +105,10 @@ $(function(){
         }else{
           $("#selectTagModalTitle").html(TAPi18n.__("select_tag_select_organization"));
         }
+
+        $(".selectTagOK").html(TAPi18n.__("select_tag_confirm"));
+        $(".selectTagOK").prop("title",TAPi18n.__("select_tag_confirm"));
+        $(".selectTagCancel").html(TAPi18n.__("select_tag_cancel"));
       }
 
       function getValuesObject(){
