@@ -33,7 +33,10 @@ InstanceManager.getNextStepOptions = function(){
 
   var instance = WorkflowManager.getInstance();
   var currentApprove = InstanceManager.getCurrentApprove();
-  var current_next_steps = currentApprove.next_steps;
+  var current_next_steps;
+  if (currentApprove) {
+    current_next_steps = currentApprove.next_steps;
+  }
   var judge = Session.get("judge");
   var currentStep = InstanceManager.getCurrentStep();
   var form_version = WorkflowManager.getInstanceFormVersion();
