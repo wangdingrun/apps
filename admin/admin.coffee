@@ -45,6 +45,7 @@ db.organizations.adminConfig =
 	newFormFields: "space,name,parent"
 	editFormFields: "name,parent"
 	selector: {space: "-1"}
+	pageLength: 100
 	routerAdmin: "/steedos/admin"
 
 db.space_users.adminConfig = 
@@ -61,6 +62,7 @@ db.space_users.adminConfig =
 	newFormFields: "space,email"
 	editFormFields: "space,name,manager,user_accepted"
 	selector: {space: "-1"}
+	pageLength: 100
 	routerAdmin: "/steedos/admin"
 
 db.flow_roles.adminConfig = 
@@ -74,6 +76,7 @@ db.flow_roles.adminConfig =
 	extraFields: []
 	newFormFields: "space,name"
 	selector: {space: "-1"}
+	pageLength: 100
 	routerAdmin: "/steedos/admin"
 
 db.flow_positions.adminConfig = 
@@ -89,6 +92,7 @@ db.flow_positions.adminConfig =
 	extraFields: ["role", "org", "users"]
 	newFormFields: "space,role,org,users"
 	selector: {space: "-1"}
+	pageLength: 100
 	routerAdmin: "/steedos/admin"
 
 @AdminConfig = 
