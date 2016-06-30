@@ -1,14 +1,18 @@
 <template name="workflow_main">
+    {{#if subsReady}}
     <div class="workflow-main">
         <div class="instance-list-wrapper">
         	{{> instance_list}}
         </div>
         <div class="instance-wrapper">
-        	{{#if showInstance}}
+        	{{#if instanceId}}
         		{{> instance_view}}
         	{{else}}
         		<!--Please select instance-->
         	{{/if}}
         </div>
     </div>
+    {{else}}
+        Loading...
+    {{/if}}
 </template>

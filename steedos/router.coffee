@@ -76,7 +76,7 @@ FlowRouter.route '/steedos/space',
 			FlowRouter.go "/steedos/sign-in";
 			return true
 
-		BlazeLayout.render 'loginLayout',
+		BlazeLayout.render 'masterLayout',
 			main: "space_select"
 
 

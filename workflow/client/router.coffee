@@ -6,19 +6,38 @@ checkUserSigned = (context, redirect) ->
 FlowRouter.route '/workflow',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		FlowRouter.go "/workflow/space/" + Steedos.getSpaceId()
+		spaceId = Steedos.getSpaceId()
+		if spaceId
+			FlowRouter.go "/workflow/space/" + spaceId
+		else
+			FlowRouter.go "/steedos/space"
 
 
-FlowRouter.route '/workflow/space/:spaceId', 
+workflowSpaceRoutes = FlowRouter.group
+	prefix: '/workflow/space/:spaceId',
+	name: 'workflowSpace',
 	triggersEnter: [ checkUserSigned ],
+	subscriptions: (params, queryParams) ->
+		if params.spaceId
+			this.register 'apps', Meteor.subscribe("apps", params.spaceId)
+			this.register 'space_users', Meteor.subscribe("space_users", params.spaceId)
+			this.register 'organizations', Meteor.subscribe("organizations", params.spaceId)
+			this.register 'flow_roles', Meteor.subscribe("flow_roles", params.spaceId)
+			this.register 'flow_positions', Meteor.subscribe("flow_positions", params.spaceId)
+			
+			this.register 'categories', Meteor.subscribe("categories", params.spaceId)
+			this.register 'forms', Meteor.subscribe("forms", params.spaceId)
+			this.register 'flows', Meteor.subscribe("flows", params.spaceId)
+
+
+workflowSpaceRoutes.route '/', 
 	action: (params, queryParams)->
 		Steedos.setSpaceId(params.spaceId)
 		BlazeLayout.render 'masterLayout',
 			main: "workflow_home"
 
 
-FlowRouter.route '/workflow/space/:spaceId/:box/', 
-	triggersEnter: [ checkUserSigned ],
+workflowSpaceRoutes.route '/:box/', 
 	action: (params, queryParams)->
 		Steedos.setSpaceId(params.spaceId)
 		
@@ -31,8 +50,7 @@ FlowRouter.route '/workflow/space/:spaceId/:box/',
 		$(".workflow-main").removeClass("instance-show")
 
 
-FlowRouter.route '/workflow/space/:spaceId/:box/:instanceId', 
-	triggersEnter: [ checkUserSigned ],
+workflowSpaceRoutes.route '/:box/:instanceId', 
 	action: (params, queryParams)->
 		
 		if Session.get("instance_change") && !ApproveManager.isReadOnly()

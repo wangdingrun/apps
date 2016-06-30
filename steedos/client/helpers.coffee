@@ -54,9 +54,13 @@ Template.registerHelpers
 	session: (v)->
 		return Session.get(v)
 		
+	spaceId: ()->
+		return Steedos.getSpaceId();
+
 	spaceName: ->
-		if Session.get("spaceId")
-			space = db.spaces.findOne(Session.get("spaceId"))
+		spaceId = Steedos.getSpaceId()
+		if spaceId
+			space = db.spaces.findOne(spaceId)
 			if space
 				return space.name
 
