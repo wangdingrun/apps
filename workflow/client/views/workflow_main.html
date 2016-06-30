@@ -7,7 +7,9 @@
 			<div class="instance-wrapper">
 				{{#if instanceId}}
 					{{> instance_view}}
-				{{else}}
+				{{/if}}
+				
+				{{#if instance_loading}}
 					<div class="loading">
 						{{> steedosLoading}}
 					</div>

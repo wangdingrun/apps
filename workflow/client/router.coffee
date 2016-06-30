@@ -58,6 +58,7 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 
 		Steedos.setSpaceId(params.spaceId)
 		Session.set("instanceId", null);
+		Session.set("instance_loading", true);
 
 		console.log "call get_instance_data"
 
@@ -74,4 +75,5 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 			Session.set("instanceId", params.instanceId);
 			Session.set("box", params.box);
 			Session.set("instance_change", false);
+			Session.set("instance_loading", false);
 
