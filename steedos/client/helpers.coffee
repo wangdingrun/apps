@@ -38,18 +38,35 @@ TemplateHelpers =
 		else
 			return undefined;
 			
-	isSpaceAdmin: ->
-		if Session.get('spaceId')
-			s = db.spaces.findOne(Session.get('spaceId'))
+	isSpaceAdmin: (spaceId)->
+		if !spaceId
+			spaceId = Steedos.getSpaceId()
+		if spaceId
+			s = db.spaces.findOne(spaceId)
 			if s
 				return s.admins.includes(Meteor.userId())
 
-	isSpaceOwner: ->
-		if Session.get('spaceId')
-			s = db.spaces.findOne(Session.get('spaceId'))
+	isSpaceOwner: (spaceId)->
+		if !spaceId
+			spaceId = Steedos.getSpaceId()
+		if spaceId
+			s = db.spaces.findOne(spaceId)
 			if s
 				return s.owner == Meteor.userId()
 
+	spaceId: ()->
+		return Steedos.getSpaceId();
+
+	spaceName: (spaceId)->
+		if !spaceId
+			spaceId = Steedos.getSpaceId()
+		if spaceId
+			space = db.spaces.findOne(spaceId)
+			if space
+				return space.name
+
+	isCloudAdmin: ->
+		return Meteor.user()?.is_cloudadmin
 
 	setAppId: (appId)->
 		if appId != Session.get("appId")
@@ -89,7 +106,6 @@ TemplateHelpers =
 				locale = "en-us"
 
 	getBadge: (appId, spaceId)->
-		console.log "getBadge: "+ appId + ", " + spaceId
 		if !appId
 			return;
 		badge = 0
@@ -127,30 +143,6 @@ TemplateHelpers =
 		return moment(posted).fromNow()
 
 
-	spaceId: ()->
-		return Steedos.getSpaceId();
-
-	spaceName: ->
-		spaceId = Steedos.getSpaceId()
-		if spaceId
-			space = db.spaces.findOne(spaceId)
-			if space
-				return space.name
-
-	isSpaceAdmin: ->
-		if Session.get('spaceId')
-			s = db.spaces.findOne(Session.get('spaceId'))
-			if s
-				return s.admins.includes(Meteor.userId())
-
-	isSpaceOwner: ->
-		if Session.get('spaceId')
-			s = db.spaces.findOne(Session.get('spaceId'))
-			if s
-				return s.owner == Meteor.userId()
-
-	isCloudAdmin: ->
-		return Meteor.user()?.is_cloudadmin
 
 	isPaid: (app)->
 		if !app
