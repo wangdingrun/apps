@@ -9,3 +9,13 @@ Template.workflow_menu.helpers
         if badge
             return badge
         return
+
+    # designer: ->
+    #     apps = Steedos.getSpaceApps()
+    #     rev = undefined
+    #     apps.forEach (i) ->
+    #       if i.name == 'Flow Designer'
+    #         rev = i
+
+    #     return rev;
+
