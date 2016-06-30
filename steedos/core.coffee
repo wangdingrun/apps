@@ -1,6 +1,9 @@
 if Meteor.isClient
     Steedos.setSpaceId = (spaceId)->
-        if spaceId != Session.get("spaceId")
+        if !spaceId
+            Session.set("spaceId", null)    
+            localStorage.removeItem("spaceId:" + Meteor.userId())
+        else if spaceId != Session.get("spaceId")
             Session.set("spaceId", spaceId)     
             localStorage.setItem("spaceId:" + Meteor.userId(), spaceId);
 
@@ -13,6 +16,23 @@ if Meteor.isClient
         spaceId = localStorage.getItem("spaceId:" + Meteor.userId())
         if spaceId
             return spaceId
+        else
+            return undefined;
+
+    Steedos.setAppId = (appId)->
+        if appId != Session.get("appId")
+            Session.set("appId", appId)     
+            localStorage.setItem("appId:" + Meteor.userId(), appId);
+
+    Steedos.getAppId = ()->
+
+        appId = Session.get("appId")
+        if appId
+            return appId
+
+        appId = localStorage.getItem("appId:" + Meteor.userId())
+        if appId
+            return appId
         else
             return undefined;
 
