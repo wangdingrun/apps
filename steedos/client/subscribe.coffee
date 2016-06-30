@@ -3,13 +3,8 @@ Steedos.subsBootstrap.subscribe('userData')
 Steedos.subsBootstrap.subscribe('apps')
 Steedos.subsBootstrap.subscribe('my_spaces')
 
-console.log "spaces loaded: " + db.spaces.find().count()
-console.log "apps loaded: " + db.apps.find().count()
-
 Tracker.autorun (c)->
 	if Steedos.subsBootstrap.ready("my_spaces")
-		console.log "spaces loaded: " + db.spaces.find().count()
-		console.log "apps loaded: " + db.apps.find().count()
 		spaceId = Steedos.getSpaceId()
 		if spaceId
 			space = db.spaces.findOne(spaceId)
