@@ -536,6 +536,11 @@ InstanceManager.getMyApprove = function(){
 
 // 申请单暂存
 InstanceManager.saveIns = function() {
+
+  //如果instanceform不存在，则不执行暂存操作
+  if(!AutoForm.getFormValues("instanceform"))
+    return
+
   var instance = WorkflowManager.getInstance();
   if (instance) {
     var state = instance.state;
