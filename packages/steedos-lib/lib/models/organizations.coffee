@@ -225,6 +225,9 @@ if (Meteor.isServer)
 		# 	existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
 		# 	if existed > 0
 		# 		throw new Meteor.Error(400, "organizations_error.organizations_name_exists"))
+
+		if modifier.$set.name != doc.name && (doc.is_company == true)
+			throw new Meteor.Error(400, "organizations_error_organization_is_company")
 		
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
