@@ -166,7 +166,11 @@ if (Meteor.isServer)
 			if existed>0
 				throw new Meteor.Error(400, "organizations_error_organizations_name_exists")
 
+		# 无法创建根部门
+		if !doc.parent
+			throw new Meteor.Error(400, "organizations_error_organizations_parent_required")
 
+		
 
 	db.organizations.after.insert (userId, doc) ->
 		updateFields = {}

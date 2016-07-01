@@ -74,6 +74,7 @@
 	"organizations_error_organization_has_children": "The organization has children",
 	"organizations_error_can_not_remove_root_organization": "The root organization can not be removed",
 	"organizations_error_organization_is_company": "The root organization can not be modified",
+	"organizations_error_organizations_parent_required": "Organization parent required",
 	
 
     "space_users_error_space_required": "Space is requred",
