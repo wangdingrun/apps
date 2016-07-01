@@ -689,6 +689,19 @@ WorkflowManager.getMyAdminOrMonitorFlows = function () {
   return flow_ids;
 };
 
+WorkflowManager.getMyCanAddFlows = function () {
+  var flows, flow_ids=[], curSpaceUser, organization;
+  curSpaceUser = db.space_users.findOne({'user': Meteor.userId()});
+  organization = db.organizations.findOne(curSpaceUser.organization);
+  flows = db.flows.find();
+  flows.forEach(function(fl){
+    if (WorkflowManager.canAdd(fl, curSpaceUser, organization)) {
+      flow_ids.push(fl._id);
+    }
+  })
+  return flow_ids;
+};
+
 WorkflowManager.getFlowListData = function(){
   //{categories:[],uncategories:[]}
 
