@@ -73,7 +73,6 @@
 	"organizations_error_parent_is_self": "The parent can not be itself",
 	"organizations_error_organization_has_children": "The organization has children",
 	"organizations_error_can_not_remove_root_organization": "The root organization can not be removed",
-	"organizations_error_organization_is_company": "The organization is company",
 	
 
     "space_users_error_space_required": "Space is requred",

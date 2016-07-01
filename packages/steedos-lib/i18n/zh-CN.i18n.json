@@ -72,7 +72,6 @@
 	"organizations_error_parent_is_self" : "上级部门不能是自己",
 	"organizations_error_organization_has_children": "该部门已有下级部门",
 	"organizations_error_can_not_remove_root_organization": "您无法删除一级部门",
-	"organizations_error_organization_is_company": "根部门的名字无法修改",
 
 	"space_users_error_space_required": "工作区必填",
     "space_users_error_space_not_found": "未找到该工作区",
