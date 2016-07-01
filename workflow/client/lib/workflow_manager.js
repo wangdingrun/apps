@@ -636,7 +636,7 @@ WorkflowManager.canAdmin = function (fl, curSpaceUser, organization) {
   var perms = fl.perms;
   var hasAdminRight = false;
   if (perms) {
-    if (perms.users_can_admin && perms.users_can_admin.includes(curUserId)) {
+    if (perms.users_can_admin && perms.users_can_admin.includes(Meteor.userId())) {
       hasAdminRight = true;
     } else if (perms.orgs_can_admin && perms.orgs_can_admin.length > 0) {
       if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_admin.includes(curSpaceUser.organization)) {
@@ -658,7 +658,7 @@ WorkflowManager.canMonitor = function (fl, curSpaceUser, organization) {
   var perms = fl.perms;
   var hasMonitorRight = false;
   if (perms) {
-    if (perms.users_can_monitor && perms.users_can_monitor.includes(curUserId)) {
+    if (perms.users_can_monitor && perms.users_can_monitor.includes(Meteor.userId())) {
       hasMonitorRight = true;
     } else if (perms.orgs_can_monitor && perms.orgs_can_monitor.length > 0) {
       if (curSpaceUser && curSpaceUser.organization && perms.orgs_can_monitor.includes(curSpaceUser.organization)) {
