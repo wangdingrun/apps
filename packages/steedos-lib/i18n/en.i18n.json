@@ -61,6 +61,47 @@
 	"space_users_manager": "Manager",
 	"space_users_organization_name()": "Organization",
 
+	"organizations_error_space_required": "Space is required",
+	"organizations_error_space_not_found": "Space can not be found",
+	"organizations_error_space_admins_only" : "Your are not the space admin",
+	"organizations_error_users_readonly": "Users can not be modified",
+	"organizations_error_organizations_name_exists": "Organization name has existed",
+	"organizations_error_space_readonly": "Space can not be modified",
+	"organizations_error_parents_readonly": "Parents can not be modified",
+	"organizations_error_children_readonly": "Children can not be modified",
+	"organizations_error_fullname_readonly": "Fullname can not be modified",
+	"organizations_error_parent_is_self": "The parent can not be itself",
+	"organizations_error_organization_has_children": "The organization has children",
+	"organizations_error_can_not_remove_root_organization": "The root organization can not be removed",
+	
+
+    "space_users_error_space_required": "Space is requred",
+    "space_users_error_space_not_found": "Space can not be found",
+    "space_users_error_space_admins_only": "You are not the space admin",
+    "space_users_error_user_required": "User is required",
+    "space_users_error_name_required": "Name is required",
+    "space_users_error_space_users_exists": "The space user has existed",
+    "space_users_error_space_not_found": "Space can not be found",
+    "space_users_error_space_admins_only": "You are not the space admin",
+    "space_users_error_email_readonly": "The e-mail can not be modified",
+    "space_users_error_space_readonly": "Space can not be modified",  
+    "space_users_error_user_readonly": "User can not be modified",
+    "space_users_error_space_not_found": "Space can not be found",
+    "space_users_error_space_admins_only": "You are not the space admin",
+    
+    "spaces_error_login_required": "Login is required",
+    "spaces_error_space_owner_only": "You are not the space owner",
+    "spaces_error_space_admins_required": "Space admin is required",
+    "spaces_error_space_readonly": "Space can not be modified",
+
+    "users_error_email_exists": "The e-mail has existed",
+    "users_error_username_exists": "The user name has existed",
+    "users_error_steedos_id_required": "Steedos ID is required",
+    "users_error_steedos_id_readonly": "Steedos ID can not be modified",
+    "users_error_cloud_admin_required": "Cloud admin required", 
+
+  
+
 	"users_error": {
 		"steedos_id_required": "Steedos ID is required"
 	}

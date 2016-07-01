@@ -68,7 +68,7 @@ if Meteor.isServer
 		doc.created = new Date();
 
 		if !doc.space
-			throw new Meteor.Error(400, t("space_users_error.space_required"));
+			throw new Meteor.Error(400, "space_users_error.space_required");
 
 
 	db.flow_positions.before.update (userId, doc, fieldNames, modifier, options) ->

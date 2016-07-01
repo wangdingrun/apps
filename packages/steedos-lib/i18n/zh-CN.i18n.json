@@ -60,6 +60,42 @@
 	"space_users_manager": "上级主管",
 	"space_users_organization_name()": "部门",
 
+	"organizations_error_space_required": "工作区必填",
+	"organizations_error_space_not_found": "未找到该工作区",
+	"organizations_error_space_admins_only": "您不是该工作区的管理员",
+	"organizations_error_users_readonly": "您无法修改部门成员",    
+	"organizations_error_organizations_name_exists": "该部门名称已经存在",
+	"organizations_error_space_readonly": "无法修改工作区",
+	"organizations_error_parents_readonly": "无法修改上级部门",
+	"organizations_error_children_readonly": "无法修改下级部门",
+	"organizations_error_fullname_readonly": "无法修改部门全名",
+	"organizations_error_parent_is_self" : "上级部门不能是自己",
+	"organizations_error_organization_has_children": "该部门已有下级部门",
+	"organizations_error_can_not_remove_root_organization": "您无法删除一级部门",
+
+	"space_users_error_space_required": "工作区必填",
+    "space_users_error_space_not_found": "未找到该工作区",
+    "space_users_error_space_admins_only": "您不是该工作区的管理员",
+    "space_users_error_user_required": "user必填",
+    "space_users_error_name_required": "用户名必填",
+    "space_users_error_space_users_exists":"该用户已经存在",
+    "space_users_error_space_not_found": "未找到该工作区",
+    "space_users_error_email_readonly": "用户邮箱不允许修改",
+    "space_users_error_space_readonly": "无法修改工作区",    
+    "space_users_error_user_readonly": "无法修改用户",
+    
+    "spaces_error_login_required": "login必填",
+    "spaces_error_space_owner_only": "您不是该工作区的所有者",
+    "spaces_error_space_admins_required": "必须为工作区选择一个管理员",
+    "spaces_error_space_readonly": "工作区无法修改",
+
+    "users_error_email_exists": "该邮件地址已存在",
+    "users_error_username_exists": "该用户名已存在",
+    "users_error_steedos_id_required": "登录账户为必填项",
+    "users_error_steedos_id_readonly": "登录账户无法修改",
+    "users_error_cloud_admin_required": "您无权删除该用户",
+
+
 
 	"users_error": {
 		"steedos_id_required": "Steedos ID 不能为空"

@@ -96,13 +96,13 @@ if Meteor.isServer
 		existed = db.users.find 
 			"emails.address": email
 		if existed.count()>0
-			throw new Meteor.Error(400, t("users_error.email_exists"));
+			throw new Meteor.Error(400, "users_error_email_exists");
 
 	db.users.checkUsernameValid = (username) ->
 		existed = db.users.find 
 			"username": username
 		if existed.count()>0
-			throw new Meteor.Error(400, t("users_error.username_exists"));
+			throw new Meteor.Error(400, "users_error_username_exists");
 
 	db.users.before.insert (userId, doc) ->
 
@@ -176,13 +176,13 @@ if Meteor.isServer
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		if modifier.$unset && modifier.$unset.steedos_id == ""
-			throw new Meteor.Error(400, t("users_error.steedos_id_required"));
+			throw new Meteor.Error(400, "users_error_steedos_id_required");
 
 		modifier.$set = modifier.$set || {};
 
 		if doc.steedos_id && modifier.$set.steedos_id
 			if modifier.$set.steedos_id != doc.steedos_id
-				throw new Meteor.Error(400, t("users_error.steedos_id_readonly"));
+				throw new Meteor.Error(400, "users_error_steedos_id_readonly");
 
 		if userId
 			modifier.$set.modified_by = userId;
@@ -196,7 +196,7 @@ if Meteor.isServer
 
 
 	db.users.before.remove (userId, doc) ->
-		throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
+		throw new Meteor.Error(400, "users_error_cloud_admin_required");
 
 
 			

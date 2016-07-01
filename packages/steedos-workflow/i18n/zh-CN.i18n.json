@@ -17,5 +17,9 @@
         "flow_positions_users": "岗位成员",
         "flow_positions_role_name()": "角色",
         "flow_positions_org_name()": "管辖范围",
-        "flow_positions_users_name()": "岗位成员"
+        "flow_positions_users_name()": "岗位成员",
+
+        "space_users_error_space_required": "工作区必填",
+        
+        "flow_roles_error_positions_exists": "已有用户担任该角色"
 }
