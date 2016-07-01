@@ -15,7 +15,7 @@ if Meteor.isClient
 
 	Steedos.openWindow = (url, target)->
 		target = "_blank"
-		options = 'EnableViewPortScale=yes,location=no,,toolbarposition=top,transitionstyle=fliphorizontal,closebuttoncaption=  x  '
+		options = 'EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,closebuttoncaption=  x  '
 		window.open(url, target, options);
 
 
