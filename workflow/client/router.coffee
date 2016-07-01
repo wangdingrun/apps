@@ -52,9 +52,6 @@ workflowSpaceRoutes.route '/:box/',
 
 workflowSpaceRoutes.route '/:box/:instanceId', 
 	action: (params, queryParams)->
-		
-		if Session.get("instance_change") && !ApproveManager.isReadOnly()
-			InstanceManager.saveIns();
 
 		Steedos.setSpaceId(params.spaceId)
 		Session.set("instanceId", null);
@@ -77,3 +74,7 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 			Session.set("instance_change", false);
 			Session.set("instance_loading", false);
 
+	triggersExit:[(context, redirect) ->
+		if Session.get("instance_change") && !ApproveManager.isReadOnly()
+			InstanceManager.saveIns();
+	]
