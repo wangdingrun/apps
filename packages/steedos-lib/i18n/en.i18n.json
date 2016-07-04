@@ -56,7 +56,7 @@
 	"spaces_prefs": "Preference",
 
 	"organizations": "Organizations",
-	"organizations": "ID",
+	"organizations_id": "ID",
 	"organizations_children": "Children",
 	"organizations_fullname": "Fullname",
 	"organizations_users": "Users",

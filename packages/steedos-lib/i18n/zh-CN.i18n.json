@@ -57,7 +57,7 @@
 
 
 	"organizations": "部门",
-	"organizations": "ID",
+	"organizations_id": "ID",
 	"organizations_fullname": "部门全名",
 	"organizations_users": "用户",
 	"organizations_name": "部门名称",
