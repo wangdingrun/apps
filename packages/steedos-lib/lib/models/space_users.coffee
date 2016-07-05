@@ -88,14 +88,14 @@ if (Meteor.isServer)
 		doc.modified = new Date();
 
 		if !doc.space
-			throw new Meteor.Error(400, t("space_users_error.space_required"));
+			throw new Meteor.Error(400, "space_users_error_space_required");
 
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
-			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
+			throw new Meteor.Error(400, "space_users_error_space_not_found");
 		if userId and space.admins.indexOf(userId) < 0
-			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
+			throw new Meteor.Error(400, "space_users_error_space_admins_only");
 			
 		creator = db.users.findOne(userId)
 
@@ -115,10 +115,10 @@ if (Meteor.isServer)
 					spaces_invited: [space._id]
 
 		if !doc.user
-			throw new Meteor.Error(400, t("space_users_error.user_required"));
+			throw new Meteor.Error(400, "space_users_error_user_required");
 
 		if !doc.name
-			throw new Meteor.Error(400, t("space_users_error.name_required"));
+			throw new Meteor.Error(400, "space_users_error_name_required");
 
 		# check space_users exists
 		oldUser=db.users.findOne
@@ -126,10 +126,10 @@ if (Meteor.isServer)
 		existed=db.space_users.find
 			"user":oldUser._id,"space":doc.space
 		if existed.count()>0
-			throw new Meteor.Error(400, t("space_users_error.space_users_exists"));
+			throw new Meteor.Error(400, "space_users_error_space_users_exists");
 
 	db.space_users.after.insert (userId, doc) ->
-		console.log("db.space_users.after.insert");
+		console.log("db.space_users_after.insert");
 		if doc.organization
 			organizationObj = db.organizations.findOne(doc.organization)
 			organizationObj.updateUsers();
@@ -147,23 +147,23 @@ if (Meteor.isServer)
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
-			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
+			throw new Meteor.Error(400, "space_users_error_space_not_found");
 		# only space admin can update space_users
 		if space.admins.indexOf(userId) < 0
-			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
+			throw new Meteor.Error(400, "space_users_error_space_admins_only");
 
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
 		if modifier.$set.email
 			if modifier.$set.email != doc.email
-				throw new Meteor.Error(400, t("space_users_error.email_readonly"));
+				throw new Meteor.Error(400, "space_users_error_email_readonly");
 		if modifier.$set.space
 			if modifier.$set.space != doc.space
-				throw new Meteor.Error(400, t("space_users_error.space_readonly"));
+				throw new Meteor.Error(400, "space_users_error_space_readonly");
 		if modifier.$set.user
 			if modifier.$set.user != doc.user
-				throw new Meteor.Error(400, t("space_users_error.user_readonly"));
+				throw new Meteor.Error(400, "space_users_error_user_readonly");
 	
 	db.space_users.after.update (userId, doc, fieldNames, modifier, options) ->
 		console.log("db.space_users.after.update");
@@ -196,10 +196,10 @@ if (Meteor.isServer)
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
-			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
+			throw new Meteor.Error(400, "space_users_error_space_not_found");
 		# only space admin can remove space_users
 		if space.admins.indexOf(userId) < 0
-			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
+			throw new Meteor.Error(400, "space_users_error_space_admins_only");
 
 
 	db.space_users.after.remove (userId, doc) ->

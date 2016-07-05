@@ -45,7 +45,7 @@
 		</div>
 	{{/if}}
 	{{else}}
-		<div class="box box-default"><div class="box-body">Loading...</div></div>
+		<div class="box box-default"><div class="box-body">{{_ "flow_db_admin_loading"}}</div></div>
 	{{/if}}
 </template>
 
@@ -63,7 +63,9 @@
 		{{/with}}
 	{{else}}
 		{{#if hasDocuments}}
-			{{> tabular table=admin_table class="table dataTable" selector=admin_table.selector}}
+			{{#if admin_table}}
+				{{> tabular table=admin_table class="table dataTable" selector=admin_table.selector}}
+			{{/if}}
 		{{else}}
 			<div class="alert alert-info">
 				<p>There are no visible items in this collection.</p>
@@ -72,7 +74,7 @@
 		{{/if}}
 	{{/if}}
 	{{else}}
-		<div class="box box-default"><div class="box-body">Loading...</div></div>
+		<div class="box box-default"><div class="box-body">{{_ "flow_db_admin_loading"}}</div></div>
 	{{/if}}
 </template>
 
@@ -168,11 +170,9 @@
 </template>
 
 <template name="adminEditBtn">
-	<a href="{{path}}" class="hidden-xs btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
-	<a href="{{path}}" class="visible-xs btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+	<a href="{{path}}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
 </template>
 
 <template name="adminDeleteBtn">
-	 <a href={{path}} class="hidden-xs btn btn-xs btn-primary"><i class="fa fa-times"></i></a>
-	 <a href="{{path}}" class="visible-xs btn btn-sm btn-primary"><i class="fa fa-times"></i>Delete</a>
+	 <a href={{path}} class="btn btn-xs btn-primary"><i class="fa fa-times"></i></a>
 </template>

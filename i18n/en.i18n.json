@@ -1,0 +1,15 @@
+{
+	"select_tag_select_user": "Select User",
+	"select_tag_select_organization": "Select Organization",
+	"select_tag_lack_of_parameters": "Lack of parameters",
+
+	"select_tag_cancel": "Cancel",
+	"select_tag_confirm": "OK",
+
+	"select_tag_username": "Name",
+
+	"select_tag_first": "First",
+	"select_tag_previous": "Previous",
+	"select_tag_next": "Next",
+	"select_tag_last": "Last"
+}

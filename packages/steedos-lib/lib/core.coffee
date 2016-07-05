@@ -14,9 +14,8 @@ if Meteor.isClient
 		return $(window).width() < 767
 
 	Steedos.openWindow = (url, target)->
-		if !target 
-			target = "_blank"
-		options = 'EnableViewPortScale=yes,location=no,,toolbarposition=top,transitionstyle=fliphorizontal,closebuttoncaption=  x  '
+		target = "_blank"
+		options = 'EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,closebuttoncaption=  x  '
 		window.open(url, target, options);
 
 

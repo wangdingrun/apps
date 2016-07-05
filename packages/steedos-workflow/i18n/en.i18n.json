@@ -16,5 +16,9 @@
         "flow_positions_users": "Users",
         "flow_positions_role_name()": "Role",
         "flow_positions_org_name()": "Organization",
-        "flow_positions_users_name()": "Users"
+        "flow_positions_users_name()": "Users",
+
+        "space_users_error_space_required": "Space required",
+        
+        "flow_roles_error_positions_exists": "Users exised in the role"
 }

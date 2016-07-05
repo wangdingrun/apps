@@ -1,18 +1,24 @@
 <template name="masterLayout">
-  <div class="steedos workflow">
-    {{# AdminLTE skin="green" sidebarMini="true" }}
-    	{{> sidebar}}
+
+	{{#if subsReady}}
+		<div class="steedos workflow">
+			{{# AdminLTE skin="green" sidebarMini="true" }}
+				{{> sidebar}}
 
 
-    	<div class="content-wrapper" style="min-height: {{minHeight}}">
-            <div class="connection-status">
-    		{{> status}}
-            </div>
-        	{{> Template.dynamic template=main}}
-        </div>
-    {{/ AdminLTE}}
-  </div>
-  
-  {{> steedosLoading}}
+				<div class="content-wrapper" style="min-height: {{minHeight}}">
+					<div class="connection-status">
+						{{> status}}
+					</div>
+					{{> Template.dynamic template=main}}
+					</div>
+			{{/ AdminLTE}}
+			{{> steedosLoading}}
+		</div>
+	{{else}}
+		<div class="loading">
+			{{> steedosLoading}}
+		</div>
+	{{/if}}
 </template>
 

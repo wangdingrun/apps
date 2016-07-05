@@ -70,11 +70,11 @@ Array.prototype.findPropertyByPK = function(h, l){
 $(function(){
 
 	if(!$("#selectTagModal").html()){
-		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">选择人员</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><ui id="valueLabel" class="valueLabel "></ui><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button><button type="button" class="btn btn-primary selectTagOK" title="确定">确定</button>  </div></div> </div></div></div>');
+		$("body").append('<div class="modal fade selectTagModal" id="selectTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  <div class="modal-dialog" role="document"><div class="modal-content">  <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="selectTagModalTitle">'+TAPi18n.__("select_tag_select_user")+'</h4>  </div>  <div id="selectTagModal-content" class="modal-body"></div><div class="modal-footer"><div class="row"><div class="col-md-8"><ui id="valueLabel_ui" class="valueLabel"><div id="valueLabel"></div></ui></div><div class="col-md-4"><div id="selectTagButton" class="selectTagButton"><button type="button" class="btn btn-default selectTagCancel" data-dismiss="modal">'+TAPi18n.__("select_tag_cancel")+'</button><button type="button" class="btn btn-primary selectTagOK" title="'+TAPi18n.__("select_tag_confirm")+'">'+TAPi18n.__("select_tag_confirm")+'</button>  </div></div</div></div> </div></div></div>');
 	}
 
 	if(!$("#selectTagTemplate").html()){
-		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">用户姓名</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
+		$("body").append('<script id="selectTagTemplate" type="text/x-handlebars-template">{{#if showOrg}}<div class="box-header with-border">    <ol class="breadcrumb" style="float:left">    {{breadcrumb org}}    </ol></div>{{/if}}<div class="selectTagModal-body" id="selectTagModal-body">{{#if showOrg}}<div class="box box-solid"><div class="box-body no-padding"><ul class="nav nav-pills nav-stacked">{{#orgList org.children tagType showUser}}{{name}}{{/orgList}}</ul></div></div>{{/if}}{{#if showUser}}{{#if org.users}}<div class="box box-solid"><div class="box-body no-padding"><table id="selectTag-users" class="table table-bordered table-striped selectTag-users" width="100%" style="text-align:left"><thead style="display:none"><tr>  <th data-priority="1">'+TAPi18n.__("select_tag_username")+'</th></tr></thead><tbody>{{#userList org.users tagType}}{{name}}{{/userList}}</tbody></table></div></div>{{/if}}{{/if}}</div></script>');
 	}
 });
 
@@ -98,13 +98,17 @@ $(function(){
 
         $(".selectTagOK").html($(".selectTagOK").prop("title") + " ( "+selectTag.values.length+" ) ")
 
-        $("#valueLabel").hide();
+        $("#valueLabel_ui").hide();
 
         if($options.showUser){
-          $("#selectTagModalTitle").html("选择人员");
+          $("#selectTagModalTitle").html(TAPi18n.__("select_tag_select_user"));
         }else{
-          $("#selectTagModalTitle").html("选择部门");
+          $("#selectTagModalTitle").html(TAPi18n.__("select_tag_select_organization"));
         }
+
+        $(".selectTagOK").html(TAPi18n.__("select_tag_confirm"));
+        $(".selectTagOK").prop("title",TAPi18n.__("select_tag_confirm"));
+        $(".selectTagCancel").html(TAPi18n.__("select_tag_cancel"));
       }
 
       function getValuesObject(){
@@ -149,6 +153,7 @@ $(function(){
           var html = '';
           selectTag.valuesObject().forEach(function(v){
             html = html + '\r\n<li data-value='+v.id+'>' + v.name + '</li>'
+            //html = html + '\r\n<span><li data-value='+v.id+'>' + v.name + '</li><li class="remove"><i class="fa fa-times" aria-hidden="true"></i></li></span>'
           });
           $("#valueLabel").html(html);
 
@@ -166,9 +171,9 @@ $(function(){
             }
           })
 
-          $("#valueLabel").show();
+          $("#valueLabel_ui").show();
         }else{
-          $("#valueLabel").hide();
+          $("#valueLabel_ui").hide();
         }
       }
 
@@ -219,7 +224,7 @@ $(function(){
 
 			function checkOptions(options){
 				if(!options || !options.data)
-					throw new Error("缺少参数，eg:show({orgs:[{id:'',name:'',parent:''}],users:[{id:'',name:'',orgs:[]}]})");
+					throw new Error(TAPi8n.__("select_tag_lack_of_parameters") + ",eg:show({orgs:[{id:'',name:'',parent:''}],users:[{id:'',name:'',orgs:[]}]})");
 				
 				return true;
 			};
@@ -280,10 +285,10 @@ $(function(){
               autoWidth:true,
               language:{
                   oPaginate:{
-                      sFirst:'首页',
-                      sPrevious:'上页',
-                      sNext:'下页',
-                      sLast:'末页'
+                      sFirst: TAPi18n.__('select_tag_first'),
+                      sPrevious: TAPi18n.__('select_tag_previous'),
+                      sNext:TAPi18n.__('select_tag_next'),
+                      sLast:TAPi18n.__('select_tag_last')
                   }
               },
               pagingType: "numbers"

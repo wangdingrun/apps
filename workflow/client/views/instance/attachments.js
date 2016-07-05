@@ -42,7 +42,10 @@ Template.instance_attachment.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        url = Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename;
+        if (!Steedos.isMobile())
+            url = url + "?download=true"; 
+        return url
     }
  
 })
@@ -144,7 +147,10 @@ Template.ins_attach_version_modal.helpers({
     },
 
     getUrl: function (attachVersion) {
-        return Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename + "?download=true"; 
+        url = Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename;
+        if (!Steedos.isMobile())
+            url = url + "?download=true"; 
+        return url; 
     }
 })
 

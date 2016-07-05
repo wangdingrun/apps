@@ -91,6 +91,8 @@ JsonRoutes.add("post", "/api/dingtalk/callback", function (req, res, next) {
             Dingtalk.syncCompany(at.access_token, auth_corp_info, permanent_code);
           }
 
+          // 激活授权套件
+          Dingtalk.activateSuitePost(o.suite_access_token, o.suite_key, auth_corp_info.corpid, permanent_code);
         }
 
       }

@@ -9,8 +9,8 @@ Template.flow_list_modal.events({
     categories = WorkflowManager.getSpaceCategories();
     flow_id = Session.get("flowId");
     var curUserId = Meteor.userId();
-    var curSpaceUser = db.space_users.findOne({'user': curUserId});
-    var organization = db.organizations.findOne(curSpaceUser.organization);
+    var canAdd_flow_ids = WorkflowManager.getMyCanAddFlows();
+    var flow_ids = WorkflowManager.getMyAdminOrMonitorFlows();
     var space = db.spaces.findOne({'_id':Session.get('spaceId')});
     var box = Session.get('box');
 
@@ -31,17 +31,18 @@ Template.flow_list_modal.events({
           form: f._id,
           state: "enabled"
         }).forEach(function(fl) {
+          var show = false;
           if (box == 'monitor') {
-            if (!space.admins.includes(curSpaceUser.user)) {
-              if (!WorkflowManager.canAdmin(fl, curSpaceUser, organization) && !WorkflowManager.canMonitor(fl, curSpaceUser, organization)) {
-                return;
-              }
-            } 
-          } else {
-            if (!WorkflowManager.canAdd(fl, curSpaceUser, organization)) {
-              return;
+            if (space.admins.includes(curUserId) || flow_ids.includes(fl._id)) {
+              show = true;
             }
-          } 
+          }
+
+          if (canAdd_flow_ids.includes(fl._id)) {
+            show = true;
+          }
+
+          if (!show) return;
 
           if (flow_id == fl._id) {
             o.nodes.push({
@@ -56,7 +57,7 @@ Template.flow_list_modal.events({
               flow_id: fl._id
             });
           }
-            
+
         });
       });
       data.push(o);
@@ -72,17 +73,18 @@ Template.flow_list_modal.events({
         state: "enabled"
       }).forEach(function(fl) {
 
+        var show = false;
         if (box == 'monitor') {
-          if (!space.admins.includes(curSpaceUser.user)) {
-            if (!WorkflowManager.canAdmin(fl, curSpaceUser, organization) && !WorkflowManager.canMonitor(fl, curSpaceUser, organization)) {
-              return;
-            }
-          } 
-        } else {
-          if (!WorkflowManager.canAdd(fl, curSpaceUser, organization)) {
-            return;
+          if (space.admins.includes(curUserId) || flow_ids.includes(fl._id)) {
+            show = true;
           }
         }
+
+        if (canAdd_flow_ids.includes(fl._id)) {
+          show = true;
+        }
+
+        if (!show) return;
 
         if (flow_id == fl._id) {
           data.push({

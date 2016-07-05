@@ -26,7 +26,7 @@ AutoForm.addInputType("select", {
     if (firstOption !== false) {
       context.items.push({
         name: context.name,
-        label: (typeof firstOption === "string" ? firstOption : "(Select One)"),
+        label: (typeof firstOption === "string" ? firstOption : TAPi18n.__("instance_select")),
         value: "",
         // _id must be included because it is a special property that
         // #each uses to track unique list items when adding and removing them

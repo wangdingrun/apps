@@ -28,7 +28,7 @@ if Meteor.isServer
 		doc.created = new Date();
 
 		if !doc.space
-			throw new Meteor.Error(400, t("space_users_error.space_required"));
+			throw new Meteor.Error(400, "space_users_error_space_required");
 
 
 	db.flow_roles.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -42,4 +42,4 @@ if Meteor.isServer
 	db.flow_roles.before.remove (userId, doc) ->
 
 		if db.flow_positions.find({role: doc._id}).count()>0
-			throw new Meteor.Error(400, t("flow_roles_error.positions_exists"));
+			throw new Meteor.Error(400, "flow_roles_error_positions_exists");

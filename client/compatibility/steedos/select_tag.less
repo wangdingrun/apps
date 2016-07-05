@@ -25,108 +25,114 @@
         display: inline-block;
     }
 
-}
+    .box-header{
+        border-bottom: 0;
+        padding: 0;
+        padding-left: 10px;
+    }
 
-.selectTagModal .box-header{
-    border-bottom: 0;
-    padding: 0;
-    padding-left: 10px;
-}
+    label {
+        cursor: pointer;
+    }
 
-.selectTagModal label {
-    cursor: pointer;
-}
+    #selectTagModal-content {
+        overflow-y: auto;
+        max-height: 500px; 
+    }
 
-#selectTagModal-content {
-    overflow-y: auto;
-    max-height: 500px; 
-}
+    .selectTag-users > tbody > tr > td{
+        padding: 4px 6px 4px 6px;
+    }
 
-.selectTag-users > tbody > tr > td{
-    padding: 4px 6px 4px 6px;
-}
+    .modal-footer{
+        text-align: left;
+    }
 
-.selectTagModal .modal-footer{
-    text-align: left;
-}
+    .selectTagButton{
+        text-align: right;
+        padding-top: 5px;
+    }
 
-.selectTagModal .selectTagButton{
-    text-align: right;
-    padding-top: 5px;
-}
+    .valueLabel {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 4px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        width: 100%;
+        min-height: 32px;
+        line-height: 22px;
+        cursor: text;
+        list-style:none;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
-.selectTagModal .valueLabel {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 4px 6px;
-    color: #555;
-    vertical-align: middle;
-    border-radius: 4px;
-    width: 100%;
-    min-height: 32px;
-    line-height: 22px;
-    cursor: text;
-    list-style:none;
-}
+    .valueLabel:after{
+        clear: both;
+        content: '';
+        display:block;
+    }
 
-.selectTagModal .valueLabel:after{
-    clear: both;
-    content: '';
-    display:block;
-}
+    .valueLabel li {
+        cursor: move;
+        margin: 4px 5px 4px 0;
+        padding: 2px 4px;
+        background-color: #5F9EDF;
+        text-align:center;
+        color:#fff;
+        font-size:13px;
+        display: inline;
+    }
 
+    .valueLabel .remove{
+        background-color: #5F9EDF;
+        margin: 0 5px 4px 0;
+        cursor: pointer;
+    }
 
-.selectTagModal .valueLabel > li {
-    cursor: move;
-    float: left;
-    margin: 4px 5px 4px 0;
-    padding: 2px 4px;
-    background-color: #5F9EDF;
-    text-align:center;
-    color:#fff;
-    font-size:13px;
-}
+    .selectTag-users .checkbox, .selectTag-users .radio{
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
 
-.selectTag-users .checkbox, .selectTag-users .radio{
-    display: inline-block;
-    margin-top: 0;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
+    .selectTag-users .checkbox > label, .selectTag-users .radio > label{
+        padding-left: 0;
+    }
 
-.selectTag-users .checkbox > label, .selectTag-users .radio > label{
-    padding-left: 0;
-}
+    .selectTag-users .fa{
+        margin-right: 5px;
+    }
 
-.selectTag-users .fa{
-    margin-right: 5px;
-}
-
-.selectTag-users a{
-    border-radius: 0;
-    border-top: 0;
-    border-left: 3px solid transparent;
-    color: #444;
-    font-size: 13px;
-}
+    .selectTag-users a{
+        border-radius: 0;
+        border-top: 0;
+        border-left: 3px solid transparent;
+        color: #444;
+        font-size: 13px;
+    }
 
 
-.selectTag-users img{
-    max-width: 27px;
-    margin-right: 5px;
-}
+    .selectTag-users img{
+        max-width: 27px;
+        margin-right: 5px;
+    }
 
-.user label, .org label{
-    font-weight: normal;
-}
+    .user label, .org label{
+        font-weight: normal;
+    }
 
-.selectUser.form-control[readonly], .selectOrg.form-control[readonly]{
-    background-color: transparent;
-    opacity: 1;
-}
+    .selectUser.form-control[readonly], .selectOrg.form-control[readonly]{
+        background-color: transparent;
+        opacity: 1;
+    }
 
-.selectUser.form-control[disabled], .selectOrg.form-control[disabled]{
-    background-color: #eee;
-    opacity: 1;
+    .selectUser.form-control[disabled], .selectOrg.form-control[disabled]{
+        background-color: #eee;
+        opacity: 1;
+    }
 }

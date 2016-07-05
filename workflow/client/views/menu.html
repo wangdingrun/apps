@@ -56,11 +56,9 @@
                     </div>
                 </a>
             </div>
-
-            {{#if isMobile}}
-            {{else}}
-            <div class="weui_cells weui_cells_access">
-                <a class="weui_cell" href="{{urlPrefix}}/app/designer">
+            {{#if isSpaceAdmin}}
+            <div class="weui_cells weui_cells_access hidden-xs">
+                <a class="weui_cell" href="{{urlPrefix}}/designer">
                     <div class="weui_cell_hd"><i class="ion ion-shuffle"></i></div>
                     <div class="weui_cell_bd weui_cell_primary">
                         &nbsp;{{_ "Workflow Designer"}}

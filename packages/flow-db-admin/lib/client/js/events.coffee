@@ -28,7 +28,7 @@ Template.adminDeleteWidget.events
 		Meteor.call 'adminRemoveDoc', collection, _id, (error,r)->
 			if error
 				if error.reason
-					toastr.error error.reason
+					toastr.error TAPi18n.__ error.reason
 				else 
 					toastr.error error
 

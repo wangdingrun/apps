@@ -17,6 +17,11 @@ Package.onUse(function(api) {
     'markdown.js'
   ], 'client');
 
+  // tapi18n
+  api.use(['tap:i18n'],both);
+  tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
+  api.add_files(tapi18nFiles,both);
+
 });
 
 Package.onTest(function(api) {

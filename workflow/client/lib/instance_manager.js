@@ -33,7 +33,10 @@ InstanceManager.getNextStepOptions = function(){
 
   var instance = WorkflowManager.getInstance();
   var currentApprove = InstanceManager.getCurrentApprove();
-  var current_next_steps = currentApprove.next_steps;
+  var current_next_steps;
+  if (currentApprove) {
+    current_next_steps = currentApprove.next_steps;
+  }
   var judge = Session.get("judge");
   var currentStep = InstanceManager.getCurrentStep();
   var form_version = WorkflowManager.getInstanceFormVersion();
@@ -237,7 +240,7 @@ InstanceManager.checkNextStep = function(){
   if(value && value != '-1')
     removeMessage(nextSteps_parent_group);
   else
-    showMessage(nextSteps_parent_group, '请选择下一步步骤');
+    showMessage(nextSteps_parent_group, TAPi18n.__("instance_select_next_step"));
 }
 
 //下一步处理人校验
@@ -256,7 +259,7 @@ InstanceManager.checkNextStepUser = function(){
   if(value.length > 0 || (nextStep && nextStep.step_type == 'end'))
     removeMessage(nextStepUsers_parent_group);
   else
-    showMessage(nextStepUsers_parent_group, '请选择下一步处理人');
+    showMessage(nextStepUsers_parent_group, TAPi18n.__("instance_next_step_user"));
 }
 
 //如果是驳回必须填写意见
@@ -267,7 +270,7 @@ InstanceManager.checkSuggestion = function(){
     if($("#suggestion").val())
       removeMessage(suggestion_parent_group);
     else
-      showMessage(suggestion_parent_group, '驳回时必须填写意见');
+      showMessage(suggestion_parent_group, TAPi18n.__("instance_reasons_reject"));
   }else{
     removeMessage(suggestion_parent_group);
   }
@@ -298,7 +301,7 @@ InstanceManager.checkFormFieldValue = function(field){
           if(fo){
             titleName = fo.name ? fo.name:fo.code;
           }
-          message = showMessage(parent_group, "字段‘" + titleName + '’为必填');
+          message = showMessage(parent_group, TAPi18n.__("instance_field")+ "‘" + titleName + '’' +TAPi18n.__("instance_is_required"));
       }
     }
 
@@ -306,13 +309,13 @@ InstanceManager.checkFormFieldValue = function(field){
       var table_value = AutoForm.getFieldValue(field.dataset.schemaKey,"instanceform");
       parent_group = jquery_f.parent().parent().parent().parent();
       if(!table_value || table_value.length < 1){
-        message = showMessage(parent_group, "字段‘" + field.dataset.schemaKey + '’为必填');
+        message = showMessage(parent_group, TAPi18n.__("instance_field")+ "‘" + field.dataset.schemaKey + '’' +TAPi18n.__("instance_is_required"));
       }
     }
 
     if(field.type == 'email' && field.value !=''){
         if(!reg_email.test(field.value))
-          message = '邮件地址格式错误';
+          message = TAPi18n.__("instance_email_format_error");
     }
 
     if(message==''){
@@ -533,6 +536,11 @@ InstanceManager.getMyApprove = function(){
 
 // 申请单暂存
 InstanceManager.saveIns = function() {
+
+  //如果instanceform不存在，则不执行暂存操作
+  if(!AutoForm.getFormValues("instanceform"))
+    return
+
   var instance = WorkflowManager.getInstance();
   if (instance) {
     var state = instance.state;
@@ -568,6 +576,9 @@ InstanceManager.saveIns = function() {
     } else if (state == "pending") {
       var myApprove = InstanceManager.getMyApprove();
       myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+      if(instance.attachments && myApprove) {
+          myApprove.attachments = instance.attachments;
+      }
       Meteor.call("inbox_save_instance", myApprove, function (error, result) {
         WorkflowManager.instanceModified.set(false)
         if (result == true)
@@ -844,7 +855,7 @@ InstanceManager.removeAttach = function () {
 // 上传附件
 InstanceManager.uploadAttach = function (files, isAddVersion) {
   $(document.body).addClass("loading");
-  $('.loading-text').text("正在上传...");
+  $('.loading-text').text(TAPi18n.__("attachments_uploading"));
 
   // 专业版文件大小不能超过100M
   var maximumFileSize = 100 * 1024 * 1024;
@@ -891,7 +902,7 @@ InstanceManager.uploadAttach = function (files, isAddVersion) {
       fileName = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + fileName.split('.').pop();
     }
     Session.set("filename", fileName);
-    $('.loading-text').text("正在上传..." + fileName);
+    $('.loading-text').text(TAPi18n.__("attachments_uploading") + fileName);
     fd = new FormData;
     fd.append('Content-Type', cfs.getContentType(fileName));
     fd.append("file", file);

@@ -124,7 +124,7 @@ Template.instance_suggestion.helpers
 
         currentApprove = InstanceManager.getCurrentApprove();
         if !Session.get("judge")
-             Session.set("judge", currentApprove.judge);
+             Session.set("judge", currentApprove?.judge);
 
         if !Session.get("judge")
             currentStep = InstanceManager.getCurrentStep();
@@ -132,7 +132,7 @@ Template.instance_suggestion.helpers
             if (currentStep.step_type == "sign" || currentStep.step_type == "counterSign")
                 Session.set("judge", "approved");
                 
-        currentApprove.judge = Session.get("judge");
+        currentApprove?.judge = Session.get("judge");
 
         return Session.get("judge")
 

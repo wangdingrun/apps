@@ -17,30 +17,37 @@ Template.instance_list.helpers
         query = {space: Session.get("spaceId"), flow: Session.get("flowId")}
         box = Session.get("box") 
         if box == "inbox"
-            query.inbox_users = Meteor.userId();
+            query.inbox_users = Meteor.userId()
         else if box == "outbox"
-            query.outbox_users = Meteor.userId();
+            query.outbox_users = Meteor.userId()
         else if box == "draft"
-            query.submitter = Meteor.userId();
+            query.submitter = Meteor.userId()
             query.state = "draft"
         else if box == "pending"
-            query.submitter = Meteor.userId();
+            query.submitter = Meteor.userId()
             query.state = "pending"
         else if box == "completed"
-            query.submitter = Meteor.userId();
+            query.submitter = Meteor.userId()
             query.state = "completed"
         else if box == "monitor"
-            query.state = {$in: ["pending","completed"]};
-            uid = Meteor.userId();
-            space = db.spaces.findOne(Session.get("spaceId"));
+            query.state = {$in: ["pending","completed"]}
+            uid = Meteor.userId()
+            space = db.spaces.findOne(Session.get("spaceId"))
             if !space
-                return;
+                query.state = "none"
+
             if !space.admins.contains(uid)
-                query.$or = [{submitter:uid}, {applicant:uid}, {inbox_users:uid}, {outbox_users:uid}]
+                flow_ids = WorkflowManager.getMyAdminOrMonitorFlows()
+                if query.flow
+                    if !flow_ids.includes(query.flow)
+                        query.$or = [{submitter:uid}, {applicant:uid}, {inbox_users:uid}, {outbox_users:uid}]
+                else
+                    query.$or = [{submitter:uid}, {applicant:uid}, {inbox_users:uid}, {outbox_users:uid}, {flow: {$in: flow_ids}}]
+
         else
             query.state = "none"
 
-        query.is_deleted = false;
+        query.is_deleted = false
         
         return query
 

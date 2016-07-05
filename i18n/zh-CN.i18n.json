@@ -1,0 +1,15 @@
+{
+	"select_tag_select_user": "选择人员",
+	"select_tag_select_organization": "选择部门",
+	"select_tag_lack_of_parameters": "缺少参数",
+
+	"select_tag_cancel": "取消",
+	"select_tag_confirm": "确定",
+
+	"select_tag_username": "用户姓名",
+
+	"select_tag_first": "首页",
+	"select_tag_previous": "上页",
+	"select_tag_next": "下页",
+	"select_tag_last": "末页"
+}

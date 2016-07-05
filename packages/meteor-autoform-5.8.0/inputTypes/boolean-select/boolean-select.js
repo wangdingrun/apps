@@ -27,7 +27,7 @@ AutoForm.addInputType("boolean-select", {
         // See https://github.com/meteor/meteor/issues/2174
         _id: "",
         selected: (context.value !== false && context.value !== true),
-        label: context.atts.nullLabel || context.atts.firstOption || "(Select One)",
+        label: context.atts.nullLabel || context.atts.firstOption || TAPi18n.__("instance_select"),
         atts: atts
       },
       {

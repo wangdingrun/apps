@@ -29,6 +29,8 @@
     "instance_relocate": "重定位",
     "instance_print": "打印",
 
+    "workflow_table_confirm":"确认",
+
     "Attachment deleted successfully": "附件删除成功!",
     "Attachment was added successfully": "附件添加成功!",
 
@@ -44,8 +46,8 @@
     "Attachments": "附件",
     "Versions": "版本",
     "Current Version": "（最新版本）",
-    "workflow_attachment_free_size_limit": "免费版不能上传超过1M的附件，请升级至专业版可自由上传附件",
-    "workflow_attachment_paid_size_limit": "附件不得超过100M",
+    "workflow_attachment_free_size_limit": "抱歉，免费版工作区只能上传1M以内的附件。",
+    "workflow_attachment_paid_size_limit": "您上传的附件大小不得超过100M",
 
     "Instance State approved": " 已核准",
     "Instance State rejected": " 已驳回",
@@ -61,6 +63,23 @@
     "Instance Relocate NewInboxUsers": "请选择重定位审核人。",
     "Instance Relocate Ok": "重定位提交成功。",
     "Instance Relocate CurStep": "当前步骤: ",
+
+    "instance_select_next_step": "请选择下一步步骤",
+    "instance_next_step_user": "请选择下一步处理人",
+    "instance_reasons_reject": "驳回时必须填写意见",
+    "instance_field": "字段",
+    "instance_is_required": "为必填",
+    "instance_email_format_error": "邮件地址格式错误",
+
+    "instance_attachments_uploading": "正在上传...",
+
+    "workflow_export_thismonth": "当月",
+    "workflow_export_lastmonth": "上月",
+    "workflow_export_thisyear": "当年",
+    "workflow_export_all": "所有",
+
+    "workflow_export_search":"按流程查看申请单",
+    "workflow_export_data":"导出申请单",
 
     // inbox
     "Inbox Suggestion NextSteps Label":"下一步骤: ",

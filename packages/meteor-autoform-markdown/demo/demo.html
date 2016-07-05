@@ -12,6 +12,6 @@
   {{#if quest}}
     {{> quickForm collection="Quests" doc=quest id="updateQuestForm" type="update"}}
   {{else}}
-    <span class="loading">Loading...</span>
+    <span class="loading">{{_ "meteor_autoform_markdown_loading"}}</span>
   {{/if}}
 </template>

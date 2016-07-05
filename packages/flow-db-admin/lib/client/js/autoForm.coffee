@@ -12,7 +12,13 @@ AutoForm.addHooks [
 	endSubmit: ->
 		$('.btn-primary').removeClass('disabled')
 	onError: (formType, error)->
-		AdminDashboard.alertFailure error.message
+		# 判断错误类型
+		if error.error
+			AdminDashboard.alertFailure TAPi18n.__ error.reason
+		else
+			AdminDashboard.alertFailure TAPi18n.__ error.message
+
+		
 
 AutoForm.hooks
 	admin_insert:
@@ -28,7 +34,7 @@ AutoForm.hooks
 						hook.done null, collection
 			return false
 		onSuccess: (formType, collection)->
-			AdminDashboard.alertSuccess 'Successfully created'
+			AdminDashboard.alertSuccess TAPi18n.__("flow_db_admin_successfully_created")
 			FlowRouter.go "/admin/view/#{collection}"
 
 	admin_update:
@@ -44,7 +50,7 @@ AutoForm.hooks
 						hook.done null, collection
 			return false
 		onSuccess: (formType, collection)->
-			AdminDashboard.alertSuccess 'Successfully updated'
+			AdminDashboard.alertSuccess TAPi18n.__("flow_db_admin_successfully_updated")
 
 	# adminNewUser:
 	# 	onSuccess: (formType, result)->

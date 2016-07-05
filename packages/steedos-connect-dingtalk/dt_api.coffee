@@ -102,6 +102,39 @@ Dingtalk.corpTokenGet = (suite_access_token, auth_corpid, permanent_code) ->
     throw _.extend(new Error("Failed to complete OAuth handshake with Dingtalk. " + err), {response: err.response});
 
 
+# 激活授权套件
+Dingtalk.activateSuitePost = (suite_access_token, suite_key, auth_corpid, permanent_code) ->
+  console.log '===Dingtalk.activateSuitePost==='
+  console.log suite_access_token
+  console.log suite_key
+  console.log auth_corpid
+  console.log permanent_code
+  try
+    response = HTTP.post(
+      "https://oapi.dingtalk.com/service/activate_suite?suite_access_token="+suite_access_token, 
+      {
+        data: 
+          suite_key: suite_key,
+          auth_corpid: auth_corpid,
+          permanent_code: permanent_code
+        headers: 
+          "Content-Type": "application/json"
+      }
+    );
+
+    if (response.error_code) 
+      throw response.msg
+
+    if response.data.errcode > 0 
+      throw response.data.errmsg
+    # {
+    #     "errcode":0,
+    #     "errmsg":"ok"
+    # }
+    return response.data
+
+  catch err
+    throw _.extend(new Error("Failed to complete OAuth handshake with Dingtalk. " + err), {response: err.response});
 
 
 # 获取部门详情

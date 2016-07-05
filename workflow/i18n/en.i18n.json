@@ -30,6 +30,8 @@
     "instance_relocate": "Relocate",
     "instance_print": "Print",
 
+    "workflow_table_confirm":"OK",
+
     "Attachment deleted successfully": "Attachment deleted successfully!",
     "Attachment was added successfully": "Attachment was added successfully!",
 
@@ -44,8 +46,8 @@
     "Attachments": "Attachments",
     "Versions": "Versions",
     "Current Version": "（Current Version）",
-    "workflow_attachment_free_size_limit": "Attachment larger than 1M is not accepted for free version. Please upgrade to increase the file size attachment limits.",
-    "workflow_attachment_paid_size_limit": "Failed to upload， because attachment size is over 100 MB.",
+    "workflow_attachment_free_size_limit": "Sorry, Attachment larger than 1M is not accepted for free version.",
+    "workflow_attachment_paid_size_limit": "Failed to upload, because attachment size is over 100 MB.",
     
     "Instance State approved": " Approved",
     "Instance State rejected": " Rejected",
@@ -61,6 +63,23 @@
     "Instance Relocate NewInboxUsers": "Please select a user.",
     "Instance Relocate Ok": "Relocated successfully.",
     "Instance Relocate CurStep": "Current Step: ",
+
+    "instance_select_next_step": "Please select next step",
+    "instance_next_step_user": "Please select next step user(s)",
+    "instance_reasons_reject": "Reasons necessary when reject the application",
+    "instance_field": "The field",
+    "instance_is_required": "is required",
+    "instance_email_format_error": "Format error of the email address",
+
+    "instance_attachments_uploading": "Uploading...",
+
+    "workflow_export_thismonth": "This Month",
+    "workflow_export_lastmonth": "Last Month",
+    "workflow_export_thisyear": "This Year",
+    "workflow_export_all": "All",
+
+    "workflow_export_search":"Search for instances according to the flow",
+    "workflow_export_data":"Export Data",
 
     // inbox
     "Inbox Suggestion NextSteps Label":"Next step: ",
@@ -79,5 +98,6 @@
     "Select placeholder": "Please select",
 
     "workflow_no_category": "No category"
+
 
 }

@@ -20,7 +20,7 @@
             <a href="{{urlPrefix}}/app/{{_id}}" class="weui_grid">
                 <div class="weui_grid_icon">
                     <i class="ion {{icon}}"></i>
-                    <span class="label label-danger">{{badge _id}}</span>
+                    <span class="label label-danger">{{getBadge _id getSpaceId}}</span>
                 </div>
                 <p class="weui_grid_label">
                     {{_ name}}

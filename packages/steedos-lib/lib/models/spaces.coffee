@@ -140,7 +140,7 @@ if Meteor.isServer
 		doc.is_deleted = false;
 		
 		if !userId
-			throw new Meteor.Error(400, t("spaces_error.login_required"));
+			throw new Meteor.Error(400, "spaces_error_login_required");
 
 		doc.owner = userId
 		doc.admins = [userId]
@@ -161,7 +161,7 @@ if Meteor.isServer
 
 		# only space owner can modify space
 		if doc.owner != userId
-			throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+			throw new Meteor.Error(400, "spaces_error_space_owner_only");
 
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
@@ -177,7 +177,7 @@ if Meteor.isServer
 		
 		# 管理员不能为空
 		if (!modifier.$set.admins)
-			throw new Meteor.Error(400, t("spaces_error.space_admins_required"));
+			throw new Meteor.Error(400, "spaces_error_space_admins_required");
 
 		# 必须启用 admin app
 		if modifier.$set.apps_enabled
@@ -193,7 +193,7 @@ if Meteor.isServer
 
 
 	db.spaces.before.remove (userId, doc) ->
-		throw new Meteor.Error(400, "暂不支持删除工作区操作");
+		throw new Meteor.Error(400, "spaces_error_space_readonly");
 
 
 	Meteor.methods
